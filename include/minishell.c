@@ -40,12 +40,16 @@ void  ft_parser(char *line_read)
 {
 	char	**cmd;
 	int		pid;
-
+	
+	
 	cmd = ft_split(line_read, ' ');
 	cmd[0] = ft_strjoin("/bin/", cmd[0]);
+}
 
+int command_executer(char *cmd)
+{
 
-int command_executer
+	int		pid;
 	pid = fork();
 	if (pid == 0)
 	{
