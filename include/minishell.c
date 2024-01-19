@@ -12,16 +12,19 @@ int free_split(char **splitted);
 
 int main (void)
 {
-	char *s;
+	char	*input;
+
+	input = NULL;
 	while(1)
 	{
-		s = rl_gets(s);
+		input = rl_gets(input);
 		rl_on_new_line();
-		ft_parser(s);
-		rl_redisplay();
-		free(s);
+		ft_parser(input);
+		//rl_redisplay();
+		free(input);
 	}
 }
+
 
 char	*rl_gets (char *line_read)
 {
@@ -40,7 +43,9 @@ void  ft_parser(char *line_read)
 
 	cmd = ft_split(line_read, ' ');
 	cmd[0] = ft_strjoin("/bin/", cmd[0]);
-	
+
+
+int command_executer
 	pid = fork();
 	if (pid == 0)
 	{
@@ -55,6 +60,7 @@ int free_split(char **splitted)
 {
 	int i;
 
+	i = 0;
 	while (splitted[i])
 	{
 		free(splitted[i]);
