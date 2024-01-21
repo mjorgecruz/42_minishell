@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_quotes.c                                    :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 12:35:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/20 18:02:11 by masoares         ###   ########.fr       */
+/*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
+/*   Updated: 2024/01/20 18:31:05 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*This file makes the first clean-up of the string received in the terminal
-It gets rid of the unnecessary quotes*/
+/*This file contains functions related to the history of the terminal*/
 
 #include "minishell.h"
 
-char    *parser_quotes(char *input)
+char	*get_line(char *line_read)
 {
-    int     i;
-    char    *output;
-    
-    output = calloc(ft_strlen(input), sizeof(char));
-    
-    i = 0;
-    while (input[i])
-    {
-        output[i] = input[i];
-        i++;
-    }
-    return(output);
+	if (line_read && *line_read)
+		line_read = (char *)NULL;
+	line_read = readline ("minishell > ");
+	if (line_read && *line_read)
+		add_history (line_read);
+  	return (line_read);
 }

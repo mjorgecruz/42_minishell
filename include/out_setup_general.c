@@ -1,61 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/21 00:05:07 by masoares         ###   ########.fr       */
+/*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
+/*   Updated: 2024/01/20 23:58:26 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av)
-{
-	char	*input;
-	char	*clean_input;
-	char	*paths;
-	
-	(void) ac;
-	(void) av;
-	//(void) env;
-	
-	paths = getenv("PATH");
-	input = NULL;
-	clear_terminal(paths);
-	while(1)
-	{
-		input = get_line(input);
-		if (input != NULL)
-		{
-			rl_on_new_line();
-			clean_input = ft_parser(input);
-			command_executer(clean_input, paths);
-			//printf("%s", clean_input);
-			//rl_redisplay();
-			free(input);
-			free(clean_input);
-		}
-	}
-}
 
-void	clear_terminal(char *paths)
+int command_executer(char *line, char *paths)
 {
+
 	char	**cmd;
 	int		pid;
 	char	**p_path;
 	int		i;
 	
-	
 	i = 0;
 	p_path = ft_split(paths, ':');
-	cmd = ft_split("clear", ' ');
+	cmd = ft_split(line, ' ');
+	ft_bzero(line, ft_strlen(line));
+	line = ft_strjoin(line, cmd[0]);
+	p_path[i] = ft_strjoin(p_path[i], "/");
+	cmd[0] = ft_strjoin(p_path[i], cmd[0]);
 	while(access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
 	{
 		p_path[i] = ft_strjoin(p_path[i], "/");
-		cmd[0] = ft_strjoin(p_path[i], "clear");
+		cmd[0] = ft_strjoin(p_path[i], line);
 		i++;
 	}
 	pid = fork();
@@ -64,5 +40,6 @@ void	clear_terminal(char *paths)
 	waitpid(pid, NULL, 0);
 	free_split(cmd);
 	free_split(p_path);
-	return ;
+	free(line);
+	return (1);
 }
