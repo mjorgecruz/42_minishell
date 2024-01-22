@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/20 23:18:26 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/22 08:06:50 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,46 @@
 # include "./libft/libft.h"
 
 
+
+/* estrutura geral que vai ligar a outras estruturas
+ e dar acesso a toda a informacaop
+
+	fd  ??  file descriptors?
+	pid_t pid;  out e in
+	paths
+	linha entrada
+	numero de comandos
+	outras infos
+	listas de comandos e outros pointers a outras estruturas
+	*/
+ 
+typedef struct s_data
+{
+	char *input;
+}	t_data;
+
+//Tokenizer
+typedef struct s_token
+{
+	char			*content;
+	t_type			type;
+}	t_cmdid;
+
+typedef enum e_type
+{
+	OTHER,
+	PIPE,
+	CD,
+	REDIR_IN,
+	REDIR_OUT,
+	SIMPLE_QUOTE,
+}	t_type;
+
 enum ERRORS
 {
 	DEU_COCO,
-	DEU_CACA
-	
+	DEU_CACA,
+	PILA_SECA
 };
 
 /* ************************************************************************** */
