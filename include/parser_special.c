@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 08:44:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:54:07 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char **get_those_pipes(const char *input)
 {
 	int	i;
 
+	i = 0;
 	while(is_space(input[i]))
 		i++;
 	//ifffff a partir de onde parou para a frente nao existir comando valido entao damos parse error (confirmar primeiro comando)
@@ -55,17 +56,13 @@ char **get_those_pipes(const char *input)
 		}
 		i++;	
 	}
+	return(NULL);
 }
-
-bool	is_space(char c)
-{
-	if((c > 8 && c < 14) || c == ' ')
-		return (true);
-	return (false);
-}
-
 
 /*
+
+
+||  cuidaddoooo
 
 1- recebo a string
          nao me preocupo com quotes

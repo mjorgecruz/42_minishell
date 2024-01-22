@@ -6,29 +6,17 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 07:58:39 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:53:27 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/* estrutura geral que vai ligar a outras estruturas
- e dar acesso a toda a informacao*/
-
-typedef struct s_data
-{
-	char *input;
-}	t_data;
-
-/*funcao para inicializar essa estrutura em modo static 
-assim limpa automatiamente e nao temos de mallocar*/
-
-t_data	mini_data_init()
-{
-	satatic t_data shell;
-	return(&shell)
-}
+// t_data	*mini_data_init(void)
+// {
+// 	static t_data shell;
+// 	return (&shell);
+// }
 
 int	main(int ac, char **av)
 {

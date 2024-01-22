@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/01/20 18:23:36 by masoares         ###   ########.fr        #
+#    Updated: 2024/01/22 09:49:02 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ NAME = minishell
 
 SRC = ./include/minishell.c ./include/history.c ./include/parser_general.c \
 		./include/parser_quotes.c ./include/parser_special.c \
-		./include/out_setup_general.c ./include/finex.c ./include/errors.c
+		./include/out_setup_general.c ./include/finex.c ./include/errors.c \
+		./include/str_utils.c
 
 OBJ = $(SRC:.c=.o)
 

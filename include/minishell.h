@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 08:26:15 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:53:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,39 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <string.h>
+# include <errno.h>
+# include <dirent.h>
+# include <termios.h>
+# include <curses.h>
+# include <stdbool.h>
+# include <term.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "./libft/libft.h"
 
 
+// typedef struct s_data
+// {
+// 	char *input;
+// }	t_data;
 
-/* estrutura geral que vai ligar a outras estruturas
- e dar acesso a toda a informacaop
+// t_data	*mini_data_init(void);
 
-	fd  ??  file descriptors?
-	pid_t pid;  out e in
-	paths
-	linha entrada
-	numero de comandos
-	outras infos
-	listas de comandos e outros pointers a outras estruturas
-	*/
- 
-typedef struct s_data
-{
-	char *input;
-}	t_data;
-
-//Tokenizer
-typedef struct s_token
-{
-	char			*content;
-	t_type			type;
-}	t_cmdid;
+// //Tokenizer
+// typedef struct s_token
+// {
+// 	char			*content;
+// 	t_type			type;
+// }	t_cmdid;
 
 typedef enum e_type
 {
