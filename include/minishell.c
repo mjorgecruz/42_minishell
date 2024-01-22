@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 09:53:27 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:53:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int	main(int ac, char **av)
 {
 	char	*input;
-	char	*clean_input;
 	char	*paths;
 	
 	(void) ac;
@@ -29,20 +28,22 @@ int	main(int ac, char **av)
 	//(void) env;
 	
 	paths = getenv("PATH");
-	input = NULL;
 	clear_terminal(paths);
+	input = NULL;
 	while(1)
 	{
 		input = get_line(input);
-		if (input != NULL)
+		if (input != NULL && *input)
 		{
 			rl_on_new_line();
-			clean_input = ft_parser(input);
-			command_executer(clean_input, paths);
+			ft_parser(input);
+			if (input == NULL)
+				return (1);
+			command_executer(input, paths);
 			//printf("%s", clean_input);
 			//rl_redisplay();
+			//free(input);
 			free(input);
-			free(clean_input);
 		}
 	}
 }

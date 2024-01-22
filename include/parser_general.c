@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/21 00:05:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:52:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@ the terminal*/
 
 #include "minishell.h"
 
-char	*ft_parser(char *line_read)
+void	ft_parser(char *line_read)
 {
-	char	*clean_line;
-
-	clean_line = parser_quotes(line_read);
-	free(line_read);
-	clean_line = parser_special(clean_line);
+	parser_quotes(line_read);
+	parser_special(line_read);
 	//printf("%s\n", clean_line);
-	return(clean_line);
+	return ;
 }

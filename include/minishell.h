@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 09:53:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:51:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_line (char *line_read);
 
 /* General parser function. It must guarantee all clean-up of the string received
 and its freeing. The output is a completely clean string to be interpreted*/
-char	*ft_parser(char *line_read);
+void	ft_parser(char *line_read);
 
 /* ************************************************************************** */
 /*                              PARSER_QUOTES                                 */
@@ -96,14 +96,14 @@ char	*ft_parser(char *line_read);
 
 /*General function to do the first clean-up of the string received in the
 terminal. It gets rid of the unnecessary quotes*/
-char	*parser_quotes(char *input);
+void	parser_quotes(char *input);
 
 
 /* ************************************************************************** */
 /*                             PARSER_SPECIAL                                 */
 /* ************************************************************************** */
 
-char	*parser_special(char *input);
+void	parser_special(char *input);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */
