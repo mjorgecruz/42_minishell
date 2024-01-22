@@ -6,12 +6,16 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/20 23:58:26 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:20:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// void	command_organizer(char *input)
+// {
+// 	while ()
+// }
 
 int command_executer(char *line, char *paths)
 {
@@ -38,8 +42,5 @@ int command_executer(char *line, char *paths)
 	if (pid == 0)
 		execve(cmd[0], cmd, NULL);
 	waitpid(pid, NULL, 0);
-	free_split(cmd);
-	free_split(p_path);
-	free(line);
-	return (1);
+	return (free(line), free_split(p_path), free_split(cmd), 1);
 }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 14:51:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:17:27 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@
 
 // t_data	*mini_data_init(void);
 
-// //Tokenizer
-// typedef struct s_token
-// {
-// 	char			*content;
-// 	t_type			type;
-// }	t_cmdid;
+//Tokenizer
+typedef struct s_token
+{
+	char	*content;
+	struct s_token	*next;
+}	t_token;
 
 typedef enum e_type
 {
@@ -64,6 +64,8 @@ enum ERRORS
 	DEU_CACA,
 	PILA_SECA
 };
+
+
 
 /* ************************************************************************** */
 /*                               MINISHELL                                    */
@@ -103,7 +105,11 @@ void	parser_quotes(char *input);
 /*                             PARSER_SPECIAL                                 */
 /* ************************************************************************** */
 
-void	parser_special(char *input);
+int 	pipe_location(const char *s, int pos);
+bool	check_quotes(const char *str, char q, int pos);
+bool	count_specials(const char *str, char c, int pos);
+bool	find_trios(const char *str, int pos);
+void	parser_special(const char *str);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */
@@ -129,5 +135,11 @@ int	free_split(char **splitted);
 
 char	*ft_strcpy(char *s);
 bool	is_space(char c);
+/*while finding spaces it will keep going and return the position of the first non space char
+ or zero if it wass all spaces or empty*/
+int		iterate_spaces(const char *str, int pos);
+
+t_token *init_struct_cmd(void);
+void	add_token(t_token **tokens, t_token *new);
 
 #endif

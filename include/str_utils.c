@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/22 09:54:29 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:23:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,38 @@ char *ft_strcpy(char *s)
 		i++;
 	}
     return(output);
+}
+
+int	iterate_spaces(const char *str, int pos)
+{
+	while(is_space(str[pos]))
+		pos++;
+	return(pos);
+}
+
+t_token *init_struct_cmd(void)
+{
+	t_token *new;
+	
+	new = NULL;
+	new->content = NULL;
+	new->next = NULL;
+	return (new);
+}
+void	add_token(t_token **tokens, t_token *new)
+{
+	t_token *trav;
+	
+	trav = NULL;
+	if (*tokens == NULL)
+		*tokens = new;
+	else
+	{
+		trav = *tokens;
+		while (trav->next != NULL)
+		{
+			trav = trav->next;
+		}
+		trav->next = new;
+	}
 }
