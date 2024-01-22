@@ -1,0 +1,4 @@
+minishell
+.vscode/launch.json
+*.o
+include/libft/libft.a
