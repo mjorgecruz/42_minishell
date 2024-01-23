@@ -6,25 +6,24 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 16:20:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:19:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	command_organizer(char *input)
-// {
-// 	while ()
-// }
-
-int command_executer(char *line, char *paths)
+void	commands_sorter(t_token **cmd_list)
 {
+	
+}
 
+int	command_execve(char *line, char *paths)
+{
 	char	**cmd;
 	int		pid;
 	char	**p_path;
 	int		i;
-	
+
 	i = 0;
 	p_path = ft_split(paths, ':');
 	cmd = ft_split(line, ' ');
@@ -32,7 +31,7 @@ int command_executer(char *line, char *paths)
 	line = ft_strjoin(line, cmd[0]);
 	p_path[i] = ft_strjoin(p_path[i], "/");
 	cmd[0] = ft_strjoin(p_path[i], cmd[0]);
-	while(access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
+	while (access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
 	{
 		p_path[i] = ft_strjoin(p_path[i], "/");
 		cmd[0] = ft_strjoin(p_path[i], line);
@@ -44,3 +43,8 @@ int command_executer(char *line, char *paths)
 	waitpid(pid, NULL, 0);
 	return (free(line), free_split(p_path), free_split(cmd), 1);
 }
+
+int	command_chdir(char *line, char *paths)
+{
+}
+

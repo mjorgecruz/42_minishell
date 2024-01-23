@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/20 16:37:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:48:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 #include "minishell.h"
 
-int free_split(char **splitted)
+int	free_split(char **splitted)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (splitted[i])
@@ -25,5 +25,5 @@ int free_split(char **splitted)
 		i++;
 	}
 	free(splitted);
-	return(0);
+	return (0);
 }

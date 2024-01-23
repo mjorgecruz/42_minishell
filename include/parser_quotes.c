@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:35:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 14:46:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:29:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ It gets rid of the unnecessary quotes*/
 
 void	parser_quotes(char *input)
 {
-	int     i;
+	int		i;
 	int		j;
-	
+
 	i = 0;
 	while (input[i])
 	{
