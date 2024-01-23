@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/22 16:17:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:00:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_token
 {
 	char	*content;
 	struct s_token	*next;
+	t_type		next_type;
 }	t_token;
 
 typedef enum e_type
@@ -60,9 +61,7 @@ typedef enum e_type
 
 enum ERRORS
 {
-	DEU_COCO,
-	DEU_CACA,
-	PILA_SECA
+	ERRO	
 };
 
 
