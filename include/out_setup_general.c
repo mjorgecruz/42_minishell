@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/23 16:19:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:31:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	commands_sorter(t_token **cmd_list)
 {
-	
 }
 
 int	command_execve(char *line, char *paths)
