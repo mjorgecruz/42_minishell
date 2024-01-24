@@ -31,6 +31,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
+# include <linux/limits.h> /*path_max is here size of 4095*/
 
 typedef enum e_builtin
 {

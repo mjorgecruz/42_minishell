@@ -31,27 +31,31 @@ t_builtin get_builtin_id(const char *str) /*all lowercase?  no aspens?? XD*/
 		return (PWD);
 	return (UNDEFINED);
 }
+
 /*having a formater returning an enum makes the functions shorter and we can use this in other parts*/
 /*after strcomp doing numbers comparision is way faster thats why i made  it like this*/
+
 void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 {
 	if (id == UNDEFINED)
-		/*go to execve*/
+		//command_execve();
 	if (id == CD)
-		/*go to builtin*/
+		//command_cd();
 	if (id == ECHOS)
-		/*go to builtin*/
+		//command_echo();
 	if (id == PWD)
-		/*go to builtin*/
+		//command_pwd();
 	if (id == EXIT)
-		/*go to builtin*/
+		//command_exit();
 	if (id == EXPORT)
-		/*go to builtin*/
+		//command_export();
 	if (id == ENV)
-		/*go to builtin*/
+		//command_env();
 	if (id == UNSET)
-		/*go to builtin*/
+		//command_unset();
 }
+
+/*should they be inside the returns?*/
 
 
 void	commands_sorter(t_token **cmd_list)
@@ -64,8 +68,8 @@ and send it to execute on the folowing function that takes in the id
 	id = get_builtin_id("cd"); /*we shoul only send the 
 	correct string with thecomand from the structure to this function*/
 
-	i = 0;
-	while (cmd_list[i]->cmds[0].cmds[0]) /*is valid and not null comparing just the first token*/
+//	i = 0;
+	//while (cmd_list[i]->cmds[0].cmds[0]) /*is valid and not null comparing just the first token*/
 
 	/*
 	make some kind of formater chosing what comand to execute if it is the corresponding symbol
@@ -102,32 +106,51 @@ int	command_execve(char *line, char *paths)
 	return (free(line), free_split(p_path), free_split(cmd), 1);
 }
 
-int	command_echo()
+
+int	comand_pwd(void)
 {
-	printf(...)
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX))
+	{
+		ft_putendl_fd(cwd, 1);
+		return (EXIT_SUCCESS);
+	}
+	else
+		return (EXIT_FAILURE);
 }
 
-int	command_cd(char *line, char *paths)
+/*
+
+int	command_echo(t_token **cmd_list)
 {
 }
 
-int	comand_pwd()
+int	command_cd(t_token **cmd_list)
+{
+}
+
+int	command_export(t_token **cmd_list)
 {
 	
 }
-int	command_export()
+int	command_unset(t_token **cmd_list)
 {
 	
 }
-int	command_unset()
+int	command_env(t_token **cmd_list)
 {
 	
 }
-int	command_env()
+
+int	command_exit(t_token **cmd_list) //will we be handling the extra numbers after exit comand?
 {
-	
+	 //if exit has more than 2 arguments or 1 if not handling numbers
+	 	//[print tooo many arguments error]
+		//and prompts back
+	//if handling confirm if second is numeric and error if not numeric
+		//if ALL OK THEN WE PRINT "exit"
+		//we free and close
 }
-int	command_exit()
-{
-	
-}
+
+*/
