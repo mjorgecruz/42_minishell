@@ -6,16 +6,16 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 15:52:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:24:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	commands_sorter(t_token **cmd_list)
-{
+// void	commands_sorter(t_token **cmd_list)
+// {
 	
-}
+// }
 
 int	command_execve(char *line, char *paths)
 {
@@ -44,32 +44,32 @@ int	command_execve(char *line, char *paths)
 	return (free(line), free_split(p_path), free_split(cmd), 1);
 }
 
-int	command_echo()
-{
-	printf(...)
-}
+// int	command_echo()
+// {
+// 	printf(...)
+// }
 
-int	command_cd(char *line, char *paths)
-{
-}
+// int	command_cd(char *line, char *paths)
+// {
+// }
 
-int	comand_pwd()
-{
+// int	comand_pwd()
+// {
 	
-}
-int	command_export()
-{
+// }
+// int	command_export()
+// {
 	
-}
-int	command_unset()
-{
+// }
+// int	command_unset()
+// {
 	
-}
-int	command_env()
-{
+// }
+// int	command_env()
+// {
 	
-}
-int	command_exit()
-{
+// }
+// int	command_exit()
+// {
 	
-}
+// }
