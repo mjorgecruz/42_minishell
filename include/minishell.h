@@ -35,7 +35,7 @@
 typedef enum e_builtin
 {
 	UNDEFINED,
-	ECHO,
+	ECHOS,
 	CD,
 	PWD,
 	ENV,

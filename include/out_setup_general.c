@@ -22,7 +22,7 @@ t_builtin get_builtin_id(const char *str) /*all lowercase?  no aspens?? XD*/
 	if (strcmp(str,"env"))
 		return (ENV);
 	if (strcmp(str,"echo"))
-		return (ECHO);
+		return (ECHOS);
 	if (strcmp(str,"unset"))
 		return (UNSET);
 	if (strcmp(str,"exit"))
@@ -39,7 +39,7 @@ void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 		/*go to execve*/
 	if (id == CD)
 		/*go to builtin*/
-	if (id == ECHO)
+	if (id == ECHOS)
 		/*go to builtin*/
 	if (id == PWD)
 		/*go to builtin*/
