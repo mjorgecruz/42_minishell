@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 10:46:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:52:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	commands_sorter(t_token **cmd_list)
 {
-	strcmp(cmd_list[0]->cmds[0].cmds[0] , "echo"); || strcmp(cmd_list[0]->cmds[0].cmds[0] , echo);
-	fepihepoihs ->execve->(errno do execve) para o handle da string sem significado  
+	
 }
 
 int	command_execve(char *line, char *paths)
