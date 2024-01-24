@@ -218,4 +218,16 @@ t_token	*init_struct_cmd(void);
 /*adds the node created to the linked list of tokens*/
 void	add_token(t_token **tokens, t_token *new);
 
+/* ************************************************************************** */
+/*                                    BUILTINS                                */
+/* ************************************************************************** */
+
+int	comand_pwd(void);
+// int	command_echo(t_token **cmd_list);
+// int	command_cd(t_token **cmd_list);
+// int	command_export(t_token **cmd_list);
+// int	command_unset(t_token **cmd_list);
+// int	command_env(t_token **cmd_list);
+// int	command_exit(t_token **cmd_list);
+
 #endif
