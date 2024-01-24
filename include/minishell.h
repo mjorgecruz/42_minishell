@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/23 16:21:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 10:00:08 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum e_type
 /*Define special characters within the separated strings*/
 typedef enum e_special
 {
+	NONE,
 	S_REDIR_IN,
 	S_REDIR_OUT,
 	D_REDIR_IN,
@@ -154,7 +155,8 @@ char	**altered_split();
 /*                              OUT_SETUP_GENERAL                             */
 /* ************************************************************************** */
 
-/*defines which function should run the commands sent*/
+/*defines which function should run the commands sent. It receives the struct
+where we can access the arrays of the commands */
 void	commands_sorter(t_token **cmd_list);
 
 /*executes commands using the execve function*/
