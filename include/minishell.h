@@ -32,6 +32,18 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 
+typedef enum e_builtin
+{
+	UNDEFINED,
+	ECHO,
+	CD,
+	PWD,
+	ENV,
+	EXPORT,
+	UNSET,
+	EXIT,
+}	t_builtin;
+
 /*Define special characters that separate strings*/
 typedef enum e_type
 {
