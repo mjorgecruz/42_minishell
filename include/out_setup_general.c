@@ -13,39 +13,56 @@
 #include "minishell.h"
 
 
-t_builtin get_builtin_id(const char *str) /*all lowercase?  no aspens?? XD*/
+/*fix aspens??  here or in previous steps? maybe flag it*/
+t_builtin get_builtin_id(const char *str) 
 {
-	if (strcmp(str,"cd"))
+	if (strcmp(str, "cd"))
 		return (CD);
-	if (strcmp(str,"export"))
+	if (strcmp(str, "export"))
 		return (EXPORT);
-	if (strcmp(str,"env"))
+	if (strcmp(str, "env"))
 		return (ENV);
-	if (strcmp(str,"echo"))
+	if (strcmp(str, "echo"))
 		return (ECHOS);
-	if (strcmp(str,"unset"))
+	if (strcmp(str, "unset"))
 		return (UNSET);
-	if (strcmp(str,"exit"))
+	if (strcmp(str, "exit"))
 		return (EXIT);
-	if (strcmp(str,"pwd"))
+	if (strcmp(str, "pwd"))
 		return (PWD);
 	return (UNDEFINED);
 }
 
-/*having a formater returning an enum makes the functions shorter and we can use this in other parts*/
-/*after strcomp doing numbers comparision is way faster thats why i made  it like this*/
+//sets the struct id for the comand using the enums for builtins.
 
+void	set_id_flag_cmd(t_token **cmd_list)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (cmd_list[++i] != NULL)
+	{
+		j = -1;
+		while (cmd_list[i]->cmds[++j].cmds[0] != NULL)
+			cmd_list[i]->cmds[j].id = get_builtin_id(cmd_list[i]->cmds[j].cmds[0]);
+	}
+	return ;
+}
+
+/*
 void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 {
+//comand runner functions be inside the return
 	if (id == UNDEFINED)
 		//command_execve();
-	if (id == CD)
+	else if (id == CD)
 		//command_cd();
-	if (id == ECHOS)
+	else if (id == ECHOS)
 		//command_echo();
-	if (id == PWD)
+	else if (id == PWD)
 		//command_pwd();
-	if (id == EXIT)
+	else if (id == EXIT)
 		//command_exit();
 	if (id == EXPORT)
 		//command_export();
@@ -54,29 +71,16 @@ void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 	if (id == UNSET)
 		//command_unset();
 }
+*/
 
-/*should they be inside the returns?*/
 
-
+/*
 void	commands_sorter(t_token **cmd_list)
 {
-	int i;
-/*this get builtin id should be in a loop checking for all the first comand to be executed
-and send it to execute on the folowing function that takes in the id
-*/
-	na struct => get_builtin_id("cd"); /*we shoul only send the 
-	correct string with thecomand from the structure to this function*/
 
-//	i = 0;
-	//while (cmd_list[i]->cmds[0].cmds[0]) /*is valid and not null comparing just the first token*/
-
-	/*
-	make some kind of formater chosing what comand to execute if it is the corresponding symbol
-	not being part of any it jumps all to the last one and goes to execve
-	*/ 
 }
-/*do i have to handle empoty null or will always reach me with something*/
-/*i could be using an enum flag*/
+*/
+
 
 int	command_execve(char *line, char *paths)
 {
