@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:10:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:21:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	general_executer(char *input, char *paths)
 	t_token	**cmd_list;
 
 	cmd_list = command_organizer(input);
+	tester_function(list);
 	//commands_separator(*cmd_list);
 	//commands_sorter(cmd_list);
 }
@@ -63,9 +64,6 @@ int	command_divider(t_token **list, t_token *token, char *input)
 				token = create_node(j, i - 1, input, D_PIPE);
 				i++;
 			}
-			else
-				token = create_node(j, i - 1, input, S_PIPE);
-			add_to_list(list, token);
 			j = i;
 		}
 		i++;
@@ -103,4 +101,17 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 		j++;
 	}
 	return (new_node);
+}
+
+int tester_function(t_token **list)
+{
+	t_token *trav;
+	trav = *list;
+	
+	while (trav)
+	{
+		printf("content: %s", trav->content);
+		printf("type: %d\n", trav->next_type);
+		trav = trav->next;
+	}
 }
