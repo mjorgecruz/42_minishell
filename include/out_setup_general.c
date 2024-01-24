@@ -12,28 +12,24 @@
 
 #include "minishell.h"
 
-
-/*fix aspens??  here or in previous steps? maybe flag it*/
-t_builtin get_builtin_id(const char *str) 
+t_builtin	get_builtin_id(const char *str)
 {
-	if (strcmp(str, "cd"))
-		return (CD);
-	if (strcmp(str, "export"))
-		return (EXPORT);
-	if (strcmp(str, "env"))
-		return (ENV);
-	if (strcmp(str, "echo"))
-		return (ECHOS);
-	if (strcmp(str, "unset"))
-		return (UNSET);
-	if (strcmp(str, "exit"))
-		return (EXIT);
-	if (strcmp(str, "pwd"))
-		return (PWD);
-	return (UNDEFINED);
+    if (strcmp(str, "cd") || strcmp(str, "\"cd\"") || strcmp(str, "\'cd\'"))
+        return CD;
+    if (strcmp(str, "export") || strcmp(str, "\"export\"") || strcmp(str, "\'export\'"))
+        return EXPORT;
+    if (strcmp(str, "env") || strcmp(str, "\"env\"") || strcmp(str, "\'env\'"))
+        return ENV;
+    if (strcmp(str, "echo") || strcmp(str, "\"echo\"") || strcmp(str, "\'echo\'"))
+        return ECHOS;
+    if (strcmp(str, "unset") || strcmp(str, "\"unset\"") || strcmp(str, "\'unset\'"))
+        return UNSET;
+    if (strcmp(str, "exit") || strcmp(str, "\"exit\"") || strcmp(str, "\'exit\'"))
+        return EXIT;
+    if (strcmp(str, "pwd") || strcmp(str, "\"pwd\"") || strcmp(str, "\'pwd\'"))
+        return PWD;
+    return UNDEFINED;
 }
-
-//sets the struct id for the comand using the enums for builtins.
 
 void	set_id_flag_cmd(t_token **cmd_list)
 {
@@ -50,10 +46,13 @@ void	set_id_flag_cmd(t_token **cmd_list)
 	return ;
 }
 
-/*
-void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
+void	exec_correct_builtin(t_command *cmds)
 {
-//comand runner functions be inside the return
+	t_builtin id;
+
+	id = cmds->id;
+	//cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
+	/*
 	if (id == UNDEFINED)
 		//command_execve();
 	else if (id == CD)
@@ -64,23 +63,32 @@ void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 		//command_pwd();
 	else if (id == EXIT)
 		//command_exit();
-	if (id == EXPORT)
+	else if (id == EXPORT)
 		//command_export();
-	if (id == ENV)
+	else if (id == ENV)
 		//command_env();
-	if (id == UNSET)
+	else if (id == UNSET)
 		//command_unset();
+	*/
+	return ;
 }
-*/
 
-
-/*
 void	commands_sorter(t_token **cmd_list)
 {
+	int	i;
+	int j;
 
+	i = -1;
+	set_id_flag_cmd(cmd_list);
+	while (cmd_list[++i] != NULL)
+	{
+		j = -1;
+		while (cmd_list[i]->cmds[++j].cmds != NULL)
+			exec_correct_builtin(&(cmd_list[i]->cmds[j]));
+	}
+	return ;
 }
-*/
-
+//confirm if thisis working properly
 
 int	command_execve(char *line, char *paths)
 {

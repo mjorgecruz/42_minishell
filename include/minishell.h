@@ -168,6 +168,18 @@ char	**altered_split();
 /*                              OUT_SETUP_GENERAL                             */
 /* ************************************************************************** */
 
+/*discovers what type of command we have as the first argument  and returns 
+the enum corresponding to it*/
+t_builtin	get_builtin_id(const char *str);
+
+/*gest the previous function working and seting the structure id of the comand
+to the correct comand enum id flag*/
+void	set_id_flag_cmd(t_token **cmd_list);
+
+/*receives the struct t_comand as argument and will match execution
+with it id flag*/
+void	exec_correct_builtin(t_command *cmds);
+
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
 void	commands_sorter(t_token **cmd_list);
