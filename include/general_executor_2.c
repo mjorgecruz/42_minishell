@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:01:33 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:08:30 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,30 @@ int	specials_counter(t_token *cmd_list)
 char	**mega_split(char *content, int *pos)
 {
 	char	**splitted;
-	char	special_c;
 	int		asp_place;
 	int		i;
+	int		j;
+	int 	count;
 	
-	special_c = 0;
+	count = 0;
 	splitted = (char **)malloc(sizeof(char *) * (ft_count_words(&content, *pos) + 1));
 	if (splitted == NULL)
 		return (NULL);
 	while (content[*pos])
 	{	
-		splitted[i] = (char *)malloc(sizeof(char) * find_next_stop(content, pos) + 1);
+		count = find_next_stop(content, pos);
+		splitted[i] = (char *)malloc(sizeof(char) * count + 1);
 		if (splitted[i] == NULL)
 			return (NULL);
-		while()
+		while(j < count)
 		{
-
+			splitted[i][j] = content[*pos];
+			*pos++;
+			j++;
 		}
 		i++;
 	}
-	splitted[i] = NULL; 
+	splitted[i] = NULL;
 	return (splitted);
 }
 
