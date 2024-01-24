@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 10:00:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:23:05 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ enum e_ERRORS
 };
 
 /* ************************************************************************** */
+/*                                TESTERS                                     */
+/* ************************************************************************** */
+
+/*in general_executor*/
+int tester_function(t_token **list);
+
+/* ************************************************************************** */
 /*                               MINISHELL                                    */
 /* ************************************************************************** */
 
@@ -157,12 +164,14 @@ void	commands_separator(t_token *cmd_list);
 
 /*This function counts the number of special characters that are in the
 substring, >> << && etc count as one special character*/
-int		specials_counter(t_token cmd_list);
+int		specials_counter(t_token *cmd_list);
 
 /*This is an altered version of the split to stop separating at a special
 character. We can also make it so it can also complete all the structs instead
 of just one*/
-char	**altered_split();
+char	**mega_split(char *content, int *pos);
+
+int 	ft_count_words(char *content, int pos);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */

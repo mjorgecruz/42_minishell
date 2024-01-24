@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/23 15:56:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:37:39 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	main(int ac, char **av, char **env)
 		{
 			rl_on_new_line();
 			ft_parser(input);
-			if (input != NULL)
-				general_executer(input, paths);
-			//printf("%s", clean_input);
-			//rl_redisplay();
+			// if (input != NULL)
+			//  	general_executer(input, paths);
 			free(input);
 		}
 	}
