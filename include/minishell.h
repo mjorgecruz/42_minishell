@@ -67,7 +67,7 @@ typedef struct s_command
 {
 	char		**cmds;
 	t_special	type;
-
+	t_builtin	id;
 }	t_command;
 
 typedef struct s_token

@@ -61,11 +61,10 @@ void	exec_correct_builtin(t_token **cdm_list, t_builtin id)
 void	commands_sorter(t_token **cmd_list)
 {
 	int i;
-	t_builtin id;
 /*this get builtin id should be in a loop checking for all the first comand to be executed
 and send it to execute on the folowing function that takes in the id
 */
-	id = get_builtin_id("cd"); /*we shoul only send the 
+	na struct => get_builtin_id("cd"); /*we shoul only send the 
 	correct string with thecomand from the structure to this function*/
 
 //	i = 0;
