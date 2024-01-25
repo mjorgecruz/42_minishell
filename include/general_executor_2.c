@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/25 11:18:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:52:17 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	specials_counter(t_token *cmd_list)
 char	**mega_split(char *content, int *pos)
 {
 	char	**splitted;
-	//int		asp_place;
 	int		i;
 	int		j;
 	int 	count;
