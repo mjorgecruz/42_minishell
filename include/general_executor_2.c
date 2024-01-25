@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:08:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:18:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	commands_separator(t_token *cmd_list)
 		while (i < specials + 1)
 		{
 			cmd_list->cmds[i].cmds = mega_split(cmd_list->content, &pos);
-			cmd_list->cmds[i].type = special_selector(cmd_list->content, pos);
+			cmd_list->cmds[i].type = specials_selector(cmd_list);
 			i++;
 		}
 		cmd_list = cmd_list->next;
@@ -43,6 +43,7 @@ int	specials_counter(t_token *cmd_list)
 	int		count;
 	int		pos;
 
+	count = 0;
 	asp_place = 0;
 	pos = 0;
 	while (cmd_list->content[pos])
@@ -60,6 +61,7 @@ int	specials_counter(t_token *cmd_list)
 				pos++;
 			count++;
 		}
+		pos++;
 	}
 	return(0);
 }
@@ -67,13 +69,15 @@ int	specials_counter(t_token *cmd_list)
 char	**mega_split(char *content, int *pos)
 {
 	char	**splitted;
-	int		asp_place;
+	//int		asp_place;
 	int		i;
 	int		j;
 	int 	count;
 	
+	i = 0;
+	j = 0;
 	count = 0;
-	splitted = (char **)malloc(sizeof(char *) * (ft_count_words(&content, *pos) + 1));
+	splitted = (char **)malloc(sizeof(char *) * (ft_count_words(content, (*pos)) + 1));
 	if (splitted == NULL)
 		return (NULL);
 	while (content[*pos])
@@ -85,7 +89,7 @@ char	**mega_split(char *content, int *pos)
 		while(j < count)
 		{
 			splitted[i][j] = content[*pos];
-			*pos++;
+			(*pos)++;
 			j++;
 		}
 		i++;
@@ -99,6 +103,7 @@ int ft_count_words(char *content, int pos)
 	int		asp_place;
 	int		count;
 
+	count = 0;
 	asp_place = 0;
 	while (content[pos] && ft_strchr( "<>&", content[pos]))
 	{
@@ -119,16 +124,17 @@ int ft_count_words(char *content, int pos)
 	if (ft_strchr( "<>&", content[pos + 1]))
 		pos += 2;
 	count = count + 1;
+	return (count);
 }
 
 int	specials_selector(t_token *cmd_list)
 {
-	
+	(void) cmd_list;
+	return(0);
 }
 
 int find_next_stop(char *content, int *pos)
 {
-	char	special_c;
 	int		asp_place;
 	int		count;
 
@@ -139,11 +145,11 @@ int find_next_stop(char *content, int *pos)
 		if (content[*pos] == 34 || content[*pos] == 39)
 		{
 			asp_place = *pos;
-			*pos++;
+			(*pos)++;
 			count++;
 			while (content[*pos] != content[asp_place])
 			{
-				*pos++;
+				(*pos)++;
 				count++;
 			}
 		}

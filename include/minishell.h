@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:23:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:14:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	parser_special(const char *str);
 void	general_executer(char *input, char *paths);
 
 /*general function to divide the full line read into parts separated by pipes*/
-t_token	**command_organizer(char *input);
+t_token	*command_organizer(char *input);
 
 /*function used to divide the full line read into parts separated by pipes*/
 int		command_divider(t_token **list, t_token *token, char *input);
@@ -172,6 +172,10 @@ of just one*/
 char	**mega_split(char *content, int *pos);
 
 int 	ft_count_words(char *content, int pos);
+
+int		find_next_stop(char *content, int *pos);
+
+int		specials_selector(t_token *cmd_list);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */

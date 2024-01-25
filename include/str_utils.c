@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/23 15:52:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/25 09:54:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*init_struct_cmd(void)
 {
 	t_token	*new;
 
-	new = NULL;
+	new = (t_token *)malloc(sizeof(t_token));
 	new->content = NULL;
 	new->next = NULL;
 	return (new);
@@ -65,9 +65,7 @@ void	add_token(t_token **tokens, t_token *new)
 	{
 		trav = *tokens;
 		while (trav->next != NULL)
-		{
 			trav = trav->next;
-		}
 		trav->next = new;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:25:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:15:16 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,35 @@ line read into segments separated by pipes*/
 
 void	general_executer(char *input, char *paths)
 {
-	t_token	**cmd_list;
+	t_token	*cmd_list;
+	(void) paths;
 
 	cmd_list = command_organizer(input);
-	tester_function(cmd_list);
-	//commands_separator(*cmd_list);
+	commands_separator(cmd_list);
+	//tester_function(&cmd_list);
 	//commands_sorter(cmd_list);
 }
 
-t_token	**command_organizer(char *input)
+t_token	*command_organizer(char *input)
 {
-	t_token	**list;
+	t_token	*list;
 	t_token	*token;
 	int		j;
 
 	j = 0;
 	list = NULL;
-	token = NULL;
-	j = command_divider(list, token, input);
-	if (ft_strlen(input) - 1 != j)
+	token = (t_token *) NULL;
+	j = command_divider(&list, token, input);
+	if ((int) ft_strlen(input) - 1 != j)
 	{
 		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
-		add_to_list(list, token);
+		add_token(&list, token);
 	}
-	token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
-	add_to_list(list, token);
+	else
+	{
+		token = create_node(0, 0, input, NO_PIPE);
+		add_token(&list, token);
+	}
 	return (list);
 }
 
@@ -55,7 +59,7 @@ int	command_divider(t_token **list, t_token *token, char *input)
 	j = 0;
 	while (input[i])
 	{
-		if (input[i] == 34 || input[39])
+		if (input[i] == 34 || input[i] == 39)
 			i = find_next(input, i);
 		if (input[i] == '|')
 		{
@@ -64,6 +68,10 @@ int	command_divider(t_token **list, t_token *token, char *input)
 				token = create_node(j, i - 1, input, D_PIPE);
 				i++;
 			}
+			else
+				token = create_node(j, i - 1, input, S_PIPE);
+			i++;
+			add_token(list, token);
 			j = i;
 		}
 		i++;
@@ -87,19 +95,24 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 	t_token	*new_node;
 	int		i;
 	int		j;
-
+	
 	i = 0;
 	j = init;
 	new_node = init_struct_cmd();
-	new_node->next_type = NO_PIPE;
-	new_node->content = ft_calloc(end + 1 - init, sizeof(char));
-	new_node->cmds = NULL;
-	while (j < end)
+	new_node->next_type = type;
+	if (end <= init)
+		new_node->content = (char *) NULL;
+	else
 	{
-		new_node->content[i] = input[j];
-		i++;
-		j++;
+		new_node->content = ft_calloc(end + 2 - init, sizeof(char));
+		while (j < end + 1)
+		{
+			new_node->content[i] = input[j];
+			i++;
+			j++;
+		}
 	}
+	new_node->cmds = NULL;
 	return (new_node);
 }
 
@@ -110,8 +123,9 @@ int tester_function(t_token **list)
 	
 	while (trav)
 	{
-		printf("content: %s", trav->content);
+		printf("content: %s ", trav->content);
 		printf("type: %d\n", trav->next_type);
 		trav = trav->next;
 	}
+	return (1);
 }
