@@ -22,6 +22,44 @@ bool	is_space(char c)
 	return (false);
 }
 
+/* NEED TO ADD THIS TO THE HEADER LATER I DO IT>
+int	ignore_in_quotes(const char *str, int pos) // upon finding special char stops and returns his position in the string.
+{
+	while (str[pos] && is_special_char(str[pos]) == false)
+	{
+		if (str[pos] == D_QUOTE)
+		{
+			pos++;
+			while (str[pos] && str[pos] != D_QUOTE) 
+				pos++;
+			return (pos + 1);
+		}
+		if (str[pos] == S_QUOTE)
+		{
+			pos++;
+			while (str[pos] && str[pos] != S_QUOTE)
+				pos++;
+			return (pos + 1);
+		}
+		pos++;
+	}
+	return(pos);
+}
+
+bool	is_special_char(char c)
+{
+	if (c == '|' || c == '>' || c == '<')
+		return (true);
+	return (false);
+}
+
+int	ignore_spaces(const char *str, int pos)
+{
+	while(is_space(str[pos]))
+		pos++;
+	return(pos);
+}
+*/
 char	*ft_strcpy(char *s)
 {
 	int		i;
@@ -35,13 +73,6 @@ char	*ft_strcpy(char *s)
 		i++;
 	}
 	return (output);
-}
-
-int	iterate_spaces(const char *str, int pos)
-{
-	while (is_space(str[pos]))
-		pos++;
-	return (pos);
 }
 
 t_token	*init_struct_cmd(void)

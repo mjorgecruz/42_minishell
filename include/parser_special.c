@@ -12,90 +12,93 @@
 
 #include "minishell.h"
 
-int pipe_location(const char *s, int pos)
+void	parser_special(const char *str)
 {
-	while (s[pos])
-	{
-		if (s[pos] == '|')
-			return (pos);
-		pos++;
-	}
-	return (-1);
+	// use this one and pass the program thge currect input whyle the other one isnt working
+	(void) str;
+	return ;
 }
 
-bool	check_quotes(const char *str, char q, int pos)  // true if quotes are valid
+/* i also need to add this to thee header dont touch it i will do it
+bool check_invalid_specialcount(const char *str)
 {
-	int	count_before;
+	int i;
+	int count;
 
-	count_before = 0;
-	while (pos > -1)
+	i = -1;
+	while (str[++i])
 	{
-		if (str[pos] == q)
-			count_before++;
-		pos--;
+		count = 0;
+		while (is_special_char(str[i]))
+		{
+			if (count > 3)
+				return (true);
+			count++;
+			i++;
+		}
+		
 	}
-	if (count_before != 0 && count_before % 2 != 0)
+	return (false);
+}
+
+int pipe_is_first(const char *s, int pos)
+{
+	pos = ignore_spaces(s, pos);
+	if (s[pos] == '|')
+		return (-1);
+	return (0);
+}
+
+bool	is_line_after_empty(const char *str, int pos)
+{
+	while (str[pos] && is_space(str[pos])) //advances spaces
+		pos++;
+	if	(str[pos] == '\0' || str[pos] == '\n')
+		return (true);
+	else if (is_special_char(str[pos]))//returns true when finding special even pipes
 		return (true);
 	return (false);
 }
 
-bool	count_specials(const char *str, char c, int pos)   //returns true when finding 3 consecutive specials | > <   outside valid quotes
-{
-	int count;
-
-	while(str[pos])
-	{
-		count = 0;
-		while (c == str[pos])
-		{
-			count++;
-			pos++;
-		}
-		if (count >= 3)	//finding 3 consecutive
-		{
-			if	(check_quotes(str, 34, pos) || check_quotes(str, 39, pos)) // if one of these are true then it they are valid i guess
-				return(false);
-			return (true);
-		}
-		pos++;
-	}
-	return (false); //cant find invalid trios thus returning false
-}
-
-bool	find_trios(const char *str, int pos)  //upon finding 3 consecutive specials it returns true
+int initial_parser_loop(const char *str)
 {
 	int i;
-	bool status;
 
-	status = false;
-	i = pos;
-	while(str[i] && status == false)
+	i = 0;
+	if (pipe_is_first(str, 0) == -1)//being a pipe the first non space char = ERROR
 	{
-		if(str[i] == '>' && status == false)
-			status = count_specials(str, '>', i);
-		if (str[i] == '<' && status == false)
-			status = count_specials(str, '<', i);
-		if (str[i] == '|' && status == false)
-			status = count_specials(str, '|', i);
-		i++;
+		printf("\nERROr -> PIPE IN FIRST POSITION\n");
+		return (-1);
 	}
-	return (status);
+	while (str[i] && !is_special_char(str[i])) //while no special or inside quotes keep iterating
+		i = ignore_in_quotes(str, i);
 }
 
 void	parser_special(const char *str)
 {
 	int i;
-
-	i = iterate_spaces(str, 0);               //passes the whitespaces
-	if (i == pipe_location(str, i))              //being a pipe the first non space char = ERROR
+	//this will check if there is any amount of consecutive special chars bigger than 3
+	if (check_invalid_specialcount(str))
 	{
-		write(1, "DEUMERDA\n", 9);
-		return ; //exit aqui e free
+		printf("Invalid Special combination > 3\n");
+		return ;
 	}
-	if (find_trios(str, i))                  //if it findes trios of pipes >>> <<< not inside valid aspens returns error (false);
+	i = initial_parser_loop(str[0]);
+	
+	while (str[i]) // correct i
 	{
-		write(1, "DEUMERDA\n", 9);
-		return ; //exit aqui e free
+		if (is_special_char(str[i])) //finds special char
+			i = //check whatever
+		if (is_line_after_empty(str, i) && str[i - 1] != '|')
+		{
+			printf("\n ERROR EMPTY LINE AFTER SPECIAL CHAR < or >\n");
+			return ;
+		}
+		while (str[i] && !is_special_char(str[i]))
+			i = ignore_in_quotes(str, i);		
 	}
+	printf("\nPASSED SPECIAL PARSER\n");
 	return ;
 }
+
+*/

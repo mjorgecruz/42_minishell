@@ -128,10 +128,6 @@ void	parser_quotes(char *input);
 /*                             PARSER_SPECIAL                                 */
 /* ************************************************************************** */
 
-int		pipe_location(const char *s, int pos);
-bool	check_quotes(const char *str, char q, int pos);
-bool	count_specials(const char *str, char c, int pos);
-bool	find_trios(const char *str, int pos);
 void	parser_special(const char *str);
 
 /* ************************************************************************** */
