@@ -51,6 +51,7 @@ void	exec_correct_builtin(t_command *cmds)
 	t_builtin id;
 
 	id = cmds->id;
+	(void) id;
 	//cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
 	/*
 	if (id == UNDEFINED)
