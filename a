@@ -1,0 +1,6 @@
+total 56
+-rw-rw-r-- 1 masoares masoares     0 jan 27 16:11 a
+drwxrwxr-x 3 masoares masoares  4096 jan 27 16:11 include
+-rw-rw-r-- 1 masoares masoares  1868 jan 26 09:24 Makefile
+-rwxrwxr-x 1 masoares masoares 42808 jan 27 16:11 minishell
+-rw-rw-r-- 1 masoares masoares    11 jan 26 09:24 README.md

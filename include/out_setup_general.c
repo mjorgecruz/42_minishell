@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:24:32 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:37:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,48 +46,48 @@ void	set_id_flag_cmd(t_token **cmd_list)
 	return ;
 }
 
-void	exec_correct_builtin(t_command *cmds)
-{
-	t_builtin id;
+// void	exec_correct_builtin(t_command *cmds)
+// {
+// 	t_builtin id;
 
-	id = cmds->id;
-	//cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
-	/*
-	if (id == UNDEFINED)
-		//command_execve();
-	else if (id == CD)
-		//command_cd();
-	else if (id == ECHOS)
-		//command_echo();
-	else if (id == PWD)
-		//command_pwd();
-	else if (id == EXIT)
-		//command_exit();
-	else if (id == EXPORT)
-		//command_export();
-	else if (id == ENV)
-		//command_env();
-	else if (id == UNSET)
-		//command_unset();
-	*/
-	return ;
-}
+// 	id = cmds->id;
+// 	//cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
+// 	/*
+// 	if (id == UNDEFINED)
+// 		//command_execve();
+// 	else if (id == CD)
+// 		//command_cd();
+// 	else if (id == ECHOS)
+// 		//command_echo();
+// 	else if (id == PWD)
+// 		//command_pwd();
+// 	else if (id == EXIT)
+// 		//command_exit();
+// 	else if (id == EXPORT)
+// 		//command_export();
+// 	else if (id == ENV)
+// 		//command_env();
+// 	else if (id == UNSET)
+// 		//command_unset();
+// 	*/
+// 	return ;
+// }
 
-void	commands_sorter(t_token **cmd_list)
-{
-	int	i;
-	int j;
+// void	commands_sorter(t_token **cmd_list)
+// {
+// 	int	i;
+// 	int j;
 
-	i = -1;
-	set_id_flag_cmd(cmd_list);
-	while (cmd_list[++i] != NULL)
-	{
-		j = -1;
-		while (cmd_list[i]->cmds[++j].cmds != NULL)
-			exec_correct_builtin(&(cmd_list[i]->cmds[j]));
-	}
-	return ;
-}
+// 	i = -1;
+// 	set_id_flag_cmd(cmd_list);
+// 	while (cmd_list[++i] != NULL)
+// 	{
+// 		j = -1;
+// 		while (cmd_list[i]->cmds[++j].cmds != NULL)
+// 			exec_correct_builtin(&(cmd_list[i]->cmds[j]));
+// 	}
+// 	return ;
+// }
 //confirm if thisis working properly
 
 int	command_execve(char *line, char *paths)

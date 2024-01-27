@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/25 10:14:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 01:19:31 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef enum e_special
 	S_REDIR_OUT,
 	D_REDIR_IN,
 	D_REDIR_OUT,
+	S_AMPER,
+	D_AMPER
 }	t_special;
 
 typedef struct s_command
@@ -173,9 +175,9 @@ char	**mega_split(char *content, int *pos);
 
 int 	ft_count_words(char *content, int pos);
 
-int		find_next_stop(char *content, int *pos);
+int		find_next_stop(char *content, int pos);
 
-int		specials_selector(t_token *cmd_list);
+t_special		specials_selector(t_token *cmd_list, int *pos);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */
