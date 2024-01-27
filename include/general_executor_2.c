@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 16:34:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:05:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	commands_separator(t_token *cmd_list)
 	while (cmd_list != NULL)
 	{
 		specials = specials_counter(cmd_list);
-		cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * (specials + 1));
+		cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * (specials + 2));
 		pos = 0;
 		i = 0;
 		while (i < specials + 1)
@@ -35,10 +35,11 @@ void	commands_separator(t_token *cmd_list)
 			while(cmd_list->content[pos] == ' ')
 				pos++;
 			cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
-			while(cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|')
+			while(cmd_list->content[pos] && (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
 				pos++;
 			i++;
 		}
+		cmd_list->cmds[i].cmds = NULL;
 		cmd_list = cmd_list->next;
 	}
 }
@@ -136,7 +137,7 @@ int ft_count_words(char *content, int pos)
 		}
 		pos++;
 	}
-	if (ft_strchr( "<>&", content[pos + 1]) != NULL)
+	if (content[pos] && ft_strchr( "<>&", content[pos + 1]) != NULL)
 		pos += 2;
 	count = count + 1;
 	return (count);

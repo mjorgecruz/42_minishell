@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 01:19:31 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:18:39 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,8 +212,12 @@ void	errors(int error_code);
 /*                                     FINEX                                  */
 /* ************************************************************************** */
 
+
+void	clean_cmd_list(t_token *cmd_list, char *paths);
+
 /*Handle the memory freeing of an array of strings*/
 int		free_split(char **splitted);
+
 
 /* ************************************************************************** */
 /*                                   STR_UTILS                                */

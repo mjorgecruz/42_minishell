@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 16:12:24 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:17:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	general_executer(char *input, char *paths)
 	commands_separator(cmd_list);
 	tester_function(&cmd_list);
 	//commands_sorter(cmd_list);
+	clean_cmd_list(cmd_list, paths);
 }
 
 t_token	*command_organizer(char *input)
@@ -104,7 +105,7 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 		new_node->content = (char *) NULL;
 	else
 	{
-		new_node->content = ft_calloc(end + 2 - init, sizeof(char));
+		new_node->content = ft_calloc(end + 3 - init, sizeof(char));
 		while (j < end + 1)
 		{
 			new_node->content[i] = input[j];
