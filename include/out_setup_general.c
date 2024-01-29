@@ -3,48 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 08:24:28 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/29 12:11:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_builtin	get_builtin_id(const char *str)
+void	commands_sorter(t_token *cmd_list)
 {
-    if (strcmp(str, "cd") || strcmp(str, "\"cd\"") || strcmp(str, "\'cd\'"))
-        return CD;
-    if (strcmp(str, "export") || strcmp(str, "\"export\"") || strcmp(str, "\'export\'"))
-        return EXPORT;
-    if (strcmp(str, "env") || strcmp(str, "\"env\"") || strcmp(str, "\'env\'"))
-        return ENV;
-    if (strcmp(str, "echo") || strcmp(str, "\"echo\"") || strcmp(str, "\'echo\'"))
-        return ECHOS;
-    if (strcmp(str, "unset") || strcmp(str, "\"unset\"") || strcmp(str, "\'unset\'"))
-        return UNSET;
-    if (strcmp(str, "exit") || strcmp(str, "\"exit\"") || strcmp(str, "\'exit\'"))
-        return EXIT;
-    if (strcmp(str, "pwd") || strcmp(str, "\"pwd\"") || strcmp(str, "\'pwd\'"))
-        return PWD;
-    return UNDEFINED;
+
+	set_id_flag_cmd(cmd_list);
+	// while (cmd_list[++i] != NULL)
+	// {
+	// 	j = -1;
+	// 	while (cmd_list[i]->cmds[++j].cmds != NULL)
+	// 		exec_correct_builtin(&(cmd_list[i]->cmds[j]));
+	// }
+	return ;
 }
 
-void	set_id_flag_cmd(t_token **cmd_list)
+void	set_id_flag_cmd(t_token *cmd_list)
 {
-	int	i;
-	int	j;
+	int		j;
 
-	i = -1;
-	while (cmd_list[++i] != NULL)
+	while (cmd_list != NULL)
 	{
 		j = -1;
-		while (cmd_list[i]->cmds[++j].cmds[0] != NULL)
-			cmd_list[i]->cmds[j].id = get_builtin_id(cmd_list[i]->cmds[j].cmds[0]);
+		while (cmd_list->cmds[++j].cmds[0] != NULL)
+			cmd_list->cmds[j].id 
+				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
+		cmd_list = cmd_list->next;
 	}
 	return ;
 }
+
+t_builtin	get_builtin_id(const char *str)
+{
+	if (strcmp(str, "cd") || strcmp(str, "\"cd\"") || strcmp(str, "\'cd\'"))
+		return (CD);
+	if (strcmp(str, "export") || strcmp(str, "\"export\"")
+		|| strcmp(str, "\'export\'"))
+		return (EXPORT);
+	if (strcmp(str, "env") || strcmp(str, "\"env\"")
+		|| strcmp(str, "\'env\'"))
+		return (ENV);
+	if (strcmp(str, "echo") || strcmp(str, "\"echo\"")
+		|| strcmp(str, "\'echo\'"))
+		return (ECHOS);
+	if (strcmp(str, "unset") || strcmp(str, "\"unset\"")
+		|| strcmp(str, "\'unset\'"))
+		return (UNSET);
+	if (strcmp(str, "exit") || strcmp(str, "\"exit\"")
+		|| strcmp(str, "\'exit\'"))
+		return (EXIT);
+	if (strcmp(str, "pwd") || strcmp(str, "\"pwd\"")
+		|| strcmp(str, "\'pwd\'"))
+		return (PWD);
+	return (UNDEFINED);
+}
+
 
 /*
 void	exec_correct_builtin(t_command *cmds)
@@ -52,7 +72,8 @@ void	exec_correct_builtin(t_command *cmds)
  	t_builtin id;
 
 	id = cmds->id;
-	cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
+	cmds->cmds(assim para aceder ao array de strings 
+		que e este comando) usar para enviar parta as functions
 	if (id == UNDEFINED)
 		//command_execve();
 	else if (id == CD)
@@ -73,22 +94,6 @@ void	exec_correct_builtin(t_command *cmds)
 }
 	*/
 
-// void	commands_sorter(t_token **cmd_list)
-// {
-// 	int	i;
-// 	int j;
-
-// 	i = -1;
-// 	set_id_flag_cmd(cmd_list);
-// 	while (cmd_list[++i] != NULL)
-// 	{
-// 		j = -1;
-// 		while (cmd_list[i]->cmds[++j].cmds != NULL)
-// 			exec_correct_builtin(&(cmd_list[i]->cmds[j]));
-// 	}
-// 	return ;
-// }
-//confirm if thisis working properly
 
 int	command_execve(char *line, char *paths)
 {

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:23:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:55:01 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_line(char *line_read)
 {
 	if (line_read && *line_read)
 		line_read = (char *) NULL;
-	//line_read = ("ls -l");	
 	line_read = readline("minishell > ");
 	if (line_read && *line_read)
 		add_history(line_read);

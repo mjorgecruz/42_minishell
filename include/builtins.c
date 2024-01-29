@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
+/*   Updated: 2024/01/29 11:55:48 by masoares         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 /*This file contains builtin functions
 as they will need extra functions we might need
@@ -41,7 +52,8 @@ int	command_env(t_token **cmd_list)
 {
 }
 
-int	command_exit(t_token **cmd_list) //will we be handling the extra numbers after exit comand?
+int	command_exit(t_token **cmd_list) //will we be 
+handling the extra numbers after exit comand?
 {
 	 //if exit has more than 2 arguments or 1 if not handling numbers
 	 	//[print tooo many arguments error]

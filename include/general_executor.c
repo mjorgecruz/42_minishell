@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 09:30:18 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 12:14:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ line read into segments separated by pipes*/
 void	general_executer(char *input, char *paths)
 {
 	t_token	*cmd_list;
-	(void) paths;
 
+	(void) paths;
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
 	tester_function(&cmd_list);
-	//commands_sorter(cmd_list);
+	commands_sorter(cmd_list);
 	clean_cmd_list(cmd_list, paths);
 }
 
@@ -96,7 +96,7 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 	t_token	*new_node;
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = init;
 	new_node = init_struct_cmd();
@@ -117,13 +117,13 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 	return (new_node);
 }
 
-int tester_function(t_token **list)
+int	tester_function(t_token **list)
 {
-	t_token *trav;
-	trav = *list;
+	t_token	*trav;
 	int		i;
 	int		j;
-	
+
+	trav = *list;
 	i = 0;
 	j = 0;
 	while (trav)
@@ -137,19 +137,21 @@ int tester_function(t_token **list)
 			printf("(null) \n");
 			printf("cmd_redir: %d\n", trav->cmds->type);
 		}
-		else{
-		while (i < specials_counter(*list) + 1)
+		else
 		{
-			j = 0;
-			while (trav->cmds[i].cmds[j])
+			while (i < specials_counter(*list) + 1)
 			{
-				printf("cmd( %d , %d ) -> ", i, j);
-				printf("%s \n", trav->cmds[i].cmds[j]);
-				j++;
+				j = 0;
+				printf("id: %d\n", trav->cmds[i].id);
+				while (trav->cmds[i].cmds[j])
+				{
+					printf("cmd( %d , %d ) -> ", i, j);
+					printf("%s \n", trav->cmds[i].cmds[j]);
+					j++;
+				}
+				printf("cmd_redir: %d\n", trav->cmds[i].type);
+				i++;
 			}
-			printf("cmd_redir: %d\n", trav->cmds[i].type);
-			i++;
-		}
 		}
 		trav = trav->next;
 	}
