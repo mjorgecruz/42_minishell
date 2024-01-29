@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:17:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 09:30:18 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,13 @@ int tester_function(t_token **list)
 		i = 0;
 		printf("content: %s ", trav->content);
 		printf("pipe type: %d\n", trav->next_type);
+		if (trav->content == NULL)
+		{
+			printf("cmd( %d , %d ) -> ", 0, 0);
+			printf("(null) \n");
+			printf("cmd_redir: %d\n", trav->cmds->type);
+		}
+		else{
 		while (i < specials_counter(*list) + 1)
 		{
 			j = 0;
@@ -142,6 +149,7 @@ int tester_function(t_token **list)
 			}
 			printf("cmd_redir: %d\n", trav->cmds[i].type);
 			i++;
+		}
 		}
 		trav = trav->next;
 	}

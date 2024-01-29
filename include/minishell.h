@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:18:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:57:08 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,13 +167,23 @@ int		specials_counter(t_token *cmd_list);
 /*This is an altered version of the split to stop separating at a special
 character. We can also make it so it can also complete all the structs instead
 of just one*/
-char	**mega_split(char *content, int *pos);
+char		**mega_split(char *content, int *pos);
 
-int 	ft_count_words(char *content, int pos);
+char		*write_to_splitted(int count, char *content, int *pos);
 
-int		find_next_stop(char *content, int pos);
+int 		ft_count_words(char *content, int pos);
 
-t_special		specials_selector(t_token *cmd_list, int *pos);
+int			find_next_stop(char *content, int pos);
+
+t_special	specials_selector(t_token *cmd_list, int *pos);
+
+int 		count_spaces(int *pos, char *content);
+
+void		fill_cmds(t_token *cmd_list, int specials);
+
+void		pass_quotes(char *content, int *pos);
+
+void		pass_spaces(char *content, int *pos);
 
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */

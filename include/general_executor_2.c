@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:05:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:04:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,40 @@ void	commands_separator(t_token *cmd_list)
 	pos = 0;
 	while (cmd_list != NULL)
 	{
+		if (cmd_list->content == NULL)
+		{
+			cmd_list->cmds = (t_command *)malloc(sizeof(t_command));
+			cmd_list->cmds->type = 0;
+			cmd_list->cmds->cmds = NULL;
+			return ;
+		}
 		specials = specials_counter(cmd_list);
 		cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * (specials + 2));
-		pos = 0;
-		i = 0;
-		while (i < specials + 1)
-		{
-			cmd_list->cmds[i].cmds = mega_split(cmd_list->content, &pos);
-			while(cmd_list->content[pos] == ' ')
-				pos++;
-			cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
-			while(cmd_list->content[pos] && (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
-				pos++;
-			i++;
-		}
-		cmd_list->cmds[i].cmds = NULL;
+		if (cmd_list == NULL)
+			return;
+		fill_cmds(cmd_list, specials);
 		cmd_list = cmd_list->next;
 	}
+}
+
+void	fill_cmds(t_token *cmd_list, int specials)
+{
+	int pos;
+	int i;
+	
+	pos = 0;
+	i = 0;
+	while (i < specials + 1)
+	{
+		cmd_list->cmds[i].cmds = mega_split(cmd_list->content, &pos);
+		while(cmd_list->content[pos] == ' ')
+			pos++;
+		cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
+		while(cmd_list->content[pos] && (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
+			pos++;
+		i++;
+	}
+	cmd_list->cmds[i].cmds = NULL;
 }
 
 int	specials_counter(t_token *cmd_list)
@@ -91,21 +108,30 @@ char	**mega_split(char *content, int *pos)
 	while (i < words)
 	{	
 		count = find_next_stop(content, *pos);
-		splitted[i] = ft_calloc(count + 1, sizeof(char));
-		j = 0;
-		while (content[*pos] == ' ')
-			(*pos)++;
-		while(j < count)
-		{
-			splitted[i][j] = content[*pos];
-			(*pos)++;
-			j++;
-		}
+		splitted[i] = write_to_splitted(count, content, pos);
 		while (content[*pos] == ' ')
 			(*pos)++;
 		i++;
 	}
 	return (splitted[i] = NULL, splitted);
+}
+
+char	*write_to_splitted(int count, char *content, int *pos)
+{
+	int		j;
+	char	*split_word;
+
+	j = 0;
+	split_word = ft_calloc(count + 1, sizeof(char));
+	while (content[*pos] == ' ')
+		(*pos)++;
+	while(j < count)
+	{
+		split_word[j] = content[*pos];
+		(*pos)++;
+		j++;
+	}
+	return (split_word);
 }
 
 int ft_count_words(char *content, int pos)
@@ -115,22 +141,15 @@ int ft_count_words(char *content, int pos)
 
 	count = 0;
 	asp_place = 0;
-	while (content[pos] == ' ')
-		pos++;
+	pass_spaces(content, &pos);
 	while (content[pos] && !ft_strchr( "<>&", content[pos]))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
-		{
-			asp_place = pos;
-			pos++;
-			while (content[pos] != content[asp_place])
-				pos++;
-		}
+			pass_quotes(content, &pos);
 		else if (content[pos] == ' ')
 		{
-			while (content[pos] == ' ')
-				pos++;
-			if ( content[pos] && !ft_strchr( "<>&", content[pos]))
+			pass_spaces(content, &pos);
+			if (content[pos] && !ft_strchr( "<>&", content[pos]))
 				count++;
 			else
 				break;
@@ -176,27 +195,49 @@ int find_next_stop(char *content, int pos)
 	int		count;
 
 	asp_place = 0;
-	count = 0;
-	while (content[pos] == ' ')
-	{
-		pos++;
-		count++;
-	}
+	count = count_spaces(&pos, content);
 	while(content[pos] && !ft_strchr( "<>&", content[pos]) && content[pos] != ' ')
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
 			asp_place = pos;
-			(pos)++;
+			pos++;
 			count++;
 			while (content[pos] != content[asp_place])
 			{
-				(pos)++;
+				pos++;
 				count++;
 			}
 		}
 		count++;
-		(pos)++;
+		pos++;
 	}
 	return (count);
+}
+
+int count_spaces(int *pos, char *content)
+{
+	int		count;
+	
+	count = 0;
+	while (content[*pos] == ' ')
+	{
+		(*pos)++;
+		count++;
+	}
+	return (count);
+}
+
+void	pass_spaces(char *content, int *pos)
+{
+	while (content[*pos] == ' ')
+		(*pos)++;
+}
+void	pass_quotes(char *content, int *pos)
+{
+	int		asp_place;
+	asp_place = *pos;
+	(*pos)++;
+	while (content[*pos] != content[asp_place])
+		(*pos)++;
 }
