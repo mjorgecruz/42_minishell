@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 13:04:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:01:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,7 @@ int	find_next_stop(char *content, int pos)
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
-			asp_place = pos;
-			pos++;
+			asp_place = pos++;
 			count++;
 			while (content[pos] != content[asp_place])
 			{
@@ -217,7 +216,10 @@ int	find_next_stop(char *content, int pos)
 		count++;
 		pos++;
 	}
-	return (count);
+	if (!ft_strchr("<>&", content[pos]) || !content[pos])
+		return (count);
+	else
+		return (count - 1);
 }
 
 int	count_spaces(int *pos, char *content)

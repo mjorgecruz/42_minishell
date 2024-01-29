@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 12:31:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:14:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	tester_function(t_token **list)
 		}
 		else
 		{
-			while (i < specials_counter(*list) + 1)
+			while (i < specials_counter(trav) + 1)
 			{
 				j = 0;
 				printf("id: %d\n", trav->cmds[i].id);
