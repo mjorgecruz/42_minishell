@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 08:23:13 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/29 08:24:28 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	set_id_flag_cmd(t_token **cmd_list)
 	return ;
 }
 
-// void	exec_correct_builtin(t_command *cmds)
-// {
-// 	t_builtin id;
+/*
+void	exec_correct_builtin(t_command *cmds)
+{
+ 	t_builtin id;
 
 	id = cmds->id;
-	//cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
-	/*
+	cmds->cmds(assim para aceder ao array de strings que e este comando) usar para enviar parta as functions
 	if (id == UNDEFINED)
 		//command_execve();
 	else if (id == CD)
@@ -69,9 +69,9 @@ void	set_id_flag_cmd(t_token **cmd_list)
 		//command_env();
 	else if (id == UNSET)
 		//command_unset();
-	*/
 	return ;
 }
+	*/
 
 // void	commands_sorter(t_token **cmd_list)
 // {
