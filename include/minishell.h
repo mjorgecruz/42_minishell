@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 10:59:32 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/29 12:27:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include <linux/limits.h> /*path_max is here size of 4095*/
+# include <linux/limits.h>
 
-#define S_QUOTE = 39
-#define D_QUOTE = 34
+#define S_QUOTE 39
+#define D_QUOTE 34
 
 typedef enum e_builtin
 {
@@ -135,7 +135,7 @@ void	parser_quotes(char *input);
 
 void	parser_special(const char *str);
 
-bool	check_invalid_specialcount(const char *str);
+bool 	check_invalid_specialcount(const char *str, int pos);
 bool	pipe_is_first(const char *s, int pos);
 bool	has_valid_cmd_after(const char *str, int pos);
 int		count_consecutive_specials(const char *str, int pos);
