@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/25 09:54:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:53:56 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ bool	is_space(char c)
 }
 
 /* NEED TO ADD THIS TO THE HEADER LATER I DO IT>
-int	ignore_in_quotes(const char *str, int pos) // upon finding special char stops and returns his position in the string.
+int	ignore_in_quotes(const char *str, int pos) // upon 
+finding special char stops and returns his position in the string.
 {
 	while (str[pos] && is_special_char(str[pos]) == false)
 	{
