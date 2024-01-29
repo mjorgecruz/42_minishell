@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 11:17:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:04:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ char	**mega_split(char *content, int *pos)
 	j = 0;
 	count = 0;
 	words = ft_count_words(content, (*pos));
+	if (words == 0)
+		return (NULL);
 	splitted = (char **)malloc(sizeof(char *) * (words + 1));
 	if (splitted == NULL)
 		return (NULL);
