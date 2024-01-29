@@ -3,26 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/25 09:54:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:33:31 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-using in special parser at the moment
-*/
 #include "minishell.h"
 
-bool	is_space(char c)
-{
-	if ((c > 8 && c < 14) || c == ' ')
-		return (true);
-	return (false);
-}
-
-/* NEED TO ADD THIS TO THE HEADER LATER I DO IT>
 int	ignore_in_quotes(const char *str, int pos) // upon finding special char stops and returns his position in the string.
 {
 	while (str[pos] && is_special_char(str[pos]) == false)
@@ -30,7 +19,7 @@ int	ignore_in_quotes(const char *str, int pos) // upon finding special char stop
 		if (str[pos] == D_QUOTE)
 		{
 			pos++;
-			while (str[pos] && str[pos] != D_QUOTE) 
+			while (str[pos] && str[pos] != D_QUOTE)
 				pos++;
 			return (pos + 1);
 		}
@@ -43,7 +32,15 @@ int	ignore_in_quotes(const char *str, int pos) // upon finding special char stop
 		}
 		pos++;
 	}
-	return(pos);
+	return (pos);
+}
+
+
+bool	is_space(char c)
+{
+	if ((c > 8 && c < 14) || c == ' ')
+		return (true);
+	return (false);
 }
 
 bool	is_special_char(char c)
@@ -59,7 +56,7 @@ int	ignore_spaces(const char *str, int pos)
 		pos++;
 	return(pos);
 }
-*/
+
 char	*ft_strcpy(char *s)
 {
 	int		i;

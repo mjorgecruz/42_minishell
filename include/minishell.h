@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:18:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:59:32 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 # include <linux/limits.h> /*path_max is here size of 4095*/
+
+#define S_QUOTE = 39
+#define D_QUOTE = 34
 
 typedef enum e_builtin
 {
@@ -132,6 +135,13 @@ void	parser_quotes(char *input);
 
 void	parser_special(const char *str);
 
+bool	check_invalid_specialcount(const char *str);
+bool	pipe_is_first(const char *s, int pos);
+bool	has_valid_cmd_after(const char *str, int pos);
+int		count_consecutive_specials(const char *str, int pos);
+bool	is_allowed_start_comb(const char *str, int pos);
+int		find_specials_at_start(const char *str, int pos);
+
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */
 /* ************************************************************************** */
@@ -219,13 +229,13 @@ int		free_split(char **splitted);
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *s);
-
+int		ignore_in_quotes(const char *str, int pos);
+int		ignore_spaces(const char *str, int pos);
+bool	is_special_char(char c);
 bool	is_space(char c);
 
-/*while finding spaces it will keep going and return the position of the first
-non space char or zero if it wass all spaces or empty*/
-int		iterate_spaces(const char *str, int pos);
+
+char	*ft_strcpy(char *s);
 
 /*Creates a new node from the line read*/
 t_token	*init_struct_cmd(void);
