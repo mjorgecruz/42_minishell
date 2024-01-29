@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/25 11:15:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:17:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void	general_executer(char *input, char *paths)
 
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
-	//tester_function(&cmd_list);
+	tester_function(&cmd_list);
 	//commands_sorter(cmd_list);
+	clean_cmd_list(cmd_list, paths);
 }
 
 t_token	*command_organizer(char *input)
@@ -104,7 +105,7 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 		new_node->content = (char *) NULL;
 	else
 	{
-		new_node->content = ft_calloc(end + 2 - init, sizeof(char));
+		new_node->content = ft_calloc(end + 3 - init, sizeof(char));
 		while (j < end + 1)
 		{
 			new_node->content[i] = input[j];
@@ -120,11 +121,28 @@ int tester_function(t_token **list)
 {
 	t_token *trav;
 	trav = *list;
+	int		i;
+	int		j;
 	
+	i = 0;
+	j = 0;
 	while (trav)
 	{
+		i = 0;
 		printf("content: %s ", trav->content);
-		printf("type: %d\n", trav->next_type);
+		printf("pipe type: %d\n", trav->next_type);
+		while (i < specials_counter(*list) + 1)
+		{
+			j = 0;
+			while (trav->cmds[i].cmds[j])
+			{
+				printf("cmd( %d , %d ) -> ", i, j);
+				printf("%s \n", trav->cmds[i].cmds[j]);
+				j++;
+			}
+			printf("cmd_redir: %d\n", trav->cmds[i].type);
+			i++;
+		}
 		trav = trav->next;
 	}
 	return (1);

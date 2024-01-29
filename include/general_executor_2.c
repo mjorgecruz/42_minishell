@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/25 11:18:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/27 19:05:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,20 @@ void	commands_separator(t_token *cmd_list)
 	while (cmd_list != NULL)
 	{
 		specials = specials_counter(cmd_list);
-		cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * (specials + 1));
+		cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * (specials + 2));
+		pos = 0;
+		i = 0;
 		while (i < specials + 1)
 		{
 			cmd_list->cmds[i].cmds = mega_split(cmd_list->content, &pos);
-			cmd_list->cmds[i].type = specials_selector(cmd_list);
+			while(cmd_list->content[pos] == ' ')
+				pos++;
+			cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
+			while(cmd_list->content[pos] && (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
+				pos++;
 			i++;
 		}
+		cmd_list->cmds[i].cmds = NULL;
 		cmd_list = cmd_list->next;
 	}
 }
@@ -63,39 +70,42 @@ int	specials_counter(t_token *cmd_list)
 		}
 		pos++;
 	}
-	return(0);
+	return(count);
 }
 
 char	**mega_split(char *content, int *pos)
 {
 	char	**splitted;
-	//int		asp_place;
 	int		i;
 	int		j;
 	int 	count;
+	int		words;
 	
 	i = 0;
 	j = 0;
 	count = 0;
-	splitted = (char **)malloc(sizeof(char *) * (ft_count_words(content, (*pos)) + 1));
+	words = ft_count_words(content, (*pos));
+	splitted = (char **)malloc(sizeof(char *) * (words + 1));
 	if (splitted == NULL)
 		return (NULL);
-	while (content[*pos])
+	while (i < words)
 	{	
-		count = find_next_stop(content, pos);
-		splitted[i] = (char *)malloc(sizeof(char) * count + 1);
-		if (splitted[i] == NULL)
-			return (NULL);
+		count = find_next_stop(content, *pos);
+		splitted[i] = ft_calloc(count + 1, sizeof(char));
+		j = 0;
+		while (content[*pos] == ' ')
+			(*pos)++;
 		while(j < count)
 		{
 			splitted[i][j] = content[*pos];
 			(*pos)++;
 			j++;
 		}
+		while (content[*pos] == ' ')
+			(*pos)++;
 		i++;
 	}
-	splitted[i] = NULL;
-	return (splitted);
+	return (splitted[i] = NULL, splitted);
 }
 
 int ft_count_words(char *content, int pos)
@@ -105,7 +115,9 @@ int ft_count_words(char *content, int pos)
 
 	count = 0;
 	asp_place = 0;
-	while (content[pos] && ft_strchr( "<>&", content[pos]))
+	while (content[pos] == ' ')
+		pos++;
+	while (content[pos] && !ft_strchr( "<>&", content[pos]))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
@@ -114,46 +126,77 @@ int ft_count_words(char *content, int pos)
 			while (content[pos] != content[asp_place])
 				pos++;
 		}
-		else if (ft_strchr(" ", content[pos]))
+		else if (content[pos] == ' ')
 		{
-			while (ft_strchr(" ", content[pos]))
+			while (content[pos] == ' ')
 				pos++;
-			count++;
+			if ( content[pos] && !ft_strchr( "<>&", content[pos]))
+				count++;
+			else
+				break;
 		}
+		pos++;
 	}
-	if (ft_strchr( "<>&", content[pos + 1]))
+	if (content[pos] && ft_strchr( "<>&", content[pos + 1]) != NULL)
 		pos += 2;
 	count = count + 1;
 	return (count);
 }
 
-int	specials_selector(t_token *cmd_list)
+t_special	specials_selector(t_token *cmd_list, int *pos)
 {
-	(void) cmd_list;
-	return(0);
+	if(cmd_list->content[*pos] == '<')
+	{
+		if (cmd_list->content[(*pos) + 1] == '<')
+			return ((*pos) += 2, D_REDIR_IN);
+		else
+			return ((*pos)++, S_REDIR_IN);
+	}
+	else if (cmd_list->content[*pos] == '>')
+	{
+		if (cmd_list->content[(*pos) + 1] == '>')
+			return ((*pos) += 2, D_REDIR_OUT);
+		else
+			return ((*pos)++, S_REDIR_OUT);
+	}
+	else if (cmd_list->content[*pos] == '&')
+	{
+		if (cmd_list->content[(*pos) + 1] == '&')
+			return ((*pos) += 2, D_AMPER);
+		else
+			return ((*pos)++, S_AMPER);
+	}
+	else
+		return ((*pos)++, NONE);
 }
 
-int find_next_stop(char *content, int *pos)
+int find_next_stop(char *content, int pos)
 {
 	int		asp_place;
 	int		count;
 
 	asp_place = 0;
 	count = 0;
-	while(content[*pos] && ft_strchr( "<>&", content[*pos]) && content[*pos] != ' ')
+	while (content[pos] == ' ')
 	{
-		if (content[*pos] == 34 || content[*pos] == 39)
+		pos++;
+		count++;
+	}
+	while(content[pos] && !ft_strchr( "<>&", content[pos]) && content[pos] != ' ')
+	{
+		if (content[pos] == 34 || content[pos] == 39)
 		{
-			asp_place = *pos;
-			(*pos)++;
+			asp_place = pos;
+			(pos)++;
 			count++;
-			while (content[*pos] != content[asp_place])
+			while (content[pos] != content[asp_place])
 			{
-				(*pos)++;
+				(pos)++;
 				count++;
 			}
 		}
 		count++;
+		(pos)++;
 	}
 	return (count);
 }
