@@ -8,6 +8,7 @@
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2024/01/31 11:02:51 by luis-ffe         ###   ########.fr       */
 =======
 /*   Updated: 2024/01/29 10:57:08 by masoares         ###   ########.fr       */
@@ -15,6 +16,9 @@
 =======
 /*   Updated: 2024/01/29 12:08:55 by masoares         ###   ########.fr       */
 >>>>>>> add command sorter (still not working)
+=======
+/*   Updated: 2024/01/30 14:07:34 by masoares         ###   ########.fr       */
+>>>>>>> Another one
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +124,10 @@ void		clear_terminal(char *paths);
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
 char		*get_line(char *line_read);
+
+/*If line finishes with a pipe or a "(" was left unclosed a new command line 
+appears, until the commands are finished*/
+void	join_to_line(char **total_line);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */

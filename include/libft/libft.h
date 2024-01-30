@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:16:41 by masoares          #+#    #+#             */
-/*   Updated: 2023/12/07 11:59:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:28:26 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
-size_t	ft_strlen(const char *str);
+int		ft_strlen(const char *str);
 
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
 

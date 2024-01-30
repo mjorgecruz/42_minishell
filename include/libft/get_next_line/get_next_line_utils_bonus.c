@@ -6,13 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 19:36:28 by masoares          #+#    #+#             */
-/*   Updated: 2023/11/10 18:24:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:24:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen3(char *str)
 {
 	int	i;
 
