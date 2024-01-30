@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 12:46:37 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:29:41 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool check_invalid_specialcount(const char *str, int pos)
 				return (true);
 			pos++;
 		}
+		pos++;//not sure if it should be here test it
 	}
 	return (false);
 }
@@ -63,11 +64,21 @@ bool	valid_start_signals(const char *str)
 void	parser_special(const char *str)
 {
 	if (finds_specials_chars(str) == false)    			 	//true continua
-		return ((void)printf("\nOK\n")); 							//nem corre porque nao encontrou specials
+	{
+		printf("\nOK\n"); 							//nem corre porque nao encontrou specials
+		return ;
+	}
 	else if (check_invalid_specialcount(str, 0) == true)	//falso continua
-		return ((void)printf("\nKO MANY SPECIALS\n"));			//dar erro direto.
+	{
+		printf("\nKO MANY SPECIALS\n");			//dar erro direto.
+		return ;
+	}
 	else if (valid_start_signals(str) == false)				//falso da erro
-		return ((void)printf("\nKO MANY SPECIALS\n"));
+	{
+		printf("\nKO MANY SPECIALS\n");
+		return ;
+	}
+	return ;
 	//checkar fim.
 	//checkar combinacoes do meio.
 }
@@ -156,7 +167,8 @@ int count_consecutive_specials(const char *str, int pos)
 	while (is_special_char(str[pos]) && str[pos])
 	{	count++;
 		pos++;
-		pos = ignore_spaces(str, pos);
+		if (str[pos])
+			pos = ignore_spaces(str, pos);
 	}
 	return (count);
 }
