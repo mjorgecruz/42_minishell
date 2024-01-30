@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:49:23 by masoares          #+#    #+#             */
-/*   Updated: 2023/10/26 19:15:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:24:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_to_temp(char **temp, char **src)
 		return ;
 	if (!*temp)
 		*temp = ft_calloc(1, 1);
-	str = ft_calloc(1, (ft_strlen(*temp) + ft_strlen(*src) + 1));
+	str = ft_calloc(1, (ft_strlen3(*temp) + ft_strlen3(*src) + 1));
 	while ((*temp)[i] != '\0')
 	{
 		str[i] = (*temp)[i];
@@ -79,7 +79,7 @@ char	*clean_temp(char *temp)
 	}
 	while (temp[len] != '\n' && temp[len] != '\0')
 		len++;
-	str = ft_calloc(1, (ft_strlen(temp) - len + 1));
+	str = ft_calloc(1, (ft_strlen3(temp) - len + 1));
 	while (temp[len] != '\0')
 	{
 		str[i] = temp[++len];

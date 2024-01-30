@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/24 16:27:24 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:45:56 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	ft_parser(char *line_read)
 {
 	parser_quotes(line_read);
 	//parser_special(line_read);
-	printf("%s\n", line_read);
+	//printf("%s\n", line_read);
 	return ;
 }

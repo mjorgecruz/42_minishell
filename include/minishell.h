@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 12:08:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:07:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,10 @@ void		clear_terminal(char *paths);
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
 char		*get_line(char *line_read);
+
+/*If line finishes with a pipe or a "(" was left unclosed a new command line 
+appears, until the commands are finished*/
+void	join_to_line(char **total_line);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */
