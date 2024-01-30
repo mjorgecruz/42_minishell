@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 10:45:38 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:46:28 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,19 +133,20 @@ void	parser_quotes(char *input);
 /*                             PARSER_SPECIAL                                 */
 /* ************************************************************************** */
 
-bool	is_valid_redirect(const char* str, int pos);
+bool	finds_specials_chars(const char *str);
+bool	check_invalid_specialcount(const char *str, int pos);
+bool	valid_start_signals(const char *str);
 void	parser_special(const char *str);
+
 bool	is_the_or_sign(const char* str, int pos);
 bool	is_pipe(const char* str, int pos);
-bool	check_signal_validity(const char *str, int pos);
-
-bool 	check_invalid_specialcount(const char *str, int pos);
 bool	pipe_is_first(const char *s, int pos);
 bool	has_valid_cmd_after(const char *str, int pos);
-int		count_consecutive_specials(const char *str, int pos);
 bool	is_allowed_start_comb(const char *str, int pos);
-int		find_specials_at_start(const char *str, int pos);
 bool	is_line_after_empty(const char *str, int pos);
+int count_consecutive_specials(const char *str, int pos);
+int		find_specials_at_start(const char *str, int pos);
+
 
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */

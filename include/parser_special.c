@@ -6,31 +6,73 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 10:51:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/30 12:46:37 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool is_valid_redirect(const char* str, int pos)
+bool	finds_specials_chars(const char *str)
 {
-	if (str[pos] == '>' || str[pos] == '<')
+	int	i;
+
+	i = -1;
+	while (str[++i])
 	{
-		if(has_valid_cmd_after(str, pos + 1))
-			return (true);
-		else if (str[pos] == '>' && is_pipe(str, pos + 1))
-		{
-			if (has_valid_cmd_after(str, pos + 2))
-			return (true);
-		}
-	}	
-	else if ((str[pos] == '>' || str[pos] == '<') && str[pos] == str[pos + 1])
-	{
-		if (has_valid_cmd_after(str, pos + 2))
+		if (is_special_char(str[i]))
 			return (true);
 	}
 	return (false);
 }
+
+bool check_invalid_specialcount(const char *str, int pos)
+{
+	int count;
+
+	while (str[pos])
+	{
+		count = 0;
+		pos = ignore_in_quotes(str, pos);
+		while (str[pos] && str[pos] != 39 && str[pos] != 34)
+		{
+			if (is_special_char(str[pos]))
+				count++;
+			else if (count > 4)
+				return (true);
+			pos++;
+		}
+	}
+	return (false);
+}
+
+bool	valid_start_signals(const char *str)
+{
+	if (pipe_is_first(str, 0)) //only >| is valid at start if if has cmd following. this already checks for pipe first and more than
+	{
+		printf("\nINVALID CHECK\n");
+		return (false);
+	}
+	if (find_specials_at_start(str, 0) < 0) // error if start comb invalid or no comand after first specials at the start.
+	{
+		printf("\nINVALID CHECK\n");
+		return (false);
+	}
+	return (true);
+}
+
+void	parser_special(const char *str)
+{
+	if (finds_specials_chars(str) == false)    			 	//true continua
+		return ((void)printf("\nOK\n")); 							//nem corre porque nao encontrou specials
+	else if (check_invalid_specialcount(str, 0) == true)	//falso continua
+		return ((void)printf("\nKO MANY SPECIALS\n"));			//dar erro direto.
+	else if (valid_start_signals(str) == false)				//falso da erro
+		return ((void)printf("\nKO MANY SPECIALS\n"));
+	//checkar fim.
+	//checkar combinacoes do meio.
+}
+
+////////////////////////////////////////////////////////////////////
 
 bool	is_the_or_sign(const char* str, int pos)
 {
@@ -50,55 +92,6 @@ bool	is_pipe(const char* str, int pos)
 		pos = ignore_spaces(str, pos + 1);
 		if (str[pos] != '|')
 			return(true);
-	}
-	return (false);
-}
-
-bool	check_signal_validity(const char *str, int pos)
-{
-	if (is_pipe(str, pos))
-	{
-		pos = ignore_spaces(str, pos + 1);
-		if (is_special_char(str[pos]) && !is_valid_redirect(str, pos))
-			return (false);
-		return (true);
-	}
-	else if (is_the_or_sign(str, pos))
-	{
-		pos = ignore_spaces(str, pos + 2);
-		if (is_special_char(str[pos]) && !is_valid_redirect(str, pos))
-			return (false);
-		return (true);
-	}
-	else if (is_valid_redirect(str, pos))
-		return (true);
-	return (false);
-}
-
-/* Finding more than 3 consecutive specials | < > should give syntax error no matter the position or spaces  they must be outside quotes */
-/*OK*/
-bool check_invalid_specialcount(const char *str, int pos)
-{
-	int count;
-
-	while (str[pos])
-	{
-		count = 0;
-		pos = ignore_in_quotes(str, pos);
-		while (str[pos] && str[pos] != 39 && str[pos] != 34)
-		{
-			if (is_special_char(str[pos]))
-				count++;
-			if (count > 3)
-			{
-				if (count == 4 && !check_signal_validity(str, pos - count))
-				{
-					printf("\nINVALID COMB #\n");	
-					return (true);
-				}
-			}
-			pos++;
-		}
 	}
 	return (false);
 }
@@ -126,25 +119,6 @@ bool	has_valid_cmd_after(const char *str, int pos)
 		return (true);
 }
 
-/*  counts the amount of consecutive specials <>| even with spaces between and returns the count
-the above function (has_valid_comand might be redundant due to this one)
-
-return: the count of special chars even with whitespaces in between */
-int count_consecutive_specials(const char *str, int pos)
-{
-	int count;
-
-	count = 0;
-	pos = ignore_spaces(str, pos);
-	while (is_special_char(str[pos]) && str[pos])
-	{	count++;
-		pos++;
-		pos = ignore_spaces(str, pos);
-	}
-	return (count);
-}
-
-
 bool is_allowed_start_comb(const char *str, int pos)
 {
 	if (str[pos] == '>' && str[pos + 1] == '|' && str[pos + 2])
@@ -160,7 +134,32 @@ bool is_allowed_start_comb(const char *str, int pos)
 	return (false);  //false means shouldnt run because has no comand after or invalid combination or spaces between specials.
 }
 
+bool	is_line_after_empty(const char *str, int pos)
+{
+	while (str[pos] && is_space(str[pos])) //advances spaces
+		pos++;
+	if	(str[pos] == '\0' || str[pos] == '\n')
+		return (true);
+	else if (is_special_char(str[pos]))//returns true when finding special even pipes
+		return (true);
+	return (false);
+}
 
+/*  counts the amount of consecutive specials <>| even with spaces between and returns the count
+the above function (has_valid_comand might be redundant due to this one)*/
+int count_consecutive_specials(const char *str, int pos)
+{
+	int count;
+
+	count = 0;
+	pos = ignore_spaces(str, pos);
+	while (is_special_char(str[pos]) && str[pos])
+	{	count++;
+		pos++;
+		pos = ignore_spaces(str, pos);
+	}
+	return (count);
+}
 
 /*returns position at the first non whitespace if there was any invalid starting vomb it should give error
 return on error = NOT VALID
@@ -189,62 +188,3 @@ int	find_specials_at_start(const char *str, int pos)
 		return (-1);
 	return (pos);
 }           //returns position at the first non whitespace
-
-// int special_parser_mid_to_end_check(const char *str, int pos)
-// {
-// 	/* needs to check:
-// 	- combination of specials mid and end of string
-// 	- has comand after
-// 	- has no comand after
-// 	- combination can have spaces between specials or not
-	
-// 	*/
-		
-// }
-
-
-
-
-void	parser_special(const char *str)
-{
-	int i;
-
-	i = 0;
-	if (pipe_is_first(str, 0) || check_invalid_specialcount(str, 0)) //only >| is valid at start if if has cmd following. this already checks for pipe first and more than
-	{
-		printf("\nINVALID CHECK\n");
-		return ;
-	}
-	i = find_specials_at_start(str, 0); // error if start comb invalid or no comand after first specials at the start.
-	if (i < 0)
-		return ;
-	/*
-	i is now at the first non whitespace that can be quotes or a special
-		should insert here a function that loops throught the string
-	
-	while (str[i])
-	{
-		i = special_parser_mid_to_end_check(str, i);
-		if (i < 0)
-		{
-			printf("\n INVALID midtoendparse \n");
-			return
-		}
-	}
-	*/
-
-	printf("\nPASSED\n");
-	return ;
-}
-
-
-bool	is_line_after_empty(const char *str, int pos)
-{
-	while (str[pos] && is_space(str[pos])) //advances spaces
-		pos++;
-	if	(str[pos] == '\0' || str[pos] == '\n')
-		return (true);
-	else if (is_special_char(str[pos]))//returns true when finding special even pipes
-		return (true);
-	return (false);
-}
