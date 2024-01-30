@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 14:08:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:14:35 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	join_to_line(char **total_line)
 	i = 0;
 	garbage = NULL;
 	line_read = NULL;
-	if (*total_line[(int) ft_strlen(*total_line) -1] == '|')
+	if ((*total_line)[(int) ft_strlen(*total_line) -1] == '|')
 	{
 		ft_parser(*total_line);
 		line_read = readline("> ");
