@@ -6,20 +6,23 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 16:39:38 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/30 10:51:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool is_valid_redirect(const char* str, int pos)      //checks the kind of redirect and if it has a valid comand after
+bool is_valid_redirect(const char* str, int pos)
 {
 	if (str[pos] == '>' || str[pos] == '<')
 	{
 		if(has_valid_cmd_after(str, pos + 1))
 			return (true);
 		else if (str[pos] == '>' && is_pipe(str, pos + 1))
+		{
+			if (has_valid_cmd_after(str, pos + 2))
 			return (true);
+		}
 	}	
 	else if ((str[pos] == '>' || str[pos] == '<') && str[pos] == str[pos + 1])
 	{
@@ -29,7 +32,7 @@ bool is_valid_redirect(const char* str, int pos)      //checks the kind of redir
 	return (false);
 }
 
-bool	is_the_or_sign(const char* str, int pos)  // true if it is a || sign even at the end
+bool	is_the_or_sign(const char* str, int pos)
 {
 	if(str[pos] == '|' && str[pos + 1] == '|')
 	{
@@ -40,7 +43,7 @@ bool	is_the_or_sign(const char* str, int pos)  // true if it is a || sign even a
 	return (false);
 }
 
-bool	is_pipe(const char* str, int pos) // true being a valid pipe even at the end
+bool	is_pipe(const char* str, int pos)
 {
 	if(str[pos] == '|' && str[pos + 1] != '|')
 	{
@@ -55,21 +58,21 @@ bool	check_signal_validity(const char *str, int pos)
 {
 	if (is_pipe(str, pos))
 	{
-		if (has_valid_cmd_after(str, pos)) // after the pipe this needs corrections in the pos and inside the redirect checker afer pipe 
-			return (true);
-			//checkat os redirects.... depois de pipe
+		pos = ignore_spaces(str, pos + 1);
+		if (is_special_char(str[pos]) && !is_valid_redirect(str, pos))
+			return (false);
+		return (true);
 	}
-	
 	else if (is_the_or_sign(str, pos))
 	{
-		//CHECKAR PIPE SEGUIDO DE REDIRECT EM FALtA e checkar || comandos que funcionam after or
-				
-		//ADICIONAR AS FUNTIONS ACIMA POR ORDEM
+		pos = ignore_spaces(str, pos + 2);
+		if (is_special_char(str[pos]) && !is_valid_redirect(str, pos))
+			return (false);
+		return (true);
 	}
-	else if(is_valid_redirect(str, pos)) //so checkar redirects
+	else if (is_valid_redirect(str, pos))
 		return (true);
 	return (false);
-		
 }
 
 /* Finding more than 3 consecutive specials | < > should give syntax error no matter the position or spaces  they must be outside quotes */
@@ -88,9 +91,9 @@ bool check_invalid_specialcount(const char *str, int pos)
 				count++;
 			if (count > 3)
 			{
-				if (count == 4 && !check_extras(str, pos - count))
+				if (count == 4 && !check_signal_validity(str, pos - count))
 				{
-					printf("\nINVALID COMB > 3#\n");	
+					printf("\nINVALID COMB #\n");	
 					return (true);
 				}
 			}
@@ -182,20 +185,22 @@ int	find_specials_at_start(const char *str, int pos)
 			return (-1);
 		}
 	}
+	else if (!check_invalid_specialcount(str, pos))
+		return (-1);
 	return (pos);
 }           //returns position at the first non whitespace
 
-int special_parser_mid_to_end_check(const char *str, int pos)
-{
-	/* needs to check:
-	- combination of specials mid and end of string
-	- has comand after
-	- has no comand after
-	- combination can have spaces between specials or not
+// int special_parser_mid_to_end_check(const char *str, int pos)
+// {
+// 	/* needs to check:
+// 	- combination of specials mid and end of string
+// 	- has comand after
+// 	- has no comand after
+// 	- combination can have spaces between specials or not
 	
-	*/
+// 	*/
 		
-}
+// }
 
 
 
@@ -210,10 +215,9 @@ void	parser_special(const char *str)
 		printf("\nINVALID CHECK\n");
 		return ;
 	}
-	i = find_specials_at_start(str, 0);  // error if start comb invalid or no comand after first specials at the start.
+	i = find_specials_at_start(str, 0); // error if start comb invalid or no comand after first specials at the start.
 	if (i < 0)
 		return ;
-
 	/*
 	i is now at the first non whitespace that can be quotes or a special
 		should insert here a function that loops throught the string
@@ -228,7 +232,7 @@ void	parser_special(const char *str)
 		}
 	}
 	*/
-	
+
 	printf("\nPASSED\n");
 	return ;
 }
