@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/29 12:34:39 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:16:00 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	is_space(char c)
 
 bool	is_special_char(char c)
 {
-	if (c == '|' || c == '>' || c == '<')
+	if (c == '|' || c == '>' || c == '<' ||  c == '&')
 		return (true);
 	return (false);
 }
