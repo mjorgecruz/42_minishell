@@ -6,14 +6,45 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:13:07 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/29 11:53:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:31:16 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-using in special parser at the moment
-*/
 #include "minishell.h"
+
+/*always returns the position
+on finding quotes ignores them and any spaces or other chars until it finds special chars outside the quotes
+returning their position
+*/
+
+int	ignore_in_quotes(const char *str, int pos)               // ok!!!!!
+{
+	while (str[pos] && !is_special_char(str[pos]))
+	{
+		if (str[pos] == D_QUOTE)
+		{
+			pos++;
+			while (str[pos] && str[pos] != D_QUOTE)
+				pos++;
+		}
+		else if (str[pos] == S_QUOTE)
+		{
+			pos++;
+			while (str[pos] && str[pos] != S_QUOTE)
+				pos++;
+		}
+		pos++;
+	}
+	return (pos);
+}
+
+//needs to receive the position of a space to start counting the spaces and returns pos of first non space
+int	ignore_spaces(const char *str, int pos)
+{
+	while(is_space(str[pos]))
+		pos++;
+	return(pos);
+}
 
 bool	is_space(char c)
 {
@@ -22,45 +53,13 @@ bool	is_space(char c)
 	return (false);
 }
 
-/* NEED TO ADD THIS TO THE HEADER LATER I DO IT>
-int	ignore_in_quotes(const char *str, int pos) // upon 
-finding special char stops and returns his position in the string.
-{
-	while (str[pos] && is_special_char(str[pos]) == false)
-	{
-		if (str[pos] == D_QUOTE)
-		{
-			pos++;
-			while (str[pos] && str[pos] != D_QUOTE) 
-				pos++;
-			return (pos + 1);
-		}
-		if (str[pos] == S_QUOTE)
-		{
-			pos++;
-			while (str[pos] && str[pos] != S_QUOTE)
-				pos++;
-			return (pos + 1);
-		}
-		pos++;
-	}
-	return(pos);
-}
-
 bool	is_special_char(char c)
 {
-	if (c == '|' || c == '>' || c == '<')
+	if (c == '|' || c == '>' || c == '<' ||  c == '&')
 		return (true);
 	return (false);
 }
 
-int	ignore_spaces(const char *str, int pos)
-{
-	while(is_space(str[pos]))
-		pos++;
-	return(pos);
-}
-*/
 char	*ft_strcpy(char *s)
 {
 	int		i;

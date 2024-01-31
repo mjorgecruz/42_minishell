@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 09:39:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:30:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include <linux/limits.h> /*path_max is here size of 4095*/
+# include "parser.h"
+# include <linux/limits.h>
+
+#define S_QUOTE 39
+#define D_QUOTE 34
 
 typedef enum e_builtin
 {
@@ -136,13 +140,7 @@ void		ft_parser(char *line_read);
 
 /*General function to do the first clean-up of the string received in the
 terminal. It gets rid of the unnecessary quotes*/
-void		parser_quotes(char *input);
-
-/* ************************************************************************** */
-/*                             PARSER_SPECIAL                                 */
-/* ************************************************************************** */
-
-void		parser_special(const char *str);
+void	parser_quotes(char *input);
 
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */
@@ -238,6 +236,12 @@ int			free_split(char **splitted);
 /* ************************************************************************** */
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
+
+int		ignore_in_quotes(const char *str, int pos);
+int		ignore_spaces(const char *str, int pos);
+bool	is_special_char(char c);
+bool	is_space(char c);
+
 
 char		*ft_strcpy(char *s);
 
