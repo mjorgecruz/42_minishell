@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 12:44:12 by masoares         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/01/31 12:47:27 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -111,19 +112,7 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char		*get_line(char *line_read);
-
-/*If line finishes with a pipe or a "(" was left unclosed a new command line 
-appears, until the commands are finished*/
-void	join_to_line(char **total_line);
-
-bool	end_pipe_and(char *total_line);
-
-bool	is_only_spaces(char *total_line);
-
-void	add_final_line(char **total_line, char *line_read);
-
-int		open_parenthesis(char *total_line);
+char	*get_line(char *line_read);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */
@@ -254,15 +243,6 @@ bool	is_space(char c);
 
 
 char	*ft_strcpy(char *s);
-=======
-char		*ft_strcpy(char *s);
-
-bool		is_space(char c);
-
-/*while finding spaces it will keep going and return the position of the first
-non space char or zero if it wass all spaces or empty*/
-int			iterate_spaces(const char *str, int pos);
->>>>>>> add command sorter (still not working)
 
 /*Creates a new node from the line read*/
 t_token		*init_struct_cmd(void);

@@ -5,25 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 12:45:00 by masoares         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/01/31 12:49:06 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #include "minishell.h"
-
-/*como vamos dar os exits disto? e frees?*/
-
-void	parser_special_first_module(const char *str)
-{
-	if(find_specials_outside_quotes(str) == false) //se nao encontrar specials da avanca direto
-	{
-		printf("\n\x1b[32m[OK] ->\x1b[0m DIDNT FIND ANY SPECIAL SHOULD JUMP VERIFICATION OF THE NEXT STEPS AND RUN\n");
-		return ;
-	}
-	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all in first module should be\n");
-	return ;
-}
 
 void	parser_special(const char *str)
 {
