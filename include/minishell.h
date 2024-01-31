@@ -3,26 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2024/01/31 11:02:51 by luis-ffe         ###   ########.fr       */
-=======
-/*   Updated: 2024/01/29 10:57:08 by masoares         ###   ########.fr       */
->>>>>>> reduced all functions back to limit
-=======
-/*   Updated: 2024/01/29 12:08:55 by masoares         ###   ########.fr       */
->>>>>>> add command sorter (still not working)
-=======
-/*   Updated: 2024/01/30 14:07:34 by masoares         ###   ########.fr       */
->>>>>>> Another one
-=======
-/*   Updated: 2024/01/30 16:37:11 by masoares         ###   ########.fr       */
->>>>>>> last commit of the day
+/*   Updated: 2024/01/31 12:44:12 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

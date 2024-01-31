@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 16:44:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 09:41:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,19 @@ void	join_to_line(char **total_line)
 	
 	i = 0;
 	garbage = NULL;
-	line_read = NULL;
+	line_read = "";
 	if (open_parenthesis(*total_line)< 0)
 		return(errors(1));
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
 		ft_parser(*total_line);
-		line_read = readline("> ");
-		garbage = *total_line;
-		*total_line = ft_strjoin(*total_line, line_read);
-		free(garbage);
-		while (end_pipe_and(line_read) || is_only_spaces(line_read) || open_parenthesis(*total_line) > 0)
+		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
-			garbage = *total_line;
-			*total_line = ft_strjoin(*total_line, line_read);
-			free(garbage);
-			ft_parser(*total_line);
+			if (is_only_spaces(line_read) == 0)
+				continue ;
+			add_space_line(total_line, line_read);
 		}
-		add_final_line(total_line, line_read);
 	}
 }
 
@@ -71,20 +65,25 @@ bool end_pipe_and(char *total_line)
 		return (false);
 }
 
-bool is_only_spaces(char *total_line)
+int is_only_spaces(char *total_line)
 {
 	int		i;
+	int		count;
 
+	count = 0;
 	i = ft_strlen(total_line) - 1;
 	while (total_line[i] == ' ' && i >= 0)
+	{
 		i--;
+		count++;
+	}
 	if (total_line[0] == ' ' || total_line[0] == '\0')
-		return (true);
+		return (count);
 	else
-		return (false);
+		return (-1);
 }
 
-void	add_final_line(char **total_line, char *line_read)
+void	add_space_line(char **total_line, char *line_read)
 {
 	char *garbage;
 	
