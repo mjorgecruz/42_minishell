@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 12:52:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:53:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,29 +117,45 @@ int		open_parenthesis(char *total_line)
 	return (count_open);
 }
 
-// char	*create_pc_name()
-// {
-// 	char	*pwd;
-// 	char	*name;
-// 	char	*hostname;
-// 	char	*vai_fora;
+char	*create_pc_name()
+{
+	char	*pwd;
+	char	*name;
+	char	*hostname;
+	char	*vai_fora;
 	
-// 	pwd = getcwd(NULL, 0);
+	pwd = get_end_path();
 	
-// 	hostname = getenv("HOSTNAME");
+	hostname = getenv("HOSTNAME");
 	
-// 	name = ft_strjoin("masoares&&luis-ffe@", pwd);
-// }
+	name = ft_strjoin("masoares&&luis-ffe@", pwd);
+}
 
-// void	function(char **pwd)
-// {
-// 	char	*garbage;
-// 	int		i;
-// 	int		count_bars;
+char	*get_end_path(void)
+{
+	char	*garbage;
+	char	*rest;
+	int		i;
+	int		count_bars;
 	
-// 	i = 0;
-// 	count_bars = 0;
-// 	garbage = *pwd;
+	garbage = getcwd(NULL, 0);
+	i = 0;
+	count_bars = 0;
 	
-// 	free(garbage);
-// }
+	
+	free(garbage);
+}
+
+char	*get_hostname(void)
+{
+	char	*hostname;
+	char	*garbage;
+	int		i;
+	
+	garbage = getenv("HOSTNAME");
+	while (hostname[i] != '.')
+		i++;
+	hostname = ft_calloc(i, sizeof(char));
+	i = 0;
+	while ()
+}
