@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:50:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 16:37:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 09:39:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	join_to_line(char **total_line);
 
 bool	end_pipe_and(char *total_line);
 
-bool	is_only_spaces(char *total_line);
+int		is_only_spaces(char *total_line);
 
-void	add_final_line(char **total_line, char *line_read);
+void	add_space_line(char **total_line, char *line_read);
 
 int		open_parenthesis(char *total_line);
 
