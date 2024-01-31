@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 14:53:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:34:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ char	*get_line(char *total_line)
 	char	*vai_fora;
 	char	*pwd;
 	
-	pwd = getcwd(NULL, 0);
+	pwd = create_pc_name();
 	vai_fora = NULL;
-	pwd = ft_strjoin("masoares&&luis-ffe@", pwd);
 	line_read = readline(pwd);
 	total_line = line_read;
 	join_to_line(&total_line);
@@ -117,18 +116,18 @@ int		open_parenthesis(char *total_line)
 	return (count_open);
 }
 
-char	*create_pc_name()
+char	*create_pc_name(void)
 {
 	char	*pwd;
 	char	*name;
-	char	*hostname;
 	char	*vai_fora;
 	
 	pwd = get_end_path();
-	
-	hostname = getenv("HOSTNAME");
-	
-	name = ft_strjoin("masoares&&luis-ffe@", pwd);
+	name = ft_strjoin("masoares&&luis-ffe@", "minishell ");
+	vai_fora = name;
+	name = ft_strjoin(name, pwd);
+	free(vai_fora);
+	return (name);
 }
 
 char	*get_end_path(void)
@@ -136,26 +135,23 @@ char	*get_end_path(void)
 	char	*garbage;
 	char	*rest;
 	int		i;
+	int		j;
 	int		count_bars;
 	
 	garbage = getcwd(NULL, 0);
 	i = 0;
+	j = 2;
 	count_bars = 0;
-	
-	
-	free(garbage);
-}
-
-char	*get_hostname(void)
-{
-	char	*hostname;
-	char	*garbage;
-	int		i;
-	
-	garbage = getenv("HOSTNAME");
-	while (hostname[i] != '.')
+	while (garbage[i] != '\0' && count_bars < 4)
+	{
+		if (garbage[i] == '/')
+			count_bars++;
 		i++;
-	hostname = ft_calloc(i, sizeof(char));
-	i = 0;
-	while ()
+	}
+	rest = ft_calloc(ft_strlen(garbage) - i + 1 + 2, sizeof(char));
+	rest[0] = '~';
+	rest[1] = '/';
+	while (garbage[i] != '\0')
+		rest[j++] = garbage[i++];
+	return (rest[i] = ' ', free(garbage), rest);
 }

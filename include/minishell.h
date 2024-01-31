@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 12:52:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:18:07 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ bool end_pipe_and(char *total_line);
 int is_only_spaces(char *total_line);
 void	add_space_line(char **total_line, char *line_read);
 int		open_parenthesis(char *total_line);
+char	*create_pc_name(void);
+char	*get_end_path(void);
+char	*get_hostname(void);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */
