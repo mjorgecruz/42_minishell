@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 09:41:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:20:57 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ char	*get_line(char *total_line)
 {
 	char	*line_read;
 	char	*vai_fora;
+	char	*pwd;
 	
+	pwd = getcwd(NULL, 0);
 	vai_fora = NULL;
-	line_read = readline("minishell > ");
+	pwd = ft_strjoin("masoares&&luis-ffe@", pwd);
+	line_read = readline(pwd);
 	total_line = line_read;
 	join_to_line(&total_line);
 	if (total_line && *total_line)
@@ -112,4 +115,31 @@ int		open_parenthesis(char *total_line)
 		i++;
 	}
 	return (count_open);
-}	
+}
+
+char	*create_pc_name()
+{
+	char	*pwd;
+	char	*name;
+	char	*hostname;
+	char	*vai_fora;
+	
+	pwd = getcwd(NULL, 0);
+	
+	hostname = getenv("HOSTNAME");
+	
+	name = ft_strjoin("masoares&&luis-ffe@", pwd);
+}
+
+void	function(char **pwd)
+{
+	char	*garbage;
+	int		i;
+	int		count_bars;
+	
+	i = 0;
+	count_bars = 0;
+	garbage = *pwd;
+	
+	free(garbage);
+}
