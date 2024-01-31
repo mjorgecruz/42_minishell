@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 16:21:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:59:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,11 @@ char		*get_end_path(void);
 received and its freeing. The output is a completely clean string to 
 be interpreted*/
 void		ft_parser(char *line_read);
+
+bool		text_in_parenthesis(char *line_read);
+
+bool		parenthesis_after_command(char *line_read);
+
 
 /* ************************************************************************** */
 /*                              PARSER_QUOTES                                 */
