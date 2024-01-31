@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 15:34:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:38:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,10 @@ char	*get_end_path(void)
 			count_bars++;
 		i++;
 	}
-	rest = ft_calloc(ft_strlen(garbage) - i + 1 + 2, sizeof(char));
+	rest = ft_calloc(ft_strlen(garbage) - i + 1 + 4, sizeof(char));
 	rest[0] = '~';
 	rest[1] = '/';
 	while (garbage[i] != '\0')
 		rest[j++] = garbage[i++];
-	return (rest[i] = ' ', free(garbage), rest);
+	return (rest[j] = '$', rest[j + 1] = ' ', rest[j + 2] = '\0', free(garbage), rest);
 }
