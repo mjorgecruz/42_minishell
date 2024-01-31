@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 15:18:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:21:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,21 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char	*get_line(char *line_read);
-void	join_to_line(char **total_line);
-bool end_pipe_and(char *total_line);
-int is_only_spaces(char *total_line);
-void	add_space_line(char **total_line, char *line_read);
-int		open_parenthesis(char *total_line);
-char	*create_pc_name(void);
-char	*get_end_path(void);
-char	*get_hostname(void);
+char		*get_line(char *line_read);
+
+void		join_to_line(char **total_line);
+
+bool		end_pipe_and(char *total_line);
+
+int			is_only_spaces(char *total_line);
+
+void		add_space_line(char **total_line, char *line_read);
+
+int			open_parenthesis(char *total_line);
+
+char		*create_pc_name(void);
+
+char		*get_end_path(void);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */

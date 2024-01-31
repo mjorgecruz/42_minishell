@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 13:03:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:29:57 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_id_flag_cmd(t_token *cmd_list)
 	while (cmd_list != NULL)
 	{
 		j = 0;
-		while (cmd_list->cmds->cmds == NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
+		while (cmd_list->cmds->cmds != NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
 		{
 			cmd_list->cmds[j].id 
 				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
@@ -45,25 +45,25 @@ void	set_id_flag_cmd(t_token *cmd_list)
 
 t_builtin	get_builtin_id(const char *str)
 {
-	if (!strcmp(str, "cd") || !strcmp(str, "\"cd\"") || !strcmp(str, "\'cd\'"))
+	if (!ft_strcmp(str, "cd") || !ft_strcmp(str, "\"cd\"") || !ft_strcmp(str, "\'cd\'"))
 		return (CD);
-	if (!strcmp(str, "export") || !strcmp(str, "\"export\"")
-		|| !strcmp(str, "\'export\'"))
+	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "\"export\"")
+		|| !ft_strcmp(str, "\'export\'"))
 		return (EXPORT);
-	if (!strcmp(str, "env") || !strcmp(str, "\"env\"")
-		|| !strcmp(str, "\'env\'"))
+	if (!ft_strcmp(str, "env") || !ft_strcmp(str, "\"env\"")
+		|| !ft_strcmp(str, "\'env\'"))
 		return (ENV);
-	if (!strcmp(str, "echo") || !strcmp(str, "\"echo\"")
-		|| !strcmp(str, "\'echo\'"))
+	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "\"echo\"")
+		|| !ft_strcmp(str, "\'echo\'"))
 		return (ECHOS);
-	if (!strcmp(str, "unset") || !strcmp(str, "\"unset\"")
-		|| !strcmp(str, "\'unset\'"))
+	if (!ft_strcmp(str, "unset") || !ft_strcmp(str, "\"unset\"")
+		|| !ft_strcmp(str, "\'unset\'"))
 		return (UNSET);
-	if (!strcmp(str, "exit") || !strcmp(str, "\"exit\"")
-		|| !strcmp(str, "\'exit\'"))
+	if (!ft_strcmp(str, "exit") || !ft_strcmp(str, "\"exit\"")
+		|| !ft_strcmp(str, "\'exit\'"))
 		return (EXIT);
-	if (!strcmp(str, "pwd") || !strcmp(str, "\"pwd\"")
-		|| !strcmp(str, "\'pwd\'"))
+	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "\"pwd\"")
+		|| !ft_strcmp(str, "\'pwd\'"))
 		return (PWD);
 	return (UNDEFINED);
 }

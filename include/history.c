@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 15:38:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:20:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*create_pc_name(void)
 	char	*vai_fora;
 	
 	pwd = get_end_path();
-	name = ft_strjoin("masoares&&luis-ffe@", "minishell ");
+	name = ft_strjoin("masoares&&luis-ffe@", "minishell:");
 	vai_fora = name;
 	name = ft_strjoin(name, pwd);
 	free(vai_fora);
