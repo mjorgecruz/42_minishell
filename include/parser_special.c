@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 12:55:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:19:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 /*como vamos dar os exits disto? e frees?*/
 
-void	parser_special_first_module(const char *str)
+int	parser_special_first_module(const char *str)
 {
-	if(find_specials_outside_quotes(str) == false) //se nao encontrar specials da avanca direto
+	if(find_specials_outside_quotes(str) == false) //se nao encontrar specials deve dar logo ok e avancar com o programa return needed
 	{
 		printf("\n\x1b[32m[OK] ->\x1b[0m DIDNT FIND ANY SPECIAL SHOULD JUMP VERIFICATION OF THE NEXT STEPS AND RUN\n");
-		return ;
+		return (1);
 	}
-	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all in first module should be\n");
-	return ;
+	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all in first module steps RTE = -1\n");
+	return (0);
 }
 
 void	parser_special(const char *str)
 {
-	parser_special_first_module(str);
+	if (parser_special_first_module(str))
+		return ;
+	//continua a correr 
 	return ;
 }
 
