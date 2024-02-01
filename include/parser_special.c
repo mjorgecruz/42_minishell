@@ -6,13 +6,31 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/01 11:19:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:04:40 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*como vamos dar os exits disto? e frees?*/
+/*return 1 if no trios of equals together found and 0  otherwise >>> ||| or <<< or &&&*/
+int find_equal_trio_nospaces(const char *str)
+{
+	int i;
+
+	i = -1;
+	while(str[++i])
+	{
+		i = ignore_in_quotes(str, i); //ignora inside quotes e espacos
+		if (is_special_char(str[i]))
+		{
+			if (find_same_trio(str, i))
+				return (1);
+			i++;
+				
+		}
+	}
+	return (0);
+}
 
 int	parser_special_first_module(const char *str)
 {
@@ -21,15 +39,21 @@ int	parser_special_first_module(const char *str)
 		printf("\n\x1b[32m[OK] ->\x1b[0m DIDNT FIND ANY SPECIAL SHOULD JUMP VERIFICATION OF THE NEXT STEPS AND RUN\n");
 		return (1);
 	}
-	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all in first module steps RTE = -1\n");
-	return (0);
+	else if (find_equal_trio_nospaces(str)) // 0 advances didnt find 3 consecutives else 1 stops
+	{
+		printf("\n\x1b[31m[OK] ->\x1b[0m TRIO FOUND STOP\x1b[0m\n");
+		return (0);
+	}
+	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all in first module steps RTE\n");
+	return (1);
 }
 
 void	parser_special(const char *str)
 {
-	if (parser_special_first_module(str))
+	if (parser_special_first_module(str)) //on return 1 continues on return 0 stops
+	{
 		return ;
-	//continua a correr 
+	}
 	return ;
 }
 
