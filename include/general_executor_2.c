@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 15:01:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/01 09:39:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,6 @@ void	pass_quotes(char *content, int *pos)
 
 	asp_place = *pos;
 	(*pos)++;
-	while (content[*pos] != content[asp_place])
+	while (content[*pos] != content[asp_place] && content[*pos] != '\0')
 		(*pos)++;
 }
