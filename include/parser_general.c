@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 17:46:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/01 10:24:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ bool	text_in_parenthesis(char *line_read)
 	j = 0;
 	while (line_read[i] != '\0')
 	{
+		pass_quotes(line_read, &i);
 		if (line_read[i] == ')')
 		{
 			j = i - 1;
@@ -56,6 +57,7 @@ bool	parenthesis_after_command(char *line_read)
 	j = 0;
 	while (line_read[i] != '\0')
 	{
+		pass_quotes(line_read, &i);
 		if (line_read[i] == '(')
 		{
 			if (i == 0)
@@ -84,6 +86,7 @@ bool	parenthesis_before_command(char *line_read)
 	j = 0;
 	while (line_read[i] != '\0')
 	{
+		pass_quotes(line_read, &i);
 		if (line_read[i] == ')')
 		{
 			j = i + 1;

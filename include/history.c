@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 16:20:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/01 10:19:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	join_to_line(char **total_line)
 	i = 0;
 	garbage = NULL;
 	line_read = "";
-	if (open_parenthesis(*total_line)< 0)
+	if (open_parenthesis(*total_line) < 0)
 		return(errors(1));
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
 		ft_parser(*total_line);
-		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
+		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) >= 0)
 		{
 			line_read = readline("> ");
 			if (is_only_spaces(line_read) == 0)
@@ -107,6 +107,7 @@ int		open_parenthesis(char *total_line)
 	count_open = 0;
 	while(total_line[i])
 	{
+		pass_quotes(total_line, &i);
 		if (total_line[i] == '(')
 			count_open++;
 		if (total_line[i] == ')')
