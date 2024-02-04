@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 17:42:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/03 10:02:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ void		pass_spaces(char *content, int *pos);
 /* ************************************************************************** */
 /*                              OUT_SETUP_GENERAL                             */
 /* ************************************************************************** */
-
 /*discovers what type of command we have as the first argument  and returns 
 the enum corresponding to it*/
 t_builtin	get_builtin_id(const char *str);
