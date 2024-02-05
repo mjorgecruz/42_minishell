@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/05 11:01:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 14:21:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ enum e_ERRORS
 	SYNTAX_D_AMP,
 	SYNTAX_AMP_PIPE,
 	SYNTAX_CMD,
+	SYNTAX_ASP,
+	SYNTAX_L_S_REDIR,
+	SYNTAX_R_S_REDIR,
+	SYNTAX_L_D_REDIR,
+	SYNTAX_R_D_REDIR,
 };
 
 /* ************************************************************************** */
@@ -123,7 +128,7 @@ Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
 char		*get_line(char *line_read);
 
-void		join_to_line(char **total_line);
+bool		join_to_line(char **total_line);
 
 bool		end_pipe_and(char *total_line);
 
@@ -144,7 +149,7 @@ char		*get_end_path(void);
 /* General parser function. It must guarantee all clean-up of the string 
 received and its freeing. The output is a completely clean string to 
 be interpreted*/
-void		ft_parser(char *line_read);
+bool		ft_parser(char *line_read);
 
 bool		text_in_parenthesis(char *line_read);
 
@@ -159,7 +164,7 @@ bool		parenthesis_before_command(char *line_read);
 
 /*General function to do the first clean-up of the string received in the
 terminal. It gets rid of the unnecessary quotes*/
-void		parser_quotes(char *input);
+bool		parser_quotes(char *input);
 
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */
@@ -223,7 +228,7 @@ t_builtin	get_builtin_id(const char *str);
 
 /*gest the previous function working and seting the structure id of the comand
 to the correct comand enum id flag*/
-void	set_id_flag_cmd(t_token *cmd_list);
+void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
 with it id flag*/
@@ -242,6 +247,8 @@ int			command_execve(char *cmd, char *paths);
 /*Handle of all errors*/
 void		errors(int error_code, char *cmd);
 
+void 		errors_2(int error_code, char *cmd);
+
 int			wrong_syntax(char **total_line);
 
 /* ************************************************************************** */
@@ -257,13 +264,12 @@ int			free_split(char **splitted);
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
 
-int		ignore_in_quotes(const char *str, int pos);
-int		ignore_spaces(const char *str, int pos);
-bool	is_special_char(char c);
-bool	is_space(char c);
+int			ignore_in_quotes(const char *str, int pos);
+int			ignore_spaces(const char *str, int pos);
+bool		is_special_char(char c);
+bool		is_space(char c);
 
-
-char	*ft_strcpy(char *s);
+char		*ft_strcpy(char *s);
 
 /*Creates a new node from the line read*/
 t_token		*init_struct_cmd(void);

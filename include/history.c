@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:22:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:07:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,28 @@ char	*get_line(char *total_line)
 	pwd = create_pc_name();
 	line_read = readline(pwd);
 	total_line = line_read;
-	join_to_line(&total_line);
+	if (!join_to_line(&total_line))
+	{
+		if (total_line && *total_line)
+			add_history(total_line);
+		free(total_line);
+	}
 	if (total_line && *total_line)
 		add_history(total_line);
 	return (total_line);
 }
 
-void	join_to_line(char **total_line)
+bool	join_to_line(char **total_line)
 {
 	char 	*line_read;
-	// int		error_code;
-	
-	// error_code = 0;
+
 	line_read = "";
-	// error_code = wrong_syntax(total_line);
-	// if (error_code != 0)
-	// 	return(errors(error_code));
 	if (open_parenthesis(*total_line) < 0)
-		return(errors(SYNTAX_CLOSE_P, NULL));
+		return(errors(SYNTAX_CLOSE_P, NULL), false);
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
-		// error_code = wrong_syntax(total_line);
-		// if (error_code != 0)
-		// 	return(errors(error_code));
-		ft_parser(*total_line);
+		if(!ft_parser(*total_line))
+			return (false);
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
@@ -54,6 +52,7 @@ void	join_to_line(char **total_line)
 			add_space_line(total_line, line_read);
 		}
 	}
+	return (true);
 }
 
 bool end_pipe_and(char *total_line)

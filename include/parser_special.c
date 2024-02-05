@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/01 15:39:32 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:17:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	parser_special_first_module(const char *str)
 	return (1);
 }
 
-void	parser_special(const char *str)
+bool	parser_special(const char *str)
 {
-	if (parser_special_first_module(str)) //on return 1 continues on return 0 stops
+	if (!parser_special_first_module(str)) //on return 1 continues on return 0 stops
 	{
-		return ;
+		return (false);
 	}
-	return ;
+	return (true);
 }
 
 /*

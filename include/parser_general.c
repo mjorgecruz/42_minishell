@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:05:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:44:12 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@ the terminal*/
 
 #include "minishell.h"
 
-void	ft_parser(char *line_read)
+bool	ft_parser(char *line_read)
 {
-	parser_quotes(line_read);
-	parser_special(line_read);
+	if (!parser_quotes(line_read))
+		return(false);
+	if (!parser_special(line_read))
+		return(false);
 	if (!text_in_parenthesis(line_read))
-		return (errors(SYNTAX_CLOSE_P, NULL));
+		return (errors(SYNTAX_CLOSE_P, NULL), false);
 	else if (parenthesis_after_command(line_read))
-		return (errors(SYNTAX_OPEN_P, NULL));
+		return (errors(SYNTAX_OPEN_P, NULL), false);
 	else if (parenthesis_before_command(line_read))
-		return (errors(SYNTAX_CMD, NULL));
-	return ;
+		return (errors(SYNTAX_CMD, NULL), false);
+	return (true);
 }
 
 bool	text_in_parenthesis(char *line_read)
@@ -64,12 +66,12 @@ bool	parenthesis_after_command(char *line_read)
 		if (line_read[i] == '(')
 		{
 			j = i - 1;
-			if (line_read[j] != '*')
-				return (true);
+			if (line_read[j] == '*')
+				return (false);
 			while (j >= 0 && line_read[j] == ' ')
 				j--;
 			if (line_read[j] != '|' && line_read[j] != '&'
-				&& line_read[j] != '<' && line_read[j] != '>' && j != -1)
+				&& line_read[j] != '<' && line_read[j] != '>' && j >= 0)
 				return (true);
 		}
  		i++;

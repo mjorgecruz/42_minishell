@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
+#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/01/31 11:27:02 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/02/05 17:06:39 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ LIBRARY =
 OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -g
+
+VALGRIND_FLAGS = valgrind --leak-check=full --suppressions=sup --track-origin=yes
 
 LIBFLAGS = -lreadline
 
@@ -62,3 +64,21 @@ clean:
 	@make clean -C ./include/libft/ -s
 
 re: fclean all
+
+leak_test: sup_file ./minishell
+
+sup_file: 
+	$(file > sup, $(SUP))
+	$(VALGRIND_FLAGS
+	dsfp)
+	
+define SUP_BODY
+{
+	
+	Memcheck:Leak
+	fun: malloc
+	...
+	fun:readline
+	...
+	fun: add_history
+}

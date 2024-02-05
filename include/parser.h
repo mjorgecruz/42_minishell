@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:00:04 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/02/01 15:46:48 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:18:35 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 
 int	parser_special_first_module(const char *str);
-void	parser_special(const char *str);
+bool	parser_special(const char *str);
 
 /* ************************************************************************** */
 /*                           PARSER_SPECIAL_UTILS                             */
