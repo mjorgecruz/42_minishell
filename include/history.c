@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/03 10:16:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:10:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 char	*get_line(char *total_line)
 {
 	char	*line_read;
-	char	*vai_fora;
 	char	*pwd;
 	
 	pwd = create_pc_name();
-	vai_fora = NULL;
 	line_read = readline(pwd);
 	total_line = line_read;
 	join_to_line(&total_line);
@@ -33,16 +31,20 @@ char	*get_line(char *total_line)
 void	join_to_line(char **total_line)
 {
 	char 	*line_read;
-	char	*garbage;
-	int		i;
+	// int		error_code;
 	
-	i = 0;
-	garbage = NULL;
+	// error_code = 0;
 	line_read = "";
+	// error_code = wrong_syntax(total_line);
+	// if (error_code != 0)
+	// 	return(errors(error_code));
 	if (open_parenthesis(*total_line) < 0)
-		return(errors(1));
+		return(errors(SYNTAX_CLOSE_P));
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
+		// error_code = wrong_syntax(total_line);
+		// if (error_code != 0)
+		// 	return(errors(error_code));
 		ft_parser(*total_line);
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
 		{

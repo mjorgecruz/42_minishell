@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/03 10:02:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:01:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,16 @@ typedef struct s_token
 /*Definition of error cases*/
 enum e_ERRORS
 {
-	ERRO	
+	SYNTAX_NEWLINE,
+	SYNTAX_CLOSE_P,
+	SYNTAX_OPEN_P,
+	SYNTAX_PIPE,
+	SYNTAX_D_PIPE,
+	SYNTAX_PIPE_AMP,
+	SYNTAX_AMP,
+	SYNTAX_D_AMP,
+	SYNTAX_AMP_PIPE,
+	SYNTAX_CMD,
 };
 
 /* ************************************************************************** */
@@ -231,7 +240,9 @@ int			command_execve(char *cmd, char *paths);
 /*                                    ERRORS                                  */
 /* ************************************************************************** */
 /*Handle of all errors*/
-void		errors(int error_code);
+void		errors(int error_code, char *cmd);
+
+int			wrong_syntax(char **total_line);
 
 /* ************************************************************************** */
 /*                                     FINEX                                  */

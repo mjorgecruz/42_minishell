@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/01 09:39:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:59:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ pipes. The strings must be divided in parts in an array of structs*/
 void	commands_separator(t_token *cmd_list)
 {
 	int		specials;
-	int		i;
-	int		pos;
 
-	i = 0;
-	pos = 0;
 	while (cmd_list != NULL)
 	{
 		if (cmd_list->content == NULL)
@@ -96,12 +92,10 @@ char	**mega_split(char *content, int *pos)
 {
 	char	**splitted;
 	int		i;
-	int		j;
 	int		count;
 	int		words;
 
 	i = 0;
-	j = 0;
 	count = 0;
 	words = ft_count_words(content, (*pos));
 	if (words == 0)
@@ -140,11 +134,9 @@ char	*write_to_splitted(int count, char *content, int *pos)
 
 int	ft_count_words(char *content, int pos)
 {
-	int		asp_place;
 	int		count;
 
 	count = 0;
-	asp_place = 0;
 	pass_spaces(content, &pos);
 	while (content[pos] && !ft_strchr("<>&", content[pos]))
 	{
@@ -246,7 +238,8 @@ void	pass_quotes(char *content, int *pos)
 	int		asp_place;
 
 	asp_place = *pos;
-	(*pos)++;
+	if (content[*pos] == 34 || content[*pos] == 39)
+		(*pos)++;
 	while (content[*pos] != content[asp_place] && content[*pos] != '\0')
 		(*pos)++;
 }

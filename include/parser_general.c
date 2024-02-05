@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/01 10:24:14 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:05:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	ft_parser(char *line_read)
 {
 	parser_quotes(line_read);
 	parser_special(line_read);
-	if (!text_in_parenthesis(line_read) || parenthesis_after_command(line_read)
-	|| parenthesis_before_command(line_read))
-		return (errors(1));
+	if (!text_in_parenthesis(line_read))
+		return (errors(SYNTAX_CLOSE_P, NULL));
+	else if (parenthesis_after_command(line_read))
+		return (errors(SYNTAX_OPEN_P, NULL));
+	else if (parenthesis_before_command(line_read))
+		return (errors(SYNTAX_CMD, NULL));
 	return ;
 }
 
@@ -60,17 +63,16 @@ bool	parenthesis_after_command(char *line_read)
 		pass_quotes(line_read, &i);
 		if (line_read[i] == '(')
 		{
-			if (i == 0)
-				j = 0;
-			else
-				j = i - 1;
+			j = i - 1;
+			if (line_read[j] != '*')
+				return (true);
 			while (j >= 0 && line_read[j] == ' ')
 				j--;
 			if (line_read[j] != '|' && line_read[j] != '&'
-				&& line_read[j] != '<' && line_read[j] != '>' && j != 0)
+				&& line_read[j] != '<' && line_read[j] != '>' && j != -1)
 				return (true);
 		}
-		i++;
+ 		i++;
 	}
 	if (line_read[i] == '\0')
 		return (false);
