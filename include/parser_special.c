@@ -29,6 +29,11 @@ int	parser_special_first_module(const char *str)
 		printf("\n\x1b[31m[KO] ->\x1b[0m >4 Sid w/wo spaces -> FOUND STOP\x1b[0m\n");
 		return (0);
 	}
+	// else if (is_invalid_start_sign(str))
+	// {
+	// 	printf("\n\x1b[31m[KO] ->\x1b[0m INVALID START\x1b[0m\n");
+	// 	return (0);
+	// }
 	printf("\n\x1b[32m[OK] ->\x1b[0m Passed all firstmodule\n");
 	return (1);
 }
@@ -41,11 +46,12 @@ void	parser_special(const char *str)
 	}
 	return ;
 }
+
 /*
 *****************************Funcionalidades ja implementadas*************************
 
  ok -> Nao encontrando sinais avanca direto.
- ok -> Iguais consecutivos da merda.
+ ok -> Iguais consecutivos dar merda.
  
 **************************************************************************************
  

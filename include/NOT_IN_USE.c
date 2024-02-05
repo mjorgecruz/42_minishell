@@ -48,7 +48,7 @@ bool check_invalid_specialcount(const char *str, int pos)
 
 bool	valid_start_signals(const char *str)
 {
-	if (pipe_is_first(str, 0)) //only >| is valid at start if if has cmd following. this already checks for pipe first and more than
+	if (pipe_is_first(str, 0))
 	{
 		printf("\nINVALID CHECK\n");
 		return (false);
@@ -108,16 +108,6 @@ bool	is_the_or_sign(const char* str, int pos)
 	return (false);
 }
 
-bool	is_pipe(const char* str, int pos)
-{
-	if(str[pos] == '|' && str[pos + 1] != '|')
-	{
-		pos = ignore_spaces(str, pos + 1);
-		if (str[pos] != '|')
-			return(true);
-	}
-	return (false);
-}
 
 /*OK*/
 bool pipe_is_first(const char *s, int pos)

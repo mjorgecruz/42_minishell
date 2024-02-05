@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+bool	is_pipe(const char* str, int pos)
+{
+	if (str[pos] == '|' && str[pos + 1] != '|')
+	{
+		pos = ignore_spaces(str, pos + 1);
+		if (str[pos] != '|')
+			return(true);
+	}
+	return (false);
+}
+
 bool find_specials_outside_quotes(const char *str)
 {
 	int i;
