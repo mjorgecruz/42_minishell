@@ -48,16 +48,19 @@ void	parser_special(const char *str)
 }
 
 /*
-*****************************Funcionalidades ja implementadas*************************
+***************************** Funcionalidades ja implementadas *************************
 
  ok -> Nao encontrando sinais avanca direto.
  ok -> Iguais consecutivos dar merda.
+ ok -> Tratado >> <<  > <   >|    todas as condicoes iniciais que funcionam com um simbolo ou dois
+ ok -> Da erro caso nao corresponda a uma combinacao de simbolos valida no inicio.
+ ok -> Tem de ter comando valido na frente que nao seja especial nem fim da string.
  
 **************************************************************************************
  
-primeiro se encontra pipe da erro   |
+
 check from end final pipe or && . || or | and no speciesl before
-se o primeiro for rediect > ou <    --- cheks next tem de ser igual ao anterior ou | if [i-1] == >
+
 erros de pipes | com espacos no meio 
 && SEMPRE JUNTOS
 	
