@@ -51,6 +51,5 @@ bool    check_combs_doubles(const char *str, int pos);
 bool    is_invalid_start_sign(const char *str);
 
 bool    pipe_is_first(const char *s, int pos);
-bool	is_pipe(const char* str, int pos);
 
 #endif
