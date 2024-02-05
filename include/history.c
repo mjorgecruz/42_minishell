@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:10:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:22:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	join_to_line(char **total_line)
 	// if (error_code != 0)
 	// 	return(errors(error_code));
 	if (open_parenthesis(*total_line) < 0)
-		return(errors(SYNTAX_CLOSE_P));
+		return(errors(SYNTAX_CLOSE_P, NULL));
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
 		// error_code = wrong_syntax(total_line);

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:02:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:24:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	errors(int error_code, char *cmd)
 		printf("minishell:syntax error near unexpected token `%s'", cmd);
 }
 
-int	wrong_syntax(char **total_line)
-{
+// int	wrong_syntax(char **total_line)
+// {
 	
-}
+// }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:35:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/23 15:29:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:23:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parser_quotes(char *input)
 			{
 				if (input[i] == 0)
 				{
-					errors(1);
+					errors(SYNTAX_AMP, NULL);
 					free(input);
 					return ;
 				}
