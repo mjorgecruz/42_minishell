@@ -79,12 +79,42 @@ bool check_invalid_specialcount(const char *str, int pos)
 			if (is_special_char(str[pos]))
 			{
 				count++;
+				pos++;
 				if (count > 4)
 					return (true);
-				
 			}
-			pos++;
+			else
+			{
+				pos = ignore_spaces(str, pos);
+				if (!is_special_char(str[pos]))
+					count = 0;
+				pos++;
+			}
 		}
 	}
 	return (false);
 }
+
+/*apagar se necessario era assim que estav antes a funcao anterior mas esta nao parava a encontrar comandos fora de aspas*/
+// bool check_invalid_specialcount(const char *str, int pos)
+// {
+// 	int count;
+// 	pos--;
+// 	while (str[++pos])
+// 	{
+// 		count = 0;
+// 		pos = ignore_in_quotes(str, pos);
+// 		while (str[pos] && str[pos] != 39 && str[pos] != 34)
+// 		{
+// 			if (is_special_char(str[pos]))
+// 			{
+// 				count++;
+// 				if (count > 4)
+// 					return (true);
+				
+// 			}
+// 			pos++;
+// 		}
+// 	}
+// 	return (false);
+// }

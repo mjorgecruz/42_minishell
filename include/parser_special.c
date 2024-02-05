@@ -40,19 +40,6 @@ int	parser_special_first_module(const char *str)
 	return (1);
 }
 
-/* primeiro modulo retornando true deve ser executado o modulo 2, que se tambem retornar verdadeiro significa que passou no parser
-*/
-
-bool	parser_special(const char *str)
-{
-	if (parser_special_first_module(str) == false) //on return true continues on false stops(error)
-		return false;
-	if (parser_special_module_two(str) == false) //on return true continues on false stops(error)
-		return false;
-	return true;
-}
-
-
 bool parser_special_module_two(const char *str)
 {
 	if (mid_parser_iteration(str))
@@ -64,6 +51,16 @@ bool parser_special_module_two(const char *str)
 	return false;
 }
 
+/* primeiro modulo retornando true deve ser executado o modulo 2, que se tambem retornar verdadeiro significa que passou no parser */
+bool	parser_special(const char *str)
+{
+	if (parser_special_first_module(str) == false) //on return true continues on false stops(error)
+		return false;
+	if (parser_special_module_two(str) == false) //on return true continues on false stops(error)
+		return false;
+	return true;
+}
+
 /*
 ***************************** Funcionalidades ja implementadas first module *************************
 
@@ -72,17 +69,15 @@ bool parser_special_module_two(const char *str)
  ok -> Tratado >> <<  > <   >|    todas as condicoes iniciais que funcionam com um simbolo ou dois
  ok -> Da erro caso nao corresponda a uma combinacao de simbolos valida no inicio.
  ok -> Tem de ter comando valido na frente que nao seja especial nem fim da string.
+ ok -> erros de pipes | com espacos no meio 
+ ok -> && SEMPRE JUNTOS
+	  //verificar todos conjuntos de 3
+	     	//   | 1st   >> > or << < or   
+	 		//   |>> |>>
+			// redirect combs >| >>  << > < 
  
 **************************************************************************************
  
+NOT YET / NOT SURE    ->     check from end final pipe or && . || or | and no speciesl before
 
-check from end final pipe or && . || or | and no speciesl before
-
-erros de pipes | com espacos no meio 
-&& SEMPRE JUNTOS
-	
-	//verificar todos conjuntos de 3
-		//   | 1st   >> > or << < or   
-		// salta 1st pipe e verifica noamente da mesma forma |>> |>>
-		// redirect combs >| >>  << > < 
 */
