@@ -1,6 +1,5 @@
+
 #include "minishell.h"
-
-
 
 bool	has_valid_cmd_after(const char *str, int pos)
 {
