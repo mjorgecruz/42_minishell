@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_special_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/01 15:45:15 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:23:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_pipe(const char* str, int pos)
+bool	is_pipe(char* str, int pos)
 {
 	if (str[pos] == '|' && str[pos + 1] != '|')
 	{
@@ -23,7 +23,7 @@ bool	is_pipe(const char* str, int pos)
 	return (false);
 }
 
-bool find_specials_outside_quotes(const char *str)
+bool find_specials_outside_quotes(char *str)
 {
 	int i;
 
@@ -37,17 +37,31 @@ bool find_specials_outside_quotes(const char *str)
 	return (false);
 }
 
-int	find_same_trio(const char *str, int pos)
+int	find_same_trio(char *str, int pos)
 {
 	if (str[pos] && str[pos + 1] && str[pos + 2])
 	{
 		if(str[pos] == str[pos + 1] && str[pos + 2] == str[pos])
+		{
+			if (str[pos] == '&')
+				errors(SYNTAX_D_AMP, NULL);
+			else if (str[pos] == '|')
+				errors(SYNTAX_D_PIPE, NULL);
+			else if (str[pos + 3] == str[pos] && str[pos + 3] == '<')
+				errors(SYNTAX_L_D_REDIR, NULL);
+			else if (str[pos + 3] == str[pos] && str[pos + 3] == '>')
+				errors(SYNTAX_R_D_REDIR, NULL);			
+			else if (str[pos] == '>')
+				errors(SYNTAX_R_S_REDIR, NULL);
+			else if (str[pos] == '<')
+				errors(SYNTAX_L_S_REDIR, NULL);
 			return (1);
+		}
 	}
 	return (0);
 }
 
-int find_equal_trio_nospaces(const char *str)
+int find_equal_trio_nospaces(char *str)
 {
 	int i;
 
@@ -60,17 +74,15 @@ int find_equal_trio_nospaces(const char *str)
 			if (find_same_trio(str, i))
 				return (1);
 			i++;
-				
 		}
 	}
 	return (0);
 }
 
-bool check_invalid_specialcount(const char *str, int pos)
+int check_invalid_specialcount(char *str, int pos)
 {
 	int count;
-	pos--;
-	while (str[++pos])
+	while (str[pos])
 	{
 		count = 0;
 		pos = ignore_in_quotes(str, pos);
@@ -81,7 +93,7 @@ bool check_invalid_specialcount(const char *str, int pos)
 				count++;
 				pos++;
 				if (count > 4)
-					return (true);
+					return (pos - 4);
 			}
 			else
 			{
@@ -92,7 +104,7 @@ bool check_invalid_specialcount(const char *str, int pos)
 			}
 		}
 	}
-	return (false);
+	return (-1);
 }
 
 /*apagar se necessario era assim que estav antes a funcao anterior mas esta nao parava a encontrar comandos fora de aspas*/

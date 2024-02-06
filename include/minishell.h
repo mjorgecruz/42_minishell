@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/05 14:21:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:16:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,9 @@ void		errors(int error_code, char *cmd);
 
 void 		errors_2(int error_code, char *cmd);
 
-int			wrong_syntax(char **total_line);
+int			wrong_syntax(char *total_line);
+
+int			error_definer(char *cmd);
 
 /* ************************************************************************** */
 /*                                     FINEX                                  */
@@ -264,8 +266,8 @@ int			free_split(char **splitted);
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
 
-int			ignore_in_quotes(const char *str, int pos);
-int			ignore_spaces(const char *str, int pos);
+int			ignore_in_quotes(char *str, int pos);
+int			ignore_spaces(char *str, int pos);
 bool		is_special_char(char c);
 bool		is_space(char c);
 

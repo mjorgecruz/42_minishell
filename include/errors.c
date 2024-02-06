@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 12:57:12 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:20:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,47 @@ void errors_2(int error_code, char *cmd)
 		printf("minishell:syntax error near unexpected token `>>'\n");
 }
 
-int	wrong_syntax(char **total_line)
+int error_definer(char *cmd)
 {
-	(void) total_line;
+	char	err[3];
+	int		i;
+	
+	i = 0;
+	while (i < 3)
+		err[i++] = '\0';
+	i = 0;
+	while (i < 2 && is_special_char(cmd[i]))
+	{
+		err[i] = cmd[i];
+		i++;
+	}
+	printf("minishell:syntax error near unexpected token `%s'\n", err);
+	return (1);
+}
+
+int	wrong_syntax(char *line)
+{
+	(void) line;
+	// int i;
+	// i = 0;
+	// if (line[i] == '&' && line[i + 1] != line[i])
+	// {
+	// 	errors(SYNTAX_AMP, NULL);
+	// 	return (0);
+	// }
+	// else if (line[i] == '|' && line[i + 1] != line[i])
+	// {
+	// 	if  ()
+	// }
+	// else if (line[i] == '>' && line[i + 1] != line[i])
+	// {
+	// 	if  ()
+	// }
+	// else if (line[i] == '<' && line[i + 1] != line[i])
+	// {
+	// 	if  ()
+	// }
+	// else
+		
 	return (0);
 }

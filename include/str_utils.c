@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/01/31 12:49:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:22:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ on finding quotes ignores them and any spaces or other chars until it finds spec
 returning their position
 */
 
-int	ignore_in_quotes(const char *str, int pos)               // ok!!!!!
+int	ignore_in_quotes(char *str, int pos)               // ok!!!!!
 {
 	while (str[pos] && !is_special_char(str[pos]))
 	{
@@ -40,7 +40,7 @@ int	ignore_in_quotes(const char *str, int pos)               // ok!!!!!
 }
 
 //needs to receive the position of a space to start counting the spaces and returns pos of first non space
-int	ignore_spaces(const char *str, int pos)
+int	ignore_spaces(char *str, int pos)
 {
 	while(is_space(str[pos]))
 		pos++;

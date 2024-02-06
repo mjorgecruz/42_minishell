@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 10:22:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:07:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	general_executer(char *input, char *paths)
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list);
 	tester_function(&cmd_list);
-	//clean_cmd_list(cmd_list, paths);
+	clean_cmd_list(cmd_list, paths);
 }
 
 t_token	*command_organizer(char *input)
