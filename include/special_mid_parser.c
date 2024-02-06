@@ -21,9 +21,7 @@ bool mid_parser_iteration(char *str)
 			i = check_uppersand(str, i);
 		}
 		if (i == -1)
-		{
 			return false;
-		}
 	}
 	return true;
 }
