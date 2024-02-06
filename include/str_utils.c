@@ -6,19 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 16:22:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:54:39 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-/*always returns the position
-on finding quotes ignores them and any spaces or other chars until it finds special chars outside the quotes
-returning their position
-*/
-
-int	ignore_in_quotes(char *str, int pos)               // ok!!!!!
+int	ignore_in_quotes(char *str, int pos)
 {
 	while (str[pos] && !is_special_char(str[pos]))
 	{
@@ -39,7 +33,6 @@ int	ignore_in_quotes(char *str, int pos)               // ok!!!!!
 	return (pos);
 }
 
-//needs to receive the position of a space to start counting the spaces and returns pos of first non space
 int	ignore_spaces(char *str, int pos)
 {
 	while(is_space(str[pos]))

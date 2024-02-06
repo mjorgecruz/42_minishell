@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 16:36:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:53:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,22 @@ int	parser_special_first_module(char *str)
 		return (0);
 	}
 	else if (is_invalid_start_sign(str))
-	{
-		
 		return (0);
-	}
 	return (1);
 }
 
-bool parser_special_module_two(char *str)
+bool	parser_special_module_two(char *str)
 {
 	if (mid_parser_iteration(str))
-	{
 		return (true);
-	}
 	return false;
 }
 
-/* primeiro modulo retornando true deve ser executado o modulo 2, que se tambem retornar verdadeiro significa que passou no parser */
 bool	parser_special(char *str)
 {
-	if (parser_special_first_module(str) == false) //on return true continues on false stops(error)
+	if (parser_special_first_module(str) == false)
 		return false;
-	if (parser_special_module_two(str) == false) //on return true continues on false stops(error)
+	if (parser_special_module_two(str) == false)
 		return false;
 	return true;
 }
