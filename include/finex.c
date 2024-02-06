@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/27 19:23:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:07:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ void	clean_cmd_list(t_token *cmd_list, char *paths)
 	while (cmd_list)
 	{
 		i = 0;
-		while (cmd_list->cmds[i].cmds)
+		if (cmd_list->cmds)
 		{
-			free_split(cmd_list->cmds[i].cmds);
-			i++;
+			while (cmd_list->cmds[i].cmds)
+			{
+				free_split(cmd_list->cmds[i].cmds);
+				i++;
+			}
 		}
 		free(cmd_list->cmds);
 		free(cmd_list->content);

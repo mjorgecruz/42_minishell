@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 16:29:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:02:01 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_id_flag_cmd(t_token *cmd_list)
 	while (cmd_list != NULL)
 	{
 		j = 0;
-		while (cmd_list->cmds->cmds != NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
+		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
 		{
 			cmd_list->cmds[j].id 
 				= get_builtin_id(cmd_list->cmds[j].cmds[0]);

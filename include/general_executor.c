@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/06 15:07:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:05:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,14 +142,17 @@ int	tester_function(t_token **list)
 			while (i < specials_counter(trav) + 1)
 			{
 				j = 0;
-				printf("id: %d\n", trav->cmds[i].id);
-				while (trav->cmds[i].cmds[j])
+				if (trav->cmds)
 				{
-					printf("cmd( %d , %d ) -> ", i, j);
-					printf("%s \n", trav->cmds[i].cmds[j]);
-					j++;
+					printf("id: %d\n", trav->cmds[i].id);
+					while (trav->cmds[i].cmds[j])
+					{
+						printf("cmd( %d , %d ) -> ", i, j);
+						printf("%s \n", trav->cmds[i].cmds[j]);
+						j++;
+					}
+					printf("cmd_redir: %d\n", trav->cmds[i].type);
 				}
-				printf("cmd_redir: %d\n", trav->cmds[i].type);
 				i++;
 			}
 		}

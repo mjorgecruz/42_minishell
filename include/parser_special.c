@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 16:53:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:47:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ bool	parser_special_module_two(char *str)
 bool	parser_special(char *str)
 {
 	if (parser_special_first_module(str) == false)
-		return false;
+		return (false);
 	if (parser_special_module_two(str) == false)
-		return false;
+		return (false);
 	return true;
 }
+
 
 /*
 ***************************** Funcionalidades ja implementadas first module *************************
