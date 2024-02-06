@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:00:04 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/02/05 12:18:35 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/06 09:07:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 
 int	parser_special_first_module(const char *str);
+
+bool parser_special_module_two(const char *str);
+
 bool	parser_special(const char *str);
 
 /* ************************************************************************** */
@@ -51,6 +54,16 @@ bool    check_combs_doubles(const char *str, int pos);
 bool    is_invalid_start_sign(const char *str);
 
 bool    pipe_is_first(const char *s, int pos);
-bool	is_pipe(const char* str, int pos);
+
+
+
+/* ************************************************************************** */
+/*                              SPECIAL_MID_PARSER                            */
+/* ************************************************************************** */
+
+int check_pipes(const char *str, int pos);
+int check_redirs(const char *str, int pos);
+int check_uppersand(const char *str, int pos);
+bool mid_parser_iteration(const char *str);
 
 #endif
