@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/05 17:06:39 by masoares         ###   ########.fr        #
+#    Updated: 2024/02/06 09:05:01 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,18 +67,18 @@ re: fclean all
 
 leak_test: sup_file ./minishell
 
-sup_file: 
-	$(file > sup, $(SUP))
-	$(VALGRIND_FLAGS
-	dsfp)
+# sup_file: 
+# 	$(file > sup, $(SUP))
+# 	$(VALGRIND_FLAGS
+# 	dsfp)
 	
-define SUP_BODY
-{
+# define SUP_BODY
+# {
 	
-	Memcheck:Leak
-	fun: malloc
-	...
-	fun:readline
-	...
-	fun: add_history
-}
+# 	Memcheck:Leak
+# 	fun: malloc
+# 	...
+# 	fun:readline
+# 	...
+# 	fun: add_history
+# }
