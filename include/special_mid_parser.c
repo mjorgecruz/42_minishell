@@ -26,7 +26,7 @@ bool mid_parser_iteration(char *str)
 	return true;
 }
 
-int check_pipes(char *str, int pos) //can have | or || se tiver pipe depois destes da erro e se tiver & depois de pipe ou depois de || da erro.
+int check_pipes(char *str, int pos)
 {
 	if (str[pos] != '|')
 		return (pos);
@@ -35,6 +35,14 @@ int check_pipes(char *str, int pos) //can have | or || se tiver pipe depois dest
 		pos = ignore_spaces(str, pos + 2);
 		if (str[pos] == '|' || str[pos] == '&')
 			return (-1);
+		else if (str[pos] == '<')
+		{
+			
+		}
+		else if (str[pos] == '>')
+		{
+			
+		}
 		return (pos);
 	}
 	else if (!is_special_char(str[pos + 1]))
