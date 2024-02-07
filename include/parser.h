@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:00:04 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/02/06 18:49:53 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/07 09:48:26 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int find_equal_trio_nospaces(char *str);
 bool	has_valid_cmd_after(char *str, int pos);
 bool    check_combs_doubles(char *str, int pos);
 bool    is_invalid_start_sign(char *str);
-
 bool    pipe_is_first(char *s, int *pos);
+void	check_next_cmd(char *str);
 
 
 
