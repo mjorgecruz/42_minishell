@@ -14,14 +14,13 @@
 
 void	commands_sorter(t_token *cmd_list)
 {
-
 	set_id_flag_cmd(cmd_list);
-	// while (cmd_list[++i] != NULL)
-	// {
-	// 	j = -1;
-	// 	while (cmd_list[i]->cmds[++j].cmds != NULL)
-	// 		exec_correct_builtin(&(cmd_list[i]->cmds[j]));
-	// }
+	// verifitions of pipens olys lasts echos soulds bes echoeds
+	while (cmd_list != NULL)
+	{
+		exec_correct_builtin(cmd_list->cmds);
+		cmd_list = cmd_list->next;
+	}
 	return ;
 }
 
@@ -68,34 +67,33 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-
-/*
 void	exec_correct_builtin(t_command *cmds)
 {
  	t_builtin id;
 
 	id = cmds->id;
-	cmds->cmds(assim para aceder ao array de strings 
-		que e este comando) usar para enviar parta as functions
-	if (id == UNDEFINED)
+	if (id == ECHOS)
+	{
+		command_echo(cmds->cmds);
+		return ;
+	}
+	// if (id == UNDEFINED)
 		//command_execve();
-	else if (id == CD)
-		//command_cd();
-	else if (id == ECHOS)
-		//command_echo();
-	else if (id == PWD)
-		//command_pwd();
-	else if (id == EXIT)
-		//command_exit();
-	else if (id == EXPORT)
-		//command_export();
-	else if (id == ENV)
-		//command_env();
-	else if (id == UNSET)
-		//command_unset();
+	// if (id == CD)
+	// 	//command_echo();
+	// else if (id == PWD)
+	// 	//command_pwd();
+	// else if (id == EXIT)
+	// 	//command_exit();
+	// else if (id == EXPORT)
+	// 	//command_export();
+	// else if (id == ENV)
+	// 	//command_env();
+	// else if (id == UNSET)
+	// 	//command_unset();
 	return ;
 }
-	*/
+
 
 
 int	command_execve(char *line, char *paths)

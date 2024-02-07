@@ -33,6 +33,7 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 # include "parser.h"
+# include "builtins.h"
 # include <linux/limits.h>
 
 #define S_QUOTE 39
@@ -227,7 +228,7 @@ void	set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
 with it id flag*/
-void		exec_correct_builtin(t_command *cmds);
+void	exec_correct_builtin(t_command *cmds);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
@@ -270,17 +271,5 @@ t_token		*init_struct_cmd(void);
 
 /*adds the node created to the linked list of tokens*/
 void		add_token(t_token **tokens, t_token *new);
-
-/* ************************************************************************** */
-/*                                    BUILTINS                                */
-/* ************************************************************************** */
-
-int			comand_pwd(void);
-// int	command_echo(t_token **cmd_list);
-// int	command_cd(t_token **cmd_list);
-// int	command_export(t_token **cmd_list);
-// int	command_unset(t_token **cmd_list);
-// int	command_env(t_token **cmd_list);
-// int	command_exit(t_token **cmd_list);
 
 #endif

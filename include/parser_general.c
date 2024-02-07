@@ -18,7 +18,7 @@ the terminal*/
 void	ft_parser(char *line_read)
 {
 	parser_quotes(line_read);
-	parser_special(line_read);
+	//parser_special(line_read);
 	if (!text_in_parenthesis(line_read))
 		return (errors(SYNTAX_CLOSE_P, NULL));
 	else if (parenthesis_after_command(line_read))
