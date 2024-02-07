@@ -24,7 +24,7 @@ int	command_echo(char **cmds)
 		n_flag = true;
 		++i;
 	}
-	
+
     while (cmds[++i] != NULL)
         printf("%s ", cmds[i]);
     if (!n_flag)
@@ -32,17 +32,15 @@ int	command_echo(char **cmds)
 	return (i);
 }
 
-/*
-// int	comand_pwd(void)
-// {
-// 	char	cwd[PATH_MAX];
+int	command_pwd(void)
+{
+	static char	cwd[PATH_MAX];
 
-// 	if (getcwd(cwd, PATH_MAX))
-// 	{
-// 		ft_putendl_fd(cwd, 1);
-// 		return (EXIT_SUCCESS);
-// 	}
-// 	else
-// 		return (EXIT_FAILURE);
-// }
-*/
+	if (getcwd(cwd, PATH_MAX))
+	{
+		ft_putendl_fd(cwd, 1);
+		return (EXIT_SUCCESS);
+	}
+	else
+		return (EXIT_FAILURE);
+}

@@ -77,12 +77,15 @@ void	exec_correct_builtin(t_command *cmds)
 		command_echo(cmds->cmds);
 		return ;
 	}
+	else if (id == PWD)
+	{
+		command_pwd();
+		return ;
+	}
 	// if (id == UNDEFINED)
 		//command_execve();
 	// if (id == CD)
 	// 	//command_echo();
-	// else if (id == PWD)
-	// 	//command_pwd();
 	// else if (id == EXIT)
 	// 	//command_exit();
 	// else if (id == EXPORT)
