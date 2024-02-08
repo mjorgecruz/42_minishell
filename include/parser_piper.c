@@ -1,10 +1,10 @@
 
 #include "minishell.h"
 
-bool	has_valid_cmd_after(char *str, int pos)
+bool	has_valid_cmd_after(char *str, int *pos)
 {
-	pos = ignore_spaces(str, pos);
-	if (is_special_char(str[pos]) || !str[pos])
+	*pos = ignore_spaces(str, *pos);
+	if (is_special_char(str[*pos]) || !str[*pos])
 		return (false);
 	else
 		return (true);
@@ -14,24 +14,24 @@ bool check_combs_doubles(char *str, int pos)
 {
 	if (str[pos] == '>' && str[pos + 1] == '>')
 	{
-		if (has_valid_cmd_after(str, pos + 2))
+		if (has_valid_cmd_after(str, &pos + 2))
 			return (true);
 		return(error_definer(&str[pos + 2]), false);
 	}
 	else if (str[pos] == '<' && str[pos + 1] == '<')
 	{
-		if (has_valid_cmd_after(str, pos + 2))
+		if (has_valid_cmd_after(str, &pos + 2))
 			return (true);
 		check_next_cmd(&str[pos + 1]);
 		return(error_definer(&str[pos + 2]), false);
 	}
 	else if (str[pos] == '>' && str[pos + 1] == '|')
 	{
-		if (has_valid_cmd_after(str, pos + 2))
+		if (has_valid_cmd_after(str, &pos + 2))
 			return (true);
 		return(errors(SYNTAX_NEWLINE, NULL), false);
 	}
-	else if ((str[pos] == '<' || str[pos] == '>') && has_valid_cmd_after(str, pos + 1))
+	else if ((str[pos] == '<' || str[pos] == '>') && has_valid_cmd_after(str, &pos + 1))
 		return (true);
 	check_next_cmd(&str[pos + 1]);
 	return (false);

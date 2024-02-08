@@ -1,0 +1,4 @@
+ls <|> (erro |)
+ls >| (erro newline)
+sada <> adasd (tudo ok)
+sada <>|
