@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/08 12:28:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:31:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ int check_redirs(char *str, int pos)
 	{
 		if (str[pos] == str[pos + 1])
 		{
-			pos = pos + 2;
-			if (has_valid_cmd_after(str, &pos))
+			pos = ignore_spaces(str, pos + 2);
+			if (has_valid_cmd_after(str, pos))
 				return (pos);
-			pos = ignore_spaces(str, pos);
 			return (error_definer(&str[pos]), -1);
 		}
 		else if (!is_special_char(str[pos + 1]))
 		{
-			if (has_valid_cmd_after(str, &pos))
+			pos = ignore_spaces(str, pos + 2);
+			if (has_valid_cmd_after(str, pos))
 				return (pos);
-			pos = ignore_spaces(str, pos);
 			return (error_definer(&str[pos]), -1);
 		}
 		else if (str[pos] == '>' && is_special_char(str[pos + 1]))
@@ -117,7 +116,7 @@ int check_redirs(char *str, int pos)
 			else if (str[pos + 1] == '&' && str[pos + 2] == '|')
 				return (errors(SYNTAX_PIPE, NULL), -1);
 			pos = ignore_spaces(str, pos + 2);
-			if (!has_valid_cmd_after(str, &pos + 2))
+			if (!has_valid_cmd_after(str, pos + 2))
 				return (error_definer(&str[pos + 2]), -1);
 						if (str[pos] == '<')
 			{

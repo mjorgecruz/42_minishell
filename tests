@@ -1,5 +1,9 @@
-V	ls <|> (erro |)
-V	ls >| (erro newline)
+	 &
+	 |
+	 >
+	 <
+	ls <|> (erro |)
+	ls >| (erro newline)
 	sada <> adasd (tudo ok)
 	sada <>| (erro token |)
 	<& (erro &)
@@ -7,3 +11,6 @@ V	ls >| (erro newline)
 	le >  < (erro token <)
 	ls ><   | (erro token <)
 	ls >   <| (erro  token <)
+	>| sadda (tudo ok)
+	asdas || >> sDS
+	 < &
