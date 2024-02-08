@@ -1,4 +1,9 @@
-ls <|> (erro |)
-ls >| (erro newline)
-sada <> adasd (tudo ok)
-sada <>|
+V	ls <|> (erro |)
+V	ls >| (erro newline)
+	sada <> adasd (tudo ok)
+	sada <>| (erro token |)
+	<& (erro &)
+	ls ><| (erro token <)
+	le >  < (erro token <)
+	ls ><   | (erro token <)
+	ls >   <| (erro  token <)

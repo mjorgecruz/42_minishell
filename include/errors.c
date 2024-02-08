@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/07 09:54:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:23:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,25 @@ int error_definer(char *cmd)
 {
 	char	err[3];
 	int		i;
+	int 	j;
 	
 	i = 0;
 	while (i < 3)
 		err[i++] = '\0';
 	i = 0;
-	i = ignore_spaces(cmd, i);
-	if (cmd[i] == '\0')
+	j = 0;
+	j = ignore_spaces(cmd, j);
+	if (cmd[j] == '\0')
 		return (errors(SYNTAX_NEWLINE, NULL), 1);
-	while (i < 2 && is_special_char(cmd[i]))
+	if (j > 0 && cmd[j] == '|')
+		return(errors(SYNTAX_PIPE, NULL), 1);
+	if (j == 0 && cmd[j] == '>' && cmd[j + 1] == '|')
+		j = ignore_spaces(cmd, j + 2);
+	while (i < 2 && is_special_char(cmd[j]))
 	{
-		err[i] = cmd[i];
+		err[i] = cmd[j];
 		i++;
+		j++;
 	}
 	return (printf("minishell:syntax error near unexpected token `%s'\n", err), 1);
 }
