@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/08 22:35:10 by masoares         ###   ########.fr        #
+#    Updated: 2024/02/08 22:47:24 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --lo
 INCDIR:=include
 ODIR:=obj
 
-SRC = minishell.c history.c parser_general.c \
+SRC := minishell.c history.c parser_general.c \
 		parser_quotes.c parser_special.c \
 		out_setup_general.c finex.c errors.c \
 		str_utils.c general_executor.c general_executor_2.c \
@@ -35,7 +35,7 @@ SRC = minishell.c history.c parser_general.c \
 
 
 LIBRARY = 
-OBJ := $(patsubst %c, $(ODIR)/%.o,$(SRC))
+OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 
 LIBFLAGS = -lreadline
 
@@ -54,6 +54,9 @@ $(NAME): $(OBJ) $(LIBFT)
 $(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
+$(ODIR):
+	@mkdir -p $@
+
 $(LIBFT):
 	@make -C ./include/libft/ -s
 
@@ -63,26 +66,42 @@ fclean: clean
 	@echo "${RED}minishell is no more...${END}"
 
 clean:
-	@$(RM) $(ODIR)/$(OBJ)
+	@$(RM) $(OBJ)
+	@$(RM) sup
+	@$(RM) leaks.log
 	@make clean -C ./include/libft/ -s
 
 re: fclean all
 
-leak_test: sup_file all
-	echo "${BOLD_YELLOW}...as LEAK CHECKER ON${END}"
-
+suppress: sup_file all
+	@echo "${BOLD_YELLOW}LEAK CHECKER ON${END}"
+	
+leaks: ./minishell
+	$(VGFLAGS) ./minishell
 
 sup_file: 
 	$(file > sup, $(SUP_BODY))
-	echo "${BOLD_YELLOW}Suppressing readline and add_history leaks${END}"
+	@echo "${BOLD_YELLOW}Suppressing readline and add_history leaks${END}"
 	
 define SUP_BODY
 {
-	Memcheck:Leak
-	fun: malloc
-	...
-	fun:readline
-	...
-	fun: add_history
+   name
+   Memcheck:Leak
+   fun:*alloc
+   ...
+   obj:*/libreadline.so.*
+   ...
+}
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
 }
 endef
