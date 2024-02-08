@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/06 09:05:01 by masoares         ###   ########.fr        #
+#    Updated: 2024/02/08 22:35:10 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,25 +15,27 @@ GREEN = \033[32m
 YELLOW = \033[33m
 END_COLOR = \033[0m
 BOLD_GREEN = \e[1;32m
+BOLD_YELLOW = \e[1;33m
 END = \e[0m
-
-
 
 NAME = minishell
 
-SRC = ./include/minishell.c ./include/history.c ./include/parser_general.c \
-		./include/parser_quotes.c ./include/parser_special.c \
-		./include/out_setup_general.c ./include/finex.c ./include/errors.c \
-		./include/str_utils.c ./include/general_executor.c ./include/general_executor_2.c \
-		./include/parser_special_utils.c ./include/parser_piper.c ./include/special_mid_parser.c \
+CFLAGS = -Wall -Werror -Wextra -g
+
+VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log 
+
+INCDIR:=include
+ODIR:=obj
+
+SRC = minishell.c history.c parser_general.c \
+		parser_quotes.c parser_special.c \
+		out_setup_general.c finex.c errors.c \
+		str_utils.c general_executor.c general_executor_2.c \
+		parser_special_utils.c parser_piper.c special_mid_parser.c \
 
 
 LIBRARY = 
-OBJ = $(SRC:.c=.o)
-
-CFLAGS = -Wall -Werror -Wextra -g
-
-VALGRIND_FLAGS = valgrind --leak-check=full --suppressions=sup --track-origin=yes
+OBJ := $(patsubst %c, $(ODIR)/%.o,$(SRC))
 
 LIBFLAGS = -lreadline
 
@@ -49,7 +51,7 @@ $(NAME): $(OBJ) $(LIBFT)
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
 		@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
-%.o: %.c
+$(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT):
@@ -61,25 +63,26 @@ fclean: clean
 	@echo "${RED}minishell is no more...${END}"
 
 clean:
-	@$(RM) $(OBJ)
+	@$(RM) $(ODIR)/$(OBJ)
 	@make clean -C ./include/libft/ -s
 
 re: fclean all
 
-leak_test: sup_file ./minishell
+leak_test: sup_file all
+	echo "${BOLD_YELLOW}...as LEAK CHECKER ON${END}"
 
-# sup_file: 
-# 	$(file > sup, $(SUP))
-# 	$(VALGRIND_FLAGS
-# 	dsfp)
+
+sup_file: 
+	$(file > sup, $(SUP_BODY))
+	echo "${BOLD_YELLOW}Suppressing readline and add_history leaks${END}"
 	
-# define SUP_BODY
-# {
-	
-# 	Memcheck:Leak
-# 	fun: malloc
-# 	...
-# 	fun:readline
-# 	...
-# 	fun: add_history
-# }
+define SUP_BODY
+{
+	Memcheck:Leak
+	fun: malloc
+	...
+	fun:readline
+	...
+	fun: add_history
+}
+endef
