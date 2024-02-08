@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 13:07:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/07 11:00:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ char	*get_line(char *total_line)
 	
 	pwd = create_pc_name();
 	line_read = readline(pwd);
+	if (!line_read)
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
 	total_line = line_read;
 	if (!join_to_line(&total_line))
 	{
@@ -47,6 +52,8 @@ bool	join_to_line(char **total_line)
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
+			if (!line_read)
+				return (false);
 			if (is_only_spaces(line_read) == 0)
 				continue ;
 			add_space_line(total_line, line_read);

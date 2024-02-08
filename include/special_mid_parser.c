@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool mid_parser_iteration(char *str)
+bool mid_parser_iteration(char *str) //review mid parser for cases with 3
 {
 	int i;
 	
@@ -26,7 +26,7 @@ bool mid_parser_iteration(char *str)
 	return true;
 }
 
-int check_pipes(char *str, int pos)
+int check_pipes(char *str, int pos) //rewrite this function to work out all cases
 {
 	if (str[pos] != '|')
 		return (pos);
@@ -35,19 +35,16 @@ int check_pipes(char *str, int pos)
 		pos = ignore_spaces(str, pos + 2);
 		if (str[pos] == '|' || str[pos] == '&')
 			return (-1);
-		else if (str[pos] == '<')
-		{
-			
-		}
-		else if (str[pos] == '>')
-		{
-			
-		}
-		return (pos);
 	}
 	else if (!is_special_char(str[pos + 1]))
 	{
 		pos = ignore_spaces(str, pos + 1);
+		if (str[pos] == '|' || str[pos] == '&')
+			return (-1);
+	}
+	else if (is_special_char(str[pos + 1]))
+	{
+		pos = ignore_spaces(str, pos + 2);
 		if (str[pos] == '|' || str[pos] == '&')
 			return (-1);
 	}
@@ -58,17 +55,29 @@ int check_redirs(char *str, int pos)
 {
 	if (str[pos] == '>' || str[pos] == '<')
 	{
-		if (str[pos] == str[pos + 1])                   // >> ou << com comando valido na frente
+		if (str[pos] == str[pos + 1])
 		{
 			if (has_valid_cmd_after(str, pos + 2))
 				return (pos + 2); 
 			return (-1);
 		}
-		else if (!is_special_char(str[pos + 1]))        // > ou < com comando valido na frente
+		else if (!is_special_char(str[pos + 1]))
 		{
 			if (has_valid_cmd_after(str, pos + 1))
 				return (pos + 1);
 			return (-1);
+		}
+		else if (str[pos] == '>' && is_special_char(str[pos + 1]))
+		{
+			if (str[pos + 1] == '|' || str[pos + 1] == '&')
+				return (error_definer(&str[pos + 1]), -1);
+			pos = ignore_spaces(str, pos + 2);
+		}
+		else if (str[pos] == '<' && is_special_char(str[pos + 1]))
+		{
+			if (str[pos + 1] == '|' || str[pos + 1] == '&')
+				return (error_definer(&str[pos + 1]), -1);
+			pos = ignore_spaces(str, pos + 2);
 		}
 	}
 	return (pos);
