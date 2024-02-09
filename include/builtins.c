@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-int	command_echo(char **cmds)
-{
-    int i;
-	bool n_flag;
-	
-	i = 0;
-	n_flag = false;
-	if (!ft_strcmp(cmds[1], "-n"))
-	{
-		n_flag = true;
-		++i;
-	}
-
-    while (cmds[++i] != NULL)
-        printf("%s ", cmds[i]);
-    if (!n_flag)
-		printf("\n");
-	return (i);
-}
-
 int	command_pwd(void)
 {
 	static char	cwd[PATH_MAX];

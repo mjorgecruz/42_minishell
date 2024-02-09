@@ -26,7 +26,7 @@ SRC = ./include/minishell.c ./include/history.c ./include/parser_general.c \
 		./include/out_setup_general.c ./include/finex.c ./include/errors.c \
 		./include/str_utils.c ./include/general_executor.c ./include/general_executor_2.c \
 		./include/parser_special_utils.c ./include/parser_piper.c ./include/special_mid_parser.c \
-		./include/builtins.c \
+		./include/builtins.c ./include/echo.c\
 
 LIBRARY = 
 OBJ = $(SRC:.c=.o)

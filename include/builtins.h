@@ -5,19 +5,30 @@
 /*                                    BUILTINS                                */
 /* ************************************************************************** */
 
-/*
-echo (empty) esta a dar seg fault
-echo "" esta a imprimir as aspas
-echo $expand
-"" ou '' tem funcionalidade diferente
-
-*/
-int	command_echo(char **cmds_str);
 int	command_pwd(void);
 
 // int	command_export();
 // int	command_unset();
 // int	command_env();
 // int	command_exit();
+
+/* ************************************************************************** */
+/*                                   EXPANDER                                 */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                     CD.C                                   */
+/* ************************************************************************** */
+
+// int	command_cd();
+
+/* ************************************************************************** */
+/*                                     ECHO.C                                 */
+/* ************************************************************************** */
+
+int	command_echo(char **cmds_str);
+
+/* returns true everytime it finds -n or -n folowed by n n_times else returns false*/
+bool    ft_find_n(char *str);
 
 #endif

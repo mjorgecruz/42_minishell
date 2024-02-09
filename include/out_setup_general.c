@@ -82,18 +82,18 @@ void	exec_correct_builtin(t_command *cmds)
 		command_pwd();
 		return ;
 	}
-	// if (id == UNDEFINED)
-		//command_execve();
-	// if (id == CD)
-	// 	//command_echo();
-	// else if (id == EXIT)
-	// 	//command_exit();
+	// else if (id == UNDEFINED)
+	// 	command_execve();
+	// else if (id == CD)
+	// 	command_cd();
 	// else if (id == EXPORT)
 	// 	//command_export();
 	// else if (id == ENV)
 	// 	//command_env();
 	// else if (id == UNSET)
 	// 	//command_unset();
+	//else if (id == EXIT)
+	// 	command_exit();
 	return ;
 }
 
