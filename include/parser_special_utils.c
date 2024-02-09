@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/08 09:54:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:01:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_pipe(char* str, int pos)
 {
-	if (str[pos] == '|' && str[pos + 1] != '|')
+	if (str[pos] != '\0' && str[pos] == '|' && str[pos + 1] != '|')
 	{
 		pos = ignore_spaces(str, pos + 1);
 		if (str[pos] != '|')
@@ -33,6 +33,8 @@ bool find_specials_outside_quotes(char *str)
 		i = ignore_in_quotes(str, i);
 		if	(is_special_char(str[i]))
 			return (true);
+		if (!str[i])
+			break;
 	}
 	return (false);
 }
@@ -75,6 +77,8 @@ int find_equal_trio_nospaces(char *str)
 				return (1);
 			i++;
 		}
+		if (!str[i])
+			break;
 	}
 	return (0);
 }

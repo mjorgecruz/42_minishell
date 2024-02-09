@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/08 17:31:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:54:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ bool mid_parser_iteration(char *str) //review mid parser for cases with 3
 {
 	int i;
 	
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
 		i = ignore_in_quotes(str, i);
 		if (i >= 0 && str[i])
@@ -34,6 +34,9 @@ bool mid_parser_iteration(char *str) //review mid parser for cases with 3
 		}
 		if (i == -1)
 			return false;
+		if (!str[i])
+			break;
+		i++;
 	}
 	return true;
 }

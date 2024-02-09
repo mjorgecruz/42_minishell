@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/07 11:00:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:34:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*get_line(char *total_line)
 	}
 	if (total_line && *total_line)
 		add_history(total_line);
+	free(pwd);
 	return (total_line);
 }
 
