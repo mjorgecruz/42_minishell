@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 16:54:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 23:26:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	ignore_in_quotes(char *str, int pos)
 {
 	while (str[pos] && !is_special_char(str[pos]))
 	{
-		if (str[pos] == D_QUOTE)
+		if (str[pos] && str[pos] == D_QUOTE)
 		{
 			pos++;
 			while (str[pos] && str[pos] != D_QUOTE)
 				pos++;
 		}
-		else if (str[pos] == S_QUOTE)
+		else if (str[pos] && str[pos] == S_QUOTE)
 		{
 			pos++;
 			while (str[pos] && str[pos] != S_QUOTE)
@@ -35,7 +35,7 @@ int	ignore_in_quotes(char *str, int pos)
 
 int	ignore_spaces(char *str, int pos)
 {
-	while(is_space(str[pos]))
+	while(str[pos] && is_space(str[pos]))
 		pos++;
 	return(pos);
 }

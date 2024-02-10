@@ -3,8 +3,10 @@
 
 bool	has_valid_cmd_after(char *str, int pos)
 {
+	if (!str[pos])
+		return (false);
 	pos = ignore_spaces(str, pos);
-	if (is_special_char(str[pos]) || !str[pos])
+	if (!str[pos] || is_special_char(str[pos]))
 		return (false);
 	else
 		return (true);

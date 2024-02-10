@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/09 11:54:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/10 10:57:57 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ int check_redirs(char *str, int pos)
 {
 	if (str[pos] == '>' || str[pos] == '<')
 	{
-		if (str[pos] == str[pos + 1])
+		if (!str[pos + 1])
+			return (error_definer(&str[pos + 1]), -1);
+		if (str[pos + 1] && str[pos] == str[pos + 1])
 		{
 			pos = ignore_spaces(str, pos + 2);
 			if (has_valid_cmd_after(str, pos))
@@ -88,7 +90,7 @@ int check_redirs(char *str, int pos)
 				return (pos);
 			return (error_definer(&str[pos]), -1);
 		}
-		else if (str[pos] == '>' && is_special_char(str[pos + 1]))
+		else if (str[pos + 1] && str[pos] == '>' && is_special_char(str[pos + 1]))
 		{
 			if (str[pos + 1] == '|' || str[pos + 1] == '&')
 			{
@@ -105,7 +107,7 @@ int check_redirs(char *str, int pos)
 				return (errors(SYNTAX_NEWLINE, NULL), -1);
 			
 		}
-		else if (str[pos] == '<' && is_special_char(str[pos + 1]))
+		else if (str[pos + 1] && str[pos] == '<' && is_special_char(str[pos + 1]))
 		{
 			if (str[pos + 1] == '|' && str[pos + 2] != '|' && str[pos + 2] != '&')
 				return (errors(SYNTAX_PIPE, NULL), -1);
@@ -119,9 +121,9 @@ int check_redirs(char *str, int pos)
 			else if (str[pos + 1] == '&' && str[pos + 2] == '|')
 				return (errors(SYNTAX_PIPE, NULL), -1);
 			pos = ignore_spaces(str, pos + 2);
-			if (!has_valid_cmd_after(str, pos + 2))
-				return (error_definer(&str[pos + 2]), -1);
-						if (str[pos] == '<')
+			if (!has_valid_cmd_after(str, pos))
+				return (error_definer(&str[pos]), -1);
+			if (str[pos] == '<')
 			{
 				// pos = pos + 1;
 				// if (str[pos] == '>')

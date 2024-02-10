@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/09 11:34:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/10 00:03:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*get_line(char *total_line)
 	if (!line_read)
 	{
 		printf("exit\n");
+		free(pwd);
 		exit(EXIT_SUCCESS);
 	}
 	total_line = line_read;
@@ -70,7 +71,7 @@ bool end_pipe_and(char *total_line)
 	i = ft_strlen(total_line) - 1;
 	while (total_line[i] == ' ' && i >= 0)
 		i--;
-	if (total_line[i] == '|' || total_line[i] == '&')
+	if (total_line[i] && (total_line[i] == '|' || total_line[i] == '&'))
 		return (true);
 	else
 		return (false);
@@ -138,6 +139,7 @@ char	*create_pc_name(void)
 	vai_fora = name;
 	name = ft_strjoin(name, pwd);
 	free(vai_fora);
+	free(pwd);
 	return (name);
 }
 

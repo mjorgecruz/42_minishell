@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/09 12:01:14 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 23:59:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,26 @@ int find_equal_trio_nospaces(char *str)
 int check_invalid_specialcount(char *str, int pos)
 {
 	int count;
-	while (str[pos])
+	
+	count = 0;
+	pos = ignore_in_quotes(str, pos);
+	while (str[pos] && str[pos] != 39 && str[pos] != 34)
 	{
-		count = 0;
-		pos = ignore_in_quotes(str, pos);
-		while (str[pos] && str[pos] != 39 && str[pos] != 34)
+		if (is_special_char(str[pos]))
 		{
-			if (is_special_char(str[pos]))
-			{
-				count++;
-				pos++;
-				if (count > 4)
-					return (pos - 4);
-			}
-			else
-			{
-				pos = ignore_spaces(str, pos);
-				if (!is_special_char(str[pos]))
-					count = 0;
-				pos++;
-			}
+			count++;
+			pos++;
+			if (count > 4)
+				return (pos - 4);
+		}
+		else
+		{
+			pos = ignore_spaces(str, pos);
+			if (!is_special_char(str[pos]))
+				count = 0;
+			if (!str[pos])
+				break;
+			pos++;
 		}
 	}
 	return (-1);
