@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/10 00:03:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:08:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ char	*get_line(char *total_line)
 bool	join_to_line(char **total_line)
 {
 	char 	*line_read;
+	int		heredocs;
 
+	heredocs = 0;
 	line_read = "";
 	if (open_parenthesis(*total_line) < 0)
 		return(errors(SYNTAX_CLOSE_P, NULL), false);
@@ -51,6 +53,9 @@ bool	join_to_line(char **total_line)
 	{
 		if(!ft_parser(*total_line))
 			return (false);
+		heredocs = heredoc_count(*total_line);
+		if (heredocs > 0)
+			heredoc_writer(*total_line, heredocs);
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
