@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 12:38:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:07:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	main(int ac, char **av)
 		input = get_line(input);
 		if (input == NULL)
 		{
-			rl_on_new_line();
+			//rl_on_new_line();
 			continue;
 		}
 		if (input != NULL && *input)
 		{
-			rl_on_new_line();
+			// rl_on_new_line();
 			if(!ft_parser(input))
 			{
 				free(input);

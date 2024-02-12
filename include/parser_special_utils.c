@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/09 23:59:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:51:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,14 @@ int	find_same_trio(char *str, int pos)
 	{
 		if(str[pos] == str[pos + 1] && str[pos + 2] == str[pos])
 		{
-			if (str[pos] == '&')
+			if (str[pos] == '&' && str[pos + 3] && str[pos + 3] == '&')
 				errors(SYNTAX_D_AMP, NULL);
-			else if (str[pos] == '|')
+			else if (str[pos] == '&')
+				errors(SYNTAX_AMP, NULL);
+			else if (str[pos] == '|' && str[pos + 3] && str[pos + 3] == '|')
 				errors(SYNTAX_D_PIPE, NULL);
+			else if (str[pos] == '|')
+				errors(SYNTAX_PIPE, NULL);
 			else if (str[pos + 3] == str[pos] && str[pos + 3] == '<')
 				errors(SYNTAX_L_D_REDIR, NULL);
 			else if (str[pos + 3] == str[pos] && str[pos + 3] == '>')

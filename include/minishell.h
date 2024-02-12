@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 16:16:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:03:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
 char		*get_line(char *line_read);
 
-bool		join_to_line(char **total_line);
+bool		join_to_line(char **total_line, char ***heredocs);
 
 bool		end_pipe_and(char *total_line);
 
@@ -290,5 +290,16 @@ int			comand_pwd(void);
 // int	command_unset(t_token **cmd_list);
 // int	command_env(t_token **cmd_list);
 // int	command_exit(t_token **cmd_list);
+
+/* ************************************************************************** */
+/*                                    HEREDOCS                                */
+/* ************************************************************************** */
+
+void		heredoc_writer(char *line_read, char ***heredocs);
+int			heredoc_counter(char *line_read);
+int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read);
+void		add_newline_line(char **total_line, char *line_read);
+void		add_heredocs(char ***new_heredocs, int j, char *line_read);
+void		add_partials(char **heredoc, char *str);
 
 #endif
