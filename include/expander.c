@@ -18,7 +18,6 @@ bool is_valid_to_expand(const char *var)
     return (true);
 }
 
-/*cmd has to reach here with just $ at the start and not any other $*/
 char    *master_expander(char *cmd)
 {
     char *cmd_var;
@@ -26,7 +25,7 @@ char    *master_expander(char *cmd)
 
     if (!is_valid_to_expand(cmd))
     {
-        printf("Warning: Environment variable '%s' does not exist.\n", cmd);
+        printf("Warning: '%s' does not exist.\n", cmd);
         return (NULL);
     }
     else if (cmd[0] == '$')
@@ -34,11 +33,13 @@ char    *master_expander(char *cmd)
     else
         return (NULL);
     curr_env = getenv(cmd_var);
-    free(cmd_var);
     if (curr_env != NULL)
+    {
+        free(cmd_var);
         return strdup(curr_env);
+    }
     else
-        printf("Warning: Environment variable '%s' does not exist.\n", cmd_var);
+        printf("Warning: '%s' does not exist.\n", cmd_var);
     return (NULL);
 }
 

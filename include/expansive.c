@@ -25,7 +25,7 @@ char    *master_expander(char *cmd)
 
     if (!is_valid_to_expand(cmd))
     {
-        printf("Warning: Environment variable '%s' does not exist.\n", cmd);
+        printf("Warning: '%s' does not exist.\n", cmd);
         return (NULL);
     }
     else if (cmd[0] == '$')
@@ -33,13 +33,25 @@ char    *master_expander(char *cmd)
     else
         return (NULL);
     curr_env = getenv(cmd_var);
-    free(cmd_var);
     if (curr_env != NULL)
+    {
+        free(cmd_var);
         return strdup(curr_env);
+    }
     else
-        printf("Warning: Environment variable '%s' does not exist.\n", cmd_var);
+        printf("Warning: '%s' does not exist.\n", cmd_var);
     return (NULL);
 }
+
+
+//$HOME$home'$HOME'"$HOME""'" = /home/luis-ffe  $HOME /home/luis-ffe'
+// $home lowercase disapears is not expanded and not printed
+// '$HOME'  in single quotes treated as  literal not expanded
+// "$HOME" tretated normally
+// "'" prints the
+
+
+
 
 
 /*to test this make sure you are on the include directory and have done a make for minishell
@@ -67,7 +79,7 @@ int main(void)
         printf("Expanded command: %s\n", expanded_cmd);
         free(expanded_cmd);
     } else {
-        printf("Command expansion failed.\n");
+        printf("\n");
     }
     return 0;
 }
