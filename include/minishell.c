@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/12 19:07:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:02:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av)
 {
 	char	*input;
 	char	*paths;
+	char	**heredocs;
 
 	(void) ac;
 	(void) av;
@@ -24,22 +25,17 @@ int	main(int ac, char **av)
 	input = NULL;
 	while (1)
 	{
-		input = get_line(input);
+		input = get_line(input, &heredocs);
 		if (input == NULL)
-		{
-			//rl_on_new_line();
 			continue;
-		}
 		if (input != NULL && *input)
 		{
-			// rl_on_new_line();
 			if(!ft_parser(input))
 			{
 				free(input);
 				continue;
 			}	
-			if (input != NULL)
-				general_executer(input, paths);
+			general_executer(input, paths, &heredocs);
 			free(input);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/12 19:02:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:00:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 #include "minishell.h"
 
-char	*get_line(char *total_line)
+char	*get_line(char *total_line, char ***heredocs)
 {
 	char	*line_read;
 	char	*pwd;
-	char	**heredocs;
 	
-	heredocs = NULL;
+	*heredocs = NULL;
 	pwd = create_pc_name();
 	line_read = readline(pwd);
 	if (!line_read)
@@ -30,8 +29,7 @@ char	*get_line(char *total_line)
 		exit(EXIT_SUCCESS);
 	}
 	total_line = line_read;
-	//heredoc_writer(total_line, &heredocs);
-	if (!join_to_line(&total_line, &heredocs))
+	if (!join_to_line(&total_line, heredocs))
 	{
 		if (total_line && *total_line)
 		{
@@ -42,8 +40,7 @@ char	*get_line(char *total_line)
 	}
 	if (total_line) //&& *total_line)
 		add_history(total_line);
-	free(pwd);
-	return (total_line);
+	return (free(pwd), total_line);
 }
 
 bool	join_to_line(char **total_line, char ***heredocs)
@@ -79,9 +76,9 @@ bool end_pipe_and(char *total_line)
 	int		i;
 
 	i = ft_strlen(total_line) - 1;
-	while (total_line[i] == ' ' && i >= 0)
+	while (i >= 0 && total_line[i] == ' ')
 		i--;
-	if (total_line[i] && (total_line[i] == '|' || total_line[i] == '&'))
+	if (i >= 0 && (total_line[i] == '|' || total_line[i] == '&'))
 		return (true);
 	else
 		return (false);

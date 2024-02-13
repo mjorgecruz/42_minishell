@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/12 13:03:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:49:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ enum e_ERRORS
 	SYNTAX_R_S_REDIR,
 	SYNTAX_L_D_REDIR,
 	SYNTAX_R_D_REDIR,
+	HEREDOC_EOF,
 };
 
 /* ************************************************************************** */
@@ -126,7 +127,7 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char		*get_line(char *line_read);
+char		*get_line(char *line_read, char ***heredocs);
 
 bool		join_to_line(char **total_line, char ***heredocs);
 
@@ -171,7 +172,7 @@ bool		parser_quotes(char *input);
 /* ************************************************************************** */
 
 /**/
-void		general_executer(char *input, char *paths);
+void		general_executer(char *input, char *paths, char ***heredocs);
 
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
@@ -231,7 +232,7 @@ to the correct comand enum id flag*/
 void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
-with it id flag*/
+with its id flag*/
 void		exec_correct_builtin(t_command *cmds);
 
 /*defines which function should run the commands sent. It receives the struct
@@ -257,7 +258,7 @@ int			error_definer(char *cmd);
 /*                                     FINEX                                  */
 /* ************************************************************************** */
 
-void		clean_cmd_list(t_token *cmd_list, char *paths);
+void		clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs);
 
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);
@@ -301,5 +302,6 @@ int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read);
 void		add_newline_line(char **total_line, char *line_read);
 void		add_heredocs(char ***new_heredocs, int j, char *line_read);
 void		add_partials(char **heredoc, char *str);
+int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
 
 #endif

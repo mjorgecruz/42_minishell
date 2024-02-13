@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/12 18:26:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:01:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,33 +70,40 @@ int		adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read)
 void	add_heredocs(char ***new_heredocs, int cur_heredocs, char *line_read)
 {
 	int		i;
-	char	*str;
-	int		n_letters;
-	int		j;
 
 	i = 0;
-	n_letters = 0;
 	while (line_read[i])
 	{
 		if (line_read[i] == '<' && line_read[i - 1] == '<')
 		{
-			i = ignore_spaces(line_read, i + 1);
-			n_letters++;
-			while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i])
-					&& line_read[i + n_letters] != '\0')
-				n_letters++;
-			str = ft_calloc(n_letters + 1, sizeof(char));
-			j = 0;
-			while (j < n_letters)
-				str[j++] = line_read[i++];
-			(*new_heredocs)[cur_heredocs] = NULL;
-			add_partials(&((*new_heredocs)[cur_heredocs]), str);
-			cur_heredocs++;
+			i = heredoc_creator (new_heredocs, &cur_heredocs, line_read, i);
 		}
 		else
 			i++;
 	}
+	(*new_heredocs)[cur_heredocs] = NULL;
 	return ;
+}
+int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, int i)
+{
+	char	*str;
+	int		n_letters;
+	int		j;
+	
+	i = ignore_spaces(line_read, i + 1);
+	n_letters = 0;
+	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i])
+		&& line_read[i + n_letters] != '\0')
+		n_letters++;
+	str = ft_calloc(n_letters + 1, sizeof(char));
+	j = 0;
+	while (j < n_letters)
+		str[j++] = line_read[i++];
+	(*new_heredocs)[*cur_heredocs] = NULL;
+	add_partials(&((*new_heredocs)[*cur_heredocs]), str);
+	(*cur_heredocs)++;
+	free(str);
+	return (i);
 }
 
 void	add_newline_line(char **total_line, char *line_read)
@@ -120,10 +127,17 @@ void	add_partials(char **heredoc, char *str)
 	char	*heredoc_line;
 	
 	heredoc_line = readline("> ");
+	if (heredoc_line == NULL)
+	{
+		*heredoc = ft_calloc(1, sizeof(char));
+		return (errors(HEREDOC_EOF, str));
+	}
 	while (ft_strcmp(str, heredoc_line))
 	{
 		add_newline_line(heredoc, heredoc_line);
 		heredoc_line = readline("> ");
+		if (heredoc_line == NULL)
+			return (errors(HEREDOC_EOF, str));
 	}
 	if (!*heredoc)
 	{
