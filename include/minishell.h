@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/13 13:49:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:05:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ typedef struct s_token
 	t_type			next_type;
 	t_command		*cmds;
 }	t_token;
+
+typedef struct s_segment
+{
+	char *segment;
+	struct s_segment *next;
+	struct s_segment *left;
+	struct s_segment *right;
+	t_token *partial; 
+}	t_segment;
 
 /*Definition of error cases*/
 enum e_ERRORS
