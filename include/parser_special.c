@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/06 20:47:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:00:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	parser_special_first_module(char *str)
 	specialcount = check_invalid_specialcount(str, 0);
 	if(find_specials_outside_quotes(str) == false)
 		return (1);
+	else if (is_invalid_start_sign(str))
+		return (0);
 	else if (find_equal_trio_nospaces(str))
 		return (0);
 	else if (specialcount >=0)
@@ -27,8 +29,6 @@ int	parser_special_first_module(char *str)
 		error_definer(&str[specialcount]);
 		return (0);
 	}
-	else if (is_invalid_start_sign(str))
-		return (0);
 	return (1);
 }
 
@@ -48,24 +48,3 @@ bool	parser_special(char *str)
 	return true;
 }
 
-
-/*
-***************************** Funcionalidades ja implementadas first module *************************
-
- ok -> Nao encontrando sinais avanca direto.
- ok -> Iguais consecutivos dar merda.
- ok -> Tratado >> <<  > <   >|    todas as condicoes iniciais que funcionam com um simbolo ou dois
- ok -> Da erro caso nao corresponda a uma combinacao de simbolos valida no inicio.
- ok -> Tem de ter comando valido na frente que nao seja especial nem fim da string.
- ok -> erros de pipes | com espacos no meio 
- ok -> && SEMPRE JUNTOS
-	  //verificar todos conjuntos de 3
-	     	//   | 1st   >> > or << < or   
-	 		//   |>> |>>
-			// redirect combs >| >>  << > < 
- 
-**************************************************************************************
- 
-NOT YET / NOT SURE    ->     check from end final pipe or && . || or | and no speciesl before
-
-*/

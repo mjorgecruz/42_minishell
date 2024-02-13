@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 12:07:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:36:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,7 @@ int error_definer(char *cmd)
 	if (cmd[j] && j == 0 && cmd[j] == '>' && cmd[j + 1] == '|')
 		j = ignore_spaces(cmd, j + 2);
 	while (cmd[j] && i < 2 && is_special_char(cmd[j]))
-	{
-		err[i] = cmd[j];
-		i++;
-		j++;
-	}
+		err[i++] = cmd[j++];
 	return (printf("minishell:syntax error near unexpected token `%s'\n", err), 1);
 }
 
-int	wrong_syntax(char *line)
-{
-	(void) line;
-	// int i;
-	// i = 0;
-	// if (line[i] == '&' && line[i + 1] != line[i])
-	// {
-	// 	errors(SYNTAX_AMP, NULL);
-	// 	return (0);
-	// }
-	// else if (line[i] == '|' && line[i + 1] != line[i])
-	// {
-	// 	if  ()
-	// }
-	// else if (line[i] == '>' && line[i + 1] != line[i])
-	// {
-	// 	if  ()
-	// }
-	// else if (line[i] == '<' && line[i + 1] != line[i])
-	// {
-	// 	if  ()
-	// }
-	// else
-		
-	return (0);
-}

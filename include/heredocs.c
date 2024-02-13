@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 13:01:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:34:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	add_newline_line(char **total_line, char *line_read)
 	else
 		*total_line = line_read;
 }
+
 void	add_partials(char **heredoc, char *str)
 {
 	char	*heredoc_line;

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:00:04 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/02/08 17:20:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:53:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ bool    is_invalid_start_sign(char *str);
 bool    pipe_is_first(char *s, int pos);
 void	check_next_cmd(char *str);
 
+bool check_combs_doubles_rr_rr(char *str, int pos);
+bool check_combs_doubles_lr_lr(char *str, int pos);
+bool    start_sign_pipe(char *str, int i);
+
 
 
 /* ************************************************************************** */
@@ -65,5 +69,7 @@ int check_pipes(char *str, int pos);
 int check_redirs(char *str, int pos);
 int check_uppersand(char *str, int pos);
 bool mid_parser_iteration(char *str);
+int check_redirs_rr_sc(char * str, int pos);
+int check_redirs_lr_sc(char * str, int pos);
 
 #endif

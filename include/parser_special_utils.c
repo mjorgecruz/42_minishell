@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/12 18:51:54 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:07:04 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,27 +114,3 @@ int check_invalid_specialcount(char *str, int pos)
 	}
 	return (-1);
 }
-
-/*apagar se necessario era assim que estav antes a funcao anterior mas esta nao parava a encontrar comandos fora de aspas*/
-// bool check_invalid_specialcount(const char *str, int pos)
-// {
-// 	int count;
-// 	pos--;
-// 	while (str[++pos])
-// 	{
-// 		count = 0;
-// 		pos = ignore_in_quotes(str, pos);
-// 		while (str[pos] && str[pos] != 39 && str[pos] != 34)
-// 		{
-// 			if (is_special_char(str[pos]))
-// 			{
-// 				count++;
-// 				if (count > 4)
-// 					return (true);
-				
-// 			}
-// 			pos++;
-// 		}
-// 	}
-// 	return (false);
-// }
