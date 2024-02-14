@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/13 15:00:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:49:04 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	parser_special_first_module(char *str)
 {
 	int		specialcount;
-
+	
+	// &i = 0;
 	specialcount = -1;
 	specialcount = check_invalid_specialcount(str, 0);
 	if(find_specials_outside_quotes(str) == false)

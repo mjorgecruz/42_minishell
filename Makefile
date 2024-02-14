@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/12 12:58:16 by masoares         ###   ########.fr        #
+#    Updated: 2024/02/14 11:23:01 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC := minishell.c history.c parser_general.c \
 		out_setup_general.c finex.c errors.c \
 		str_utils.c general_executor.c general_executor_2.c \
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
-		heredocs.c
+		heredocs.c parser_parenthesis.c
 
 
 LIBRARY = 

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/13 16:05:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:22:23 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,3 +314,14 @@ void		add_partials(char **heredoc, char *str);
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
 
 #endif
+
+
+/* ************************************************************************** */
+/*                             PARSER_PARENTHESIS                             */
+/* ************************************************************************** */
+
+int			parser_parenthesis(char *total_line);
+bool		check_operator_open_p(char *total_line);
+bool		check_open_p_operator(char *total_line);
+bool		check_operator_closed_p(char *total_line);
+bool		check_closed_p_operator(char *total_line);

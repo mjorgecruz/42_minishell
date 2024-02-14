@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 12:44:12 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:00:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ the terminal*/
 
 bool	ft_parser(char *line_read)
 {
+	
+	// while (line_read[i])
+	// {
 	if (!parser_quotes(line_read))
-		return(false);
+		return(errors(SYNTAX_ASP, NULL), false);
 	if (!parser_special(line_read))
 		return(false);
 	if (!text_in_parenthesis(line_read))
@@ -27,6 +30,8 @@ bool	ft_parser(char *line_read)
 		return (errors(SYNTAX_OPEN_P, NULL), false);
 	else if (parenthesis_before_command(line_read))
 		return (errors(SYNTAX_CMD, NULL), false);
+	else if (parser_parenthesis(line_read) < 0)
+		return (false);
 	return (true);
 }
 

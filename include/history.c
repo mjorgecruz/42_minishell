@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 11:00:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:54:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int		open_parenthesis(char *total_line)
 			count_open++;
 		if (total_line[i] == ')')
 			count_open--;
+		if (count_open < 0)
+			return (-1);
 		i++;
 	}
 	return (count_open);
