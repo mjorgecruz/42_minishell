@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 10:51:18 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:23:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ bool	check_operator_closed_p(char *total_line, int *i)
 			j = k - 1;
 			while (j >= -1)
 			{
-				if (total_line[j] == ')' || !is_special_char(total_line[j]))
+				if (total_line[j] == ')' || (!is_special_char(total_line[j]) && total_line[j] != ' '))
 					break;
 				else if (total_line[j] != ' ')
 					return (errors(SYNTAX_CLOSE_P, NULL), false);
