@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 13:35:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:47:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ bool	parenthesis_before_command(char *line_read, int *i)
 	int		j;
 
 	j = 0;
-	pass_quotes(line_read, i);
 	if (line_read[*i] == ')')
 	{
 		j = (*i) + 1;
