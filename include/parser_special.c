@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/15 16:02:33 by masoares         ###   ########.fr       */
+/*   Created: 2024/02/15 16:55:31 by masoares          #+#    #+#             */
+/*   Updated: 2024/02/15 16:56:05 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	parser_special_first_module(char *str, int *i)
 {
 	int		specialcount;
-	
+
 	specialcount = -1;
 	specialcount = check_invalid_specialcount(str, 0, i);
 	if (find_equal_trio_nospaces(str, i))
@@ -32,7 +32,7 @@ bool	parser_special_module_two(char *str, int *i)
 {
 	if (mid_parser_iteration(str, i))
 		return (true);
-	return false;
+	return (false);
 }
 
 bool	parser_special(char *str, int *i)
@@ -41,6 +41,5 @@ bool	parser_special(char *str, int *i)
 		return (false);
 	if (parser_special_module_two(str, i) == false)
 		return (false);
-	return true;
+	return (true);
 }
-
