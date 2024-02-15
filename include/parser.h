@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:00:04 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/02/13 14:53:24 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:00:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 /* ************************************************************************** */
 
 
-int	parser_special_first_module(char *str);
+int	parser_special_first_module(char *str, int *i);
 
-bool parser_special_module_two(char *str);
+bool parser_special_module_two(char *str, int *i);
 
-bool	parser_special(char *str);
+bool	parser_special(char *str, int *i);
 
 /* ************************************************************************** */
 /*                           PARSER_SPECIAL_UTILS                             */
@@ -39,11 +39,11 @@ bool find_specials_outside_quotes(char *str);
 int	find_same_trio(char *str, int pos);
 
 /*error finding more than 4 special consecutivly with or without spaces in between them*/
-int check_invalid_specialcount(char *str, int pos);
+int check_invalid_specialcount(char *str, int pos, int *i);
 
 
 /*return 1 if no trios of equals together found and 0  otherwise >>> ||| or <<< or &&&*/
-int find_equal_trio_nospaces(char *str);
+int find_equal_trio_nospaces(char *str, int *i);
 
 /* ************************************************************************** */
 /*                                 PARSER_PIPE                                */
@@ -68,7 +68,7 @@ bool    start_sign_pipe(char *str, int i);
 int check_pipes(char *str, int pos);
 int check_redirs(char *str, int pos);
 int check_uppersand(char *str, int pos);
-bool mid_parser_iteration(char *str);
+bool mid_parser_iteration(char *str, int *i);
 int check_redirs_rr_sc(char * str, int pos);
 int check_redirs_lr_sc(char * str, int pos);
 

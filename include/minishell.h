@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/14 11:22:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:17:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,13 @@ enum e_ERRORS
 	SYNTAX_AMP_PIPE,
 	SYNTAX_CMD,
 	SYNTAX_ASP,
+	SYNTAX_S_ASP,
 	SYNTAX_L_S_REDIR,
 	SYNTAX_R_S_REDIR,
 	SYNTAX_L_D_REDIR,
 	SYNTAX_R_D_REDIR,
+	SYNTAX_BACKSLASH,
+	SYNTAX_COLON,
 	HEREDOC_EOF,
 };
 
@@ -159,13 +162,13 @@ char		*get_end_path(void);
 /* General parser function. It must guarantee all clean-up of the string 
 received and its freeing. The output is a completely clean string to 
 be interpreted*/
-bool		ft_parser(char *line_read);
+bool		ft_parser(char *line_read, int *i);
 
-bool		text_in_parenthesis(char *line_read);
+bool		text_in_parenthesis(char *line_read, int *i);
 
-bool		parenthesis_after_command(char *line_read);
+bool		parenthesis_after_command(char *line_read, int *i);
 
-bool		parenthesis_before_command(char *line_read);
+bool		parenthesis_before_command(char *line_read, int *i);
 
 
 /* ************************************************************************** */
@@ -174,7 +177,7 @@ bool		parenthesis_before_command(char *line_read);
 
 /*General function to do the first clean-up of the string received in the
 terminal. It gets rid of the unnecessary quotes*/
-bool		parser_quotes(char *input);
+bool		parser_quotes(char *input, int *i);
 
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */
@@ -305,11 +308,11 @@ int			comand_pwd(void);
 /*                                    HEREDOCS                                */
 /* ************************************************************************** */
 
-void		heredoc_writer(char *line_read, char ***heredocs);
-int			heredoc_counter(char *line_read);
-int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read);
+void		heredoc_writer(char *line_read, char ***heredocs, int i);
+int			heredoc_counter(char *line_read, int i);
+int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
 void		add_newline_line(char **total_line, char *line_read);
-void		add_heredocs(char ***new_heredocs, int j, char *line_read);
+void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
 void		add_partials(char **heredoc, char *str);
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
 
@@ -320,8 +323,8 @@ int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read,
 /*                             PARSER_PARENTHESIS                             */
 /* ************************************************************************** */
 
-int			parser_parenthesis(char *total_line);
-bool		check_operator_open_p(char *total_line);
-bool		check_open_p_operator(char *total_line);
-bool		check_operator_closed_p(char *total_line);
-bool		check_closed_p_operator(char *total_line);
+int			parser_parenthesis(char *total_line, int *i);
+bool		check_operator_open_p(char *total_line, int *i);
+bool		check_open_p_operator(char *total_line, int *i);
+bool		check_operator_closed_p(char *total_line, int *i);
+bool		check_closed_p_operator(char *total_line, int *i);

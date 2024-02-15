@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/14 11:54:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:53:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_line(char *total_line, char ***heredocs)
 			total_line = NULL;
 		}
 	}
-	if (total_line) //&& *total_line)
+	if (total_line)
 		add_history(total_line);
 	return (free(pwd), total_line);
 }
@@ -46,28 +46,41 @@ char	*get_line(char *total_line, char ***heredocs)
 bool	join_to_line(char **total_line, char ***heredocs)
 {
 	char 	*line_read;
-
+	int		i;
+	
+	i = 0;
 	line_read = "";
-	if (open_parenthesis(*total_line) < 0)
-		return(errors(SYNTAX_CLOSE_P, NULL), false);
-	if(!ft_parser(*total_line))
+	if(!ft_parser(*total_line, &i))
+	{
+		heredoc_writer(*total_line, heredocs, i);
 		return (false);
-	heredoc_writer(*total_line, heredocs);
+	}
+	heredoc_writer(*total_line, heredocs, i);
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
-		if(!ft_parser(*total_line))
+		i = 0;
+		if(!ft_parser(*total_line, &i))
 			return (false);
-		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
+		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0
+		|| open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
-			heredoc_writer(line_read, heredocs);
 			if (!line_read)
 				return (false);
 			if (is_only_spaces(line_read) == 0)
 				continue ;
 			add_space_line(total_line, line_read);
+			if(!ft_parser(*total_line, &i))
+			{
+				heredoc_writer(*total_line, heredocs, i);
+				return (false);
+			}
+			heredoc_writer(line_read, heredocs, i);
 		}
 	}
+	i = 0;
+	if(!ft_parser(*total_line, &i))
+		return (false);
 	return (true);
 }
 
@@ -112,7 +125,7 @@ void	add_space_line(char **total_line, char *line_read)
 	garbage = *total_line;
 	*total_line = ft_strjoin(*total_line, line_read);
 	free(garbage);
-	ft_parser(*total_line);
+	//ft_parser(*total_line);
 }
 
 

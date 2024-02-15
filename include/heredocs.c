@@ -6,80 +6,84 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 14:34:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:08:53 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc_counter(char *line_read)
+int	heredoc_counter(char *line_read, int i)
 {
-	int	i;
+	int	j;
 	int	heredocs;
 
 	heredocs = 0;
-	i = 0;
-	while (line_read[i])
+	j = 0;
+	while (line_read[j] && j <= i)
 	{
-		if (line_read[i] == '<' && line_read[i - 1] == '<')
+		if (j - 1 >= 0 && line_read[j] == '<' && line_read[j - 1] == '<')
 			heredocs++;
-		i++;
+		j++;
 	}
 	return (heredocs);
 }
 
-void	heredoc_writer(char *line_read, char ***heredocs)
+void	heredoc_writer(char *line_read, char ***heredocs, int i)
 {
 	int		n_heredocs;
 
-	n_heredocs = heredoc_counter(line_read);
+	n_heredocs = heredoc_counter(line_read, i);
 	if (n_heredocs == 0)
 		return ;
-	adjust_heredocs(heredocs, n_heredocs, line_read);
+	adjust_heredocs(heredocs, n_heredocs, line_read, i);
 }
 
-int		adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read)
+int		adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i )
 {
-	int		i;
+	int		k;
 	int		total_heredocs;
 	char	**new_heredocs;
 	int		j;
 	
-	i = 0;
+	k = 0;
 	j = 0;
 	if (*heredocs)
 	{
-		while ((*heredocs)[i])
-			i++;
+		while ((*heredocs)[k])
+			k++;
 	}
-	total_heredocs = i + n_heredocs;
+	total_heredocs = k + n_heredocs;
 	new_heredocs = (char **)malloc(sizeof(char *) * (total_heredocs + 1));
 	if (new_heredocs == NULL)
 		return (0);
-	while(j < i)
+	while(j < k)
 	{
-		new_heredocs[j] = (*heredocs)[j];
+		new_heredocs[j] = (*heredocs)[k];
 		j++;
 	}
 	free(*heredocs);
-	add_heredocs(&new_heredocs, j, line_read);
+	add_heredocs(&new_heredocs, j, line_read, i);
 	*heredocs = new_heredocs;
 	return (1);
 }
 
-void	add_heredocs(char ***new_heredocs, int cur_heredocs, char *line_read)
+void	add_heredocs(char ***new_heredocs, int cur_heredocs, char *line_read, int i)
 {
-	int		i;
+	int		j;
+	int		heredoc_count;
 
-	i = 0;
-	while (line_read[i])
+	j = 0;
+	heredoc_count = 0;
+	while (line_read[j] && j <= i)
 	{
-		if (line_read[i] == '<' && line_read[i - 1] == '<')
+		if (line_read[j] == '<' && line_read[j - 1] == '<')
 		{
-			i = heredoc_creator (new_heredocs, &cur_heredocs, line_read, i);
+			if (heredoc_count == cur_heredocs) 
+				j = heredoc_creator(new_heredocs, &cur_heredocs, line_read, j);
+			heredoc_count++;
 		}
 		else
-			i++;
+			j++;
 	}
 	(*new_heredocs)[cur_heredocs] = NULL;
 	return ;
@@ -92,7 +96,7 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, in
 	
 	i = ignore_spaces(line_read, i + 1);
 	n_letters = 0;
-	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i])
+	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i+ n_letters])
 		&& line_read[i + n_letters] != '\0')
 		n_letters++;
 	str = ft_calloc(n_letters + 1, sizeof(char));

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 14:07:04 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:59:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ bool find_specials_outside_quotes(char *str)
 		i = ignore_in_quotes(str, i);
 		if	(is_special_char(str[i]))
 			return (true);
-		if (!str[i])
-			break;
 	}
 	return (false);
 }
@@ -67,33 +65,33 @@ int	find_same_trio(char *str, int pos)
 	return (0);
 }
 
-int find_equal_trio_nospaces(char *str)
+int find_equal_trio_nospaces(char *str, int *i)
 {
-	int i;
+	int j;
 
-	i = -1;
-	while(str[++i])
+	j = -1;
+	while(str[++j] && j <= *i)
 	{
-		i = ignore_in_quotes(str, i);
-		if (is_special_char(str[i]))
+		j = ignore_in_quotes(str, j);
+		if (is_special_char(str[j]))
 		{
-			if (find_same_trio(str, i))
+			if (find_same_trio(str, j))
 				return (1);
-			i++;
+			j++;
 		}
-		if (!str[i])
+		if (!str[j])
 			break;
 	}
 	return (0);
 }
 
-int check_invalid_specialcount(char *str, int pos)
+int check_invalid_specialcount(char *str, int pos, int *i)
 {
 	int count;
 	
 	count = 0;
 	pos = ignore_in_quotes(str, pos);
-	while (str[pos] && str[pos] != 39 && str[pos] != 34)
+	while (str[pos] && pos <= *i && str[pos] != 39 && str[pos] != 34)
 	{
 		if (is_special_char(str[pos]))
 		{

@@ -6,37 +6,37 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 14:29:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 09:46:27 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool mid_parser_iteration(char *str)
+bool mid_parser_iteration(char *str, int *i)
 {
-	int i;
+	int		j;
 	
-	i = 0;
-	while (str[i])
+	j = 0;
+	while (str[j] && j <= *i)
 	{
-		i = ignore_in_quotes(str, i);
-		if (i >= 0 && str[i])
-			i = check_pipes(str, i);
-		if (i >= 0 && str[i])
+		j = ignore_in_quotes(str, j);
+		if (j >= 0 && str[j])
+			j = check_pipes(str, j);
+		if (j >= 0 && str[j])
 		{
-			i = ignore_spaces(str, i);
-			i = check_redirs(str, i);
+			j = ignore_spaces(str, j);
+			j = check_redirs(str, j);
 		}
-		if (i >= 0 && str[i])
+		if (j >= 0 && str[j])
 		{
-			i = ignore_spaces(str, i);
-			i = check_uppersand(str, i);
+			j = ignore_spaces(str, j);
+			j = check_uppersand(str, j);
 		}
-		if (i == -1)
+		if (j == -1)
 			return false;
-		if (!str[i])
+		if (!str[j])
 			break;
-		i++;
+		j++;
 	}
 	return true;
 }

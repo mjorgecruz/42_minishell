@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 11:02:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:33:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	main(int ac, char **av)
 			continue;
 		if (input != NULL && *input)
 		{
-			if(!ft_parser(input))
-			{
-				free(input);
-				continue;
-			}	
+			// if(!ft_parser(input, 0))
+			// {
+			// 	free(input);
+			// 	continue;
+			// }	
 			general_executer(input, paths, &heredocs);
 			free(input);
 		}

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/14 10:15:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:23:57 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,18 @@ void errors_2(int error_code, char *cmd)
 {
 	if (error_code == SYNTAX_L_S_REDIR)
 		printf("minishell:syntax error near unexpected token `<'\n");
+	else if (error_code == SYNTAX_S_ASP)
+		printf("minishell:syntax error near unexpected token `\''\n");
 	else if (error_code == SYNTAX_R_S_REDIR)
 		printf("minishell:syntax error near unexpected token `>'\n");
 	else if (error_code == SYNTAX_L_D_REDIR)
 		printf("minishell:syntax error near unexpected token `<<'\n");
 	else if (error_code == SYNTAX_R_D_REDIR)
 		printf("minishell:syntax error near unexpected token `>>'\n");
+	else if (error_code == SYNTAX_BACKSLASH)
+		printf("minishell:syntax error near unexpected token `\\'\n");
+	else if (error_code == SYNTAX_COLON)
+		printf("minishell:syntax error near unexpected token `;'\n");
 	else if (error_code == HEREDOC_EOF)
 		printf("minishell:warning: here-document delimited\
 by end-of-file (wanted `%s')\n", cmd);

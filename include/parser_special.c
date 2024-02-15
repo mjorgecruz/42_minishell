@@ -6,26 +6,21 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/14 13:49:04 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:02:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parser_special_first_module(char *str)
+int	parser_special_first_module(char *str, int *i)
 {
 	int		specialcount;
 	
-	// &i = 0;
 	specialcount = -1;
-	specialcount = check_invalid_specialcount(str, 0);
-	if(find_specials_outside_quotes(str) == false)
-		return (1);
-	else if (is_invalid_start_sign(str))
+	specialcount = check_invalid_specialcount(str, 0, i);
+	if (find_equal_trio_nospaces(str, i))
 		return (0);
-	else if (find_equal_trio_nospaces(str))
-		return (0);
-	else if (specialcount >=0)
+	else if (specialcount >= 0)
 	{
 		error_definer(&str[specialcount]);
 		return (0);
@@ -33,18 +28,18 @@ int	parser_special_first_module(char *str)
 	return (1);
 }
 
-bool	parser_special_module_two(char *str)
+bool	parser_special_module_two(char *str, int *i)
 {
-	if (mid_parser_iteration(str))
+	if (mid_parser_iteration(str, i))
 		return (true);
 	return false;
 }
 
-bool	parser_special(char *str)
+bool	parser_special(char *str, int *i)
 {
-	if (parser_special_first_module(str) == false)
+	if (parser_special_first_module(str, i) == false)
 		return (false);
-	if (parser_special_module_two(str) == false)
+	if (parser_special_module_two(str, i) == false)
 		return (false);
 	return true;
 }

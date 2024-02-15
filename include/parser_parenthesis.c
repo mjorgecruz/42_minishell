@@ -6,38 +6,38 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/14 13:14:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:51:18 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*This file handles the first division of commands based on the existence of parenthesis*/
 #include "minishell.h"
 
-int	parser_parenthesis(char *total_line)
+int	parser_parenthesis(char *total_line, int *i)
 {
-	if (!check_operator_open_p(total_line))
+	if (!check_operator_open_p(total_line, i))
 		return (-1);
-	if (!check_open_p_operator(total_line))
+	if (!check_open_p_operator(total_line, i))
 		return (-2);
-	if (!check_operator_closed_p(total_line))
+	if (!check_operator_closed_p(total_line, i))
 		return (-3);
-	if (!check_closed_p_operator(total_line))
+	if (!check_closed_p_operator(total_line, i))
 		return (-4);
 	return (0);
 }
 
-bool	check_operator_open_p(char *total_line)
+bool	check_operator_open_p(char *total_line, int *i)
 {
-	int		i;
+	int		k;
 	int		j;
 		
-	i = 0;
+	k = 0;
 	j = 0;
-	while (total_line[i])
+	while (total_line[k] && k <= *i)
 	{
-		if (total_line[i] == '(')
+		if (total_line[k] == '(')
 		{
-			j = i - 1;
+			j = k - 1;
 			while (total_line[j])
 			{
 				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&'
@@ -48,49 +48,49 @@ bool	check_operator_open_p(char *total_line)
 				j--;
 			}
 		}
-		i++;
+		k++;
 	}
 	return (true);
 }
 
-bool	check_open_p_operator(char *total_line)
+bool	check_open_p_operator(char *total_line, int *i)
 {
-	int		i;
+	int		k;
 	int		j;
 		
-	i = 0;
+	k = 0;
 	j = 0;
-	while (total_line[i])
+	while (total_line[k] && k <= *i)
 	{
-		if (total_line[i] == '(')
+		if (total_line[k] == '(')
 		{
-			j = i + 1;
+			j = k + 1;
 			j = ignore_spaces(total_line, j);
 			if (total_line[j] == '(' || !is_special_char(total_line[j]))
 			{
-				i++;
+				k++;
 				continue ;
 			}
 			else
 				return (errors(SYNTAX_OPEN_P, NULL), false);
 		}
-		i++;
+		k++;
 	}
 	return (true);	
 }
 
-bool	check_operator_closed_p(char *total_line)
+bool	check_operator_closed_p(char *total_line, int *i)
 {
-	int		i;
+	int		k;
 	int		j;
 		
-	i = 0;
+	k = 0;
 	j = 0;
-	while (total_line[i])
+	while (total_line[k] && k <= *i)
 	{
-		if (total_line[i] == ')')
+		if (total_line[k] == ')')
 		{
-			j = i - 1;
+			j = k - 1;
 			while (j >= -1)
 			{
 				if (total_line[j] == ')' || !is_special_char(total_line[j]))
@@ -100,23 +100,23 @@ bool	check_operator_closed_p(char *total_line)
 				j--;
 			}
 		}
-		i++;
+		k++;
 	}
 	return (true);
 }
 
-bool	check_closed_p_operator(char *total_line)
+bool	check_closed_p_operator(char *total_line, int *i)
 {
-	int		i;
+	int		k;
 	int		j;
 		
-	i = 0;
+	k = 0;
 	j = 0;
-	while (total_line[i])
+	while (total_line[k] && k <= *i)
 	{
-		if (total_line[i] == ')')
+		if (total_line[k] == ')')
 		{
-			j = i + 1;
+			j = k + 1;
 			j = ignore_spaces(total_line, j);
 			if (!total_line[j] || total_line[j] == ')' || (total_line[j] == '&'
 				&& total_line[j + 1] == '&') || (total_line[j] == '|' && total_line[j + 1] == '|'))
@@ -124,7 +124,7 @@ bool	check_closed_p_operator(char *total_line)
 			else
 				return (errors(SYNTAX_CLOSE_P, NULL), false);
 		}
-		i++;
+		k++;
 	}
 	return (true);
 }
