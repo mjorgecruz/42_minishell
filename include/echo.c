@@ -1,6 +1,8 @@
 
 #include "minishell.h"
 
+
+/*deals with the newline -n -n -nnnnnnn etc*/
 bool    ft_find_n(char *str)
 {
     int i;
@@ -19,6 +21,8 @@ bool    ft_find_n(char *str)
     }
     return (false);
 }
+
+/*expander needs to be integrated for the comand string list */
 
 int	command_echo(char **cmds)
 {
