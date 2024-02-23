@@ -182,7 +182,7 @@ int quotation_size(char *cmd, int start)
     return i - start + 1;
 }
 
-void create_list_(char *cmd, t_lstexpand **in_cmd_list)
+void create_list_quotes(char *cmd, t_lstexpand **in_cmd_list)
 {
     int i = 0;
     int start = 0;
@@ -205,70 +205,131 @@ void create_list_(char *cmd, t_lstexpand **in_cmd_list)
         insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + start, i - start)));
 }
 
-// int main()
-// {
-//     char cmd[1000];
-//     t_lstexpand *in_cmd_list = NULL;
 
-//     printf("Enter a command: ");
-//     while (fgets(cmd, sizeof(cmd), stdin))
-// 	{
-//         cmd[strcspn(cmd, "\n")] = '\0';
-//         create_list_(cmd, &in_cmd_list);
-//         printf("Command parts:\n");
-//         print_list(in_cmd_list);
-//         free_lstexpand(in_cmd_list);
-//         in_cmd_list = NULL;
-//         printf("\nEnter a command: ");
-//     }
-//     return 0;
-// }
+void expand_content_in_list(t_lstexpand *head)
+{
+    t_lstexpand *current;
+    char *expanded_content;
+
+	current = head;
+    while (current != NULL)
+	{
+        expanded_content = expand_single_variable(current->content);
+        free(current->content);
+        current->content = expanded_content;
+        current = current->next;
+    }
+}
+
+void clean_quotes_in_list(t_lstexpand *head)
+{
+    t_lstexpand *current;
+	
+	current = head;
+    while (current != NULL)
+    {
+        if ((strcmp(current->content, "''") == 0) || (strcmp(current->content, "\"\"") == 0))
+        {
+            free(current->content);
+            current->content = NULL;
+        }
+        else
+        {
+            int len = strlen(current->content);
+            if (len >= 2 && ((current->content[0] == '\'' && current->content[len - 1] == '\'') ||
+                             (current->content[0] == '\"' && current->content[len - 1] == '\"')))
+            {
+                char *temp = strdup(current->content + 1);
+                temp[len - 2] = '\0';
+                free(current->content);
+                current->content = temp;
+            }
+        }
+        current = current->next;
+    }
+}
+
+char *join_list_contents(t_lstexpand *head)
+{
+    int total_length;
+	t_lstexpand *current;
+	char *joined_content;
+
+	total_length = 0;
+	current = head;
+    while (current != NULL)
+    {
+        if (current->content != NULL)
+            total_length += strlen(current->content);
+        current = current->next;
+    }
+    joined_content = malloc((total_length + 1) * sizeof(char));
+    if (!joined_content) return NULL;
+    joined_content[0] = '\0';
+    current = head;
+    while (current != NULL)
+    {
+        if (current->content != NULL)
+            strcat(joined_content, current->content);
+        current = current->next;
+    }
+    return joined_content;
+}
 
 
-// int main()
-// {
-//     char cmd[] = "$HOME$home'''$HOME'\"\"\"$HOME\"  balalsksks";
-//     t_lstexpand *in_cmd_list = NULL;
-//     create_list_(cmd, &in_cmd_list);
-//     print_list(in_cmd_list);
-//     free_lstexpand(in_cmd_list);
-//     return 0;
-// }
+char *master_expander(const char *cmd)
+{
+    t_lstexpand *in_cmd_list;
+	char *joined_content;
 
+	in_cmd_list = NULL;
+    create_list_quotes(cmd, &in_cmd_list);
+    expand_content_in_list(in_cmd_list);
+    clean_quotes_in_list(in_cmd_list);
+    joined_content = join_list_contents(in_cmd_list);
+	free_lstexpand(in_cmd_list);
+    in_cmd_list = NULL;
+    return (joined_content);
+}
 
-// int main(void)
-// {
-//     char input_cmd[100];
-    
-//     printf("EXPANDER_Minishell/> ");
-//     fgets(input_cmd, sizeof(input_cmd), stdin);
-//     input_cmd[strcspn(input_cmd, "\n")] = '\0'; 
-//     char *result = expand_single_variable(input_cmd);
-//     printf("Expanded command: %s\n", result);
-//     free(result);
-//     return 0;
-// }
+int main()
+{
+    char cmd[1000];
+    t_lstexpand *in_cmd_list = NULL;
 
-// int main()
-// {
-// 	char *l1 = "Node 1 content";
-// 	char *l2 = "Node 2 content";
-// 	char *l3 = "Node 3 content";
+    printf("Enter a command: ");
+    while (fgets(cmd, sizeof(cmd), stdin))
+    {
+        cmd[strcspn(cmd, "\n")] = '\0';
 
-//     t_lstexpand *node1 = create_node_lstexpand(1, l1);
-//     t_lstexpand *node2 = create_node_lstexpand(0, l2);
-//     t_lstexpand *node3 = create_node_lstexpand(1, l3);
-//     t_lstexpand *head = NULL;
-//     insert_lstexpand_node(&head, node1);
-//     insert_lstexpand_node(&head, node2);
-//     insert_lstexpand_node(&head, node3);
-//     printf("Printing the list:\n");
-//     print_list(head);
-//     //free_lstexpand(head); //dont free cuz im using string literals only available on the read scope not needed to free
-//     return 0;
-// }
+        create_list_quotes(cmd, &in_cmd_list);
 
+        printf("List before expansion:\n");
+        print_list(in_cmd_list);
 
+        expand_content_in_list(in_cmd_list);
+
+        printf("\nList after expansion:\n");
+        print_list(in_cmd_list);
+
+        printf("\nCleaning the list:\n");
+        clean_quotes_in_list(in_cmd_list);
+
+        printf("\nList after cleaning:\n");
+        print_list(in_cmd_list);
+
+        char *joined_content = join_list_contents(in_cmd_list);
+        printf("\nJoined content:\n%s\n", joined_content);
+        free(joined_content);
+
+        free_lstexpand(in_cmd_list);
+        in_cmd_list = NULL;
+
+        printf("\nEnter a command: ");
+    }
+
+    return 0;
+}
 
 ////////////////////////////////////// GARBAGE CAN ////////////////////////////////////////////////
 
