@@ -180,16 +180,20 @@ void free_lstexpand(t_lstexpand *head)
 
 int main()
 {
-    t_lstexpand *node1 = create_node_lstexpand(1, 1, "Node 1 content");
-    t_lstexpand *node2 = create_node_lstexpand(2, 0, "Node 2 content");
-    t_lstexpand *node3 = create_node_lstexpand(3, 1, "Node 3 content");
+	char *l1 = "Node 1 content";
+	char *l2 = "Node 2 content";
+	char *l3 = "Node 3 content";
+
+    t_lstexpand *node1 = create_node_lstexpand(1, 1, l1);
+    t_lstexpand *node2 = create_node_lstexpand(2, 0, l2);
+    t_lstexpand *node3 = create_node_lstexpand(3, 1, l3);
     t_lstexpand *head = NULL;
     insert_lstexpand_node(&head, node1);
     insert_lstexpand_node(&head, node2);
     insert_lstexpand_node(&head, node3);
     printf("Printing the list:\n");
     print_list(head);
-    free_lstexpand(head);
+    //free_lstexpand(head); //dont free cuz im using string literals only available on the read scope not needed to free
     return 0;
 }
 
