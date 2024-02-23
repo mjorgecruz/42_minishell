@@ -2,7 +2,6 @@
 
 typedef struct s_lstexpand
 {
-    int id;
     int status;
     char *content;
     struct s_lstexpand *next;
@@ -15,15 +14,9 @@ int		quotes_counter(char *cmd);
 char	*expand_single_variable(char *cmd);
 
 t_lstexpand *create_node_lstexpand(int status, char *content);
-void insert_lstexpand_node(t_lstexpand **head, t_lstexpand *newNode);
+void insert_lstexpand_node(t_lstexpand **head, t_lstexpand *new_node);
 void free_lstexpand(t_lstexpand *head);
 void print_list(t_lstexpand *head);
-
-
-
-
-
-
 
 
 char	*get_ds_code(char *cmd)
@@ -112,25 +105,6 @@ char	*expand_single_variable(char *cmd)
 }
 
 ////////////////////////////// Structure that is used to create a linjed list of the comand by parts to be used by the expander
-/*
-ex:
-
-$HOME$home'''$HOME'"""$HOME"  balalsksks
-[$HOME$home]['']['$HOME'][""]["$HOME"][  balalsksks]             (this is how i want the data to be formated)
-
-has to become: /home/luis-ffe$HOME/home/luis-ffebalalsksks
-
-the linked list divdes them in order by 
-
-[$HOME$home]
-['']
-['$HOME']
-[""]
-["$HOME"]
-[  balalsksks]
-
-and then need to remove the quotes! and expande the ones that should be expanded
-*/
 
 t_lstexpand *create_node_lstexpand(int status, char *content)
 {
@@ -154,18 +128,18 @@ void print_list(t_lstexpand *head)
     }
 }
 
-void insert_lstexpand_node(t_lstexpand **head, t_lstexpand *newNode)
+void insert_lstexpand_node(t_lstexpand **head, t_lstexpand *new_node)
 {
     t_lstexpand *temp;
 
     if (*head == NULL)
-		*head = newNode;
+		*head = new_node;
     else
     {
         temp = *head;
         while (temp->next != NULL)
             temp = temp->next;
-        temp->next = newNode;
+        temp->next = new_node;
     }
 }
 
@@ -182,6 +156,86 @@ void free_lstexpand(t_lstexpand *head)
     }
 }
 
+char *ft_strndup(const char *s, size_t n)
+{
+    char *dup;
+    size_t len = ft_strlen(s);
+    if (len < n)
+        n = len;
+    dup = (char *)malloc(sizeof(char) * (n + 1));
+    if (!dup)
+        return NULL;
+    ft_memcpy(dup, s, n);
+    dup[n] = '\0';
+    return dup;
+}
+
+int quotation_size(char *cmd, int start)
+{
+    char quote;
+    int i;
+	
+	i = start + 1;
+	quote = cmd[start];
+    while (cmd[i] != '\0' && cmd[i] != quote)
+        i++;
+    return i - start + 1;
+}
+
+void create_list_(char *cmd, t_lstexpand **in_cmd_list)
+{
+    int i = 0;
+    int start = 0;
+
+    while (cmd[i] != '\0')
+    {
+        if (cmd[i] == '\'' || cmd[i] == '\"')
+        {
+            if (i > start)
+                insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + start, i - start)));
+            int size = quotation_size(cmd, i);
+            insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + i, size)));
+            i = i + size;
+            start = i;
+        }
+        else
+            i++;
+    }
+    if (i > start)
+        insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + start, i - start)));
+}
+
+// int main()
+// {
+//     char cmd[1000];
+//     t_lstexpand *in_cmd_list = NULL;
+
+//     printf("Enter a command: ");
+//     while (fgets(cmd, sizeof(cmd), stdin))
+// 	{
+//         cmd[strcspn(cmd, "\n")] = '\0';
+//         create_list_(cmd, &in_cmd_list);
+//         printf("Command parts:\n");
+//         print_list(in_cmd_list);
+//         free_lstexpand(in_cmd_list);
+//         in_cmd_list = NULL;
+//         printf("\nEnter a command: ");
+//     }
+//     return 0;
+// }
+
+
+// int main()
+// {
+//     char cmd[] = "$HOME$home'''$HOME'\"\"\"$HOME\"  balalsksks";
+//     t_lstexpand *in_cmd_list = NULL;
+//     create_list_(cmd, &in_cmd_list);
+//     print_list(in_cmd_list);
+//     free_lstexpand(in_cmd_list);
+//     return 0;
+// }
+
+
 // int main(void)
 // {
 //     char input_cmd[100];
@@ -195,24 +249,24 @@ void free_lstexpand(t_lstexpand *head)
 //     return 0;
 // }
 
-int main()
-{
-	char *l1 = "Node 1 content";
-	char *l2 = "Node 2 content";
-	char *l3 = "Node 3 content";
+// int main()
+// {
+// 	char *l1 = "Node 1 content";
+// 	char *l2 = "Node 2 content";
+// 	char *l3 = "Node 3 content";
 
-    t_lstexpand *node1 = create_node_lstexpand(1, l1);
-    t_lstexpand *node2 = create_node_lstexpand(0, l2);
-    t_lstexpand *node3 = create_node_lstexpand(1, l3);
-    t_lstexpand *head = NULL;
-    insert_lstexpand_node(&head, node1);
-    insert_lstexpand_node(&head, node2);
-    insert_lstexpand_node(&head, node3);
-    printf("Printing the list:\n");
-    print_list(head);
-    //free_lstexpand(head); //dont free cuz im using string literals only available on the read scope not needed to free
-    return 0;
-}
+//     t_lstexpand *node1 = create_node_lstexpand(1, l1);
+//     t_lstexpand *node2 = create_node_lstexpand(0, l2);
+//     t_lstexpand *node3 = create_node_lstexpand(1, l3);
+//     t_lstexpand *head = NULL;
+//     insert_lstexpand_node(&head, node1);
+//     insert_lstexpand_node(&head, node2);
+//     insert_lstexpand_node(&head, node3);
+//     printf("Printing the list:\n");
+//     print_list(head);
+//     //free_lstexpand(head); //dont free cuz im using string literals only available on the read scope not needed to free
+//     return 0;
+// }
 
 
 
