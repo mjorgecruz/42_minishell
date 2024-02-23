@@ -277,7 +277,7 @@ char *join_list_contents(t_lstexpand *head)
 }
 
 
-char *master_expander(const char *cmd)
+char *master_expander(char *cmd)
 {
     t_lstexpand *in_cmd_list;
 	char *joined_content;
@@ -292,6 +292,25 @@ char *master_expander(const char *cmd)
     return (joined_content);
 }
 
+// cc expansive.c -o expansive -Ilibft -Llibft -lft
+int main()
+{
+    char cmd[1000];
+    char *expanded_cmd;
+
+    printf("Enter a command: ");
+    while (fgets(cmd, sizeof(cmd), stdin))
+    {
+        cmd[strcspn(cmd, "\n")] = '\0';
+        expanded_cmd = master_expander(cmd);
+        printf("Expanded command: %s\n", expanded_cmd);
+        free(expanded_cmd);
+        printf("\nEnter a command: ");
+    }
+
+    return 0;
+}
+/*
 int main()
 {
     char cmd[1000];
@@ -330,51 +349,4 @@ int main()
 
     return 0;
 }
-
-////////////////////////////////////// GARBAGE CAN ////////////////////////////////////////////////
-
-/*  functions not in use anymore but work fine and are good!
-
-bool is_valid_to_expand(const char *var)
-{
-    int i;
-
-    i = 0;
-    if (var[0] != '$')
-        return (false);
-    else if (ft_isdigit(var[1]))
-        return (false);
-    while (var[++i])
-    {
-        if (!ft_isalpha(var[i]) && !ft_isdigit(var[i]) && var[i] != '_')
-            return(false);
-    }
-    return (true);
-}
-
-char    *substr_expander(char *cmd)
-{
-    char *cmd_var;
-    char *curr_env;
-
-    if (!is_valid_to_expand(cmd))
-    {
-        printf("Warning: '%s' does not exist.\n", cmd);
-        return (NULL);
-    }
-    else if (cmd[0] == '$')
-        cmd_var = ft_strdup(cmd + 1);
-    else
-        return (NULL);
-    curr_env = getenv(cmd_var);
-    if (curr_env != NULL)
-    {
-        free(cmd_var);
-        return strdup(curr_env);
-    }
-    else
-        printf("Warning: '%s' does not exist.\n", cmd_var);
-    return (NULL);
-}
-
 */
