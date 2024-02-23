@@ -62,15 +62,6 @@ int	quotes_counter(char *cmd)
 	return (i);
 }
 
-/*
-
-necessita receber o comando dividido
-'$HOME'"$HOME"$HOME
-tenho de separa o que esta dentro de singles do restante e depois tenho de remover
-as aspas
-
-*/
-
 char	*expand_single_variable(char *cmd)
 {
 	char	*env;
@@ -94,8 +85,29 @@ char	*expand_single_variable(char *cmd)
 	return (expanded_str);
 }
 
+////////////////////////////// Structure that is used to create a linjed list of the comand by parts to be used by the expander
+/*
+ex:
 
-typedef struct s_lstexpand {
+$HOME$home'''$HOME'"""$HOME"  balalsksks
+[$HOME$home]['']['$HOME'][""]["$HOME"][  balalsksks]             (this is how i want the data to be formated)
+
+has to become: /home/luis-ffe$HOME/home/luis-ffebalalsksks
+
+the linked list divdes them in order by 
+
+[$HOME$home]
+['']
+['$HOME']
+[""]
+["$HOME"]
+[  balalsksks]
+
+and then need to remove the quotes! and expande the ones that should be expanded
+*/
+
+typedef struct s_lstexpand
+{
     int id;
     int status;
     char *content;
@@ -109,177 +121,49 @@ t_lstexpand *create_node_lstexpand(int id, int status, char *content)
     new_node = (t_lstexpand *)malloc(sizeof(t_lstexpand));
     if (!new_node)
         return (NULL);
-    new_node->id = id;
+    new_node->id = id; //nao sera necessario
     new_node->status = status;
     new_node->content = content;
     new_node->next = NULL;
     return new_node;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int main(void)
+void print_list(t_lstexpand *head)
 {
-    char input_cmd[100];
-    
-    printf("EXPANDER_Minishell/> ");
-    fgets(input_cmd, sizeof(input_cmd), stdin);
-    input_cmd[strcspn(input_cmd, "\n")] = '\0'; 
-    char *result = expand_single_variable(input_cmd);
-    printf("Expanded command: %s\n", result);
-    free(result);
-    return 0;
+    while (head != NULL)
+	{
+        printf("ID: %d, Status: %d, Content: %s\n", head->id, head->status, head->content);
+        head = head->next;
+    }
 }
 
-// typedef struct s_expstr
-// {
-// 	char		*str;
-//     int         i;
+void insert_lstexpand_node(t_lstexpand **head, t_lstexpand *newNode)
+{
+    t_lstexpand *temp;
 
-// }	t_expstr;
+    if (*head == NULL)
+		*head = newNode;
+    else
+    {
+        temp = *head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+}
 
-// t_expstr *init_expstr(char *cmd_str)
-// {
-//     t_expstr *str_data = malloc(sizeof(t_expstr));
-//     if (!str_data)
-//         return (NULL);
-//     str_data->i = 0;
-//     str_data->str = ft_strcpy(cmd_str);
-//     return (str_data);
-// }
+void free_lstexpand(t_lstexpand *head)
+{
+    t_lstexpand *temp;
 
-// char *shell_like_expander(char *cmd_str)
-// {
-//     t_expstr *str_data;
-//     char *expanded_str;
-
-//     str_data = init_expstr(cmd_str);
-
-//     /*function to iterate and expand the str in the structure*/
-
-//     expanded_str = ft_strcpy(str_data->str);
-//     free (str_data);
-//     return (expanded_str);
-// }
-
-// /*supposed to build the entire new string with the env var expanded*/
-
-// // char *expand_into_new_str(char *str)
-// // {
-// //     bool s_quote;
-// //     bool d_quote;
-// //     int i;
-
-// //     s_quote = false;
-// //     d_quote = false;
-// //     i = -1;
-// //     while (str[++i])
-// //     {
-// //         if (!d_quote && !s_quote && str[i] == "\"" )
-// //             d_quote = true;
-// //         else if (d_quote && str[i] == "\"" )
-// //             d_quote = false;
-// //         else if (!d_quote && !s_quote && str[i] == "\'" )
-// //             s_quote = true;
-// //         else if (s_quote && str[i] == "\'" )
-// //             s_quote = false;
-// //     }
-// // }
-
-
-// /*
-// expandir ou nao quote management
-// "" expande
-// single not
-
-
-// is_valid_to_expand e expande or else fica igual(aspens removal in the endens)
-
-// expande- copiar tudo o que ta antes e depois para compor a frase *placeholders
-
-// master_expander(substitui o que esta no $)
-
-// colar tudo 
-
-// remove aspens if needed
-
-// ft_strdup
-// ft_strlcat
-// */
-
-// bool is_valid_to_expand(const char *var)
-// {
-//     int i;
-
-//     i = 0;
-//     if (var[0] != '$')
-//         return (false);
-//     else if (ft_isdigit(var[1]))
-//         return (false);
-//     while (var[++i])
-//     {
-//         if (!ft_isalpha(var[i]) && !ft_isdigit(var[i]) && var[i] != '_')
-//             return(false);
-//     }
-//     return (true);
-// }
-
-// /* expands the given string that must start with the $ and returns already cleared of $
-// */
-// char    *substr_expander(char *cmd)
-// {
-//     char *cmd_var;
-//     char *curr_env;
-
-//     if (!is_valid_to_expand(cmd))
-//     {
-//         printf("Warning: '%s' does not exist.\n", cmd);
-//         return (NULL);
-//     }
-//     else if (cmd[0] == '$')
-//         cmd_var = ft_strdup(cmd + 1);
-//     else
-//         return (NULL);
-//     curr_env = getenv(cmd_var);
-//     if (curr_env != NULL)
-//     {
-//         free(cmd_var);
-//         return strdup(curr_env);
-//     }
-//     else
-//         printf("Warning: '%s' does not exist.\n", cmd_var);
-//     return (NULL);
-// }
-
-//$HOME$home'$HOME'"$HOME""'" = /home/luis-ffe  $HOME /home/luis-ffe'
-// $home lowercase disapears is not expanded and not printed
-// '$HOME'   in single quotes treated as  literal not expanded
-// "$HOME"   tretated normally
-// "'" prints the
-
-/*to test this make sure you are on the include directory and have done a make for minishell
-now just paste this:
-cc expansive.c -o expansive -Ilibft -Llibft -lf
-./expansive
-
-write comands with $ at the start
-
-make sure the smae functions are comented in the main minishell
-*/
-
+    while (head != NULL)
+	{
+        temp = head;
+        head = head->next;
+        free(temp->content);
+        free(temp);
+    }
+}
 
 // int main(void)
 // {
@@ -288,7 +172,73 @@ make sure the smae functions are comented in the main minishell
 //     printf("EXPANDER_Minishell/> ");
 //     fgets(input_cmd, sizeof(input_cmd), stdin);
 //     input_cmd[strcspn(input_cmd, "\n")] = '\0'; 
-//     char *result = get_ds_code(input_cmd);
+//     char *result = expand_single_variable(input_cmd);
 //     printf("Expanded command: %s\n", result);
+//     free(result);
 //     return 0;
 // }
+
+int main()
+{
+    t_lstexpand *node1 = create_node_lstexpand(1, 1, "Node 1 content");
+    t_lstexpand *node2 = create_node_lstexpand(2, 0, "Node 2 content");
+    t_lstexpand *node3 = create_node_lstexpand(3, 1, "Node 3 content");
+    t_lstexpand *head = NULL;
+    insert_lstexpand_node(&head, node1);
+    insert_lstexpand_node(&head, node2);
+    insert_lstexpand_node(&head, node3);
+    printf("Printing the list:\n");
+    print_list(head);
+    free_lstexpand(head);
+    return 0;
+}
+
+
+
+////////////////////////////////////// GARBAGE CAN ////////////////////////////////////////////////
+
+/*  functions not in use anymore but work fine and are good!
+
+bool is_valid_to_expand(const char *var)
+{
+    int i;
+
+    i = 0;
+    if (var[0] != '$')
+        return (false);
+    else if (ft_isdigit(var[1]))
+        return (false);
+    while (var[++i])
+    {
+        if (!ft_isalpha(var[i]) && !ft_isdigit(var[i]) && var[i] != '_')
+            return(false);
+    }
+    return (true);
+}
+
+char    *substr_expander(char *cmd)
+{
+    char *cmd_var;
+    char *curr_env;
+
+    if (!is_valid_to_expand(cmd))
+    {
+        printf("Warning: '%s' does not exist.\n", cmd);
+        return (NULL);
+    }
+    else if (cmd[0] == '$')
+        cmd_var = ft_strdup(cmd + 1);
+    else
+        return (NULL);
+    curr_env = getenv(cmd_var);
+    if (curr_env != NULL)
+    {
+        free(cmd_var);
+        return strdup(curr_env);
+    }
+    else
+        printf("Warning: '%s' does not exist.\n", cmd_var);
+    return (NULL);
+}
+
+*/
