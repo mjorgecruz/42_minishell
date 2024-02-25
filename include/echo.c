@@ -29,14 +29,20 @@ int	command_echo(char **cmds)
 {
     int i;
 	bool n_flag;
+    char *exp_temp;
 	
 	i = 0;
 	n_flag = false;
-    while (cmds[++i] && ft_find_n(cmds[i]))
+    while (cmds[++i] && ft_find_n(cmds[i])) // e se o expandido tive -n??
         n_flag = true;
     while (cmds[i] != NULL)
     {
-        printf("%s ", cmds[i]);
+        exp_temp = master_expander(cmds[i]);
+        if (exp_temp)
+        {
+            printf("%s ", exp_temp);
+            free(exp_temp);
+        }
         i++;
     }
     if (!n_flag)
