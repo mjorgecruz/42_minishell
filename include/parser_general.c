@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:05:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:47:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,93 +15,86 @@ the terminal*/
 
 #include "minishell.h"
 
-void	ft_parser(char *line_read)
+bool	ft_parser(char *line_read, int *i)
 {
-	parser_quotes(line_read);
-	//parser_special(line_read);
-	if (!text_in_parenthesis(line_read))
-		return (errors(SYNTAX_CLOSE_P, NULL));
-	else if (parenthesis_after_command(line_read))
-		return (errors(SYNTAX_OPEN_P, NULL));
-	else if (parenthesis_before_command(line_read))
-		return (errors(SYNTAX_CMD, NULL));
-	return ;
+	if (is_invalid_start_sign(line_read))
+		return (0);
+	while (line_read[*i])
+	{
+		if (!parser_quotes(line_read, i))
+			return(false);
+		if (!parser_special(line_read, i))
+			return(false);
+		if (line_read[*i] == '\\')
+			return(errors(SYNTAX_BACKSLASH, NULL), false);
+		if (line_read[*i] == ';')
+			return(errors(SYNTAX_COLON, NULL), false);
+		if (!text_in_parenthesis(line_read, i))
+			return (errors(SYNTAX_CLOSE_P, NULL), false);
+		else if (parenthesis_after_command(line_read, i))
+			return (errors(SYNTAX_OPEN_P, NULL), false);
+		else if (parenthesis_before_command(line_read, i))
+			return (errors(SYNTAX_CMD, NULL), false);
+		if (parser_parenthesis(line_read, i) < 0)
+			return (false);
+		(*i)++;
+	}	
+	if (open_parenthesis(line_read) < 0)
+		return(errors(SYNTAX_CLOSE_P, NULL), false);
+	return (true);
 }
 
-bool	text_in_parenthesis(char *line_read)
+bool	text_in_parenthesis(char *line_read, int *i)
 {
-	int		i;
 	int		j;
-
-	i = 0;
+	
 	j = 0;
-	while (line_read[i] != '\0')
+	if (line_read[*i] == ')')
 	{
-		pass_quotes(line_read, &i);
-		if (line_read[i] == ')')
-		{
-			j = i - 1;
-			while (j >= 0 && line_read[j] == ' ')
-				j--;
-			if (line_read[j] == '(')
-				return (false);
-		}
-		i++;
+		j = (*i) - 1;
+		while (j >= 0 && line_read[j] == ' ')
+			j--;
+		if (line_read[j] == '(')
+			return (false);
 	}
 	return (true);
 }
 
-bool	parenthesis_after_command(char *line_read)
+bool	parenthesis_after_command(char *line_read, int *i)
 {
-	int		i;
 	int		j;
-
-	i = 0;
+	
 	j = 0;
-	while (line_read[i] != '\0')
+	if (line_read[*i] == '(')
 	{
-		pass_quotes(line_read, &i);
-		if (line_read[i] == '(')
-		{
-			j = i - 1;
-			if (line_read[j] != '*')
-				return (true);
-			while (j >= 0 && line_read[j] == ' ')
-				j--;
-			if (line_read[j] != '|' && line_read[j] != '&'
-				&& line_read[j] != '<' && line_read[j] != '>' && j != -1)
-				return (true);
-		}
- 		i++;
+		j = (*i) - 1;
+		if (line_read[j] == '*')
+			return (false);
+		while (j >= 0 && line_read[j] == ' ')
+			j--;
+		if (line_read[j] != '|' && line_read[j] != '&'
+			&& line_read[j] != '<' && line_read[j] != '>' && j >= 0)
+			return (true);
 	}
-	if (line_read[i] == '\0')
+	if (line_read[*i] == '\0')
 		return (false);
-	return (true);
+	return (false);
 }
 
-bool	parenthesis_before_command(char *line_read)
+bool	parenthesis_before_command(char *line_read, int *i)
 {
-	int		i;
 	int		j;
 
-	i = 0;
 	j = 0;
-	while (line_read[i] != '\0')
+	if (line_read[*i] == ')')
 	{
-		pass_quotes(line_read, &i);
-		if (line_read[i] == ')')
-		{
-			j = i + 1;
-			while (line_read[j] != '\0' && line_read[j] == ' ')
-				j++;
-			if (line_read[j] != '|' && line_read[j] != '&'
-				&& line_read[j] != '<' && line_read[j] != '>' 
-				&& line_read[j] != '\0')
-				return (true);
-		}
-		i++;
+		j = (*i) + 1;
+		while (line_read[j] != '\0' && line_read[j] == ' ')
+			j++;
+		if (line_read[j] != '|' && line_read[j] != '&'
+			&& line_read[j] != '<' && line_read[j] != '>' 
+			&& line_read[j] != '\0' && line_read[j] != ')' )
+			return (true);
 	}
-	if (line_read[i] == '\0')
-		return (false);
-	return (true);
+	return (false);
 }

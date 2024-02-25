@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 09:59:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:04:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	fill_cmds(t_token *cmd_list, int specials)
 		while (cmd_list->content[pos] == ' ')
 			pos++;
 		cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
-		while (cmd_list->content[pos] 
+		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
 			&& (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
 			pos++;
 		i++;

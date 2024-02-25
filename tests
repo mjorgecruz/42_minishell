@@ -1,0 +1,42 @@
+	 &
+	 |
+	 >
+	 <
+	ls <|> (erro |)
+	ls >| (erro newline)
+	sada <> adasd (tudo ok)
+	sada <>| (erro token |)
+	<& (erro &)
+	ls ><| (erro token <)
+	le >  < (erro token <)
+	ls ><   | (erro token <)
+	ls >   <| (erro  token <)
+	>| sadda (tudo ok)
+	asdas || >> sDS
+	 < &
+	<>< erro de token <
+	dawd >> erro de newline
+	dasd << erro de newline
+
+	echo "" "" tem que aparecer as aspas todas
+	adhwih < erro newline
+	sa " << da"
+
+	rui testes
+	ls || '"
+	ls || (re||re))
+	<< re
+	ls || (((re||re) ||re)||re)
+	ls || (re||re)|(re||re)
+	ls || (re||re)(re
+	((ls||re)||re)
+	(re||re&& )
+	(re||re&&(re||Re))
+	ls || ((re||re)||re))
+	ls << re | escreves pipe no input do pipe
+	ls || escreves pipe no input do pipe
+		ls || (re||re
+> ||(
+> re||re
+> )
+> )

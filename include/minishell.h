@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/05 11:01:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:17:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 # include "parser.h"
-# include "builtins.h"
 # include <linux/limits.h>
 
 #define S_QUOTE 39
@@ -86,6 +85,15 @@ typedef struct s_token
 	t_command		*cmds;
 }	t_token;
 
+typedef struct s_segment
+{
+	char *segment;
+	struct s_segment *next;
+	struct s_segment *left;
+	struct s_segment *right;
+	t_token *partial; 
+}	t_segment;
+
 /*Definition of error cases*/
 enum e_ERRORS
 {
@@ -99,6 +107,15 @@ enum e_ERRORS
 	SYNTAX_D_AMP,
 	SYNTAX_AMP_PIPE,
 	SYNTAX_CMD,
+	SYNTAX_ASP,
+	SYNTAX_S_ASP,
+	SYNTAX_L_S_REDIR,
+	SYNTAX_R_S_REDIR,
+	SYNTAX_L_D_REDIR,
+	SYNTAX_R_D_REDIR,
+	SYNTAX_BACKSLASH,
+	SYNTAX_COLON,
+	HEREDOC_EOF,
 };
 
 /* ************************************************************************** */
@@ -122,9 +139,9 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char		*get_line(char *line_read);
+char		*get_line(char *line_read, char ***heredocs);
 
-void		join_to_line(char **total_line);
+bool		join_to_line(char **total_line, char ***heredocs);
 
 bool		end_pipe_and(char *total_line);
 
@@ -145,13 +162,13 @@ char		*get_end_path(void);
 /* General parser function. It must guarantee all clean-up of the string 
 received and its freeing. The output is a completely clean string to 
 be interpreted*/
-void		ft_parser(char *line_read);
+bool		ft_parser(char *line_read, int *i);
 
-bool		text_in_parenthesis(char *line_read);
+bool		text_in_parenthesis(char *line_read, int *i);
 
-bool		parenthesis_after_command(char *line_read);
+bool		parenthesis_after_command(char *line_read, int *i);
 
-bool		parenthesis_before_command(char *line_read);
+bool		parenthesis_before_command(char *line_read, int *i);
 
 
 /* ************************************************************************** */
@@ -160,14 +177,14 @@ bool		parenthesis_before_command(char *line_read);
 
 /*General function to do the first clean-up of the string received in the
 terminal. It gets rid of the unnecessary quotes*/
-void		parser_quotes(char *input);
+bool		parser_quotes(char *input, int *i);
 
 /* ************************************************************************** */
 /*                               GENERAL_EXECUTOR                             */
 /* ************************************************************************** */
 
 /**/
-void		general_executer(char *input, char *paths);
+void		general_executer(char *input, char *paths, char ***heredocs);
 
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
@@ -224,11 +241,11 @@ t_builtin	get_builtin_id(const char *str);
 
 /*gest the previous function working and seting the structure id of the comand
 to the correct comand enum id flag*/
-void	set_id_flag_cmd(t_token *cmd_list);
+void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
-with it id flag*/
-void	exec_correct_builtin(t_command *cmds);
+with its id flag*/
+void		exec_correct_builtin(t_command *cmds);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
@@ -243,13 +260,17 @@ int			command_execve(char *cmd, char *paths);
 /*Handle of all errors*/
 void		errors(int error_code, char *cmd);
 
-int			wrong_syntax(char **total_line);
+void 		errors_2(int error_code, char *cmd);
+
+int			wrong_syntax(char *total_line);
+
+int			error_definer(char *cmd);
 
 /* ************************************************************************** */
 /*                                     FINEX                                  */
 /* ************************************************************************** */
 
-void		clean_cmd_list(t_token *cmd_list, char *paths);
+void		clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs);
 
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);
@@ -258,13 +279,12 @@ int			free_split(char **splitted);
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
 
-int		ignore_in_quotes(const char *str, int pos);
-int		ignore_spaces(const char *str, int pos);
-bool	is_special_char(char c);
-bool	is_space(char c);
+int			ignore_in_quotes(char *str, int pos);
+int			ignore_spaces(char *str, int pos);
+bool		is_special_char(char c);
+bool		is_space(char c);
 
-
-char	*ft_strcpy(char *s);
+char		*ft_strcpy(char *s);
 
 /*Creates a new node from the line read*/
 t_token		*init_struct_cmd(void);
@@ -272,4 +292,39 @@ t_token		*init_struct_cmd(void);
 /*adds the node created to the linked list of tokens*/
 void		add_token(t_token **tokens, t_token *new);
 
+/* ************************************************************************** */
+/*                                    BUILTINS                                */
+/* ************************************************************************** */
+
+int			comand_pwd(void);
+// int	command_echo(t_token **cmd_list);
+// int	command_cd(t_token **cmd_list);
+// int	command_export(t_token **cmd_list);
+// int	command_unset(t_token **cmd_list);
+// int	command_env(t_token **cmd_list);
+// int	command_exit(t_token **cmd_list);
+
+/* ************************************************************************** */
+/*                                    HEREDOCS                                */
+/* ************************************************************************** */
+
+void		heredoc_writer(char *line_read, char ***heredocs, int i);
+int			heredoc_counter(char *line_read, int i);
+int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
+void		add_newline_line(char **total_line, char *line_read);
+void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
+void		add_partials(char **heredoc, char *str);
+int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
+
 #endif
+
+
+/* ************************************************************************** */
+/*                             PARSER_PARENTHESIS                             */
+/* ************************************************************************** */
+
+int			parser_parenthesis(char *total_line, int *i);
+bool		check_operator_open_p(char *total_line, int *i);
+bool		check_open_p_operator(char *total_line, int *i);
+bool		check_operator_closed_p(char *total_line, int *i);
+bool		check_closed_p_operator(char *total_line, int *i);

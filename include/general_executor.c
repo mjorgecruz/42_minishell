@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/31 10:22:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:41:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ line read into segments separated by pipes*/
 
 #include "minishell.h"
 
-void	general_executer(char *input, char *paths)
+void	general_executer(char *input, char *paths, char ***heredocs)
 {
 	t_token	*cmd_list;
 
@@ -25,7 +25,7 @@ void	general_executer(char *input, char *paths)
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list);
 	tester_function(&cmd_list);
-	//clean_cmd_list(cmd_list, paths);
+	clean_cmd_list(cmd_list, paths, heredocs);
 }
 
 t_token	*command_organizer(char *input)
@@ -142,14 +142,17 @@ int	tester_function(t_token **list)
 			while (i < specials_counter(trav) + 1)
 			{
 				j = 0;
-				printf("id: %d\n", trav->cmds[i].id);
-				while (trav->cmds[i].cmds[j])
+				if (trav->cmds)
 				{
-					printf("cmd( %d , %d ) -> ", i, j);
-					printf("%s \n", trav->cmds[i].cmds[j]);
-					j++;
+					printf("id: %d\n", trav->cmds[i].id);
+					while (trav->cmds[i].cmds[j])
+					{
+						printf("cmd( %d , %d ) -> ", i, j);
+						printf("%s \n", trav->cmds[i].cmds[j]);
+						j++;
+					}
+					printf("cmd_redir: %d\n", trav->cmds[i].type);
 				}
-				printf("cmd_redir: %d\n", trav->cmds[i].type);
 				i++;
 			}
 		}

@@ -1,82 +1,151 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   special_mid_parser.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
+/*   Updated: 2024/02/15 09:46:27 by masoares         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-bool mid_parser_iteration(const char *str)
+bool mid_parser_iteration(char *str, int *i)
 {
-    int i;
-    
-    i = -1;
-    while (str[++i])
-    {
-        i = ignore_in_quotes(str, i);
-        if (i >= 0 && str[i])
-            i = check_pipes(str, i);
-        if (i >= 0 && str[i])
-        {
-            i = ignore_spaces(str, i);
-            i = check_redirs(str, i);
-        }
-        if (i >= 0 && str[i])
-        {
-            i = ignore_spaces(str, i);
-            i = check_uppersand(str, i);
-        }
-        if (i == -1)
-        {
-            printf("\n\x1b[31m[KO] ->\x1b[0m INVALID MID->  M2\x1b[0m\n");
-            return false;
-        }
-    }
-    return true;
+	int		j;
+	
+	j = 0;
+	while (str[j] && j <= *i)
+	{
+		j = ignore_in_quotes(str, j);
+		if (j >= 0 && str[j])
+			j = check_pipes(str, j);
+		if (j >= 0 && str[j])
+		{
+			j = ignore_spaces(str, j);
+			j = check_redirs(str, j);
+		}
+		if (j >= 0 && str[j])
+		{
+			j = ignore_spaces(str, j);
+			j = check_uppersand(str, j);
+		}
+		if (j == -1)
+			return false;
+		if (!str[j])
+			break;
+		j++;
+	}
+	return true;
 }
 
-int check_pipes(const char *str, int pos) //can have | or || se tiver pipe depois destes da erro e se tiver & depois de pipe ou depois de || da erro.
+int check_pipes(char *str, int pos)
 {
-    if (str[pos] != '|')
-        return (pos);
-    else if (str[pos] == str[pos + 1])
-    {
-        pos = ignore_spaces(str, pos + 2);
-        if (str[pos] == '|' || str[pos] == '&')
-            return (-1);
-        return (pos);
-    }
-    else if (!is_special_char(str[pos + 1]))
-    {
-        pos = ignore_spaces(str, pos + 1);
-        if (str[pos] == '|' || str[pos] == '&')
-            return (-1);
-    }
-    return (pos);
+	if (str[pos] != '|')
+		return (pos);
+	else if (str[pos] == str[pos + 1])
+	{
+		pos = ignore_spaces(str, pos + 2);
+		if (str[pos] == '|' || str[pos] == '&')
+			return (error_definer(&str[pos]), -1);
+	}
+	else if (!is_special_char(str[pos + 1]))
+	{
+		pos = ignore_spaces(str, pos + 1);
+		if (str[pos] == '|')
+			return (error_definer(&str[pos]), -1);
+		else if (str[pos] == '&')
+			return (errors(SYNTAX_AMP, NULL), -1);
+	}
+	else if (is_special_char(str[pos + 1]))
+	{
+		pos = ignore_spaces(str, pos + 1);
+		if (str[pos] == '|')
+			return (error_definer(&str[pos]), -1);
+		else if (str[pos] == '&')
+			return (errors(SYNTAX_AMP, NULL), -1);
+	}
+	return (pos);
 }
 
-int check_redirs(const char *str, int pos)
+int check_redirs(char *str, int pos)
 {
-    if (str[pos] == '>' || str[pos] == '<')
-    {
-        if (str[pos] == str[pos + 1])                   // >> ou << com comando valido na frente
-        {
-            if (has_valid_cmd_after(str, pos + 2))
-                return (pos + 2); 
-            return (-1);
-        }
-        else if (!is_special_char(str[pos + 1]))        // > ou < com comando valido na frente
-        {
-            if (has_valid_cmd_after(str, pos + 1))
-                return (pos + 1);
-            return (-1);
-        }
-    }
-    return (pos);
+	if (str[pos] == '>' || str[pos] == '<')
+	{
+		if (!str[pos + 1])
+			return (error_definer(&str[pos + 1]), -1);
+		if (str[pos + 1] && str[pos] == str[pos + 1])
+		{
+			pos = ignore_spaces(str, pos + 2);
+			if (has_valid_cmd_after(str, pos))
+				return (pos);
+			return (error_definer(&str[pos]), -1);
+		}
+		else if (!is_special_char(str[pos + 1]))
+		{
+			pos = ignore_spaces(str, pos + 2);
+			if (has_valid_cmd_after(str, pos))
+				return (pos);
+			return (error_definer(&str[pos]), -1);
+		}
+		else if (str[pos + 1] && str[pos] == '>' && is_special_char(str[pos + 1]))
+			pos = check_redirs_rr_sc(str, pos);
+		else if (str[pos + 1] && str[pos] == '<' && is_special_char(str[pos + 1]))
+			pos = check_redirs_lr_sc(str, pos);
+	}
+	return (pos);
 }
 
-int check_uppersand(const char *str, int pos)
+int check_redirs_rr_sc(char *str, int pos)
 {
-    if (str[pos] != '&')
-        return (pos);
-    else if (str[pos] == '&')
-    {
-        if (str[pos] == str[pos + 1])
-            return (pos + 2);
-    }
-    return (-1);
+	if (str[pos + 1] == '|' || str[pos + 1] == '&')
+	{
+		pos = ignore_spaces(str, pos + 2);
+		if (str[pos] == '\0')
+			return (errors(SYNTAX_NEWLINE, NULL), -1);
+		else if (is_special_char(str[pos]))
+			return (error_definer(&str[pos]), -1);
+	}
+	if (str[pos + 1] == '<' )
+		return (errors(SYNTAX_L_S_REDIR, NULL), -1);
+	pos = ignore_spaces(str, pos + 2);
+	if (str[pos] == '\0')
+		return (errors(SYNTAX_NEWLINE, NULL), -1);
+	return (pos);
+}
+
+int check_redirs_lr_sc(char * str, int pos)
+{
+	if (str[pos + 1] == '|' && str[pos + 2] != '|' && str[pos + 2] != '&')
+		return (errors(SYNTAX_PIPE, NULL), -1);
+	else if  (str[pos + 1] == '|' && str[pos + 2] == '|')
+		return (errors(SYNTAX_D_PIPE, NULL), -1);
+	else if  (str[pos + 1] == '|' && str[pos + 2] == '&')
+		return (errors(SYNTAX_PIPE_AMP, NULL), -1);
+	else if (str[pos + 1] == '&' && str[pos + 2] != '|')
+	{
+		pos = ignore_spaces(str, pos + 2);		
+		return (errors(SYNTAX_AMP, NULL), -1);
+	}
+	else if (str[pos + 1] == '&' && str[pos + 2] == '|')
+		return (errors(SYNTAX_PIPE, NULL), -1);
+	pos = ignore_spaces(str, pos + 2);
+	if (!has_valid_cmd_after(str, pos))
+		return (error_definer(&str[pos]), -1);
+	return (pos);
+}
+
+
+int check_uppersand(char *str, int pos)
+{
+	if (str[pos] != '&')
+		return (pos);
+	else if (str[pos] == '&')
+	{
+		if (str[pos] == str[pos + 1])
+			return (pos + 2);
+	}
+	return (errors(SYNTAX_AMP, NULL), -1);
 }

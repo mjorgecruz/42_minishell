@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:22:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:53:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,74 @@
 
 #include "minishell.h"
 
-char	*get_line(char *total_line)
+char	*get_line(char *total_line, char ***heredocs)
 {
 	char	*line_read;
 	char	*pwd;
 	
+	*heredocs = NULL;
 	pwd = create_pc_name();
 	line_read = readline(pwd);
+	if (!line_read)
+	{
+		printf("exit\n");
+		free(pwd);
+		exit(EXIT_SUCCESS);
+	}
 	total_line = line_read;
-	join_to_line(&total_line);
-	if (total_line && *total_line)
+	if (!join_to_line(&total_line, heredocs))
+	{
+		if (total_line && *total_line)
+		{
+			add_history(total_line);
+			free(total_line);
+			total_line = NULL;
+		}
+	}
+	if (total_line)
 		add_history(total_line);
-	return (total_line);
+	return (free(pwd), total_line);
 }
 
-void	join_to_line(char **total_line)
+bool	join_to_line(char **total_line, char ***heredocs)
 {
 	char 	*line_read;
-	// int		error_code;
+	int		i;
 	
-	// error_code = 0;
+	i = 0;
 	line_read = "";
-	// error_code = wrong_syntax(total_line);
-	// if (error_code != 0)
-	// 	return(errors(error_code));
-	if (open_parenthesis(*total_line) < 0)
-		return(errors(SYNTAX_CLOSE_P, NULL));
+	if(!ft_parser(*total_line, &i))
+	{
+		heredoc_writer(*total_line, heredocs, i);
+		return (false);
+	}
+	heredoc_writer(*total_line, heredocs, i);
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
-		// error_code = wrong_syntax(total_line);
-		// if (error_code != 0)
-		// 	return(errors(error_code));
-		ft_parser(*total_line);
-		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0 || open_parenthesis(*total_line) > 0)
+		i = 0;
+		if(!ft_parser(*total_line, &i))
+			return (false);
+		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0
+		|| open_parenthesis(*total_line) > 0)
 		{
 			line_read = readline("> ");
+			if (!line_read)
+				return (false);
 			if (is_only_spaces(line_read) == 0)
 				continue ;
 			add_space_line(total_line, line_read);
+			if(!ft_parser(*total_line, &i))
+			{
+				heredoc_writer(*total_line, heredocs, i);
+				return (false);
+			}
+			heredoc_writer(line_read, heredocs, i);
 		}
 	}
+	i = 0;
+	if(!ft_parser(*total_line, &i))
+		return (false);
+	return (true);
 }
 
 bool end_pipe_and(char *total_line)
@@ -61,9 +89,9 @@ bool end_pipe_and(char *total_line)
 	int		i;
 
 	i = ft_strlen(total_line) - 1;
-	while (total_line[i] == ' ' && i >= 0)
+	while (i >= 0 && total_line[i] == ' ')
 		i--;
-	if (total_line[i] == '|' || total_line[i] == '&')
+	if (i >= 0 && (total_line[i] == '|' || total_line[i] == '&'))
 		return (true);
 	else
 		return (false);
@@ -97,8 +125,9 @@ void	add_space_line(char **total_line, char *line_read)
 	garbage = *total_line;
 	*total_line = ft_strjoin(*total_line, line_read);
 	free(garbage);
-	ft_parser(*total_line);
+	//ft_parser(*total_line);
 }
+
 
 int		open_parenthesis(char *total_line)
 {
@@ -115,6 +144,8 @@ int		open_parenthesis(char *total_line)
 			count_open++;
 		if (total_line[i] == ')')
 			count_open--;
+		if (count_open < 0)
+			return (-1);
 		i++;
 	}
 	return (count_open);
@@ -131,6 +162,7 @@ char	*create_pc_name(void)
 	vai_fora = name;
 	name = ft_strjoin(name, pwd);
 	free(vai_fora);
+	free(pwd);
 	return (name);
 }
 

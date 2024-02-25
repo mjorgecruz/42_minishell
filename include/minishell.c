@@ -6,32 +6,36 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/01 09:35:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:33:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
 	char	*input;
 	char	*paths;
+	char	**heredocs;
 
 	(void) ac;
 	(void) av;
-	(void) env;
 	paths = getenv("PATH");
 	//clear_terminal(paths);
 	input = NULL;
 	while (1)
 	{
-		input = get_line(input);
+		input = get_line(input, &heredocs);
+		if (input == NULL)
+			continue;
 		if (input != NULL && *input)
 		{
-			rl_on_new_line();
-			ft_parser(input);
-			if (input != NULL)
-				general_executer(input, paths);
+			// if(!ft_parser(input, 0))
+			// {
+			// 	free(input);
+			// 	continue;
+			// }	
+			general_executer(input, paths, &heredocs);
 			free(input);
 		}
 	}

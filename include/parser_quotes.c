@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:35:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/05 11:23:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:22:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,25 @@ It gets rid of the unnecessary quotes*/
 
 #include "minishell.h"
 
-void	parser_quotes(char *input)
+bool	parser_quotes(char *input, int *i)
 {
-	int		i;
 	int		j;
 
-	i = 0;
-	while (input[i])
+	if (input[*i] == '\'' || input[*i] == '\"')
 	{
-		if (input[i] == 34 || input[i] == 39)
+		j = *i;
+		(*i)++;
+		while (input[*i] != input[j])
 		{
-			j = i;
-			i++;
-			while (input[i] != input[j])
+			if (input[*i] == 0)
 			{
-				if (input[i] == 0)
-				{
-					errors(SYNTAX_AMP, NULL);
-					free(input);
-					return ;
-				}
-				i++;
+				if (input[j] == '\"')
+					return (errors(SYNTAX_ASP, NULL), false);
+				else if (input[j] == '\'')
+					return (errors(SYNTAX_S_ASP, NULL), false);
 			}
+			(*i)++;
 		}
-		i++;
 	}
-	return ;
+	return (true);
 }
