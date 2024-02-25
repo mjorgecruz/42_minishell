@@ -27,12 +27,12 @@ VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --lo
 INCDIR:=include
 ODIR:=obj
 
-SRC := minishell.c history.c parser_general.c \
-		parser_quotes.c parser_special.c \
-		out_setup_general.c finex.c errors.c \
+SRC := minishell.c history.c parser_general.c expander_lst.c\
+		parser_quotes.c parser_special.c expander_main.c \
+		out_setup_general.c finex.c errors.c expander_utils.c \
 		str_utils.c general_executor.c general_executor_2.c \
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
-		heredocs.c parser_parenthesis.c
+		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
 
 
 LIBRARY = 

@@ -32,8 +32,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include "parser.h"
 # include <linux/limits.h>
+
+# include "parser.h"
+# include "builtins.h"
 
 #define S_QUOTE 39
 #define D_QUOTE 34
@@ -291,18 +293,6 @@ t_token		*init_struct_cmd(void);
 
 /*adds the node created to the linked list of tokens*/
 void		add_token(t_token **tokens, t_token *new);
-
-/* ************************************************************************** */
-/*                                    BUILTINS                                */
-/* ************************************************************************** */
-
-int			comand_pwd(void);
-// int	command_echo(t_token **cmd_list);
-// int	command_cd(t_token **cmd_list);
-// int	command_export(t_token **cmd_list);
-// int	command_unset(t_token **cmd_list);
-// int	command_env(t_token **cmd_list);
-// int	command_exit(t_token **cmd_list);
 
 /* ************************************************************************** */
 /*                                    HEREDOCS                                */
