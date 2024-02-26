@@ -5,16 +5,18 @@
 #                                                     +:+ +:+         +:+      #
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/14 11:23:01 by masoares         ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/02/26 09:48:49 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 RED = \033[31m
 GREEN = \033[32m
 YELLOW = \033[33m
 END_COLOR = \033[0m
 BOLD_GREEN = \e[1;32m
+BOLD_YELLOW = \e[1;33m
 BOLD_YELLOW = \e[1;33m
 END = \e[0m
 
@@ -27,15 +29,16 @@ VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --lo
 INCDIR:=include
 ODIR:=obj
 
-SRC := minishell.c history.c parser_general.c \
-		parser_quotes.c parser_special.c \
-		out_setup_general.c finex.c errors.c \
+SRC := minishell.c history.c parser_general.c expander_lst.c\
+		parser_quotes.c parser_special.c expander_main.c \
+		out_setup_general.c finex.c errors.c expander_utils.c \
 		str_utils.c general_executor.c general_executor_2.c \
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
-		heredocs.c parser_parenthesis.c
+		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
 
 
 LIBRARY = 
+OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 
 LIBFLAGS = -lreadline
@@ -53,7 +56,11 @@ $(NAME): $(OBJ) $(LIBFT)
 		@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
 $(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
+$(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
 	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(ODIR):
+	@mkdir -p $@
 
 $(ODIR):
 	@mkdir -p $@
@@ -70,9 +77,44 @@ clean:
 	@$(RM) $(OBJ)
 	@$(RM) sup
 	@$(RM) leaks.log
+	@$(RM) sup
+	@$(RM) leaks.log
 	@make clean -C ./include/libft/ -s
 
 re: fclean all
+
+suppress: sup_file all
+	@echo "${BOLD_YELLOW}LEAK CHECKER ON${END}"
+	
+leaks: ./minishell
+	$(VGFLAGS) ./minishell
+
+sup_file: 
+	$(file > sup, $(SUP_BODY))
+	@echo "${BOLD_YELLOW}Suppressing readline and add_history leaks${END}"
+	
+define SUP_BODY
+{
+   name
+   Memcheck:Leak
+   fun:*alloc
+   ...
+   obj:*/libreadline.so.*
+   ...
+}
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+endef
 
 suppress: sup_file all
 	@echo "${BOLD_YELLOW}LEAK CHECKER ON${END}"

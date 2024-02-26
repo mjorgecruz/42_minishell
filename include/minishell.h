@@ -32,8 +32,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include "parser.h"
 # include <linux/limits.h>
+
+# include "parser.h"
+# include "builtins.h"
 
 #define S_QUOTE 39
 #define D_QUOTE 34
@@ -293,16 +295,16 @@ t_token		*init_struct_cmd(void);
 void		add_token(t_token **tokens, t_token *new);
 
 /* ************************************************************************** */
-/*                                    BUILTINS                                */
+/*                                    HEREDOCS                                */
 /* ************************************************************************** */
 
-int			comand_pwd(void);
-// int	command_echo(t_token **cmd_list);
-// int	command_cd(t_token **cmd_list);
-// int	command_export(t_token **cmd_list);
-// int	command_unset(t_token **cmd_list);
-// int	command_env(t_token **cmd_list);
-// int	command_exit(t_token **cmd_list);
+void		heredoc_writer(char *line_read, char ***heredocs, int i);
+int			heredoc_counter(char *line_read, int i);
+int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
+void		add_newline_line(char **total_line, char *line_read);
+void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
+void		add_partials(char **heredoc, char *str);
+int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
 
 /* ************************************************************************** */
 /*                                    HEREDOCS                                */
