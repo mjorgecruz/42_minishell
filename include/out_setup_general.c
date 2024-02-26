@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/06 20:02:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:11:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	command_execve(char *line, char *paths)
 	cmd = ft_split(line, ' ');
 	ft_bzero(line, ft_strlen(line));
 	line = ft_strjoin(line, cmd[0]);
-	p_path[i] = ft_strjoin(p_path[i], "/");
-	cmd[0] = ft_strjoin(p_path[i], cmd[0]);
+	//p_path[i] = ft_strjoin(p_path[i], "/");
+	//cmd[0] = ft_strjoin(p_path[i], cmd[0]);
 	while (access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
 	{
 		p_path[i] = ft_strjoin(p_path[i], "/");

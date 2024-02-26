@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/02/26 09:48:49 by masoares         ###   ########.fr        #
+#    Updated: 2024/02/26 12:54:11 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ SRC := minishell.c history.c parser_general.c expander_lst.c\
 		str_utils.c general_executor.c general_executor_2.c \
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
 		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
+		list_organizer.c
 
 
 LIBRARY = 
-OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 
 LIBFLAGS = -lreadline
@@ -56,11 +56,7 @@ $(NAME): $(OBJ) $(LIBFT)
 		@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
 $(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
-$(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
 	@$(CC) $(CFLAGS) -c -o $@ $<
-
-$(ODIR):
-	@mkdir -p $@
 
 $(ODIR):
 	@mkdir -p $@
@@ -116,35 +112,4 @@ define SUP_BODY
 }
 endef
 
-suppress: sup_file all
-	@echo "${BOLD_YELLOW}LEAK CHECKER ON${END}"
 	
-leaks: ./minishell
-	$(VGFLAGS) ./minishell
-
-sup_file: 
-	$(file > sup, $(SUP_BODY))
-	@echo "${BOLD_YELLOW}Suppressing readline and add_history leaks${END}"
-	
-define SUP_BODY
-{
-   name
-   Memcheck:Leak
-   fun:*alloc
-   ...
-   obj:*/libreadline.so.*
-   ...
-}
-{
-    leak readline
-    Memcheck:Leak
-    ...
-    fun:readline
-}
-{
-    leak add_history
-    Memcheck:Leak
-    ...
-    fun:add_history
-}
-endef

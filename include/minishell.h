@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/15 13:17:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/26 22:25:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef enum e_type
 {
 	NO_PIPE,
 	S_PIPE,
-	D_PIPE
+	D_PIPE,
+	D_AMP
 }	t_type;
 
 /*Define special characters within the separated strings*/
@@ -83,18 +84,10 @@ typedef struct s_token
 {
 	char			*content;
 	struct s_token	*next;
+	struct s_token	*down;
 	t_type			next_type;
 	t_command		*cmds;
 }	t_token;
-
-typedef struct s_segment
-{
-	char *segment;
-	struct s_segment *next;
-	struct s_segment *left;
-	struct s_segment *right;
-	t_token *partial; 
-}	t_segment;
 
 /*Definition of error cases*/
 enum e_ERRORS
@@ -192,14 +185,17 @@ void		general_executer(char *input, char *paths, char ***heredocs);
 t_token		*command_organizer(char *input);
 
 /*function used to divide the full line read into parts separated by pipes*/
-int			command_divider(t_token **list, t_token *token, char *input);
-
+void			command_divider(t_token **list, char *input);
+int type_definer(char *input, int *i);
+bool token_has_par(t_token *token);
+char *trim_string(char *str);
 /*Function to find the next '"' or '''*/ 
 int			find_next(char *input, int init_pos);
 
 /* creates new t_token node with the segment of the full line read*/
 t_token		*create_node(int init, int end, char *input, t_type type);
 
+int			find_closed(char *input, int i);
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */
 /* ************************************************************************** */
@@ -330,3 +326,11 @@ bool		check_operator_open_p(char *total_line, int *i);
 bool		check_open_p_operator(char *total_line, int *i);
 bool		check_operator_closed_p(char *total_line, int *i);
 bool		check_closed_p_operator(char *total_line, int *i);
+
+/* ************************************************************************** */
+/*                                LIST_ORGANIZER                              */
+/* ************************************************************************** */
+
+int list_organizer(t_token **list, char *input);
+int create_list_node(t_token **list, char *input, int  i, int beg);
+t_token *create_list_new_node(char *input, int i, int beg);

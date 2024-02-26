@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/14 14:55:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:48:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_token	*init_struct_cmd(void)
 	new = (t_token *)malloc(sizeof(t_token));
 	new->content = NULL;
 	new->next = NULL;
+	new->down = NULL;
 	return (new);
 }
 

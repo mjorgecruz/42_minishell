@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/13 11:41:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/26 22:26:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ line read into segments separated by pipes*/
 void	general_executer(char *input, char *paths, char ***heredocs)
 {
 	t_token	*cmd_list;
-
+	
+	cmd_list = NULL;
 	(void) paths;
+
+	//list_organizer(&cmd_list, input);
+	
 	cmd_list = command_organizer(input);
-	commands_separator(cmd_list);
-	commands_sorter(cmd_list);
+	//commands_separator(cmd_list);
+	//commands_sorter(cmd_list);
 	tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, paths, heredocs);
 }
@@ -31,53 +35,114 @@ void	general_executer(char *input, char *paths, char ***heredocs)
 t_token	*command_organizer(char *input)
 {
 	t_token	*list;
-	t_token	*token;
-	int		j;
 
-	j = 0;
 	list = NULL;
-	token = (t_token *) NULL;
-	j = command_divider(&list, token, input);
-	if ((int) ft_strlen(input) - 1 != j)
-	{
-		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
-		add_token(&list, token);
-	}
-	else
-	{
-		token = create_node(0, 0, input, NO_PIPE);
-		add_token(&list, token);
-	}
+	command_divider(&list, input);
 	return (list);
 }
 
-int	command_divider(t_token **list, t_token *token, char *input)
+void	command_divider(t_token **list, char *input)
 {
+	int		i;
+	int		j;
+	int		type;
+	t_token	*token;
+
+	i = 0;
+	j = 0;
+	type = 0;
+	while (input[i])
+	{
+		if (input[i] == 34 || input[i] == 39)
+			i = find_next(input, i);
+		if (input[i] == '(')
+			i = find_closed(input, i);
+		if (is_special_char(input[i]) || input[i] == '\0')
+		{
+			type = type_definer(input, &i);
+			if (type == D_PIPE || type == D_AMPER)
+			{
+				token = create_node(j, i - 2, input, type);
+			}
+			else
+				token = create_node(j, i - 1, input, type);
+			add_token(list, token);
+			if (token_has_par(token))
+				command_divider(&(token->down), trim_string(token->content));
+			i++;
+			j = i;
+		}
+		i++;
+	}
+	token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
+	add_token(list, token);
+}
+bool token_has_par(t_token *token)
+{
+	int i;
+
+	i = 0;
+	while (token->content[i])
+	{
+		i++;
+		if (token->content[i] == '(')
+			return (true);
+	}
+	return (false);
+}
+
+char *trim_string(char *str)
+{
+	char	*trimmed;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (input[i])
+	trimmed = ft_calloc(ft_strlen(str), sizeof(char));
+	if (trimmed == NULL)
+		return (NULL);
+	while (str[i] != '(')
+		i++;
+	i++;
+	while (str[i])
 	{
-		if (input[i] == 34 || input[i] == 39)
-			i = find_next(input, i);
-		if (input[i] == '|')
+		trimmed[j] = str[i];
+		i++;
+		j++;
+	}
+	while (trimmed[j] != ')')
+	{
+		trimmed[j] = '\0';
+		j--; 
+	}
+	return (trimmed);
+}
+
+int type_definer(char *input, int *i)
+{
+	t_type	type;
+	
+	type = -1;
+	if (input[*i] == '|')
 		{
-			if (input[i + 1] == '|')
+			if (input[(*i) + 1] == '|')
 			{
-				token = create_node(j, i - 1, input, D_PIPE);
-				i++;
+				type  = D_PIPE;
+				(*i)++;
 			}
 			else
-				token = create_node(j, i - 1, input, S_PIPE);
-			i++;
-			add_token(list, token);
-			j = i;
+				type = S_PIPE;
 		}
-		i++;
+	else if (input[*i] == '&')
+	{
+		if (input[(*i) + 1] == '&')
+			type  = D_AMP;
+		(*i)++;
 	}
-	return (j);
+	else
+		type = NO_PIPE;
+	return (type);
 }
 
 int	find_next(char *input, int init_pos)
@@ -117,6 +182,22 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 	return (new_node);
 }
 
+int	find_closed(char *input, int i)
+{
+	int	par_count;
+
+	par_count = 1;
+	i++;
+	while (input[i] != ')' && par_count > 0)
+	{
+		if (input[i] != '(')
+			par_count++;
+		else if (input[i] != ')')
+			par_count--;
+		i++;
+	}
+	return (i);
+}
 int	tester_function(t_token **list)
 {
 	t_token	*trav;
