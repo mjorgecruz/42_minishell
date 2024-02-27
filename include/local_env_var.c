@@ -54,6 +54,6 @@ t_localenv *env_init(char **envirion)
     {
         exit(EXIT_FAILURE);
     }
-    new->content = copy_environment_variables(environ);
+    new->content = copy_environment_variables(envirion);
     return (new);
 }
