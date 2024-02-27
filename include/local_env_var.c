@@ -22,8 +22,7 @@ void *ft_memalloc(size_t size)
     void *mem = malloc(size);
     if (mem == NULL)
         return NULL;
-    for (size_t i = 0; i < size; i++)
-        *((char *)mem + i) = '\0';
+    ft_bzero(mem, size);
     return mem;
 }
 
@@ -78,84 +77,169 @@ t_localenv *env_init(char **envirion)
     return (new);
 }
 
+char *extract_variable_name(const char *variable)
+{
+    int len;
+    char *name;
+    char *equal_sign;
+    
+    len = 0;
+    equal_sign = ft_strchr(variable, '=');
+    if (equal_sign != NULL)
+    {
+        while (variable[len] != '=' && variable[len] != '\0')
+            len++;
+    }
+    else
+    {
+        while (variable[len] != '\0')
+            len++;
+    }
+    name = (char *)ft_memalloc(len + 1);
+    if (!name)
+        return NULL;
+    len = -1;
+    while (variable[++len] != '=' && variable[len] != '\0')
+    {
+        name[len] = variable[len];
+    }
+    return name;
+}
 
-int find_variable_index_recursive(const char *variable, char **env, int index)
+int find_variable_index_recursive(const char *name, char **env, int index)
 {
     if (env[index] == NULL)
         return -1;
-    if (ft_strncmp(variable, env[index], ft_strlen(variable)) == 0 && env[index][ft_strlen(variable)] == '=')
+    if (ft_strncmp(name, env[index], ft_strlen(name)) == 0 && env[index][ft_strlen(name)] == '=')
+    {
         return index;
-    return find_variable_index_recursive(variable, env, index + 1);
+    }
+    return find_variable_index_recursive(name, env, index + 1);
 }
 
 int find_variable_index(const char *variable, char **env)
 {
-    return find_variable_index_recursive(variable, env, 0);
+    char *name;
+    int ret;
+
+    name = extract_variable_name(variable);
+    ret = find_variable_index_recursive(name, env, 0);
+    free(name);
+    return ret;
+}
+void ft_free_str_array(char **ar_str)
+{
+    int i;
+
+    if (!ar_str)
+        return;
+    i = 0;
+    while (ar_str[i])
+    {
+        free(&ar_str[i]);
+        i++;
+    }
+    free(ar_str);
 }
 
-int add_variable(const char *variable, char ***env_ptr)
+
+
+
+// necvessario dividir esta function em mais 
+
+int add_variable(const char *variable, t_localenv *local)
 {
-    char **env;
     int num_vars;
     char **new_env;
-    
-    env = *env_ptr;
+    int i;
+
+    if (!local)
+        return -1;
     num_vars = 0;
-    while (env[num_vars] != NULL)
+    while (local->content[num_vars] != NULL)
         num_vars++;
     new_env = (char **)ft_memalloc((num_vars + 2) * sizeof(char *));
-    if (new_env == NULL)
+    if (!new_env)
         return -1;
-    env = new_env;
-    env[num_vars] = ft_strdup(variable);
-    if (env[num_vars] == NULL)
+    i = 0;
+    while (i < num_vars)
+    {
+        new_env[i] = ft_strdup(local->content[i]);
+        if (!new_env[i])
+        {
+            while (i > 0)
+                free(new_env[--i]);
+            free(new_env);
+            return -1;
+        }
+        i++;
+    }
+    new_env[i] = ft_strdup(variable);
+    if (!new_env[i])
+    {
+        while (i > 0)
+            free(new_env[--i]);
+        free(new_env);
         return -1;
-    env[num_vars + 1] = NULL;
-    *env_ptr = env;
-    printf("ADEDDDDD");
+    }
+    new_env[num_vars + 1] = NULL;
+    i = -1;
+    while (local->content[++i])
+        free(local->content[i]);
+    local->content = new_env;
     return 0;
 }
 
-int update_variable(const char *variable, char **env)
+
+int update_variable(const char *variable, t_localenv *local)
 {
     char *equal_sign;
+    char *variable_copy;
     int index;
 
-    index = find_variable_index(variable, env);
+    if (!local || !local->content)
+        return -1;
+    index = find_variable_index(variable, local->content);
     if (index != -1)
     {
-        equal_sign = ft_strchr(variable, '=');
-        *equal_sign = '\0';
-        free(&env[index]);
-        env[index] = ft_strdup(variable);
-        *equal_sign = '=';
-        printf("UPDATEDEEEDDDD");
+        variable_copy = ft_strdup(variable);
+        if (!variable_copy)
+            return -1;
+        equal_sign = ft_strchr(variable_copy, '=');
+        if (!equal_sign)
+        {
+            free(variable_copy);
+            return -1;
+        }
+        free(local->content[index]);
+        local->content[index] = variable_copy;
         return 0;
     }
     else
-        return add_variable(variable, &env);
+        return (add_variable(variable, local));
 }
 
-int command_export(char **cmds, char ***local_env_ptr)
+int command_export(char **cmds, t_localenv *local)
 {
     char *variable;
     char *equal_sign;
-    char **local_env;
-    int result;
+    int i = -1;
 
-    if (cmds == NULL || local_env_ptr == NULL || *local_env_ptr == NULL)
+    if (cmds == NULL || local == NULL || local->content == NULL)
         return -1;
+    if (cmds[1] == NULL)
+    {
+        printf("Usage: export VARIABLE=VALUE\n");
+        return -1;
+    }
     variable = cmds[1];
     equal_sign = ft_strchr(variable, '=');
     if (equal_sign == NULL || equal_sign == variable)
         return -1;
-    local_env = *local_env_ptr;
-    if (local_env == NULL)
-        return -1;
-    result = update_variable(variable, local_env);
-    if (result == 0)
+    if (update_variable(variable, local) == 0)
     {
-        *local_env_ptr = local_env;
+        while (local->content[++i])
+            printf("\n [%i] LIST: %s", i, local->content[i]);        //testes da lista apagar
         return 0;
     }
     else

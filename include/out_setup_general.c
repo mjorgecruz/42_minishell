@@ -12,11 +12,8 @@
 
 #include "minishell.h"
 
-void	commands_sorter(t_token *cmd_list, char **env)
+void	commands_sorter(t_token *cmd_list, t_localenv *local_env)
 {
-	t_localenv *local_env;
-
-	local_env = env_init(env); // quando vamos dar free desta env???
 	set_id_flag_cmd(cmd_list);
 	while (cmd_list != NULL)
 	{
@@ -86,7 +83,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	}
 	else if (id == EXPORT)
 	{
-		command_export(cmds->cmds, &local_env->content);
+		command_export(cmds->cmds, local_env);
 		return ;
 	}
 	// else if (id == UNDEFINED)

@@ -186,7 +186,7 @@ bool		parser_quotes(char *input, int *i);
 /* ************************************************************************** */
 
 /**/
-void	general_executer(char *input, char *paths, char ***heredocs, char **env);
+void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *local_env);
 
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
@@ -251,7 +251,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
-void	commands_sorter(t_token *cmd_list, char **env);
+void	commands_sorter(t_token *cmd_list, t_localenv *local_env);
 
 /*executes commands using the execve function*/
 int			command_execve(char *cmd, char *paths);

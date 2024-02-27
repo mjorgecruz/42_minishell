@@ -17,9 +17,11 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	*paths;
 	char	**heredocs;
-
+	t_localenv *local_env;
+	
 	(void) ac;
 	(void) av;
+	local_env = env_init(env);
 	paths = getenv("PATH");
 	//clear_terminal(paths);
 	input = NULL;
@@ -35,7 +37,7 @@ int	main(int ac, char **av, char **env)
 			// 	free(input);
 			// 	continue;
 			// }	
-			general_executer(input, paths, &heredocs, env);
+			general_executer(input, paths, &heredocs, local_env);
 			free(input);
 		}
 	}

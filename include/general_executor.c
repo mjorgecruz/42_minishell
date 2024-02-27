@@ -16,14 +16,14 @@ line read into segments separated by pipes*/
 
 #include "minishell.h"
 
-void	general_executer(char *input, char *paths, char ***heredocs, char **env)
+void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *local_env)
 {
 	t_token	*cmd_list;
 
 	(void) paths;
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
-	commands_sorter(cmd_list, env);
+	commands_sorter(cmd_list, local_env);
 	tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, paths, heredocs);
 }

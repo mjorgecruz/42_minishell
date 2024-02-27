@@ -20,7 +20,7 @@ typedef struct s_localenv
 /* ************************************************************************** */
 
 int	    command_pwd(void);
-int command_export(char **cmds, char ***local_env_ptr);
+int command_export(char **cmds, t_localenv *local);
 // int	command_unset();
 // int	command_env();
 // int	command_exit();
@@ -90,5 +90,15 @@ char **copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char **copy_environment_variables(char **environ);
 t_localenv *env_init(char **envirion);
 
+int find_variable_index_recursive(const char *variable, char **env, int index);
+int find_variable_index(const char *variable, char **env);
+
+int add_variable(const char *variable, t_localenv *local);
+int update_variable(const char *variable, t_localenv *local);
+
+
+void ft_free_str_array(char **ar_str);
+char *ft_strncpy(char *dst, const char *src, size_t n);
+void *ft_memalloc(size_t size);
 
 #endif
