@@ -14,11 +14,15 @@
 
 void	commands_sorter(t_token *cmd_list)
 {
+	t_localenv *local_env;
+
+
+
+	local_env = env_init();
 	set_id_flag_cmd(cmd_list);
-	// verifitions of pipens olys lasts echos soulds bes echoeds
 	while (cmd_list != NULL)
 	{
-		exec_correct_builtin(cmd_list->cmds);
+		exec_correct_builtin(cmd_list->cmds, local_env);
 		cmd_list = cmd_list->next;
 	}
 	return ;
@@ -67,10 +71,11 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-void	exec_correct_builtin(t_command *cmds)
+void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 {
  	t_builtin id;
 
+	(void) local_env;
 	id = cmds->id;
 	if (id == ECHOS)
 	{
@@ -82,12 +87,15 @@ void	exec_correct_builtin(t_command *cmds)
 		command_pwd();
 		return ;
 	}
+	else if (id == EXPORT)
+	{
+		command_export(cmds->cmds, local_env);
+		return ;
+	}
 	// else if (id == UNDEFINED)
 	// 	command_execve();
 	// else if (id == CD)
 	// 	command_cd();
-	// else if (id == EXPORT)
-	// 	//command_export();
 	// else if (id == ENV)
 	// 	//command_env();
 	// else if (id == UNSET)

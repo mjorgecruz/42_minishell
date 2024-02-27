@@ -247,7 +247,7 @@ void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
-void		exec_correct_builtin(t_command *cmds);
+void	exec_correct_builtin(t_command *cmds, t_localenv *local_env);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */

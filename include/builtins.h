@@ -9,12 +9,18 @@ typedef struct s_lstexpand
 	struct s_lstexpand *next;
 } t_lstexpand;
 
+typedef struct s_localenv
+{
+	char **content;
+} t_localenv;
+
+
 /* ************************************************************************** */
 /*                                    BUILTINS                                */
 /* ************************************************************************** */
 
 int	    command_pwd(void);
-// int	command_export();
+int		command_export(char **cmds, t_localenv *local_env);
 // int	command_unset();
 // int	command_env();
 // int	command_exit();
@@ -69,5 +75,14 @@ char	*master_expander(char *cmd);
 /* returns true everytime it finds -n or -n folowed by n n_times else returns false*/
 bool	ft_find_n(char *str);
 int		command_echo(char **cmds_str);
+
+/* ************************************************************************** */
+/*                                 LOCAL_ENV_VAR.c                            */
+/* ************************************************************************** */
+
+char **copy_env_var_utils(char **env, int num_vars, char **env_copy);
+char **copy_environment_variables(char **environ);
+t_localenv *env_init(char **envirion);
+
 
 #endif
