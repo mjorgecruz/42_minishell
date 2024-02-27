@@ -20,7 +20,7 @@ typedef struct s_localenv
 /* ************************************************************************** */
 
 int	    command_pwd(void);
-int		command_export(char **cmds, t_localenv *local_env);
+int command_export(char **cmds, char ***local_env_ptr);
 // int	command_unset();
 // int	command_env();
 // int	command_exit();
@@ -80,6 +80,12 @@ int		command_echo(char **cmds_str);
 /*                                 LOCAL_ENV_VAR.c                            */
 /* ************************************************************************** */
 
+
+/*
+these will make a copy of the environment variables as a char **envirion   
+the env_init will store that pointer in a structur (not needed but fuck it anyway)
+and we will pass that structure along to access and edit it.
+*/
 char **copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char **copy_environment_variables(char **environ);
 t_localenv *env_init(char **envirion);

@@ -39,9 +39,7 @@ char **copy_environment_variables(char **environ)
     }
     env_copy = (char **)malloc((num_vars + 1) * sizeof(char *));
     if (env_copy == NULL)
-    {
         exit(EXIT_FAILURE);
-    }
     return (copy_env_var_utils(environ, 0, env_copy));
 }
 
@@ -56,4 +54,86 @@ t_localenv *env_init(char **envirion)
     }
     new->content = copy_environment_variables(envirion);
     return (new);
+}
+
+
+int find_variable_index_recursive(const char *variable, char **env, int index)
+{
+    if (env[index] == NULL)
+        return -1;
+    if (ft_strncmp(variable, env[index], ft_strlen(variable)) == 0 && env[index][ft_strlen(variable)] == '=')
+        return index;
+    return find_variable_index_recursive(variable, env, index + 1);
+}
+
+int find_variable_index(const char *variable, char **env)
+{
+    return find_variable_index_recursive(variable, env, 0);
+}
+
+int add_variable(const char *variable, char ***env_ptr)
+{
+    char **env;
+    int num_vars;
+    char **new_env;
+    
+    env = *env_ptr;
+    num_vars = 0;
+    while (env[num_vars] != NULL)
+        num_vars++;
+    new_env = (char **)ft_memalloc((num_vars + 2) * sizeof(char *));
+    if (new_env == NULL)
+        return -1;
+    env = new_env;
+    env[num_vars] = ft_strdup(variable);
+    if (env[num_vars] == NULL)
+        return -1;
+    env[num_vars + 1] = NULL;
+    *env_ptr = env;
+    return 0;
+}
+
+int update_variable(const char *variable, char **env)
+{
+    char *equal_sign;
+    int index;
+
+    index = find_variable_index(variable, env);
+    if (index != -1)
+    {
+        equal_sign = ft_strchr(variable, '=');
+        *equal_sign = '\0';
+        free(&env[index]);
+        env[index] = ft_strdup(variable);
+        *equal_sign = '=';
+        return 0;
+    }
+    else
+        return add_variable(variable, &env);
+}
+
+int command_export(char **cmds, char ***local_env_ptr)
+{
+    char *variable;
+    char *equal_sign;
+    char **local_env;
+    int result;
+
+    if (cmds == NULL || local_env_ptr == NULL || *local_env_ptr == NULL)
+        return -1;
+    variable = cmds[1];
+    equal_sign = ft_strchr(variable, '=');
+    if (equal_sign == NULL || equal_sign == variable)
+        return -1;
+    local_env = *local_env_ptr;
+    if (local_env == NULL)
+        return -1;
+    result = update_variable(variable, local_env);
+    if (result == 0)
+    {
+        *local_env_ptr = local_env;
+        return 0;
+    }
+    else
+        return -1;
 }

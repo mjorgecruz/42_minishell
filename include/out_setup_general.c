@@ -12,13 +12,11 @@
 
 #include "minishell.h"
 
-void	commands_sorter(t_token *cmd_list)
+void	commands_sorter(t_token *cmd_list, char **env)
 {
 	t_localenv *local_env;
 
-
-
-	local_env = env_init();
+	local_env = env_init(env); // quando vamos dar free desta env???
 	set_id_flag_cmd(cmd_list);
 	while (cmd_list != NULL)
 	{
@@ -75,7 +73,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 {
  	t_builtin id;
 
-	(void) local_env;
+	(void) local_env; /// aqui esta a putaaaaaaaaaaaaaaaaa
 	id = cmds->id;
 	if (id == ECHOS)
 	{

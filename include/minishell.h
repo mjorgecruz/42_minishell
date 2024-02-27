@@ -251,7 +251,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
-void		commands_sorter(t_token *cmd_list);
+void	commands_sorter(t_token *cmd_list, char **env);
 
 /*executes commands using the execve function*/
 int			command_execve(char *cmd, char *paths);
