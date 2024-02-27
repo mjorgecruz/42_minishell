@@ -1,9 +1,31 @@
 
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "libft.h"
+
+char *ft_strncpy(char *dst, const char *src, size_t n)
+{
+    char *start = dst;
+    while (n > 0 && *src != '\0')
+    {
+        *dst++ = *src++;
+        n--;
+    }
+    while (n > 0)
+    {
+        *dst++ = '\0';
+        n--;
+    }
+    return start;
+}
+
+void *ft_memalloc(size_t size)
+{
+    void *mem = malloc(size);
+    if (mem == NULL)
+        return NULL;
+    for (size_t i = 0; i < size; i++)
+        *((char *)mem + i) = '\0';
+    return mem;
+}
 
 char **copy_env_var_utils(char **env, int num_vars, char **env_copy)
 {
@@ -90,6 +112,7 @@ int add_variable(const char *variable, char ***env_ptr)
         return -1;
     env[num_vars + 1] = NULL;
     *env_ptr = env;
+    printf("ADEDDDDD");
     return 0;
 }
 
@@ -106,6 +129,7 @@ int update_variable(const char *variable, char **env)
         free(&env[index]);
         env[index] = ft_strdup(variable);
         *equal_sign = '=';
+        printf("UPDATEDEEEDDDD");
         return 0;
     }
     else

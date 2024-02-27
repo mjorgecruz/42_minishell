@@ -73,7 +73,6 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 {
  	t_builtin id;
 
-	(void) local_env; /// aqui esta a putaaaaaaaaaaaaaaaaa
 	id = cmds->id;
 	if (id == ECHOS)
 	{
@@ -87,7 +86,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	}
 	else if (id == EXPORT)
 	{
-		command_export(cmds->cmds, local_env);
+		command_export(cmds->cmds, &local_env->content);
 		return ;
 	}
 	// else if (id == UNDEFINED)

@@ -186,7 +186,7 @@ bool		parser_quotes(char *input, int *i);
 /* ************************************************************************** */
 
 /**/
-void		general_executer(char *input, char *paths, char ***heredocs);
+void	general_executer(char *input, char *paths, char ***heredocs, char **env);
 
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);

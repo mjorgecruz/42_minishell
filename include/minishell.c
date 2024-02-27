@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	*paths;
@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 			// 	free(input);
 			// 	continue;
 			// }	
-			general_executer(input, paths, &heredocs);
+			general_executer(input, paths, &heredocs, env);
 			free(input);
 		}
 	}
