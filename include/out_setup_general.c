@@ -100,7 +100,6 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	return ;
 }
 
-
 int	command_execve(char *line, char *paths)
 {
 	char	**cmd;
