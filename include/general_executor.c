@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/28 16:05:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:55:23 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,14 @@ line read into segments separated by pipes*/
 void	general_executer(char *input, char *paths, char ***heredocs)
 {
 	t_token	*cmd_list;
-	t_token *trav;
 	
 	cmd_list = NULL;
 	(void) paths;
 	//list_organizer(&cmd_list, input);
 	
 	cmd_list = command_organizer(input);
-	trav = cmd_list; 
-	while (trav != NULL)
-	{
-		commands_separator(trav);
-		trav = trav->next;
-	}
-	//commands_sorter(cmd_list);
+	commands_separator(cmd_list);
+	commands_sorter(cmd_list);
 	tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, paths, heredocs);
 }
@@ -96,9 +90,9 @@ bool token_has_par(t_token *token)
 	i = 0;
 	while (token->content && token->content[i])
 	{
-		i++;
 		if (token->content[i] == '(')
 			return (true);
+		i++;
 	}
 	return (false);
 }
@@ -226,7 +220,10 @@ int	tester_function(t_token **list)
 		printf("content: %s ", trav->content);
 		printf("pipe type: %d\n", trav->next_type);
 		if (trav ->down != NULL)
+		{
 			printf("down: %s , pipe type: %d, next: %s , pipe type: %d\n", trav->down->content, trav->down->next_type, trav->down->next->content, trav->down->next->next_type);
+			tester_function(&trav->down);
+		}
 		if (trav->content == NULL)
 		{
 			printf("cmd( %d , %d ) -> ", 0, 0);

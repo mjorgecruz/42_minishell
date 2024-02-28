@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/28 15:04:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:39:06 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,30 @@ pipes. The strings must be divided in parts in an array of structs*/
 void	commands_separator(t_token *cmd_list)
 {
 	int		specials;
-	
-	specials = 0;
-	if (cmd_list->down == NULL)
+ 
+	while (cmd_list != NULL)
 	{
-		if (cmd_list->content == NULL)
+		specials = 0;
+		if (cmd_list->down == NULL)
 		{
-			cmd_list->cmds = (t_command *)malloc(sizeof(t_command));
-			cmd_list->cmds->cmds = NULL;
-			return ;
+			if (cmd_list->content == NULL)
+			{
+				cmd_list->cmds = (t_command *)malloc(sizeof(t_command));
+				cmd_list->cmds->cmds = NULL;
+				return ;
+			}
+			else
+			{
+				specials = specials_counter(cmd_list);
+				cmd_list->cmds = (t_command *)malloc
+				(sizeof(t_command) * (specials + 2));
+			}
+			fill_cmds(cmd_list, specials);	
 		}
-		else
-		{
-			specials = specials_counter(cmd_list);
-			cmd_list->cmds = (t_command *)malloc
-			(sizeof(t_command) * (specials + 2));
-		}
-		// if (cmd_list == NULL)
-		// 	return ;
-		fill_cmds(cmd_list, specials);
+		else 
+			commands_separator(cmd_list->down);
+		cmd_list = cmd_list->next;
 	}
-	else 
-		commands_separator(cmd_list->down);
 }
 
 void	fill_cmds(t_token *cmd_list, int specials)
