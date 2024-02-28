@@ -82,6 +82,7 @@ int	command_echo(char **cmds, t_localenv *local);
 /* ************************************************************************** */
 
 char		*extract_variable_name(const char *variable);
+char		**copy_environment(char **old_env, int num_vars);
 int			add_variable(const char *variable, t_localenv *local);
 int			update_variable(const char *variable, t_localenv *local);
 int			command_export(char **cmds, t_localenv *local);

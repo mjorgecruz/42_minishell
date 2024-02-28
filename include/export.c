@@ -30,50 +30,58 @@ char *extract_variable_name(const char *variable)
     return name;
 }
 
-// necvessario dividir esta function em mais 
+char **copy_environment(char **old_env, int num_vars)
+{
+    char **new_env;
+    int i;
+
+    new_env = (char **)ft_memalloc((num_vars + 2) * sizeof(char *));
+    if (!new_env)
+        return NULL;
+    i = 0;
+    while (i < num_vars)
+    {
+        new_env[i] = ft_strdup(old_env[i]);
+        if (!new_env[i])
+        {
+            while (i > 0)
+                free(new_env[--i]);
+            free(new_env);
+            return NULL;
+        }
+        i++;
+    }
+    new_env[num_vars + 1] = NULL;
+    return new_env;
+}
+
 int add_variable(const char *variable, t_localenv *local)
 {
     int num_vars;
     char **new_env;
-    int i;
 
     if (!local)
         return -1;
     num_vars = 0;
     while (local->content[num_vars] != NULL)
         num_vars++;
-    new_env = (char **)ft_memalloc((num_vars + 2) * sizeof(char *));
+    new_env = copy_environment(local->content, num_vars);
     if (!new_env)
         return -1;
-    i = 0;
-    while (i < num_vars)
+    new_env[num_vars] = ft_strdup(variable);
+    if (!new_env[num_vars])
     {
-        new_env[i] = ft_strdup(local->content[i]);
-        if (!new_env[i])
-        {
-            while (i > 0)
-                free(new_env[--i]);
-            free(new_env);
-            return -1;
-        }
-        i++;
-    }
-    new_env[i] = ft_strdup(variable);
-    if (!new_env[i])
-    {
-        while (i > 0)
-            free(new_env[--i]);
+        while (num_vars > 0)
+            free(new_env[--num_vars]);
         free(new_env);
         return -1;
     }
-    new_env[num_vars + 1] = NULL;
-    i = -1;
-    while (local->content[++i])
-        free(local->content[i]);
+    num_vars = -1;
+    while (local->content[++num_vars])
+        free(local->content[num_vars]);
     local->content = new_env;
     return 0;
 }
-
 
 int update_variable(const char *variable, t_localenv *local)
 {
