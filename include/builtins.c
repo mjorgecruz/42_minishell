@@ -25,3 +25,24 @@ int	command_pwd(void)
 	else
 		return (EXIT_FAILURE);
 }
+
+void print_string_array(char **strings)
+{
+	int i;
+    if (strings == NULL)
+        return;
+    i = -1;
+    while (strings[++i] != NULL)
+        printf("%s\n", strings[i]);
+}
+
+int command_env(t_localenv *local)
+{
+    if (local == NULL)
+	{
+        printf("Invalid argument: local environment is NULL\n");
+        return (-1);
+    }
+	print_string_array(local->content);
+    return (0);
+}

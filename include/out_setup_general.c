@@ -73,7 +73,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	id = cmds->id;
 	if (id == ECHOS)
 	{
-		command_echo(cmds->cmds);
+		command_echo(cmds->cmds, local_env);
 		return ;
 	}
 	else if (id == PWD)
@@ -86,12 +86,13 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 		command_export(cmds->cmds, local_env);
 		return ;
 	}
+	else if (id == ENV)
+		command_env(local_env);
+		
 	// else if (id == UNDEFINED)
 	// 	command_execve();
 	// else if (id == CD)
 	// 	command_cd();
-	// else if (id == ENV)
-	// 	//command_env();
 	// else if (id == UNSET)
 	// 	//command_unset();
 	//else if (id == EXIT)

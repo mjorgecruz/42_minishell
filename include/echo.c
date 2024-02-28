@@ -25,7 +25,7 @@ bool    ft_find_n(char *str)
 
 /*expander needs to be integrated for the comand string list */
 
-int	command_echo(char **cmds)
+int	command_echo(char **cmds, t_localenv *local)
 {
     int i;
 	bool n_flag;
@@ -37,7 +37,7 @@ int	command_echo(char **cmds)
         n_flag = true;
     while (cmds[i] != NULL)
     {
-        exp_temp = master_expander(cmds[i]);
+        exp_temp = master_expander(cmds[i], local);
         if (exp_temp)
         {
             printf("%s ", exp_temp);

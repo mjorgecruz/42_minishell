@@ -64,7 +64,7 @@ void create_list_quotes(char *cmd, t_lstexpand **in_cmd_list)
         insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + start, i - start)));
 }
 
-void expand_content_in_list(t_lstexpand *head)
+void expand_content_in_list(t_lstexpand *head, t_localenv *local)
 {
     t_lstexpand *current;
     char *expanded_content;
@@ -72,7 +72,7 @@ void expand_content_in_list(t_lstexpand *head)
 	current = head;
     while (current != NULL)
 	{
-        expanded_content = expand_single_variable(current->content);
+        expanded_content = expand_single_variable(current->content, local);
         free(current->content);
         current->content = expanded_content;
         current = current->next;

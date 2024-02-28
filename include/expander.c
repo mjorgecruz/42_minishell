@@ -41,7 +41,7 @@ char	*ds_replace_codeword(char *cmd, char *code, char *env_val)
 	return (new);
 }
 
-char	*expand_single_variable(char *cmd)
+char	*expand_single_variable(char *cmd, t_localenv *local)
 {
 	char	*env;
 	char	*code_word;
@@ -58,7 +58,7 @@ char	*expand_single_variable(char *cmd)
 		if (!ft_strncmp(code_word, "$?", 2))
 			env = "696969";                                                     // codigo de erro???? pid? o que ???
 		else
-			env = getenv(code_word);                                            // teremos de substituir isto pela nossa propria versao!  ft_getenv!!!!
+			env = ft_getenv(code_word, local->content);                                            // teremos de substituir isto pela nossa propria versao!  ft_getenv!!!!
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
 	return (expanded_str);

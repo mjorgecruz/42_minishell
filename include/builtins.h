@@ -14,15 +14,14 @@ typedef struct s_localenv
 	char **content;
 } t_localenv;
 
-
 /* ************************************************************************** */
 /*                                    BUILTINS                                */
 /* ************************************************************************** */
 
-int	    command_pwd(void);
-int command_export(char **cmds, t_localenv *local);
+int		command_pwd(void);
+void	print_string_array(char **strings);
+int		command_env(t_localenv *local);
 // int	command_unset();
-// int	command_env();
 // int	command_exit();
 
 /* ************************************************************************** */
@@ -31,7 +30,7 @@ int command_export(char **cmds, t_localenv *local);
 
 char	*get_ds_code(char *cmd);
 char	*ds_replace_codeword(char *cmd, char *code, char *env_val);
-char	*expand_single_variable(char *cmd);
+char	*expand_single_variable(char *cmd, t_localenv *local);
 char	*join_list_contents(t_lstexpand *head);
 void	clean_quotes_in_list(t_lstexpand *head);
 
@@ -43,24 +42,24 @@ t_lstexpand	*create_node_lstexpand(int status, char *content);
 void		insert_lstexpand_node(t_lstexpand **head, t_lstexpand *new_node);
 void		free_lstexpand(t_lstexpand *head);
 void		create_list_quotes(char *cmd, t_lstexpand **in_cmd_list);
-void		expand_content_in_list(t_lstexpand *head);
+void		expand_content_in_list(t_lstexpand *head, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                 EXPANDER_UTILS.c                           */
 /* ************************************************************************** */
 
-bool	is_str_empty(char *str);
-int		quotes_counter(char *cmd);
-char	*ft_strndup(const char *s, size_t n);
-int		quotation_size(char *cmd, int start);
-void	print_list(t_lstexpand *head);
+bool		is_str_empty(char *str);
+int			quotes_counter(char *cmd);
+char		*ft_strndup(const char *s, size_t n);
+int			quotation_size(char *cmd, int start);
+void		print_list(t_lstexpand *head);
 
 
 /* ************************************************************************** */
 /*                                 EXPANDER_MAIN.c                            */
 /* ************************************************************************** */
 
-char	*master_expander(char *cmd);
+char *master_expander(char *cmd, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                     CD.C                                   */
@@ -72,33 +71,54 @@ char	*master_expander(char *cmd);
 /*                                     ECHO.C                                 */
 /* ************************************************************************** */
 
-/* returns true everytime it finds -n or -n folowed by n n_times else returns false*/
-bool	ft_find_n(char *str);
-int		command_echo(char **cmds_str);
+/* returns true everytime it finds -n or -n 
+folowed by n n_times else returns false*/
+
+bool		ft_find_n(char *str);
+int	command_echo(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
-/*                                 LOCAL_ENV_VAR.c                            */
+/*                                 EXPORT.c                                   */
 /* ************************************************************************** */
 
+char		*extract_variable_name(const char *variable);
+int			add_variable(const char *variable, t_localenv *local);
+int			update_variable(const char *variable, t_localenv *local);
+int			command_export(char **cmds, t_localenv *local);
 
-/*
-these will make a copy of the environment variables as a char **envirion   
-the env_init will store that pointer in a structur (not needed but fuck it anyway)
-and we will pass that structure along to access and edit it.
-*/
-char **copy_env_var_utils(char **env, int num_vars, char **env_copy);
-char **copy_environment_variables(char **environ);
-t_localenv *env_init(char **envirion);
+/* ************************************************************************** */
+/*                                EXPORT_UTILS.c                              */
+/* ************************************************************************** */
 
-int find_variable_index_recursive(const char *variable, char **env, int index);
-int find_variable_index(const char *variable, char **env);
+void		ft_free_str_array(char **ar_str);
+int			find_variable_index_recursive(const char *name, char **env, int index);
+int			find_variable_index(const char *variable, char **env);
+char		*ft_strncpy(char *dst, const char *src, size_t n);
+void		*ft_memalloc(size_t size);
 
-int add_variable(const char *variable, t_localenv *local);
-int update_variable(const char *variable, t_localenv *local);
+/* ************************************************************************** */
+/*                               EXPORT_ENVCPY.c                              */
+/* ************************************************************************** */
+
+t_localenv	*env_init(char **envirion);
+char		**copy_env_var_utils(char **env, int num_vars, char **env_copy);
+char		**copy_environment_variables(char **environ);
+void		print_sorted_strings(t_localenv *local);
+
+/* ************************************************************************** */
+/*                             EXPORT_UTILS_SORT.c                            */
+/* ************************************************************************** */
+
+size_t		ft_strarrlen(char **arr);
+char		**ft_strarrdup(char **src);
+void		print_next_string(char **str);
+void		swap_strings(char **str1, char **str2);
 
 
-void ft_free_str_array(char **ar_str);
-char *ft_strncpy(char *dst, const char *src, size_t n);
-void *ft_memalloc(size_t size);
+/* ************************************************************************** */
+/*                                 FT_GETENV.c                                */
+/* ************************************************************************** */
+
+char *ft_getenv(const char *name, char **envp);
 
 #endif
