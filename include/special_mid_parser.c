@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 09:46:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:37:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int check_redirs_rr_sc(char *str, int pos)
 			return (errors(SYNTAX_NEWLINE, NULL), -1);
 		else if (is_special_char(str[pos]))
 			return (error_definer(&str[pos]), -1);
+		else
+			return(pos);
 	}
 	if (str[pos + 1] == '<' )
 		return (errors(SYNTAX_L_S_REDIR, NULL), -1);

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/26 22:25:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/02/28 09:50:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ typedef enum e_type
 	NO_PIPE,
 	S_PIPE,
 	D_PIPE,
-	D_AMP
+	D_AMP,
+	S_RED_IN,
+	S_RED_OUT,
+	D_RED_IN,
+	D_RED_OUT,
 }	t_type;
 
 /*Define special characters within the separated strings*/
@@ -186,7 +190,7 @@ t_token		*command_organizer(char *input);
 
 /*function used to divide the full line read into parts separated by pipes*/
 void			command_divider(t_token **list, char *input);
-int type_definer(char *input, int *i);
+t_type type_definer(char *input, int *i);
 bool token_has_par(t_token *token);
 char *trim_string(char *str);
 /*Function to find the next '"' or '''*/ 
@@ -196,6 +200,7 @@ int			find_next(char *input, int init_pos);
 t_token		*create_node(int init, int end, char *input, t_type type);
 
 int			find_closed(char *input, int i);
+t_token *token_creator (int i, int j, char *input, int type);
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */
 /* ************************************************************************** */
