@@ -272,7 +272,7 @@ int			error_definer(char *cmd);
 /*                                     FINEX                                  */
 /* ************************************************************************** */
 
-void		clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs);
+void	clean_cmd_list(t_token *cmd_list, char ***heredocs);
 
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);

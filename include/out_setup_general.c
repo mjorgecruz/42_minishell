@@ -87,13 +87,19 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 		return ;
 	}
 	else if (id == ENV)
+	{
 		command_env(local_env);
-
+		return ;
+	}
+	else if (id == UNSET)
+	{
+		command_unset(cmds->cmds, local_env);
+		return ;
+	}
 	// else if (id == UNDEFINED)
 	//  	command_execve();
 	// else if (id == CD)
 	// 	command_cd();
-	// else if (id == UNSET)
 	// 	//command_unset();
 	//else if (id == EXIT)
 	// 	command_exit();

@@ -25,7 +25,7 @@ void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *lo
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list, local_env);
 	tester_function(&cmd_list);
-	clean_cmd_list(cmd_list, paths, heredocs);
+	clean_cmd_list(cmd_list, heredocs);
 }
 
 t_token	*command_organizer(char *input)

@@ -8,7 +8,7 @@ t_localenv *env_init(char **envirion)
     new = malloc(sizeof(t_localenv));
     if (new == NULL)
     {
-        exit(EXIT_FAILURE);
+        return NULL;
     }
     new->content = copy_environment_variables(envirion);
     return (new);
@@ -27,7 +27,7 @@ char **copy_env_var_utils(char **env, int num_vars, char **env_copy)
     env_copy[num_vars] = (char *)malloc(len * sizeof(char));
     if (env_copy[num_vars] == NULL)
     {
-        exit(EXIT_FAILURE);
+        return NULL;
     }
     ft_strncpy(env_copy[num_vars], *env, len);
     return (copy_env_var_utils(env + 1, num_vars + 1, env_copy));
@@ -66,7 +66,7 @@ char **copy_environment_variables(char **environ)
     }
     env_copy = (char **)malloc((num_vars + 1) * sizeof(char *));
     if (env_copy == NULL)
-        exit(EXIT_FAILURE);
+        return NULL;
     return (copy_env_var_utils(environ, 0, env_copy));
 }
 

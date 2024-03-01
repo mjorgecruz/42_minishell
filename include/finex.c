@@ -14,12 +14,11 @@
 
 #include "minishell.h"
 
-void	clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs)
+void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 {
 	int		i;
 	t_token *prev;
-	(void) paths;
-	
+
 	if (*heredocs)
 		free_split(*heredocs);
 	while (cmd_list)
@@ -38,7 +37,7 @@ void	clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs)
 		prev = cmd_list;
 		cmd_list = cmd_list->next;
 		free(prev);
-	} 
+	}
 }
 
 

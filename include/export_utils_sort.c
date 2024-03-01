@@ -31,7 +31,7 @@ char	**ft_strarrdup(char **src)
 		dst[i] = ft_strdup(src[i]);
 		if (!dst[i])
 		{
-			ft_free_str_array(dst);
+			free_split(dst);
 			return (NULL);
 		}
 		i++;

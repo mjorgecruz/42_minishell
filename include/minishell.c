@@ -41,6 +41,13 @@ int	main(int ac, char **av, char **env)
 			free(input);
 		}
 	}
+	//necessario dar free disto no scope correto ... nao pode ser na clean comds list que la da erro.
+	if (local_env && local_env->content) //corresponde em media se nao forem inseridos comandos a 4820 bytes e esta e a forma correta de lhe dar free
+    {
+        free_split(local_env->content);
+        local_env->content = NULL;
+    }
+	free(local_env);
 }
 
 void	clear_terminal(char *paths)

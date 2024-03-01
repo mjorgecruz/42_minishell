@@ -43,16 +43,19 @@ void free_lstexpand(t_lstexpand *head)
 
 void create_list_quotes(char *cmd, t_lstexpand **in_cmd_list)
 {
-    int i = 0;
-    int start = 0;
+    int i;
+    int start;
+    int size;
 
+    i = 0;
+    start = 0;
     while (cmd[i] != '\0')
     {
         if (cmd[i] == '\'' || cmd[i] == '\"')
         {
             if (i > start)
                 insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + start, i - start)));
-            int size = quotation_size(cmd, i);
+            size = quotation_size(cmd, i);
             insert_lstexpand_node(in_cmd_list, create_node_lstexpand(0, ft_strndup(cmd + i, size)));
             i = i + size;
             start = i;

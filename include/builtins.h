@@ -21,8 +21,8 @@ typedef struct s_localenv
 int		command_pwd(void);
 void	print_string_array(char **strings);
 int		command_env(t_localenv *local);
-// int	command_unset();
-// int	command_exit();
+int		unset_variable(const char *variable, t_localenv *local);
+int		command_unset(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                   EXPANDER.c                               */
@@ -91,7 +91,7 @@ int			command_export(char **cmds, t_localenv *local);
 /*                                EXPORT_UTILS.c                              */
 /* ************************************************************************** */
 
-void		ft_free_str_array(char **ar_str);
+// void		ft_free_str_array(char **ar_str); apagada!!!!
 int			find_variable_index_recursive(const char *name, char **env, int index);
 int			find_variable_index(const char *variable, char **env);
 char		*ft_strncpy(char *dst, const char *src, size_t n);

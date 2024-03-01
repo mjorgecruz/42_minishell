@@ -1,21 +1,6 @@
 
 #include "minishell.h"
 
-void ft_free_str_array(char **ar_str)
-{
-    int i;
-
-    if (!ar_str)
-        return;
-    i = 0;
-    while (ar_str[i])
-    {
-        free(&ar_str[i]);
-        i++;
-    }
-    free(ar_str);
-}
-
 int find_variable_index_recursive(const char *name, char **env, int index)
 {
     if (env[index] == NULL)

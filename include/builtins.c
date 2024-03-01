@@ -46,3 +46,47 @@ int command_env(t_localenv *local)
 	print_string_array(local->content);
     return (0);
 }
+
+int unset_variable(const char *variable, t_localenv *local)
+{
+    int index;
+
+	index = find_variable_index(variable, local->content);
+    if (index != -1)
+	{
+        free(local->content[index]);
+        while (local->content[index] != NULL)
+		{
+            local->content[index] = local->content[index + 1];
+            index++;
+        }
+        local->content[index] = NULL;
+        return 0;
+    }
+	else
+        return -1;
+}
+
+int command_unset(char **cmds, t_localenv *local)
+{
+    if (cmds == NULL || local == NULL || local->content == NULL)
+	{
+        printf("Error: Invalid command or local environment.\n");
+        return -1;
+    }
+    if (cmds[1] == NULL)
+	{
+        printf("Error: No variable specified for unset.\n");
+        return -1;
+    }
+    if (unset_variable(cmds[1], local) == 0)
+	{
+        printf("Variable '%s' unset.\n", cmds[1]);
+        return 0;
+    }
+	else
+	{
+        printf("Variable '%s' not found.\n", cmds[1]);
+        return -1;
+    }
+}
