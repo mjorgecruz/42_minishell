@@ -65,7 +65,7 @@ char *master_expander(char *cmd, t_localenv *local);
 /*                                     CD.C                                   */
 /* ************************************************************************** */
 
-// int	command_cd();
+int command_cd(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                     ECHO.C                                 */
@@ -75,7 +75,7 @@ char *master_expander(char *cmd, t_localenv *local);
 folowed by n n_times else returns false*/
 
 bool		ft_find_n(char *str);
-int	command_echo(char **cmds, t_localenv *local);
+int			command_echo(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                 EXPORT.c                                   */
@@ -121,5 +121,11 @@ void		swap_strings(char **str1, char **str2);
 /* ************************************************************************** */
 
 char *ft_getenv(const char *name, char **envp);
+
+/* ************************************************************************** */
+/*                                 EXIT_COMMAND.c                             */
+/* ************************************************************************** */
+
+void command_exit(t_localenv *local);
 
 #endif

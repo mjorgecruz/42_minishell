@@ -96,13 +96,18 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 		command_unset(cmds->cmds, local_env);
 		return ;
 	}
+	// else if (id == EXIT)
+	// {
+	// 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
+	// 	return ;
+	// }
+	else if (id == CD)
+	{
+		command_cd(cmds->cmds, local_env);
+		return ;
+	}
 	// else if (id == UNDEFINED)
 	//  	command_execve();
-	// else if (id == CD)
-	// 	command_cd();
-	// 	//command_unset();
-	//else if (id == EXIT)
-	// 	command_exit();
 	return ;
 }
 
