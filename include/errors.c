@@ -42,7 +42,7 @@ void	errors(int error_code, char *cmd)
 		errors_2(error_code, cmd);
 }
 
-void errors_2(int error_code, char *cmd)
+void	errors_2(int error_code, char *cmd)
 {
 	if (error_code == SYNTAX_L_S_REDIR)
 		printf("minishell:syntax error near unexpected token `<'\n");
@@ -63,12 +63,12 @@ void errors_2(int error_code, char *cmd)
 by end-of-file (wanted `%s')\n", cmd);
 }
 
-int error_definer(char *cmd)
+int	error_definer(char *cmd)
 {
 	char	err[3];
 	int		i;
-	int 	j;
-	
+	int		j;
+
 	i = 0;
 	while (i < 3)
 		err[i++] = '\0';
@@ -82,11 +82,12 @@ int error_definer(char *cmd)
 	if (cmd[j] == '\0')
 		return (errors(SYNTAX_NEWLINE, NULL), 1);
 	if (cmd[j] && j > 0 && cmd[j] == '|')
-		return(errors(SYNTAX_PIPE, NULL), 1);
+		return (errors(SYNTAX_PIPE, NULL), 1);
 	if (cmd[j] && j == 0 && cmd[j] == '>' && cmd[j + 1] == '|')
 		j = ignore_spaces(cmd, j + 2);
 	while (cmd[j] && i < 2 && is_special_char(cmd[j]))
 		err[i++] = cmd[j++];
-	return (printf("minishell:syntax error near unexpected token `%s'\n", err), 1);
+	return \
+	(printf("minishell:syntax error near unexpected token `%s'\n", err), 1);
 }
 
