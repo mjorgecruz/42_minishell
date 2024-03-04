@@ -17,7 +17,7 @@
 void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 {
 	int		i;
-	t_token *prev;
+	t_token	*prev;
 
 	if (*heredocs)
 		free_split(*heredocs);

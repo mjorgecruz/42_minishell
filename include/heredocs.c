@@ -44,7 +44,7 @@ int		adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i )
 	int		total_heredocs;
 	char	**new_heredocs;
 	int		j;
-	
+
 	k = 0;
 	j = 0;
 	if (*heredocs)
@@ -56,7 +56,7 @@ int		adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i )
 	new_heredocs = (char **)malloc(sizeof(char *) * (total_heredocs + 1));
 	if (new_heredocs == NULL)
 		return (0);
-	while(j < k)
+	while (j < k)
 	{
 		new_heredocs[j] = (*heredocs)[k];
 		j++;
