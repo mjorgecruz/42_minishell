@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/28 09:50:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:58:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,6 @@ typedef enum e_type
 	S_PIPE,
 	D_PIPE,
 	D_AMP,
-	S_RED_IN,
-	S_RED_OUT,
-	D_RED_IN,
-	D_RED_OUT,
 }	t_type;
 
 /*Define special characters within the separated strings*/
@@ -76,6 +72,15 @@ typedef enum e_special
 	S_AMPER,
 	D_AMPER
 }	t_special;
+
+typedef enum s_in_out
+{
+	IN_DOC,
+	HEREDOC,
+	OUT_DOC,
+	OUT_UND,
+	UNDEF,
+}	t_in_out;
 
 typedef struct s_command
 {
@@ -93,6 +98,11 @@ typedef struct s_token
 	t_command		*cmds;
 }	t_token;
 
+typedef struct s_info
+{
+	char	***heredocs;
+	int		pos_heredoc;
+} t_info;
 /*Definition of error cases*/
 enum e_ERRORS
 {
@@ -190,8 +200,11 @@ t_token		*command_organizer(char *input);
 
 /*function used to divide the full line read into parts separated by pipes*/
 void			command_divider(t_token **list, char *input);
+
 t_type type_definer(char *input, int *i);
+
 bool token_has_par(t_token *token);
+
 char *trim_string(char *str);
 /*Function to find the next '"' or '''*/ 
 int			find_next(char *input, int init_pos);
@@ -200,7 +213,9 @@ int			find_next(char *input, int init_pos);
 t_token		*create_node(int init, int end, char *input, t_type type);
 
 int			find_closed(char *input, int i);
+
 t_token *token_creator (int i, int j, char *input, int type);
+
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */
 /* ************************************************************************** */
@@ -248,11 +263,11 @@ void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
-void		exec_correct_builtin(t_command *cmds);
+void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
-void		commands_sorter(t_token *cmd_list);
+void		commands_sorter(t_token *cmd_list, t_info info);
 
 /*executes commands using the execve function*/
 int			command_execve(char *cmd, char *paths);
@@ -273,7 +288,7 @@ int			error_definer(char *cmd);
 /*                                     FINEX                                  */
 /* ************************************************************************** */
 
-void		clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs);
+void		clean_cmd_list(t_token *cmd_list, char ***heredocs);
 
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);
@@ -283,8 +298,11 @@ int			free_split(char **splitted);
 /* ************************************************************************** */
 
 int			ignore_in_quotes(char *str, int pos);
+
 int			ignore_spaces(char *str, int pos);
+
 bool		is_special_char(char c);
+
 bool		is_space(char c);
 
 char		*ft_strcpy(char *s);
@@ -300,11 +318,17 @@ void		add_token(t_token **tokens, t_token *new);
 /* ************************************************************************** */
 
 void		heredoc_writer(char *line_read, char ***heredocs, int i);
+
 int			heredoc_counter(char *line_read, int i);
+
 int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
+
 void		add_newline_line(char **total_line, char *line_read);
+
 void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
+
 void		add_partials(char **heredoc, char *str);
+
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
 
 /* ************************************************************************** */
@@ -312,24 +336,31 @@ int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read,
 /* ************************************************************************** */
 
 void		heredoc_writer(char *line_read, char ***heredocs, int i);
+
 int			heredoc_counter(char *line_read, int i);
+
 int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
+
 void		add_newline_line(char **total_line, char *line_read);
+
 void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
+
 void		add_partials(char **heredoc, char *str);
+
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
-
-#endif
-
 
 /* ************************************************************************** */
 /*                             PARSER_PARENTHESIS                             */
 /* ************************************************************************** */
 
 int			parser_parenthesis(char *total_line, int *i);
+
 bool		check_operator_open_p(char *total_line, int *i);
+
 bool		check_open_p_operator(char *total_line, int *i);
+
 bool		check_operator_closed_p(char *total_line, int *i);
+
 bool		check_closed_p_operator(char *total_line, int *i);
 
 /* ************************************************************************** */
@@ -337,5 +368,21 @@ bool		check_closed_p_operator(char *total_line, int *i);
 /* ************************************************************************** */
 
 int list_organizer(t_token **list, char *input);
+
 int create_list_node(t_token **list, char *input, int  i, int beg);
+
 t_token *create_list_new_node(char *input, int i, int beg);
+
+/* ************************************************************************** */
+/*                                   SOLVER                                   */
+/* ************************************************************************** */
+
+int 	solver(t_token *cmd_list, t_info info);
+
+int		cd_output_exec(t_command *cmds, int *fd_in_out, int *in_out, t_info info);
+
+void	define_input(t_command *cmds, int *fd, int *heredocs, int *in);
+
+void	define_output(t_command *cmds, int *fd, int *out);
+
+#endif

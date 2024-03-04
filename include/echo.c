@@ -30,7 +30,7 @@ int	command_echo(char **cmds)
     int i;
 	bool n_flag;
     char *exp_temp;
-	
+
 	i = 0;
 	n_flag = false;
     while (cmds[++i] && ft_find_n(cmds[i])) // e se o expandido tive -n??
@@ -47,5 +47,5 @@ int	command_echo(char **cmds)
     }
     if (!n_flag)
 		printf("\n");
-	return (i);
+    return (i);
 }

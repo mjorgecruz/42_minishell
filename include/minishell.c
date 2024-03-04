@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 11:33:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:41:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int ac, char **av)
 	(void) ac;
 	(void) av;
 	paths = getenv("PATH");
-	//clear_terminal(paths);
 	input = NULL;
 	while (1)
 	{
@@ -30,11 +29,6 @@ int	main(int ac, char **av)
 			continue;
 		if (input != NULL && *input)
 		{
-			// if(!ft_parser(input, 0))
-			// {
-			// 	free(input);
-			// 	continue;
-			// }	
 			general_executer(input, paths, &heredocs);
 			free(input);
 		}

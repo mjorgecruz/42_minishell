@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/29 10:39:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:38:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@ line read into segments separated by pipes*/
 void	general_executer(char *input, char *paths, char ***heredocs)
 {
 	t_token	*cmd_list;
+	t_info	info;
 	
 	cmd_list = NULL;
 	(void) paths;
 	//list_organizer(&cmd_list, input);
-	
+	info.heredocs = heredocs;
+	info.pos_heredoc = -1;
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
-	commands_sorter(cmd_list);
-	tester_function(&cmd_list);
-	clean_cmd_list(cmd_list, paths, heredocs);
+	commands_sorter(cmd_list, info);
+	//tester_function(&cmd_list);
+	clean_cmd_list(cmd_list, heredocs);
 }
 
 t_token	*command_organizer(char *input)

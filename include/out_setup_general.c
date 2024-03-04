@@ -6,19 +6,18 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/26 11:11:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:55:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	commands_sorter(t_token *cmd_list)
+void	commands_sorter(t_token *cmd_list, t_info info)
 {
 	set_id_flag_cmd(cmd_list);
-	// verifitions of pipens olys lasts echos soulds bes echoeds
 	while (cmd_list != NULL)
 	{
-		exec_correct_builtin(cmd_list->cmds);
+		solver(cmd_list, info);
 		cmd_list = cmd_list->next;
 	}
 	return ;
@@ -28,22 +27,28 @@ void	set_id_flag_cmd(t_token *cmd_list)
 {
 	int		j;
 
-	while (cmd_list != NULL)
+	if (cmd_list != NULL && cmd_list->down != NULL)
+	{
+		set_id_flag_cmd(cmd_list->down);
+	}
+	if (cmd_list != NULL)
 	{
 		j = 0;
-		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
+		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
+			&& cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
 		{
 			cmd_list->cmds[j].id 
 				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
 			j++;
 		}	
-		cmd_list = cmd_list->next;
+		set_id_flag_cmd(cmd_list->next);
 	}
 	return ;
 }
 
 t_builtin	get_builtin_id(const char *str)
 {
+	
 	if (!ft_strcmp(str, "cd") || !ft_strcmp(str, "\"cd\"") || !ft_strcmp(str, "\'cd\'"))
 		return (CD);
 	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "\"export\"")
@@ -67,10 +72,13 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-void	exec_correct_builtin(t_command *cmds)
+void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info)
 {
  	t_builtin id;
-
+	
+	(void) fd_in;
+	(void) in;
+	(void) info;
 	id = cmds->id;
 	if (id == ECHOS)
 	{
@@ -82,8 +90,6 @@ void	exec_correct_builtin(t_command *cmds)
 		command_pwd();
 		return ;
 	}
-	// else if (id == UNDEFINED)
-	// 	command_execve();
 	// else if (id == CD)
 	// 	command_cd();
 	// else if (id == EXPORT)
@@ -94,6 +100,8 @@ void	exec_correct_builtin(t_command *cmds)
 	// 	//command_unset();
 	//else if (id == EXIT)
 	// 	command_exit();
+	// else if (id == UNDEFINED)
+	// 	command_execve(cmds, fd_in, in, info);
 	return ;
 }
 

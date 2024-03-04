@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/26 16:10:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:38:16 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 #include "minishell.h"
 
-void	clean_cmd_list(t_token *cmd_list, char *paths, char ***heredocs)
+void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 {
 	int		i;
 	t_token *prev;
-	(void) paths;
 	
 	if (*heredocs)
 		free_split(*heredocs);

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/28 11:37:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/01 09:29:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int check_redirs(char *str, int pos)
 		}
 		else if (!is_special_char(str[pos + 1]))
 		{
-			pos = ignore_spaces(str, pos + 2);
+			pos = ignore_spaces(str, pos + 1);
 			if (has_valid_cmd_after(str, pos))
 				return (pos);
 			return (error_definer(&str[pos]), -1);
