@@ -33,7 +33,7 @@ char	*get_ds_code(char *cmd);
 char	*ds_replace_codeword(char *cmd, char *code, char *env_val);
 char	*expand_single_variable(char *cmd, t_localenv *local);
 char	*join_list_contents(t_lstexpand *head);
-void	clean_quotes_in_list(t_lstexpand *head);
+void	clean_quotes_in_list(t_lstexpand *head, int len);
 
 /* ************************************************************************** */
 /*                                 EXPANDER_LST.c                             */

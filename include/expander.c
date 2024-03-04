@@ -6,12 +6,12 @@ char	*get_ds_code(char *cmd)
 	int		len;
 
 	len = 0;
-	tmp = ft_strnstr(cmd, "$", ft_strlen(cmd)); //encontra $ returna tudo na sua frente
+	tmp = ft_strnstr(cmd, "$", ft_strlen(cmd));
 	if (tmp[1] == '?')
-		return (ft_strdup("$?")); //se for interrogacao retorna isso
+		return (ft_strdup("$?"));
 	if (ft_isdigit(tmp[1]))
-		return (ft_substr(tmp, 0, 1)); //se for digito not valid RETURN NULL
-	while (ft_isalnum(tmp[len + 1]) || tmp[len + 1] == '_') //enquanto for alphanumerico ou _ is valid!
+		return (ft_substr(tmp, 0, 1));
+	while (ft_isalnum(tmp[len + 1]) || tmp[len + 1] == '_')
 		len++;
 	return (ft_substr(tmp, 1, len));
 }
@@ -36,8 +36,8 @@ char	*ds_replace_codeword(char *cmd, char *code, char *env_val)
 	ft_strlcpy(new, cmd, start - cmd);
 	ft_strlcat(new, env_val, len);
 	ft_strlcat(new, end, len);
-    free(code);
-    free(cmd);
+	free(code);
+	free(cmd);
 	return (new);
 }
 
@@ -48,73 +48,75 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 	char	*expanded_str;
 
 	expanded_str = ft_strdup(cmd);
-	if (*expanded_str == '\'' && quotes_counter(expanded_str) % 2)               //no caso de haver single quotes em numero impar retorna como esta.
+	if (*expanded_str == '\'' && quotes_counter(expanded_str) % 2)
 		return (expanded_str);
 	while (ft_strnstr(expanded_str, "$", ft_strlen(expanded_str)))
 	{
 		code_word = get_ds_code(expanded_str);
 		if (!code_word || is_str_empty(code_word))
-			break ;                                                             //sendo nula ou vazia
+			break ;
 		if (!ft_strncmp(code_word, "$?", 2))
-			env = "696969";                                                     // codigo de erro???? pid? o que ???
+			env = "696969";
 		else
-			env = ft_getenv(code_word, local->content);                                            // teremos de substituir isto pela nossa propria versao!  ft_getenv!!!!
+			env = ft_getenv(code_word, local->content);
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
 	return (expanded_str);
 }
+// codigo de erro???? pid? o que ??? linha 59 e outros codigos dos   $!?
 
-char *join_list_contents(t_lstexpand *head)
+char	*join_list_contents(t_lstexpand *head)
 {
-    int total_length;
-	t_lstexpand *current;
-	char *joined_content;
+	int			total_length;
+	t_lstexpand	*cur;
+	char		*joined_content;
 
 	total_length = 0;
-	current = head;
-    while (current != NULL)
-    {
-        if (current->content != NULL)
-            total_length += strlen(current->content);
-        current = current->next;
-    }
-    joined_content = malloc((total_length + 1) * sizeof(char));
-    if (!joined_content) return NULL;
-    joined_content[0] = '\0';
-    current = head;
-    while (current != NULL)
-    {
-        if (current->content != NULL)
-            strcat(joined_content, current->content);
-        current = current->next;
-    }
-    return joined_content;
+	cur = head;
+	while (cur != NULL)
+	{
+		if (cur->content != NULL)
+			total_length += strlen(cur->content);
+		cur = cur->next;
+	}
+	joined_content = malloc((total_length + 1) * sizeof(char));
+	if (!joined_content)
+		return (NULL);
+	joined_content[0] = '\0';
+	cur = head;
+	while (cur != NULL)
+	{
+		if (cur->content != NULL)
+			strcat(joined_content, cur->content);
+		cur = cur->next;
+	}
+	return (joined_content);
 }
 
-void clean_quotes_in_list(t_lstexpand *head)
+void	clean_quotes_in_list(t_lstexpand *head, int len)
 {
-    t_lstexpand *current;
-	
-	current = head;
-    while (current != NULL)
-    {
-        if ((strcmp(current->content, "''") == 0) || (strcmp(current->content, "\"\"") == 0))
-        {
-            free(current->content);
-            current->content = NULL;
-        }
-        else
-        {
-            int len = strlen(current->content);
-            if (len >= 2 && ((current->content[0] == '\'' && current->content[len - 1] == '\'') ||
-                             (current->content[0] == '\"' && current->content[len - 1] == '\"')))
-            {
-                char *temp = strdup(current->content + 1);
-                temp[len - 2] = '\0';
-                free(current->content);
-                current->content = temp;
-            }
-        }
-        current = current->next;
-    }
+	t_lstexpand	*cur;
+	char		*temp;
+
+	cur = head;
+	while (cur != NULL)
+	{
+		if ((strcmp(cur->content, "''") == 0) || (strcmp(cur->content, "\"\"") == 0))
+		{
+			free(cur->content);
+			cur->content = NULL;
+		}
+		else
+		{
+			len = strlen(cur->content);
+			if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') || (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
+			{
+				temp = strdup(cur->content + 1);
+				temp[len - 2] = '\0';
+				free(cur->content);
+				cur->content = temp;
+			}
+		}
+		cur = cur->next;
+	}
 }

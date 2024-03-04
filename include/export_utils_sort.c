@@ -40,19 +40,20 @@ char	**ft_strarrdup(char **src)
 	return (dst);
 }
 
-
-void print_next_string(char **str)
+void	print_next_string(char **str)
 {
-    while (*str != NULL)
+	while (*str != NULL)
 	{
-        printf("%s\n", *str);
-        str++;
-    }
+		printf("%s\n", *str);
+		str++;
+	}
 }
 
-void swap_strings(char **str1, char **str2)
+void	swap_strings(char **str1, char **str2)
 {
-    char *temp = *str1;
-    *str1 = *str2;
-    *str2 = temp;
+	char	*temp;
+
+	temp = *str1;
+	*str1 = *str2;
+	*str2 = temp;
 }
