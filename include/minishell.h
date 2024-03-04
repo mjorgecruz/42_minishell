@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/15 13:17:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:21:27 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include <linux/limits.h>
+//# include <linux/limits.h>
+# include <sys/syslimits.h>
 
 # include "parser.h"
 # include "builtins.h"

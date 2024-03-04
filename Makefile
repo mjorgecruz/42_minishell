@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/02/14 11:23:01 by masoares         ###   ########.fr        #
+#    Updated: 2024/03/04 18:24:41 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ RED = \033[31m
 GREEN = \033[32m
 YELLOW = \033[33m
 END_COLOR = \033[0m
-BOLD_GREEN = \e[1;32m
-BOLD_YELLOW = \e[1;33m
-END = \e[0m
+BOLD_GREEN = \033[1;32m
+BOLD_YELLOW = \033[1;33m
+END = \033[0m
 
 NAME = minishell
 
