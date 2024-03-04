@@ -34,7 +34,7 @@ SRC := minishell.c history.c parser_general.c expander_lst.c\
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
 		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
 		export.c export_utils.c export_envcpy.c cd_command.c\
-		export_utils_sort.c ft_getenv.c exit_command.c \
+		export_utils_sort.c ft_getenv.c exit_command.c cd_utils.c\
 
 
 LIBRARY = 

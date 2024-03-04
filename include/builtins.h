@@ -1,18 +1,19 @@
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
 
 typedef struct s_lstexpand
 {
-	int status;
-	char *content;
-	struct s_lstexpand *next;
-} t_lstexpand;
+	int					status;
+	char				*content;
+	struct s_lstexpand	*next;
+}				t_lstexpand;
 
 typedef struct s_localenv
 {
-	char **content;
-} t_localenv;
+	char	**content;
+}				t_localenv;
 
 /* ************************************************************************** */
 /*                                    BUILTINS                                */
@@ -38,34 +39,46 @@ void	clean_quotes_in_list(t_lstexpand *head);
 /*                                 EXPANDER_LST.c                             */
 /* ************************************************************************** */
 
+void	insert_lstexpand_node(t_lstexpand **head, t_lstexpand *new_node);
+void	free_lstexpand(t_lstexpand *head);
+void	create_list_quotes(char *cmd, t_lstexpand **in_cmd_list);
+void	expand_content_in_list(t_lstexpand *head, t_localenv *local);
+
 t_lstexpand	*create_node_lstexpand(int status, char *content);
-void		insert_lstexpand_node(t_lstexpand **head, t_lstexpand *new_node);
-void		free_lstexpand(t_lstexpand *head);
-void		create_list_quotes(char *cmd, t_lstexpand **in_cmd_list);
-void		expand_content_in_list(t_lstexpand *head, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                 EXPANDER_UTILS.c                           */
 /* ************************************************************************** */
 
-bool		is_str_empty(char *str);
-int			quotes_counter(char *cmd);
-char		*ft_strndup(const char *s, size_t n);
-int			quotation_size(char *cmd, int start);
-void		print_list(t_lstexpand *head);
-
+bool	is_str_empty(char *str);
+int		quotes_counter(char *cmd);
+char	*ft_strndup(const char *s, size_t n);
+int		quotation_size(char *cmd, int start);
+void	print_list(t_lstexpand *head);
 
 /* ************************************************************************** */
 /*                                 EXPANDER_MAIN.c                            */
 /* ************************************************************************** */
 
-char *master_expander(char *cmd, t_localenv *local);
+char	*master_expander(char *cmd, t_localenv *local);
 
 /* ************************************************************************** */
-/*                                     CD.C                                   */
+/*                                  CD_COMMAND.C                              */
 /* ************************************************************************** */
 
-int command_cd(char **cmds, t_localenv *local);
+int		change_directory(const char *path);
+char	*get_home_directory(t_localenv *local);
+char	*get_previous_directory(t_localenv *local);
+int		update_directories(t_localenv *local, char *cwd);
+int		command_cd(char **cmds, t_localenv *local);
+
+/* ************************************************************************** */
+/*                                  CD_UTILS.C                                */
+/* ************************************************************************** */
+
+int		add_env_variable(char *name, char *value, t_localenv *local);
+int		update_env_variable(char *name, char *value, t_localenv *local);
+int		ft_setenv(char *name, char *value, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                     ECHO.C                                 */
@@ -74,58 +87,57 @@ int command_cd(char **cmds, t_localenv *local);
 /* returns true everytime it finds -n or -n 
 folowed by n n_times else returns false*/
 
-bool		ft_find_n(char *str);
-int			command_echo(char **cmds, t_localenv *local);
+bool	ft_find_n(char *str);
+int		command_echo(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                 EXPORT.c                                   */
 /* ************************************************************************** */
 
-char		*extract_variable_name(const char *variable);
-char		**copy_environment(char **old_env, int num_vars);
-int			add_variable(const char *variable, t_localenv *local);
-int			update_variable(const char *variable, t_localenv *local);
-int			command_export(char **cmds, t_localenv *local);
+char	*extract_variable_name(const char *variable);
+char	**copy_environment(char **old_env, int num_vars);
+int		add_variable(const char *variable, t_localenv *local);
+int		update_variable(const char *variable, t_localenv *local);
+int		command_export(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                EXPORT_UTILS.c                              */
 /* ************************************************************************** */
 
 // void		ft_free_str_array(char **ar_str); apagada!!!!
-int			find_variable_index_recursive(const char *name, char **env, int index);
-int			find_variable_index(const char *variable, char **env);
-char		*ft_strncpy(char *dst, const char *src, size_t n);
-void		*ft_memalloc(size_t size);
+int		find_variable_index_recursive(const char *name, char **env, int index);
+int		find_variable_index(const char *variable, char **env);
+char	*ft_strncpy(char *dst, const char *src, size_t n);
+void	*ft_memalloc(size_t size);
 
 /* ************************************************************************** */
 /*                               EXPORT_ENVCPY.c                              */
 /* ************************************************************************** */
 
 t_localenv	*env_init(char **envirion);
-char		**copy_env_var_utils(char **env, int num_vars, char **env_copy);
-char		**copy_environment_variables(char **environ);
-void		print_sorted_strings(t_localenv *local);
+char	**copy_env_var_utils(char **env, int num_vars, char **env_copy);
+char	**copy_environment_variables(char **environ);
+void	print_sorted_strings(t_localenv *local);
 
 /* ************************************************************************** */
 /*                             EXPORT_UTILS_SORT.c                            */
 /* ************************************************************************** */
 
-size_t		ft_strarrlen(char **arr);
-char		**ft_strarrdup(char **src);
-void		print_next_string(char **str);
-void		swap_strings(char **str1, char **str2);
-
+size_t	ft_strarrlen(char **arr);
+char	**ft_strarrdup(char **src);
+void	print_next_string(char **str);
+void	swap_strings(char **str1, char **str2);
 
 /* ************************************************************************** */
 /*                                 FT_GETENV.c                                */
 /* ************************************************************************** */
 
-char *ft_getenv(const char *name, char **envp);
+char	*ft_getenv(const char *name, char **envp);
 
 /* ************************************************************************** */
 /*                                 EXIT_COMMAND.c                             */
 /* ************************************************************************** */
 
-void command_exit(t_localenv *local);
+void	command_exit(t_localenv *local);
 
 #endif
