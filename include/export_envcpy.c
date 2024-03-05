@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:04:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:31:25 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,41 @@ char	**copy_environment_variables(char **environ)
 	return (copy_env_var_utils(environ, 0, env_copy));
 }
 
+
+void put_dickens_ciders(char **arrstr)
+{
+	int i;
+	int j;
+	bool equal;
+
+	i = 0;
+	while (arrstr[i] != NULL)
+	{
+		j = 0;
+		equal = false;
+		ft_putstr_fd("declare -x ", 1);
+		while (arrstr[i][j] != '\0')
+		{
+			ft_putchar_fd(arrstr[i][j], 1);
+			if (arrstr[i][j] == '=' && !equal)
+			{
+				ft_putchar_fd('"', 1);
+				equal = true;
+			}
+			j++;
+		}
+		ft_putchar_fd('"', 1);
+		ft_putchar_fd('\n', 1);
+		i++;
+	}
+}
+
+
 void	print_sorted_strings(t_localenv *local)
 {
 	char	**temp_content;
 	char	**temp_content_start;
-	int		i;
+	//int		i;
 
 	if (local == NULL || local->content == NULL)
 		return ;
@@ -94,9 +124,10 @@ void	print_sorted_strings(t_localenv *local)
 		return ;
 	temp_content_start = temp_content;
 	sort_strings(temp_content);
-	i = -1;
-	while (temp_content[++i] != NULL)
-		printf("declare -x %s\n", temp_content[i]);
+	//i = -1;
+	//while (temp_content[++i] != NULL)
+		//printf("declare -x %s\n", temp_content[i]);
+	put_dickens_ciders(temp_content);
 	while (*temp_content)
 	{
 		free(*temp_content);

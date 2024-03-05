@@ -6,12 +6,14 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:58 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:09:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:12:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 //posso usar realloc? NAO, necessario criar o proprio.
+
 int	add_env_variable(char *name, char *value, t_localenv *local)
 {
 	char	**new_content;
