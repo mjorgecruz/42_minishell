@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   special_mid_parser.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 09:46:27 by masoares         ###   ########.fr       */
+/*   Created: 2024/01/20 00:09:57 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/03/05 00:10:15 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 

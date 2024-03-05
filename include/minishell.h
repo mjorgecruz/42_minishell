@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/04 18:21:27 by luis-ffe         ###   ########.fr       */
+/*   Created: 2024/03/05 00:07:23 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/03/05 00:07:27 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
