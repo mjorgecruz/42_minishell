@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 00:07:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:07:55 by luis-ffe         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/03/07 11:04:47 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ignore_in_quotes(char *str, int pos)
 
 int	ignore_spaces(char *str, int pos)
 {
-	while(str[pos] && is_space(str[pos]))
+	while (str[pos] && is_space(str[pos]))
 		pos++;
 	return(pos);
 }
@@ -72,6 +72,7 @@ t_token	*init_struct_cmd(void)
 	new = (t_token *)malloc(sizeof(t_token));
 	new->content = NULL;
 	new->next = NULL;
+	new->down = NULL;
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/04 18:24:41 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/03/07 11:02:51 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC := minishell.c history.c parser_general.c expander_lst.c\
 		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
 		export.c export_utils.c export_envcpy.c cd_command.c\
 		export_utils_sort.c ft_getenv.c exit_command.c cd_utils.c\
+		list_organizer.c solver.c
 
 
 LIBRARY = 
@@ -70,6 +71,8 @@ fclean: clean
 
 clean:
 	@$(RM) $(OBJ)
+	@$(RM) sup
+	@$(RM) leaks.log
 	@$(RM) sup
 	@$(RM) leaks.log
 	@make clean -C ./include/libft/ -s
@@ -108,3 +111,5 @@ define SUP_BODY
     fun:add_history
 }
 endef
+
+	

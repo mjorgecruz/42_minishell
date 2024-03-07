@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/09 12:04:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/02 12:25:08 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,28 @@ pipes. The strings must be divided in parts in an array of structs*/
 void	commands_separator(t_token *cmd_list)
 {
 	int		specials;
-
+ 
 	while (cmd_list != NULL)
 	{
-		if (cmd_list->content == NULL)
+		specials = 0;
+		if (cmd_list->down == NULL)
 		{
-			cmd_list->cmds = (t_command *)malloc(sizeof(t_command));
-			cmd_list->cmds->type = 0;
-			cmd_list->cmds->cmds = NULL;
-			return ;
+			if (cmd_list->content == NULL)
+			{
+				cmd_list->cmds = (t_command *)malloc(sizeof(t_command));
+				cmd_list->cmds->cmds = NULL;
+				return ;
+			}
+			else
+			{
+				specials = specials_counter(cmd_list);
+				cmd_list->cmds = (t_command *)malloc
+				(sizeof(t_command) * (specials + 2));
+			}
+			fill_cmds(cmd_list, specials);	
 		}
-		specials = specials_counter(cmd_list);
-		cmd_list->cmds = (t_command *)malloc
-			(sizeof(t_command) * (specials + 2));
-		if (cmd_list == NULL)
-			return ;
-		fill_cmds(cmd_list, specials);
+		else 
+			commands_separator(cmd_list->down);
 		cmd_list = cmd_list->next;
 	}
 }
@@ -97,6 +103,7 @@ char	**mega_split(char *content, int *pos)
 
 	i = 0;
 	count = 0;
+	*pos = ignore_spaces(content, (*pos));
 	words = ft_count_words(content, (*pos));
 	if (words == 0)
 		return (NULL);
@@ -107,7 +114,7 @@ char	**mega_split(char *content, int *pos)
 	{
 		count = find_next_stop(content, *pos);
 		splitted[i] = write_to_splitted(count, content, pos);
-		while (content[*pos] == ' ')
+		while (content[*pos] == ' ' )
 			(*pos)++;
 		i++;
 	}
@@ -138,21 +145,23 @@ int	ft_count_words(char *content, int pos)
 
 	count = 0;
 	pass_spaces(content, &pos);
-	while (content[pos] && !ft_strchr("<>&", content[pos]))
+	while (content[pos] )
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 			pass_quotes(content, &pos);
-		else if (content[pos] == ' ')
+		else if (content[pos] == ' ' || ft_strchr("<>", content[pos]))
 		{
 			pass_spaces(content, &pos);
-			if (content[pos] && !ft_strchr("<>&", content[pos]))
+			// while (content[pos] && ft_strchr("<>", content[pos]))
+			// 	pos++;
+			if (content[pos] && !ft_strchr("<>", content[pos]))
 				count++;
 			else
 				break ;
 		}
 		pos++;
 	}
-	if (content[pos] && ft_strchr("<>&", content[pos + 1]) != NULL)
+	if (content[pos] && ft_strchr("<>", content[pos + 1]) != NULL)
 		pos += 2;
 	count = count + 1;
 	return (count);
@@ -208,10 +217,10 @@ int	find_next_stop(char *content, int pos)
 		count++;
 		pos++;
 	}
-	if (!ft_strchr("<>&", content[pos]) || !content[pos])
+	if (!ft_strchr("<>", content[pos]) || !content[pos])
 		return (count);
 	else
-		return (count - 1);
+		return (count);
 }
 
 int	count_spaces(int *pos, char *content)

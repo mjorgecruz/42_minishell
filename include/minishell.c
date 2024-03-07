@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 11:33:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:31:38 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ int	main(int ac, char **av, char **env)
 	char	*paths;
 	char	**heredocs;
 	t_localenv *local_env;
-	
+
 	(void) ac;
 	(void) av;
 	local_env = env_init(env);
 	paths = getenv("PATH");
-	//clear_terminal(paths);
 	input = NULL;
 	while (1)
 	{
@@ -32,22 +31,17 @@ int	main(int ac, char **av, char **env)
 			continue;
 		if (input != NULL && *input)
 		{
-			// if(!ft_parser(input, 0))
-			// {
-			// 	free(input);
-			// 	continue;
-			// }	
 			general_executer(input, paths, &heredocs, local_env);
 			free(input);
 		}
 	}
 	//necessario dar free disto no scope correto ... nao pode ser na clean comds list que la da erro.
-	if (local_env && local_env->content) //corresponde em media se nao forem inseridos comandos a 4820 bytes e esta e a forma correta de lhe dar free
-    {
-        free_split(local_env->content);
-        local_env->content = NULL;
-    }
-	free(local_env);
+	//if (local_env && local_env->content) //corresponde em media se nao forem inseridos comandos a 4820 bytes e esta e a forma correta de lhe dar free
+   // {
+  //      free_split(local_env->content);
+ //       local_env->content = NULL;
+  //  }
+	//free(local_env);
 }
 
 void	clear_terminal(char *paths)

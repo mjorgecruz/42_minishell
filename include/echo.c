@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:08:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:04:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	command_echo(char **cmds, t_localenv *local)
 	}
 	if (!n_flag)
 		printf("\n");
-	return (i);
+    return (i);
 }

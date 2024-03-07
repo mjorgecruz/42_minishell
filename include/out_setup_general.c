@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/06 20:02:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:30:40 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	commands_sorter(t_token *cmd_list, t_localenv *local_env)
+void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
 	set_id_flag_cmd(cmd_list);
 	while (cmd_list != NULL)
 	{
-		exec_correct_builtin(cmd_list->cmds, local_env);
+		solver(cmd_list, info, local);
 		cmd_list = cmd_list->next;
 	}
 	return ;
@@ -27,16 +27,21 @@ void	set_id_flag_cmd(t_token *cmd_list)
 {
 	int		j;
 
-	while (cmd_list != NULL)
+	if (cmd_list != NULL && cmd_list->down != NULL)
+	{
+		set_id_flag_cmd(cmd_list->down);
+	}
+	if (cmd_list != NULL)
 	{
 		j = 0;
-		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL && cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
+		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
+			&& cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
 		{
 			cmd_list->cmds[j].id 
 				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
 			j++;
 		}	
-		cmd_list = cmd_list->next;
+		set_id_flag_cmd(cmd_list->next);
 	}
 	return ;
 }
@@ -66,14 +71,17 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
+void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
 {
  	t_builtin id;
-
+	
+	(void) fd_in;
+	(void) in;
+	(void) info;
 	id = cmds->id;
 	if (id == ECHOS)
 	{
-		command_echo(cmds->cmds, local_env);
+		command_echo(cmds->cmds, local);
 		return ;
 	}
 	else if (id == PWD)
@@ -83,17 +91,17 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	}
 	else if (id == EXPORT)
 	{
-		command_export(cmds->cmds, local_env);
+		command_export(cmds->cmds, local);
 		return ;
 	}
 	else if (id == ENV)
 	{
-		command_env(local_env);
+		command_env(local);
 		return ;
 	}
 	else if (id == UNSET)
 	{
-		command_unset(cmds->cmds, local_env);
+		command_unset(cmds->cmds, local);
 		return ;
 	}
 	// else if (id == EXIT)
@@ -103,7 +111,7 @@ void	exec_correct_builtin(t_command *cmds, t_localenv *local_env)
 	// }
 	else if (id == CD)
 	{
-		command_cd(cmds->cmds, local_env);
+		command_cd(cmds->cmds, local);
 		return ;
 	}
 	// else if (id == UNDEFINED)
@@ -123,8 +131,8 @@ int	command_execve(char *line, char *paths)
 	cmd = ft_split(line, ' ');
 	ft_bzero(line, ft_strlen(line));
 	line = ft_strjoin(line, cmd[0]);
-	p_path[i] = ft_strjoin(p_path[i], "/");
-	cmd[0] = ft_strjoin(p_path[i], cmd[0]);
+	//p_path[i] = ft_strjoin(p_path[i], "/");
+	//cmd[0] = ft_strjoin(p_path[i], cmd[0]);
 	while (access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
 	{
 		p_path[i] = ft_strjoin(p_path[i], "/");
