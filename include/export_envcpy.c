@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:25 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:10:35 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ char	**copy_environment_variables(char **environ)
 }
 
 
-void put_dickens_ciders(char **arrstr)
+void	put_dickens_ciders(char **arrstr)
 {
-	int i;
-	int j;
-	bool equal;
+	int		i;
+	int		j;
+	bool	equal;
 
 	i = 0;
 	while (arrstr[i] != NULL)
@@ -110,12 +110,11 @@ void put_dickens_ciders(char **arrstr)
 	}
 }
 
-
 void	print_sorted_strings(t_localenv *local)
 {
 	char	**temp_content;
 	char	**temp_content_start;
-	//int		i;
+	//int	i;
 
 	if (local == NULL || local->content == NULL)
 		return ;
