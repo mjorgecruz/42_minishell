@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:23:07 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:15:41 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void	 define_output(t_command *cmds, int *fd, int *out)
 	int		i;
 		
 	i = 0;
-	*fd = -1;
+	*fd = 1;
 	while (cmds[i].cmds)
 	{
 		if (cmds[i].type == S_REDIR_OUT)
 		{
-			if (*fd > -1)
+			if (*fd > 1)
 				close(*fd);
 			*fd = open(cmds[i + 1].cmds[0], O_TRUNC);
 			close(*fd);
@@ -104,7 +104,7 @@ void	 define_output(t_command *cmds, int *fd, int *out)
 		}
 		if (cmds[i].type == D_REDIR_OUT)
 		{
-			if (*fd > -1)
+			if (*fd > 1)
 				close(*fd);
 			*fd = open(cmds[i + 1].cmds[0], O_RDWR|O_APPEND|O_CREAT, 0660);
 			*out = OUT_DOC; 

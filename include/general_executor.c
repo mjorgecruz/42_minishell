@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:27:32 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:26:52 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *lo
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list, info, local);
-	//tester_function(&cmd_list);
+	tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, heredocs);
 }
 

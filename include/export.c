@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:05:22 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:10:40 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,3 +145,10 @@ int	command_export(char **cmds, t_localenv *local)
 }
 //while (local->content[++i])
 // printf("\n [%i] LIST: %s", i, local->content[i]);
+
+//void error_if_export_invalid_format(char **cmds)
+//{
+	//where cmds[0] = "export"
+	//cmds[1] = whatever is in front of it and cant be in invalid format cn only accept valid VARIABLE=ATRIBUTE
+	//so all the rules of nomenclature for the variable should be checked and there has to be a = sign in the end of variable even if atribute is empty
+//}
