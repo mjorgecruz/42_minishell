@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/07 11:28:33 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 09:56:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-//# include <linux/limits.h>
-# include <sys/syslimits.h>
+# include <linux/limits.h>
+//# include <sys/syslimits.h>
 
 # include "parser.h"
 # include "builtins.h"
@@ -103,6 +103,7 @@ typedef struct s_info
 	char	***heredocs;
 	int		pos_heredoc;
 } t_info;
+
 /*Definition of error cases*/
 enum e_ERRORS
 {
