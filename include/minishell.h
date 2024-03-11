@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/11 09:56:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:46:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef enum e_builtin
 typedef enum e_type
 {
 	NO_PIPE,
-	S_PIPE,
 	D_PIPE,
 	D_AMP,
 }	t_type;
@@ -69,8 +68,7 @@ typedef enum e_special
 	S_REDIR_OUT,
 	D_REDIR_IN,
 	D_REDIR_OUT,
-	S_AMPER,
-	D_AMPER
+	S_PIPE
 }	t_special;
 
 typedef enum s_in_out
@@ -264,14 +262,14 @@ void		set_id_flag_cmd(t_token *cmd_list);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
-void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info,  t_localenv *local);
+int			exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info,  t_localenv *local);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 
 /*executes commands using the execve function*/
-int			command_execve(char *cmd, char *paths);
+int			command_execve(char **cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                    ERRORS                                  */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:30:40 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:53:56 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
 	set_id_flag_cmd(cmd_list);
-	while (cmd_list != NULL)
-	{
+	// while (cmd_list != NULL)
+	// {
 		solver(cmd_list, info, local);
-		cmd_list = cmd_list->next;
-	}
+	// 	cmd_list = cmd_list->next;
+	// }
 	return ;
 }
 
@@ -31,7 +31,7 @@ void	set_id_flag_cmd(t_token *cmd_list)
 	{
 		set_id_flag_cmd(cmd_list->down);
 	}
-	if (cmd_list != NULL)
+	if (cmd_list != NULL && cmd_list->cmds != NULL)
 	{
 		j = 0;
 		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
@@ -43,6 +43,8 @@ void	set_id_flag_cmd(t_token *cmd_list)
 		}	
 		set_id_flag_cmd(cmd_list->next);
 	}
+	if (cmd_list != NULL && cmd_list->cmds == NULL && cmd_list->next)
+		set_id_flag_cmd(cmd_list->next);
 	return ;
 }
 
@@ -71,7 +73,7 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
+int	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
 {
  	t_builtin id;
 	
@@ -80,68 +82,51 @@ void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_loc
 	(void) info;
 	id = cmds->id;
 	if (id == ECHOS)
-	{
-		command_echo(cmds->cmds, local);
-		return ;
-	}
+		return (command_echo(cmds->cmds, local));
 	else if (id == PWD)
-	{
-		command_pwd();
-		return ;
-	}
+		return (command_pwd());
 	else if (id == EXPORT)
-	{
-		command_export(cmds->cmds, local);
-		return ;
-	}
+		return (command_export(cmds->cmds, local)) ;
 	else if (id == ENV)
-	{
-		command_env(local);
-		return ;
-	}
+		return (command_env(local));
 	else if (id == UNSET)
-	{
-		command_unset(cmds->cmds, local);
-		return ;
-	}
+		return (command_unset(cmds->cmds, local));
 	// else if (id == EXIT)
 	// {
 	// 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
 	// 	return ;
 	// }
 	else if (id == CD)
-	{
-		command_cd(cmds->cmds, local);
-		return ;
-	}
-	// else if (id == UNDEFINED)
-	//  	command_execve();
-	return ;
+		return (command_cd(cmds->cmds, local));
+	else if (id == UNDEFINED)
+		return(command_execve(cmds->cmds, local));
+	return (1) ;
 }
 
-int	command_execve(char *line, char *paths)
+int	command_execve(char **cmds, t_localenv *local)
 {
-	char	**cmd;
 	int		pid;
 	char	**p_path;
 	int		i;
+	char 	*line;
+	char	*cmd_0;
 
 	i = 0;
-	p_path = ft_split(paths, ':');
-	cmd = ft_split(line, ' ');
-	ft_bzero(line, ft_strlen(line));
-	line = ft_strjoin(line, cmd[0]);
-	//p_path[i] = ft_strjoin(p_path[i], "/");
-	//cmd[0] = ft_strjoin(p_path[i], cmd[0]);
-	while (access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
+	cmd_0 = ft_strcpy(cmds[0]);
+	p_path = ft_split(ft_getenv("PATH", local->content), ':');
+	while (access(cmds[0], F_OK) != 0 && p_path[i] != NULL)
 	{
+		line = p_path[i];
 		p_path[i] = ft_strjoin(p_path[i], "/");
-		cmd[0] = ft_strjoin(p_path[i], line);
+		free(line);
+		line = cmds[0];
+		cmds[0] = ft_strjoin(p_path[i], cmd_0);
+		free(line);
 		i++;
 	}
 	pid = fork();
 	if (pid == 0)
-		execve(cmd[0], cmd, NULL);
+		execve(cmds[0], cmds, NULL);
 	waitpid(pid, NULL, 0);
-	return (free(line), free_split(p_path), free_split(cmd), 1);
+	return (free_split(p_path), 0);
 }

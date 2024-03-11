@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/11 13:37:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:32:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	fill_cmds(t_token *cmd_list, int specials)
 			pos++;
 		cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
 		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
-			&& (cmd_list->content[pos] == ' ' || cmd_list->content[pos] == '|'))
+			&& (cmd_list->content[pos] == ' '))
+			//|| cmd_list->content[pos] == '|'))
 			pos++;
 		i++;
 	}
@@ -83,9 +84,9 @@ int	specials_counter(t_token *cmd_list)
 			while (cmd_list->content[pos] != cmd_list->content[asp_place])
 				pos++;
 		}
-		else if (ft_strchr("<>&", cmd_list->content[pos]))
+		else if (ft_strchr("<>|", cmd_list->content[pos]))
 		{
-			while (ft_strchr("<>&", cmd_list->content[pos]))
+			while (ft_strchr("<>|", cmd_list->content[pos]))
 				pos++;
 			count++;
 		}
@@ -153,17 +154,17 @@ int	ft_count_words(char *content, int pos)
 				count++;
 			pass_quotes(content, &pos);
 		}
-		else if (content[pos] == ' ' || ft_strchr("<>", content[pos]))
+		else if (content[pos] == ' ' || ft_strchr("<>|", content[pos]))
 		{
 			pass_spaces(content, &pos);
-			if (content[pos] && !ft_strchr("<>", content[pos]) && content[pos] != 34 && content[pos] != 39)
+			if (content[pos] && !ft_strchr("<>|", content[pos]) && content[pos] != 34 && content[pos] != 39)
 				count++;
 			else
-				continue ;	
+			 	break ;	
 		}
 		pos++;
 	}
-	if (content[pos] && ft_strchr("<>", content[pos + 1]) != NULL)
+	if (content[pos] && ft_strchr("<>|", content[pos + 1]) != NULL)
 		pos += 2;
 	return (count + 1);
 }
@@ -184,13 +185,8 @@ t_special	specials_selector(t_token *cmd_list, int *pos)
 		else
 			return ((*pos)++, S_REDIR_OUT);
 	}
-	else if (cmd_list->content[*pos] == '&')
-	{
-		if (cmd_list->content[(*pos) + 1] == '&')
-			return ((*pos) += 2, D_AMPER);
-		else
-			return ((*pos)++, S_AMPER);
-	}
+	else if (cmd_list->content[*pos] == '|')
+		return ((*pos)++, S_PIPE);
 	else
 		return ((*pos)++, NONE);
 }
@@ -202,7 +198,7 @@ int	find_next_stop(char *content, int pos)
 
 	asp_place = 0;
 	count = count_spaces(&pos, content);
-	while (content[pos] && !ft_strchr("<>&", content[pos])
+	while (content[pos] && !ft_strchr("<>|", content[pos])
 		&& content[pos] != ' ')
 	{
 		if (content[pos] == 34 || content[pos] == 39)
@@ -218,7 +214,7 @@ int	find_next_stop(char *content, int pos)
 		count++;
 		pos++;
 	}
-	if (!ft_strchr("<>", content[pos]) || !content[pos])
+	if (!ft_strchr("<>|", content[pos]) || !content[pos])
 		return (count);
 	else
 		return (count);

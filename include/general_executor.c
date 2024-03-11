@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 14:26:52 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 21:43:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *lo
 
 	cmd_list = NULL;
 	(void) paths;
+	(void) local;
 	//list_organizer(&cmd_list, input);
 	info.heredocs = heredocs;
 	info.pos_heredoc = -1;
@@ -58,10 +59,10 @@ void	command_divider(t_token **list, char *input)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		if (input[i] == '|' || input[i] == '&')
+		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
-			token = token_creator (i, j, input, type);
+			token = token_creator(i, j, input, type);
 			add_token(list, token);
 			if (token_has_par(token))
 				command_divider(&(token->down), trim_string(token->content));
@@ -140,8 +141,6 @@ t_type type_definer(char *input, int *i)
 				type  = D_PIPE;
 				(*i)++;
 			}
-			else
-				type = S_PIPE;
 		}
 	else if (input[*i] == '&')
 	{
@@ -197,11 +196,11 @@ int	find_closed(char *input, int i)
 
 	par_count = 1;
 	i++;
-	while (input[i] != ')' && par_count > 0)
+	while (par_count > 0)
 	{
-		if (input[i] != '(')
+		if (input[i] == '(')
 			par_count++;
-		else if (input[i] != ')')
+		else if (input[i] == ')')
 			par_count--;
 		i++;
 	}

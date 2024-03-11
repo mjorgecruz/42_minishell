@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 14:15:41 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:28:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,35 @@ int solver(t_token *cmd_list, t_info info, t_localenv *local)
 {
 	int		fd_in_out[2];
 	int 	in_out[2];
-		
+	int		res;
+	
+	res = -1;	
 	in_out[0] = UNDEF;
 	in_out[1] = UNDEF;
 	fd_in_out[0] = 0;
 	fd_in_out[1] = 1;
 	if (cmd_list->down != NULL)
 		solver(cmd_list->down, info, local);
-	while (cmd_list && cmd_list->cmds)
+	if (cmd_list && cmd_list->cmds)
 	{
 		define_input(cmd_list->cmds, &fd_in_out[0], &info.pos_heredoc, &in_out[0]);
 		if (fd_in_out[0] == -1)
 			return (-1);
-		//printf(in:  fd %d, heredoc %d, in %d\n", fd_in, heredocs, in);
 		define_output(cmd_list->cmds, &fd_in_out[1], &in_out[1]);
-		//printf("out: fd %d, in %d\n", fd_out, out);
 		if (fd_in_out[1] == STDOUT_FILENO)
-			exec_correct_builtin(cmd_list->cmds, fd_in_out[0], in_out[0], info, local);
+			res = exec_correct_builtin(cmd_list->cmds, fd_in_out[0], in_out[0], info, local);
 		else if (fd_in_out[1] > STDOUT_FILENO)
-			cd_output_exec(cmd_list->cmds, fd_in_out, in_out, info, local);
-		cmd_list = cmd_list->next;
+			res = cd_output_exec(cmd_list->cmds, fd_in_out, in_out, info, local);
+		if (cmd_list && cmd_list->next)
+		{
+			while (cmd_list->next_type == D_PIPE && res == 0)
+				cmd_list = cmd_list->next;
+			if (cmd_list && cmd_list->next)
+				solver(cmd_list->next, info, local);
+		}
 	}
+	if (cmd_list && !cmd_list->cmds && cmd_list->next)
+		solver(cmd_list->next, info, local);
 	return(1);
 }
 
