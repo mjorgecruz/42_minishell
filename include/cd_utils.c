@@ -6,13 +6,29 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:58 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 14:12:43 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 10:18:08 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//posso usar realloc? NAO, necessario criar o proprio.
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void	*new_ptr;
+	size_t	old_size;
+
+	if (!ptr)
+		return (ft_memalloc(size));
+	old_size = ft_strlen(ptr) + 1;
+	if (size <= old_size)
+		return (ptr);
+	new_ptr = ft_memalloc(size);
+	if (!new_ptr)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, old_size);
+	free(ptr);
+	return (new_ptr);
+}
 
 int	add_env_variable(char *name, char *value, t_localenv *local)
 {
@@ -24,7 +40,7 @@ int	add_env_variable(char *name, char *value, t_localenv *local)
 	index = 0;
 	while (local->content[index] != NULL)
 		index++;
-	new_content = realloc(local->content, (index + 2) * sizeof(char *));
+	new_content = ft_realloc(local->content, (index + 2) * sizeof(char *));
 	if (new_content == NULL)
 		return (-1);
 	local->content = new_content;

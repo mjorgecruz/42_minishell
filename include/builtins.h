@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 15:23:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 10:18:28 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		command_cd(char **cmds, t_localenv *local);
 /*                                  CD_UTILS.C                                */
 /* ************************************************************************** */
 
+void	*ft_realloc(void *ptr, size_t size);
 int		add_env_variable(char *name, char *value, t_localenv *local);
 int		update_env_variable(char *name, char *value, t_localenv *local);
 int		ft_setenv(char *name, char *value, t_localenv *local);

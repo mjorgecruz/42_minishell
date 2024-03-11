@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/06 13:10:35 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 09:44:52 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	print_sorted_strings(t_localenv *local)
 {
 	char	**temp_content;
 	char	**temp_content_start;
-	//int	i;
 
 	if (local == NULL || local->content == NULL)
 		return ;
@@ -123,7 +122,7 @@ void	print_sorted_strings(t_localenv *local)
 		return ;
 	temp_content_start = temp_content;
 	sort_strings(temp_content);
-	//i = -1;
+	//int	i = -1;
 	//while (temp_content[++i] != NULL)
 		//printf("declare -x %s\n", temp_content[i]);
 	put_dickens_ciders(temp_content);
