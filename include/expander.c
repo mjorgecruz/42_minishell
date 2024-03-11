@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:04:48 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 08:20:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 		if (!code_word || is_str_empty(code_word))
 			break ;
 		if (!ft_strncmp(code_word, "$?", 2))
-			env = "696969";
+			env = ft_itoa(getpid());
 		else
 			env = ft_getenv(code_word, local->content);
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
