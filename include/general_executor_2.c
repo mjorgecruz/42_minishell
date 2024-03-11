@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_executor_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 14:45:06 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:37:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,26 +145,27 @@ int	ft_count_words(char *content, int pos)
 
 	count = 0;
 	pass_spaces(content, &pos);
-	while (content[pos] )
+	while (content[pos])
 	{
 		if (content[pos] == 34 || content[pos] == 39)
+		{
+			if (pos == 0 || content[pos - 1] != content[pos])
+				count++;
 			pass_quotes(content, &pos);
+		}
 		else if (content[pos] == ' ' || ft_strchr("<>", content[pos]))
 		{
 			pass_spaces(content, &pos);
-			// while (content[pos] && ft_strchr("<>", content[pos]))
-			// 	pos++;
-			if (content[pos] && !ft_strchr("<>", content[pos]))
+			if (content[pos] && !ft_strchr("<>", content[pos]) && content[pos] != 34 && content[pos] != 39)
 				count++;
 			else
-				break ;
+				continue ;	
 		}
 		pos++;
 	}
 	if (content[pos] && ft_strchr("<>", content[pos + 1]) != NULL)
 		pos += 2;
-	count = count + 1;
-	return (count);
+	return (count + 1);
 }
 
 t_special	specials_selector(t_token *cmd_list, int *pos)
