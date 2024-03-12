@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/11 22:28:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 09:37:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int solver(t_token *cmd_list, t_info info, t_localenv *local)
 	int		fd_in_out[2];
 	int 	in_out[2];
 	int		res;
+	char	**final_cmds;
 	
 	res = -1;	
 	in_out[0] = UNDEF;
@@ -31,6 +32,7 @@ int solver(t_token *cmd_list, t_info info, t_localenv *local)
 		if (fd_in_out[0] == -1)
 			return (-1);
 		define_output(cmd_list->cmds, &fd_in_out[1], &in_out[1]);
+		final_cmds = clean_cmds(cmd_list->cmds);
 		if (fd_in_out[1] == STDOUT_FILENO)
 			res = exec_correct_builtin(cmd_list->cmds, fd_in_out[0], in_out[0], info, local);
 		else if (fd_in_out[1] > STDOUT_FILENO)
@@ -93,7 +95,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	}
 }
 
-void	 define_output(t_command *cmds, int *fd, int *out)
+void	define_output(t_command *cmds, int *fd, int *out)
 {
 	int		i;
 		
@@ -119,4 +121,19 @@ void	 define_output(t_command *cmds, int *fd, int *out)
 		}
 		i++;
 	}
+}
+
+char	**clean_cmds(t_command *full_cmds)
+{
+	char	**final_cmds;
+	int		i;
+	int		j;
+	i = 0;
+	while (full_cmds[i].cmds != NULL)
+	{
+		if (i = 0 || full_cmds[i].type 
+		while ()
+		i++;
+	}
+	return (final_cmds);
 }

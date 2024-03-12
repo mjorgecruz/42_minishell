@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/11 19:32:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 09:46:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,21 +171,21 @@ int	ft_count_words(char *content, int pos)
 
 t_special	specials_selector(t_token *cmd_list, int *pos)
 {
-	if (cmd_list->content[*pos] == '<')
-	{
-		if (cmd_list->content[(*pos) + 1] == '<')
-			return ((*pos) += 2, D_REDIR_IN);
-		else
-			return ((*pos)++, S_REDIR_IN);
-	}
-	else if (cmd_list->content[*pos] == '>')
-	{
-		if (cmd_list->content[(*pos) + 1] == '>')
-			return ((*pos) += 2, D_REDIR_OUT);
-		else
-			return ((*pos)++, S_REDIR_OUT);
-	}
-	else if (cmd_list->content[*pos] == '|')
+	// if (cmd_list->content[*pos] == '<')
+	// {
+	// 	if (cmd_list->content[(*pos) + 1] == '<')
+	// 		return ((*pos) += 2, D_REDIR_IN);
+	// 	else
+	// 		return ((*pos)++, S_REDIR_IN);
+	// }
+	// else if (cmd_list->content[*pos] == '>')
+	// {
+	// 	if (cmd_list->content[(*pos) + 1] == '>')
+	// 		return ((*pos) += 2, D_REDIR_OUT);
+	// 	else
+	// 		return ((*pos)++, S_REDIR_OUT);
+	// }
+	if (cmd_list->content[*pos] == '|')
 		return ((*pos)++, S_PIPE);
 	else
 		return ((*pos)++, NONE);
