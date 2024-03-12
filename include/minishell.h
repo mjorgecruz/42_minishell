@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/11 22:46:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:04:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef enum s_in_out
 
 typedef struct s_command
 {
-	char		**cmds;
+	char		*cmds;
 	t_special	type;
 	t_builtin	id;
 }	t_command;
@@ -226,24 +226,24 @@ void		commands_separator(t_token *cmd_list);
 
 /*This function counts the number of special characters that are in the
 substring, >> << && etc count as one special character*/
-int			specials_counter(t_token *cmd_list);
+int			pipe_counter(t_token *cmd_list);
 
 /*This is an altered version of the split to stop separating at a special
 character. We can also make it so it can also complete all the structs instead
 of just one*/
-char		**mega_split(char *content, int *pos);
+char		*mega_divider(char *content, int *pos);
 
-char		*write_to_splitted(int count, char *content, int *pos);
+char		*write_to_line(int count, char *content, int *pos);
 
 int			ft_count_words(char *content, int pos);
 
 int			find_next_stop(char *content, int pos);
 
-t_special	specials_selector(t_token *cmd_list, int *pos);
+t_special	pipe_selector(t_token *cmd_list, int *pos);
 
 int			count_spaces(int *pos, char *content);
 
-void		fill_cmds(t_token *cmd_list, int specials);
+void		fill_cmds(t_token *cmd_list, int pipes);
 
 void		pass_quotes(char *content, int *pos);
 
@@ -258,7 +258,7 @@ t_builtin	get_builtin_id(const char *str);
 
 /*gest the previous function working and seting the structure id of the comand
 to the correct comand enum id flag*/
-void		set_id_flag_cmd(t_token *cmd_list);
+void	set_id_flag_cmd(char **cmd, t_builtin *id);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
@@ -383,5 +383,11 @@ int		cd_output_exec(t_command *cmds, int *fd_in_out, int *in_out, t_info info, t
 void	define_input(t_command *cmds, int *fd, int *heredocs, int *in);
 
 void	define_output(t_command *cmds, int *fd, int *out);
+
+char	*create_file_name(char *cmd, int *i);
+
+char	**clean_cmds(t_command *full_cmds);
+
+char	*clean_str(char *cmds);
 
 #endif

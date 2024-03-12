@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 09:45:33 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:57:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,60 @@
 
 void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
-	set_id_flag_cmd(cmd_list);
-	solver(cmd_list, info, local);
+	int		fd_in_out[2];
+	int 	in_out[2];
+	int		i;
+	int		res;
+	char	**final_cmds;
+	
+	res = -1;	
+	in_out[0] = UNDEF;
+	in_out[1] = UNDEF;
+	fd_in_out[0] = 0;
+	fd_in_out[1] = 1;
+	i = 0;
+	if (cmd_list->down != NULL)
+		commands_sorter(cmd_list->down, info, local);
+	if (cmd_list && cmd_list->cmds)
+	{
+		while (cmd_list->cmds[i].cmds != NULL)
+		{
+			define_input(&(cmd_list->cmds[i]), &fd_in_out[0], &info.pos_heredoc, &in_out[0]);
+				if (fd_in_out[0] == -1)
+					return ;
+			define_output(&(cmd_list->cmds[i]), &fd_in_out[1], &in_out[1]);
+			final_cmds = clean_cmds(&(cmd_list->cmds[i]));
+			set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
+			res = solver(final_cmds, info, local);
+			i++;
+		}
+	}
+	if (cmd_list->next != NULL)
+		commands_sorter(cmd_list->next, info, local);
 	return ;
 }
 
-void	set_id_flag_cmd(t_token *cmd_list)
+void	set_id_flag_cmd(char **cmd, t_builtin *id)
 {
-	int		j;
+	// int		j;
 
-	if (cmd_list != NULL && cmd_list->down != NULL)
-	{
-		set_id_flag_cmd(cmd_list->down);
-	}
-	if (cmd_list != NULL && cmd_list->cmds != NULL)
-	{
-		j = 0;
-		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
-			&& cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
-		{
-			cmd_list->cmds[j].id 
-				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
-			j++;
-		}	
-		set_id_flag_cmd(cmd_list->next);
-	}
-	if (cmd_list != NULL && cmd_list->cmds == NULL && cmd_list->next)
-		set_id_flag_cmd(cmd_list->next);
+	// if (cmd_list != NULL && cmd_list->down != NULL)
+	// {
+	// 	set_id_flag_cmd(cmd_list->down);
+	// }
+	// if (cmd_list != NULL && cmd_list->cmds != NULL)
+	// {
+	// 	j = 0;
+	// 	while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
+	// 		&& cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
+	// 	{
+			*id = get_builtin_id(cmd[0]);
+			// j++;
+		// }	
+	// 	set_id_flag_cmd(cmd_list->next);
+	// }
+	// if (cmd_list != NULL && cmd_list->cmds == NULL && cmd_list->next)
+	// 	set_id_flag_cmd(cmd_list->next);
 	return ;
 }
 
@@ -71,31 +98,32 @@ t_builtin	get_builtin_id(const char *str)
 
 int	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
 {
- 	t_builtin id;
-	
+ 	// t_builtin id;
+	(void) cmds;
+	(void) local;
 	(void) fd_in;
 	(void) in;
 	(void) info;
-	id = cmds->id;
-	if (id == ECHOS)
-		return (command_echo(cmds->cmds, local));
-	else if (id == PWD)
-		return (command_pwd());
-	else if (id == EXPORT)
-		return (command_export(cmds->cmds, local)) ;
-	else if (id == ENV)
-		return (command_env(local));
-	else if (id == UNSET)
-		return (command_unset(cmds->cmds, local));
-	// else if (id == EXIT)
-	// {
-	// 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
-	// 	return ;
-	// }
-	else if (id == CD)
-		return (command_cd(cmds->cmds, local));
-	else if (id == UNDEFINED)
-		return(command_execve(cmds->cmds, local));
+	// id = cmds->id;
+	// if (id == ECHOS)
+	// 	return (command_echo(cmds->cmds, local));
+	// else if (id == PWD)
+	// 	return (command_pwd());
+	// else if (id == EXPORT)
+	// 	return (command_export(cmds->cmds, local)) ;
+	// else if (id == ENV)
+	// 	return (command_env(local));
+	// else if (id == UNSET)
+	// 	return (command_unset(cmds->cmds, local));
+	// // else if (id == EXIT)
+	// // {
+	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
+	// // 	return ;
+	// // }
+	// else if (id == CD)
+	// 	return (command_cd(cmds->cmds, local));
+	// else if (id == UNDEFINED)
+	// 	return(command_execve(cmds->cmds, local));
 	return (1) ;
 }
 

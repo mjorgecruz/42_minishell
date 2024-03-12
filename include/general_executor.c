@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 09:33:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:10:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *lo
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list, info, local);
-	//tester_function(&cmd_list);
+	tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, heredocs);
 }
 
@@ -210,11 +210,9 @@ int	tester_function(t_token **list)
 {
 	t_token	*trav;
 	int		i;
-	int		j;
 
 	trav = *list;
 	i = 0;
-	j = 0;
 	while (trav)
 	{
 		i = 0;
@@ -233,18 +231,13 @@ int	tester_function(t_token **list)
 		}
 		else
 		{
-			while (i < specials_counter(trav) + 1)
+			while (i < pipe_counter(trav) + 1)
 			{
-				j = 0;
 				if (trav->cmds)
 				{
 					printf("id: %d\n", trav->cmds[i].id);
-					while (trav->cmds[i].cmds[j])
-					{
-						printf("cmd( %d , %d ) -> ", i, j);
-						printf("%s \n", trav->cmds[i].cmds[j]);
-						j++;
-					}
+					printf("cmd(%d) -> ", i);
+					printf("%s \n", trav->cmds[i].cmds);
 					printf("cmd_redir: %d\n", trav->cmds[i].type);
 				}
 				i++;

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 09:46:54 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:05:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ pipes. The strings must be divided in parts in an array of structs*/
 
 void	commands_separator(t_token *cmd_list)
 {
-	int		specials;
+	int		pipes;
  
 	while (cmd_list != NULL)
 	{
-		specials = 0;
+		pipes = 0;
 		if (cmd_list->down == NULL)
 		{
 			if (cmd_list->content == NULL)
@@ -32,11 +32,11 @@ void	commands_separator(t_token *cmd_list)
 			}
 			else
 			{
-				specials = specials_counter(cmd_list);
+				pipes = pipe_counter(cmd_list);
 				cmd_list->cmds = (t_command *)malloc
-				(sizeof(t_command) * (specials + 2));
+				(sizeof(t_command) * (pipes + 1));
 			}
-			fill_cmds(cmd_list, specials);	
+			fill_cmds(cmd_list, pipes);	
 		}
 		else 
 			commands_separator(cmd_list->down);
@@ -44,19 +44,19 @@ void	commands_separator(t_token *cmd_list)
 	}
 }
 
-void	fill_cmds(t_token *cmd_list, int specials)
+void	fill_cmds(t_token *cmd_list, int pipes)
 {
 	int	pos;
 	int	i;
 
 	pos = 0;
 	i = 0;
-	while (i < specials + 1)
+	while (i < pipes + 1)
 	{
-		cmd_list->cmds[i].cmds = mega_split(cmd_list->content, &pos);
+		cmd_list->cmds[i].cmds = mega_divider(cmd_list->content, &pos);
 		while (cmd_list->content[pos] == ' ')
 			pos++;
-		cmd_list->cmds[i].type = specials_selector(cmd_list, &pos);
+		cmd_list->cmds[i].type = pipe_selector(cmd_list, &pos);
 		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
 			&& (cmd_list->content[pos] == ' '))
 			//|| cmd_list->content[pos] == '|'))
@@ -66,7 +66,7 @@ void	fill_cmds(t_token *cmd_list, int specials)
 	cmd_list->cmds[i].cmds = NULL;
 }
 
-int	specials_counter(t_token *cmd_list)
+int	pipe_counter(t_token *cmd_list)
 {
 	int		asp_place;
 	int		count;
@@ -84,9 +84,9 @@ int	specials_counter(t_token *cmd_list)
 			while (cmd_list->content[pos] != cmd_list->content[asp_place])
 				pos++;
 		}
-		else if (ft_strchr("<>|", cmd_list->content[pos]))
+		else if (ft_strchr("|", cmd_list->content[pos]))
 		{
-			while (ft_strchr("<>|", cmd_list->content[pos]))
+			while (ft_strchr("|", cmd_list->content[pos]))
 				pos++;
 			count++;
 		}
@@ -95,49 +95,42 @@ int	specials_counter(t_token *cmd_list)
 	return (count);
 }
 
-char	**mega_split(char *content, int *pos)
+char	*mega_divider(char *content, int *pos)
 {
-	char	**splitted;
-	int		i;
+	char	*line;
+	//int		i;
 	int		count;
-	int		words;
 
-	i = 0;
+	//i = 0;
 	count = 0;
 	*pos = ignore_spaces(content, (*pos));
-	words = ft_count_words(content, (*pos));
-	if (words == 0)
-		return (NULL);
-	splitted = (char **)malloc(sizeof(char *) * (words + 1));
-	if (splitted == NULL)
-		return (NULL);
-	while (i < words)
-	{
-		count = find_next_stop(content, *pos);
-		splitted[i] = write_to_splitted(count, content, pos);
-		while (content[*pos] == ' ' )
-			(*pos)++;
-		i++;
-	}
-	return (splitted[i] = NULL, splitted);
+	// //line = (char **)malloc(sizeof(char *) * (1 + 1));
+	// if (line == NULL)
+	// 	return (NULL);
+	count = find_next_stop(content, *pos);
+	line = write_to_line(count, content, pos);
+	while (content[*pos] == ' ' )
+		(*pos)++;
+	//i++;
+	return (line);
 }
 
-char	*write_to_splitted(int count, char *content, int *pos)
+char	*write_to_line(int count, char *content, int *pos)
 {
 	int		j;
-	char	*split_word;
+	char	*line;
 
 	j = 0;
-	split_word = ft_calloc(count + 1, sizeof(char));
+	line = ft_calloc(count + 1, sizeof(char));
 	while (content[*pos] == ' ')
 		(*pos)++;
 	while (j < count)
 	{
-		split_word[j] = content[*pos];
+		line[j] = content[*pos];
 		(*pos)++;
 		j++;
 	}
-	return (split_word);
+	return (line);
 }
 
 int	ft_count_words(char *content, int pos)
@@ -154,37 +147,17 @@ int	ft_count_words(char *content, int pos)
 				count++;
 			pass_quotes(content, &pos);
 		}
-		else if (content[pos] == ' ' || ft_strchr("<>|", content[pos]))
-		{
-			pass_spaces(content, &pos);
-			if (content[pos] && !ft_strchr("<>|", content[pos]) && content[pos] != 34 && content[pos] != 39)
-				count++;
-			else
-			 	break ;	
-		}
+		else if (ft_strchr("|", content[pos]))
+			count++;
 		pos++;
 	}
-	if (content[pos] && ft_strchr("<>|", content[pos + 1]) != NULL)
+	if (content[pos] && ft_strchr("|", content[pos + 1]) != NULL)
 		pos += 2;
 	return (count + 1);
 }
 
-t_special	specials_selector(t_token *cmd_list, int *pos)
+t_special	pipe_selector(t_token *cmd_list, int *pos)
 {
-	// if (cmd_list->content[*pos] == '<')
-	// {
-	// 	if (cmd_list->content[(*pos) + 1] == '<')
-	// 		return ((*pos) += 2, D_REDIR_IN);
-	// 	else
-	// 		return ((*pos)++, S_REDIR_IN);
-	// }
-	// else if (cmd_list->content[*pos] == '>')
-	// {
-	// 	if (cmd_list->content[(*pos) + 1] == '>')
-	// 		return ((*pos) += 2, D_REDIR_OUT);
-	// 	else
-	// 		return ((*pos)++, S_REDIR_OUT);
-	// }
 	if (cmd_list->content[*pos] == '|')
 		return ((*pos)++, S_PIPE);
 	else
@@ -198,8 +171,7 @@ int	find_next_stop(char *content, int pos)
 
 	asp_place = 0;
 	count = count_spaces(&pos, content);
-	while (content[pos] && !ft_strchr("<>|", content[pos])
-		&& content[pos] != ' ')
+	while (content[pos] && !ft_strchr("|", content[pos]))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
@@ -214,7 +186,7 @@ int	find_next_stop(char *content, int pos)
 		count++;
 		pos++;
 	}
-	if (!ft_strchr("<>|", content[pos]) || !content[pos])
+	if (!ft_strchr("|", content[pos]) || !content[pos])
 		return (count);
 	else
 		return (count);

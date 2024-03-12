@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:19:20 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:07:50 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 		{
 			while (cmd_list->cmds[i].cmds)
 			{
-				free_split(cmd_list->cmds[i].cmds);
+				free_split(&(cmd_list->cmds[i].cmds));
 				i++;
 			}
 		}
