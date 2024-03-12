@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 19:57:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:51:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			define_output(&(cmd_list->cmds[i]), &fd_in_out[1], &in_out[1]);
 			final_cmds = clean_cmds(&(cmd_list->cmds[i]));
 			set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
-			res = solver(final_cmds, info, local);
+			res = solver(final_cmds, info, local, fd_in_out, in_out, cmd_list->cmds[i].id);
 			i++;
 		}
 	}
-	if (cmd_list->next != NULL)
+	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
+		cmd_list = cmd_list->next;
+	if (cmd_list->next != NULL)	
 		commands_sorter(cmd_list->next, info, local);
 	return ;
 }
@@ -96,34 +98,32 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-int	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
+int	exec_correct_builtin(char **cmds, int fd_in, int in, t_info info, t_localenv *local, t_builtin id)
 {
- 	// t_builtin id;
 	(void) cmds;
 	(void) local;
 	(void) fd_in;
 	(void) in;
 	(void) info;
-	// id = cmds->id;
-	// if (id == ECHOS)
-	// 	return (command_echo(cmds->cmds, local));
-	// else if (id == PWD)
-	// 	return (command_pwd());
-	// else if (id == EXPORT)
-	// 	return (command_export(cmds->cmds, local)) ;
-	// else if (id == ENV)
-	// 	return (command_env(local));
-	// else if (id == UNSET)
-	// 	return (command_unset(cmds->cmds, local));
+	if (id == ECHOS)
+		return (command_echo(cmds, local));
+	else if (id == PWD)
+		return (command_pwd());
+	else if (id == EXPORT)
+		return (command_export(cmds, local)) ;
+	else if (id == ENV)
+		return (command_env(local));
+	else if (id == UNSET)
+		return (command_unset(cmds, local));
 	// // else if (id == EXIT)
 	// // {
 	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
 	// // 	return ;
 	// // }
-	// else if (id == CD)
-	// 	return (command_cd(cmds->cmds, local));
-	// else if (id == UNDEFINED)
-	// 	return(command_execve(cmds->cmds, local));
+	else if (id == CD)
+		return (command_cd(cmds, local));
+	else if (id == UNDEFINED)
+		return(command_execve(cmds, local));
 	return (1) ;
 }
 

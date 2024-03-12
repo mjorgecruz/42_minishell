@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/12 19:04:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:42:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	set_id_flag_cmd(char **cmd, t_builtin *id);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
-int			exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info,  t_localenv *local);
+int			exec_correct_builtin(char **cmds, int fd_in, int in, t_info info,  t_localenv *local, t_builtin id);
 
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
@@ -376,9 +376,9 @@ t_token *create_list_new_node(char *input, int i, int beg);
 /*                                   SOLVER                                   */
 /* ************************************************************************** */
 
-int 	solver(t_token *cmd_list, t_info info, t_localenv *local);
+int 	solver(char **final_cmds, t_info info, t_localenv *local, int fd_in_out[2], int in_out[2], t_builtin id);
 
-int		cd_output_exec(t_command *cmds, int *fd_in_out, int *in_out, t_info info, t_localenv *local);
+int		cd_output_exec(char **cmds, int *fd_in_out, int *in_out, t_info info, t_localenv *local, t_builtin id);
 
 void	define_input(t_command *cmds, int *fd, int *heredocs, int *in);
 
