@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
+#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/07 11:02:51 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/03/13 23:29:55 by masoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,10 @@ SRC := minishell.c history.c parser_general.c expander_lst.c\
 		out_setup_general.c finex.c errors.c expander_utils.c \
 		str_utils.c general_executor.c general_executor_2.c \
 		parser_special_utils.c parser_piper.c special_mid_parser.c \
-		heredocs.c parser_parenthesis.c builtins.c echo.c expander.c \
+		heredocs.c heredocs_2.c parser_parenthesis.c builtins.c echo.c expander.c \
 		export.c export_utils.c export_envcpy.c cd_command.c\
 		export_utils_sort.c ft_getenv.c exit_command.c cd_utils.c\
-		list_organizer.c solver.c
+		solver.c execve.c
 
 
 LIBRARY = 

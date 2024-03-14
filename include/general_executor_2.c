@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 16:05:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/13 23:34:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	fill_cmds(t_token *cmd_list, int pipes)
 		cmd_list->cmds[i].type = pipe_selector(cmd_list, &pos);
 		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
 			&& (cmd_list->content[pos] == ' '))
-			//|| cmd_list->content[pos] == '|'))
 			pos++;
 		i++;
 	}
@@ -98,20 +97,14 @@ int	pipe_counter(t_token *cmd_list)
 char	*mega_divider(char *content, int *pos)
 {
 	char	*line;
-	//int		i;
 	int		count;
 
-	//i = 0;
 	count = 0;
 	*pos = ignore_spaces(content, (*pos));
-	// //line = (char **)malloc(sizeof(char *) * (1 + 1));
-	// if (line == NULL)
-	// 	return (NULL);
 	count = find_next_stop(content, *pos);
 	line = write_to_line(count, content, pos);
 	while (content[*pos] == ' ' )
 		(*pos)++;
-	//i++;
 	return (line);
 }
 

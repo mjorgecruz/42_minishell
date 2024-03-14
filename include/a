@@ -1,11 +1,11 @@
 a
-b
 builtins.c
 builtins.h
 cd_command.c
 cd_utils.c
 echo.c
 errors.c
+execve.c
 exit_command.c
 expander.c
 expander_lst.c
@@ -17,6 +17,7 @@ export_utils.c
 export_utils_sort.c
 finex.c
 ft_getenv.c
+general_executor.c
 general_executor_2.c
 heredocs.c
 history.c
@@ -36,3 +37,4 @@ pipes.c
 solver.c
 special_mid_parser.c
 str_utils.c
+0

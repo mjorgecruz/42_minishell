@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 15:23:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:24:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+
+typedef struct s_localenv
+{
+	char	**content;
+}				t_localenv;
 
 typedef struct s_lstexpand
 {
@@ -19,11 +24,6 @@ typedef struct s_lstexpand
 	char				*content;
 	struct s_lstexpand	*next;
 }				t_lstexpand;
-
-typedef struct s_localenv
-{
-	char	**content;
-}				t_localenv;
 
 /* ************************************************************************** */
 /*                                    BUILTINS                                */

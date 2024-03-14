@@ -6,45 +6,31 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 23:34:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:28:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int solver(char **final_cmds, t_info info, t_localenv *local, int fd_in_out[2], int in_out[2], t_builtin id)
+int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
 	int		res;
-
-	// if (cmd_list->down != NULL)
-	// 	solver(cmd_list->down, info, local);
-	// if (cmd_list && cmd_list->cmds)
-
-		if (fd_in_out[1] == STDOUT_FILENO)
-			res = exec_correct_builtin(final_cmds, fd_in_out[0], in_out[0], info, local, id);
-		else if (fd_in_out[1] > STDOUT_FILENO)
-			res = cd_output_exec(final_cmds, fd_in_out, in_out, info, local, id);
-		// if (cmd_list && cmd_list->next)
-		// {
-		// 	while (cmd_list->next_type == D_PIPE && res == 0)
-		// 		cmd_list = cmd_list->next;
-		// 	if (cmd_list && cmd_list->next)
-		// 		solver(cmd_list->next, info, local);
-		// }
-	// }
-	// if (cmd_list && !cmd_list->cmds && cmd_list->next)
-	// 	solver(cmd_list->next, info, local);
+	
+	if (cmd_info->fd_in_out[1] == STDOUT_FILENO)
+		res = exec_correct_builtin(final_cmds, info, cmd_info->id, *cmd_info);
+	else if (cmd_info->fd_in_out[1] > STDOUT_FILENO)
+		res = cd_output_exec(final_cmds, info, cmd_info->id, *cmd_info);
 	return(res);
 }
 
-int	cd_output_exec(char **cmds, int *fd_in_out, int *in_out, t_info info, t_localenv *local, t_builtin id)
+int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
 	int		fd;
 	
 	fd = dup(STDOUT_FILENO);
-	dup2(fd_in_out[1], STDOUT_FILENO);
-	close(fd_in_out[1]);
-	exec_correct_builtin(cmds, fd_in_out[0], in_out[0], info, local, id);
+	dup2(cmd_info.fd_in_out[1], STDOUT_FILENO);
+	close(cmd_info.fd_in_out[1]);
+	exec_correct_builtin(cmds, info, id, cmd_info);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	return (0);
@@ -53,10 +39,10 @@ int	cd_output_exec(char **cmds, int *fd_in_out, int *in_out, t_info info, t_loca
 void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 {
 	int		i;
-char	*file;
+	char	*file;
 		
 	i = 0;
-file = NULL;
+	file = NULL;
 	(*fd) = STDIN_FILENO;
 	while ((cmds->cmds)[i])
 	{
@@ -69,24 +55,25 @@ file = NULL;
 			*fd = open( file, O_RDWR);
 			if (*fd < 0)
 			{
-				perror("minishell:");
+				perror("minishell");
 				return ;
 			}
 			*in = IN_DOC; 
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
 		{
-			if (*fd > -1)
+			if (*fd > STDIN_FILENO)
 			{
 				close(*fd);
 				*fd = -1;
 			}
 			(*heredocs)++;
 			*in = HEREDOC;
+			i++;
 		}
 		i++;
 	}
-if (file != NULL)
+	if (file != NULL)
 		free(file);
 }
 
@@ -97,6 +84,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 	
 	i = 0;
 	*fd = 1;
+	file = NULL;
 	while (cmds->cmds[i])
 	{
 		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
@@ -136,8 +124,8 @@ char	*create_file_name(char *cmd, int *i)
 	char	*file;
 	
 	k = 0;
-	j = *i;
 	*i = ignore_spaces(cmd, *i);
+	j = *i;
 	while (cmd[j] && !ft_strchr("<>|& ", cmd[j]))
 		j++;
 	file = ft_calloc(j - (*i) + 2, sizeof(char));
