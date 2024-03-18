@@ -24,18 +24,42 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log 
 
-INCDIR:=include
+INCDIR:=srcs
 ODIR:=obj
 
-SRC := minishell.c history.c parser_general.c expander_lst.c\
-		parser_quotes.c parser_special.c expander_main.c \
-		out_setup_general.c finex.c errors.c expander_utils.c \
-		str_utils.c general_executor.c general_executor_2.c \
-		parser_special_utils.c parser_piper.c special_mid_parser.c \
-		heredocs.c heredocs_2.c parser_parenthesis.c builtins.c echo.c expander.c \
-		export.c export_utils.c export_envcpy.c cd_command.c\
-		export_utils_sort.c ft_getenv.c exit_command.c cd_utils.c\
-		solver.c execve.c
+SRC := minishell.c \
+		history.c \
+		finex.c \
+		errors/errors.c \
+		utils/str_utils.c \
+		heredocs/heredocs.c \
+		heredocs/heredocs_2.c \
+		parser/parser_general.c \
+		parser/parser_quotes.c \
+		parser/parser_special.c \
+		parser/parser_special_utils.c \
+		parser/parser_piper.c \
+		parser/parser_parenthesis.c \
+		parser/special_mid_parser.c \
+		execution/solver.c \
+		execution/execve.c \
+		execution/out_setup_general.c \
+		execution/general_executor.c \
+		execution/general_executor_2.c \
+		builtins/builtins.c \
+		builtins/echo/echo.c \
+		builtins/expander/expander.c \
+		builtins/expander/expander_lst.c \
+		builtins/expander/expander_utils.c \
+		builtins/expander/expander_main.c \
+		builtins/export/export.c \
+		builtins/export/export_utils.c \
+		builtins/export/export_envcpy.c \
+		builtins/export/export_utils_sort.c \
+		builtins/export/ft_getenv.c \
+		builtins/exit/exit_command.c \
+		builtins/cd/cd_command.c \
+		builtins/cd/cd_utils.c \
 
 
 LIBRARY = 
@@ -43,7 +67,7 @@ OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 
 LIBFLAGS = -lreadline
 
-LIBFT = ./include/libft/libft.a
+LIBFT = ./libft/libft.a
 
 CC = cc
 
@@ -62,11 +86,11 @@ $(ODIR):
 	@mkdir -p $@
 
 $(LIBFT):
-	@make -C ./include/libft/ -s
+	@make -C ./libft/ -s
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make fclean -C ./include/libft/ -s
+	@make fclean -C ./libft/ -s
 	@echo "${RED}minishell is no more...${END}"
 
 clean:
@@ -75,7 +99,7 @@ clean:
 	@$(RM) leaks.log
 	@$(RM) sup
 	@$(RM) leaks.log
-	@make clean -C ./include/libft/ -s
+	@make clean -C ./libft/ -s
 
 re: fclean all
 
