@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:31:38 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:42:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	*paths;
 	char	**heredocs;
 	t_localenv *local_env;
 
 	(void) ac;
 	(void) av;
 	local_env = env_init(env);
-	paths = getenv("PATH");
 	input = NULL;
 	while (1)
 	{
@@ -31,7 +29,7 @@ int	main(int ac, char **av, char **env)
 			continue;
 		if (input != NULL && *input)
 		{
-			general_executer(input, paths, &heredocs, local_env);
+			general_executer(input, &heredocs, local_env);
 			free(input);
 		}
 	}

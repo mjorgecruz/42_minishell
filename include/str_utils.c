@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/07 11:04:47 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/12 09:01:56 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strcpy(char *s)
 	int		i;
 	char	*output;
 
-	output = ft_calloc(ft_strlen(s), sizeof(char));
+	output = ft_calloc(ft_strlen(s) + 1, sizeof(char));
 	i = 0;
 	while (s[i])
 	{

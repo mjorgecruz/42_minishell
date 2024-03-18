@@ -6,12 +6,17 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/11 10:18:28 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:26:07 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+
+typedef struct s_localenv
+{
+	char	**content;
+}				t_localenv;
 
 typedef struct s_lstexpand
 {
@@ -19,11 +24,6 @@ typedef struct s_lstexpand
 	char				*content;
 	struct s_lstexpand	*next;
 }				t_lstexpand;
-
-typedef struct s_localenv
-{
-	char	**content;
-}				t_localenv;
 
 /* ************************************************************************** */
 /*                                    BUILTINS                                */

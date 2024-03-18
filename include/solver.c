@@ -3,51 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 14:15:41 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:28:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int solver(t_token *cmd_list, t_info info, t_localenv *local)
+int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
-	int		fd_in_out[2];
-	int 	in_out[2];
-		
-	in_out[0] = UNDEF;
-	in_out[1] = UNDEF;
-	fd_in_out[0] = 0;
-	fd_in_out[1] = 1;
-	if (cmd_list->down != NULL)
-		solver(cmd_list->down, info, local);
-	while (cmd_list && cmd_list->cmds)
-	{
-		define_input(cmd_list->cmds, &fd_in_out[0], &info.pos_heredoc, &in_out[0]);
-		if (fd_in_out[0] == -1)
-			return (-1);
-		//printf(in:  fd %d, heredoc %d, in %d\n", fd_in, heredocs, in);
-		define_output(cmd_list->cmds, &fd_in_out[1], &in_out[1]);
-		//printf("out: fd %d, in %d\n", fd_out, out);
-		if (fd_in_out[1] == STDOUT_FILENO)
-			exec_correct_builtin(cmd_list->cmds, fd_in_out[0], in_out[0], info, local);
-		else if (fd_in_out[1] > STDOUT_FILENO)
-			cd_output_exec(cmd_list->cmds, fd_in_out, in_out, info, local);
-		cmd_list = cmd_list->next;
-	}
-	return(1);
+	int		res;
+	
+	if (cmd_info->fd_in_out[1] == STDOUT_FILENO)
+		res = exec_correct_builtin(final_cmds, info, cmd_info->id, *cmd_info);
+	else if (cmd_info->fd_in_out[1] > STDOUT_FILENO)
+		res = cd_output_exec(final_cmds, info, cmd_info->id, *cmd_info);
+	return(res);
 }
 
-int	cd_output_exec(t_command *cmds, int *fd_in_out, int *in_out, t_info info, t_localenv *local)
+int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
 	int		fd;
 	
 	fd = dup(STDOUT_FILENO);
-	dup2(fd_in_out[1], STDOUT_FILENO);
-	close(fd_in_out[1]);
-	exec_correct_builtin(cmds, fd_in_out[0], in_out[0], info, local);
+	dup2(cmd_info.fd_in_out[1], STDOUT_FILENO);
+	close(cmd_info.fd_in_out[1]);
+	exec_correct_builtin(cmds, info, id, cmd_info);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	return (0);
@@ -56,59 +39,139 @@ int	cd_output_exec(t_command *cmds, int *fd_in_out, int *in_out, t_info info, t_
 void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 {
 	int		i;
+	char	*file;
 		
 	i = 0;
+	file = NULL;
 	(*fd) = STDIN_FILENO;
-	while (cmds[i].cmds != NULL)
+	while ((cmds->cmds)[i])
 	{
-		if (cmds[i].type == S_REDIR_IN)
+		if ((cmds->cmds)[i] == '<' && (cmds->cmds)[i + 1] != '<')
 		{
-			*fd = open( cmds[i + 1].cmds[0], O_RDWR);
+			i++;
+			if (file != NULL)
+				free(file);
+			file = create_file_name(cmds->cmds, &i);
+			*fd = open( file, O_RDWR);
 			if (*fd < 0)
 			{
-				perror("minishell:");
+				perror("minishell");
 				return ;
 			}
 			*in = IN_DOC; 
 		}
-		if (cmds[i].type == D_REDIR_IN)
+		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
 		{
-			if (*fd > -1)
+			if (*fd > STDIN_FILENO)
 			{
 				close(*fd);
 				*fd = -1;
 			}
 			(*heredocs)++;
 			*in = HEREDOC;
+			i++;
 		}
 		i++;
 	}
+	if (file != NULL)
+		free(file);
 }
 
-void	 define_output(t_command *cmds, int *fd, int *out)
+void	define_output(t_command *cmds, int *fd, int *out)
 {
 	int		i;
-		
+	char	*file;
+	
 	i = 0;
 	*fd = 1;
-	while (cmds[i].cmds)
+	file = NULL;
+	while (cmds->cmds[i])
 	{
-		if (cmds[i].type == S_REDIR_OUT)
+		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
 		{
+			i++;
 			if (*fd > 1)
 				close(*fd);
-			*fd = open(cmds[i + 1].cmds[0], O_TRUNC);
+			if (file != NULL)
+				free(file);
+			file = create_file_name(cmds->cmds, &i);
+			*fd = open(file, O_TRUNC);
 			close(*fd);
-			*fd = open(cmds[i + 1].cmds[0], O_RDWR|O_CREAT, 0666);
+			*fd = open(file, O_RDWR|O_CREAT, 0666);
 			*out = OUT_DOC; 
 		}
-		if (cmds[i].type == D_REDIR_OUT)
+		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
 		{
+			i++;
 			if (*fd > 1)
 				close(*fd);
-			*fd = open(cmds[i + 1].cmds[0], O_RDWR|O_APPEND|O_CREAT, 0660);
+			if (file != NULL)
+				free(file);
+			file = create_file_name(cmds->cmds, &i);
+			*fd = open(file, O_RDWR|O_APPEND|O_CREAT, 0660);
 			*out = OUT_DOC; 
 		}
 		i++;
 	}
+	if (file != NULL)
+		free(file);
+}
+
+char	*create_file_name(char *cmd, int *i)
+{
+	int		j;
+	int		k;
+	char	*file;
+	
+	k = 0;
+	*i = ignore_spaces(cmd, *i);
+	j = *i;
+	while (cmd[j] && !ft_strchr("<>|& ", cmd[j]))
+		j++;
+	file = ft_calloc(j - (*i) + 2, sizeof(char));
+	while (*i <= j)
+	{
+		file[k] = cmd[*i]; 
+		(*i)++;
+		k++;
+	}
+	return (file);
+}
+
+char	**clean_cmds(t_command *full_cmds)
+{
+char	*clean;
+	char	**final_cmds;
+
+	clean = clean_str(full_cmds->cmds);
+	final_cmds = ft_split(clean, ' ');
+	free(clean);
+	return (final_cmds);
+}
+
+char	*clean_str(char *cmds)
+{
+	char	*clean;
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	clean = ft_calloc(ft_strlen(cmds) + 1, sizeof(char));
+	while (cmds[i])
+	{
+		if (cmds[i] == '<' || cmds[i] == '>') 
+		{
+			while(cmds[i] == '<' || cmds[i] == '>')
+				i++;
+			i = ignore_spaces(cmds, i);
+			while(cmds[i] && cmds[i] != ' ')
+		i++;
+	}
+	clean[j] = cmds[i];
+		i++;
+		j++;
+	}
+	return(clean);
+
 }

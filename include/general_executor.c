@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 14:26:52 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:03:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,39 @@ line read into segments separated by pipes*/
 
 #include "minishell.h"
 
-void	general_executer(char *input, char *paths, char ***heredocs, t_localenv *local)
+void	general_executer(char *input, char ***heredocs, t_localenv *local)
 {
 	t_token	*cmd_list;
 	t_info	info;
 
 	cmd_list = NULL;
-	(void) paths;
-	//list_organizer(&cmd_list, input);
 	info.heredocs = heredocs;
 	info.pos_heredoc = -1;
+	info.local = local->content;
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list, info, local);
-	tester_function(&cmd_list);
+	//tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, heredocs);
 }
 
 t_token	*command_organizer(char *input)
 {
 	t_token	*list;
-
+	t_type	type;
+	t_token	*token;
+	
+	type = 0;
+	token = NULL;
 	list = NULL;
-	command_divider(&list, input);
+	command_divider(&list, input, type, token);
 	return (list);
 }
 
-void	command_divider(t_token **list, char *input)
+void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 {
 	int			i;
 	int			j;
-	t_type			type;
-	t_token		*token;
 
 	i = 0;
 	j = 0;
@@ -58,13 +59,13 @@ void	command_divider(t_token **list, char *input)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		if (input[i] == '|' || input[i] == '&')
+		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
-			token = token_creator (i, j, input, type);
+			token = token_creator(i, j, input, type);
 			add_token(list, token);
 			if (token_has_par(token))
-				command_divider(&(token->down), trim_string(token->content));
+				command_divider(&(token->down), trim_string(token->content), type, token);
 			j = i + 1;
 		}
 		i++;
@@ -140,8 +141,6 @@ t_type type_definer(char *input, int *i)
 				type  = D_PIPE;
 				(*i)++;
 			}
-			else
-				type = S_PIPE;
 		}
 	else if (input[*i] == '&')
 	{
@@ -197,25 +196,24 @@ int	find_closed(char *input, int i)
 
 	par_count = 1;
 	i++;
-	while (input[i] != ')' && par_count > 0)
+	while (par_count > 0)
 	{
-		if (input[i] != '(')
+		if (input[i] == '(')
 			par_count++;
-		else if (input[i] != ')')
+		else if (input[i] == ')')
 			par_count--;
 		i++;
 	}
 	return (i);
 }
+
 int	tester_function(t_token **list)
 {
 	t_token	*trav;
 	int		i;
-	int		j;
 
 	trav = *list;
 	i = 0;
-	j = 0;
 	while (trav)
 	{
 		i = 0;
@@ -234,18 +232,13 @@ int	tester_function(t_token **list)
 		}
 		else
 		{
-			while (i < specials_counter(trav) + 1)
+			while (i < pipe_counter(trav) + 1)
 			{
-				j = 0;
 				if (trav->cmds)
 				{
 					printf("id: %d\n", trav->cmds[i].id);
-					while (trav->cmds[i].cmds[j])
-					{
-						printf("cmd( %d , %d ) -> ", i, j);
-						printf("%s \n", trav->cmds[i].cmds[j]);
-						j++;
-					}
+					printf("cmd(%d) -> ", i);
+					printf("%s \n", trav->cmds[i].cmds);
 					printf("cmd_redir: %d\n", trav->cmds[i].type);
 				}
 				i++;

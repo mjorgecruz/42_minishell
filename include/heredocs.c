@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 16:08:53 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/13 23:26:56 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, in
 	i = ignore_spaces(line_read, i + 1);
 	n_letters = 0;
 	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i+ n_letters])
-		&& line_read[i + n_letters] != '\0')
+		&& line_read[i + n_letters] != '\0' && !ft_strchr("\'\"", line_read[i + n_letters]))
 		n_letters++;
 	str = ft_calloc(n_letters + 1, sizeof(char));
 	j = 0;
@@ -125,30 +125,4 @@ void	add_newline_line(char **total_line, char *line_read)
 	}
 	else
 		*total_line = line_read;
-}
-
-void	add_partials(char **heredoc, char *str)
-{
-	char	*heredoc_line;
-	
-	heredoc_line = readline("> ");
-	if (heredoc_line == NULL)
-	{
-		*heredoc = ft_calloc(1, sizeof(char));
-		return (errors(HEREDOC_EOF, str));
-	}
-	while (ft_strcmp(str, heredoc_line))
-	{
-		add_newline_line(heredoc, heredoc_line);
-		heredoc_line = readline("> ");
-		if (heredoc_line == NULL)
-			return (errors(HEREDOC_EOF, str));
-	}
-	if (!*heredoc)
-	{
-		*heredoc = ft_calloc(2, sizeof(char));
-		*heredoc[0] = '\n';
-	}	
-	else
-		*heredoc = ft_strjoin(*heredoc, "\n");
 }

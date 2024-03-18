@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:30:40 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:10:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,44 @@
 
 void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
-	set_id_flag_cmd(cmd_list);
-	while (cmd_list != NULL)
+	int		i;
+	int		res;
+	char	**final_cmds;
+	t_cmd_info	cmd_info;
+	
+	cmd_info.fd_in_out[0] = 0;
+	cmd_info.fd_in_out[1] = 1;
+	cmd_info.in_out[0] = UNDEF;
+	cmd_info.in_out[1] = UNDEF;
+	res = -1;	
+	i = 0;
+	if (cmd_list->down != NULL)
+		commands_sorter(cmd_list->down, info, local);
+	if (cmd_list && cmd_list->cmds)
 	{
-		solver(cmd_list, info, local);
-		cmd_list = cmd_list->next;
+		while (cmd_list->cmds[i].cmds != NULL)
+		{
+			define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
+			if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
+				return ;
+			define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
+			final_cmds = clean_cmds(&(cmd_list->cmds[i]));
+			set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
+			cmd_info.id = cmd_list->cmds[i].id;
+			res = solver(final_cmds, info, &cmd_info);
+			i++;
+		}
 	}
+	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
+		cmd_list = cmd_list->next;
+	if (cmd_list->next != NULL)	
+		commands_sorter(cmd_list->next, info, local);
 	return ;
 }
 
-void	set_id_flag_cmd(t_token *cmd_list)
+void	set_id_flag_cmd(char **cmd, t_builtin *id)
 {
-	int		j;
-
-	if (cmd_list != NULL && cmd_list->down != NULL)
-	{
-		set_id_flag_cmd(cmd_list->down);
-	}
-	if (cmd_list != NULL)
-	{
-		j = 0;
-		while (cmd_list->cmds && cmd_list->cmds->cmds != NULL 
-			&& cmd_list->cmds[j].cmds != NULL && cmd_list->cmds[j].cmds[0] != NULL)
-		{
-			cmd_list->cmds[j].id 
-				= get_builtin_id(cmd_list->cmds[j].cmds[0]);
-			j++;
-		}	
-		set_id_flag_cmd(cmd_list->next);
-	}
+	*id = get_builtin_id(cmd[0]);
 	return ;
 }
 
@@ -71,77 +80,31 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-void	exec_correct_builtin(t_command *cmds, int fd_in, int in, t_info info, t_localenv *local)
+int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
- 	t_builtin id;
+	t_localenv *local;
 	
-	(void) fd_in;
-	(void) in;
-	(void) info;
-	id = cmds->id;
+	local = (t_localenv *) malloc(sizeof(t_localenv));
+	local->content = info.local;
 	if (id == ECHOS)
-	{
-		command_echo(cmds->cmds, local);
-		return ;
-	}
+		return (command_echo(cmds, local));
 	else if (id == PWD)
-	{
-		command_pwd();
-		return ;
-	}
+		return (command_pwd());
 	else if (id == EXPORT)
-	{
-		command_export(cmds->cmds, local);
-		return ;
-	}
+		return (command_export(cmds, local)) ;
 	else if (id == ENV)
-	{
-		command_env(local);
-		return ;
-	}
+		return (command_env(local));
 	else if (id == UNSET)
-	{
-		command_unset(cmds->cmds, local);
-		return ;
-	}
-	// else if (id == EXIT)
-	// {
-	// 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
-	// 	return ;
-	// }
+		return (command_unset(cmds, local));
+	// // else if (id == EXIT)
+	// // {
+	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
+	// // 	return ;
+	// // }
 	else if (id == CD)
-	{
-		command_cd(cmds->cmds, local);
-		return ;
-	}
-	// else if (id == UNDEFINED)
-	//  	command_execve();
-	return ;
-}
-
-int	command_execve(char *line, char *paths)
-{
-	char	**cmd;
-	int		pid;
-	char	**p_path;
-	int		i;
-
-	i = 0;
-	p_path = ft_split(paths, ':');
-	cmd = ft_split(line, ' ');
-	ft_bzero(line, ft_strlen(line));
-	line = ft_strjoin(line, cmd[0]);
-	//p_path[i] = ft_strjoin(p_path[i], "/");
-	//cmd[0] = ft_strjoin(p_path[i], cmd[0]);
-	while (access(cmd[0], F_OK) != 0 && p_path[i] != NULL)
-	{
-		p_path[i] = ft_strjoin(p_path[i], "/");
-		cmd[0] = ft_strjoin(p_path[i], line);
-		i++;
-	}
-	pid = fork();
-	if (pid == 0)
-		execve(cmd[0], cmd, NULL);
-	waitpid(pid, NULL, 0);
-	return (free(line), free_split(p_path), free_split(cmd), 1);
+		return (command_cd(cmds, local));
+	else if (id == UNDEFINED)
+		return(command_execve(cmds, local, info, cmd_info));
+	free(local);
+	return (1);
 }
