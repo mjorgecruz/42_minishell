@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:09:08 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:40:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ int	command_cd(char **cmds, t_localenv *local)
 	else if (strcmp(cmds[1], "-") == 0)
 		target_dir = get_previous_directory(local);
 	else
-		target_dir = cmds[1];
+	{
+		if (cmds[1][0] == '$')
+			target_dir = master_expander(cmds[1], local);
+		else
+			target_dir = cmds[1];
+	}
 	if (!target_dir)
 		return (1);
 	if (change_directory(target_dir) == -1)
@@ -69,5 +74,5 @@ int	command_cd(char **cmds, t_localenv *local)
 		return (1);
 	return (0);
 }
-//provavel have leaks com as stings dos diretorios alterar
-//forma de execution com mais uma funcao e ddar frees
+
+//ADICIONAR EXPANSION DE VARIABLES
