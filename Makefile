@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/13 23:29:55 by masoares         ###   ########.fr        #
+#    Updated: 2024/03/19 16:04:15 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,16 @@ $(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
 
 $(ODIR):
 	@mkdir -p $@
+	@mkdir -p $(ODIR)/builtins/cd
+	@mkdir -p $(ODIR)/builtins/echo
+	@mkdir -p $(ODIR)/builtins/exit
+	@mkdir -p $(ODIR)/builtins/expander
+	@mkdir -p $(ODIR)/builtins/export
+	@mkdir -p $(ODIR)/errors
+	@mkdir -p $(ODIR)/execution
+	@mkdir -p $(ODIR)/heredocs
+	@mkdir -p $(ODIR)/parser
+	@mkdir -p $(ODIR)/utils
 
 $(LIBFT):
 	@make -C ./libft/ -s
@@ -135,5 +145,3 @@ define SUP_BODY
     fun:add_history
 }
 endef
-
-	
