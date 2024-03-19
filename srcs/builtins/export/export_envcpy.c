@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/11 09:44:52 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:21:15 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	**copy_environment_variables(char **environ)
 }
 
 
-void	put_dickens_ciders(char **arrstr)
+void	put_quotes_expdr(char **arrstr)
 {
 	int		i;
 	int		j;
@@ -125,7 +125,7 @@ void	print_sorted_strings(t_localenv *local)
 	//int	i = -1;
 	//while (temp_content[++i] != NULL)
 		//printf("declare -x %s\n", temp_content[i]);
-	put_dickens_ciders(temp_content);
+	put_quotes_expdr(temp_content);
 	while (*temp_content)
 	{
 		free(*temp_content);

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/11 13:31:44 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:19:12 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,17 +144,4 @@ int	command_export(char **cmds, t_localenv *local)
 		return (-1);
 }
 
-// void error_if_export_invalid_format(char **cmds)
-// {
-//     char *variable;
-	
-// 	variable = cmds[1];
-//     for (int i = 0; variable[i] != '\0'; i++) {
-//         char c = variable[i];
-//         if (!(c == '_' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))) {
-//             printf("Invalid variable name: Only alphanumeric characters and '_' allowed.\n");
-//             return;
-//         }
-//     }
-//     printf("Export command format is valid.\n");
-// }
+//export valid format

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/18 08:26:07 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:23:03 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_localenv	*env_init(char **envirion);
 char	**copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char	**copy_environment_variables(char **environ);
 void	print_sorted_strings(t_localenv *local);
+void	put_quotes_expdr(char **arrstr);
 
 /* ************************************************************************** */
 /*                             EXPORT_UTILS_SORT.c                            */
