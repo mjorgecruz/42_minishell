@@ -1,14 +1,14 @@
-# **************************************************************************** #
+#******************************************************************************#
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
+#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/19 16:04:15 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/03/20 09:24:54 by masoares         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
+#******************************************************************************#
 
 RED = \033[31m
 GREEN = \033[32m
@@ -79,21 +79,14 @@ $(NAME): $(OBJ) $(LIBFT)
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
 		@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
-$(ODIR)/%.o: $(INCDIR)/%.c | $(ODIR)
-	@$(CC) $(CFLAGS) -c -o $@ $<
-
 $(ODIR):
 	@mkdir -p $@
-	@mkdir -p $(ODIR)/builtins/cd
-	@mkdir -p $(ODIR)/builtins/echo
-	@mkdir -p $(ODIR)/builtins/exit
-	@mkdir -p $(ODIR)/builtins/expander
-	@mkdir -p $(ODIR)/builtins/export
-	@mkdir -p $(ODIR)/errors
-	@mkdir -p $(ODIR)/execution
-	@mkdir -p $(ODIR)/heredocs
-	@mkdir -p $(ODIR)/parser
-	@mkdir -p $(ODIR)/utils
+	
+$(ODIR)/%.o: $(INCDIR)/%.c
+	@mkdir -p $(dir $@) 
+	@$(CC) $(CFLAGS) -c -o $@ $<
+	
+
 
 $(LIBFT):
 	@make -C ./libft/ -s
@@ -105,8 +98,6 @@ fclean: clean
 
 clean:
 	@$(RM) $(OBJ)
-	@$(RM) sup
-	@$(RM) leaks.log
 	@$(RM) sup
 	@$(RM) leaks.log
 	@make clean -C ./libft/ -s

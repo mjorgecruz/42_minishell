@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -6,22 +6,24 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/14 08:42:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:41:46 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../includes/minishell.h"
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	char	**heredocs;
-	t_localenv *local_env;
+	char		*input;
+	char		**heredocs;
+	int			i;
+	t_localenv	*local_env;
 
 	(void) ac;
 	(void) av;
 	local_env = env_init(env);
 	input = NULL;
+	i = 0;
 	while (1)
 	{
 		input = get_line(input, &heredocs);
@@ -29,7 +31,8 @@ int	main(int ac, char **av, char **env)
 			continue;
 		if (input != NULL && *input)
 		{
-			general_executer(input, &heredocs, local_env);
+			if (input[ignore_spaces(input, i)])
+				general_executer(input, &heredocs, local_env);
 			free(input);
 		}
 	}
