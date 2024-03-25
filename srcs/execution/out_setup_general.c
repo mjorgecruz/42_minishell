@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 17:00:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:28:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -28,58 +28,63 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 	if (cmd_list->down != NULL)
 		commands_sorter(cmd_list->down, info, local);
 	if (cmd_list && cmd_list->cmds)
-	{	
-		fd = fd_creator(*cmd_list, &pid);
-		while (cmd_list->cmds[i].cmds != NULL)
+	{
+		if (cmd_list->cmds[i + 1].cmds == NULL)
+			res = inter_executioner(cmd_list, info, local, i);
+		else
 		{
-			if (i == 0)
+			fd = fd_creator(*cmd_list, &pid);
+			while (cmd_list->cmds[i].cmds != NULL)
 			{
-				fd[i] = pipe_creator_2();
-				if (cmd_list->cmds[i + 1].cmds != NULL)
-					dup2(fd[i][1], STDOUT_FILENO);
-				else
-					close(fd[i][0]);
-				close(fd[i][1]);
-				pid[i] = fork();
-				if (pid[i] == 0)
+				if (i == 0)
 				{
-					res = inter_executioner(cmd_list, info, local, i);
-					exit(EXIT_SUCCESS);
+					fd[i] = pipe_creator_2();
+					if (cmd_list->cmds[i + 1].cmds != NULL)
+						dup2(fd[i][1], STDOUT_FILENO);
+					else
+						close(fd[i][0]);
+					close(fd[i][1]);
+					pid[i] = fork();
+					if (pid[i] == 0)
+					{
+						res = inter_executioner(cmd_list, info, local, i);
+						exit(EXIT_SUCCESS);
+					}
 				}
-			}
-			else if (cmd_list->cmds[i + 1].cmds != NULL && i > 0)
-			{
-				fd[i] = pipe_creator_2();
-				dup2(fd[i - 1][0], STDIN_FILENO);
-				close(fd[i - 1][0]);
-				dup2(fd[i][1], STDOUT_FILENO);
-				close(fd[i][1]);
-				pid[i] = fork();
-				if (pid[i] == 0)
+				else if (cmd_list->cmds[i + 1].cmds != NULL && i > 0)
 				{
-					res = inter_executioner(cmd_list, info, local, i);
-					exit(EXIT_SUCCESS);
-				}	
-			}
-			else if (cmd_list->cmds[i + 1].cmds == NULL && i > 0)
-			{
-				dup2(fd[i - 1][0], STDIN_FILENO);
-				close(fd[i - 1][0]);
-				dup2(stdout, STDOUT_FILENO);
-				close(stdout);
-				pid[i] = fork();
-				if (pid[i] == 0)
+					fd[i] = pipe_creator_2();
+					dup2(fd[i - 1][0], STDIN_FILENO);
+					close(fd[i - 1][0]);
+					dup2(fd[i][1], STDOUT_FILENO);
+					close(fd[i][1]);
+					pid[i] = fork();
+					if (pid[i] == 0)
+					{
+						res = inter_executioner(cmd_list, info, local, i);
+						exit(EXIT_SUCCESS);
+					}	
+				}
+				else if (cmd_list->cmds[i + 1].cmds == NULL && i > 0)
 				{
-					res = inter_executioner(cmd_list, info, local, i);
-					exit(EXIT_SUCCESS);
-				}	
-				dup2(stdin, STDIN_FILENO);
-				close(stdin);
+					dup2(fd[i - 1][0], STDIN_FILENO);
+					close(fd[i - 1][0]);
+					dup2(stdout, STDOUT_FILENO);
+					close(stdout);
+					pid[i] = fork();
+					if (pid[i] == 0)
+					{
+						res = inter_executioner(cmd_list, info, local, i);
+						exit(EXIT_SUCCESS);
+					}	
+					dup2(stdin, STDIN_FILENO);
+					close(stdin);
+				}
+				i++;
 			}
-			i++;
+			waitpid(pid[0], NULL, 0);
+			waitpid(pid[1], NULL, 0);
 		}
-		waitpid(pid[0], NULL, 0);
-		waitpid(pid[1], NULL, 0);
 	}
 	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
 		cmd_list = cmd_list->next;
