@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/20 09:32:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:07:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,7 +15,7 @@
 int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
 	int		res;
-	
+
 	if (cmd_info->fd_in_out[1] == STDOUT_FILENO)
 		res = exec_correct_builtin(final_cmds, info, cmd_info->id, *cmd_info);
 	else if (cmd_info->fd_in_out[1] > STDOUT_FILENO)

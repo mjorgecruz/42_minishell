@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 11:58:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:08:05 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -124,6 +124,9 @@ t_builtin	get_builtin_id(const char *str)
 		|| !ft_strcmp(str, "\'export\'"))
 		return (EXPORT);
 	if (!ft_strcmp(str, "env") || !ft_strcmp(str, "\"env\"")
+		|| !ft_strcmp(str, "\'env\'"))
+		return (ENV);
+	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "\"echo\"")
 		|| !ft_strcmp(str, "\'echo\'"))
 		return (ECHOS);
 	if (!ft_strcmp(str, "unset") || !ft_strcmp(str, "\"unset\"")
