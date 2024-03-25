@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/24 22:48:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:22:05 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -60,19 +60,14 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	if (cmd_info.in_out[0] == HEREDOC)
 		status = execve_heredoc(info, cmds, local);
 	else if (cmd_info.in_out[0] == IN_DOC)
-	 	execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
+	 	status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 	else
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			//status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 			status = execve(cmds[0], cmds, local->content);
-			exit(EXIT_SUCCESS);
-		}	
 		waitpid(pid, NULL, 0);
 	}
-	//printf("%d\n", status);
 	return(status);
 }
 
@@ -103,7 +98,6 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 		close(fd[0]);
 		close(fd[1]);
 		execve(cmds[0], cmds, local->content);
-		exit(EXIT_SUCCESS);
 	}
 	close(fd[0]);
 	close(fd[1]);
