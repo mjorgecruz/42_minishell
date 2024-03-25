@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/22 11:21:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:48:07 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -66,12 +66,13 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 		pid = fork();
 		if (pid == 0)
 		{
+			//status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 			status = execve(cmds[0], cmds, local->content);
 			exit(EXIT_SUCCESS);
 		}	
 		waitpid(pid, NULL, 0);
 	}
-	printf("%d\n", status);
+	//printf("%d\n", status);
 	return(status);
 }
 

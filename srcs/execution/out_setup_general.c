@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,72 +6,115 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/22 11:24:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:15:47 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
-	int		i;
-	int		res;
-	char	**final_cmds;
-	t_cmd_info	cmd_info;
-	int		fd[2];
-	//int		pid;
-	
-	cmd_info.fd_in_out[0] = 0;
-	cmd_info.fd_in_out[1] = 1;
-	cmd_info.in_out[0] = UNDEF;
-	cmd_info.in_out[1] = UNDEF;
-	res = -1;	
+	int			i;
+	int			res;
+	int			**fd;
+	int			*pid;
+
+	res = -1;
 	i = 0;
 	if (cmd_list->down != NULL)
 		commands_sorter(cmd_list->down, info, local);
 	if (cmd_list && cmd_list->cmds)
-	{
-		//printf("%s \n", cmd_list->content);
+	{	
+		fd = pipe_creator(*cmd_list, &pid);
+		// pid[0] = fork();
+		// if (pid[0] == 0)
+		// {
+			res = first_executioner(cmd_list, info, local, 0, fd);
+		// 	exit(EXIT_SUCCESS);			
+		// }
 		while (cmd_list->cmds[i].cmds != NULL)
 		{
-			if (i > 0)
+			if (cmd_list->cmds[i].cmds != NULL && i > 0)
 			{
-				dup2(fd[0], STDIN_FILENO);
-				close(fd[0]);
+				pid[i] = fork();
+				if (pid[i] == 0)
+				{
+					res = inter_executioner(cmd_list, info, local, i, fd);
+					exit(EXIT_SUCCESS);
+				}	
 			}
-			if (cmd_list->cmds[i + 1].cmds != NULL)
-			{
-				pipe(fd);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			else
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			// pid = fork();
-			// if (pid == 0)
-			// {
-				define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
-				if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
-					return ;
-				define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
-				final_cmds = clean_cmds(&(cmd_list->cmds[i]));
-				set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
-				cmd_info.id = cmd_list->cmds[i].id;
-				res = solver(final_cmds, info, &cmd_info);
-			// }
-			// waitpid(pid, NULL, 0);
 			i++;
-			//printf("%s  %d", cmd_list->cmds[i].cmds, cmd_list->cmds[i].type);
 		}
+		// waitpid(pid[0], NULL, 0);
+		// waitpid(pid[1], NULL, 0);
+
 	}
 	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
 		cmd_list = cmd_list->next;
 	if (cmd_list->next != NULL)	
 		commands_sorter(cmd_list->next, info, local);
 	return ;
+}
+
+int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd)
+{
+	char		**final_cmds;
+	t_cmd_info	cmd_info;
+	int		res;
+	(void) local;
+
+	printf("aqui");
+	cmd_info.fd_in_out[0] = 0;
+	cmd_info.fd_in_out[1] = 1;
+	cmd_info.in_out[0] = UNDEF;
+	cmd_info.in_out[1] = UNDEF;
+	close_fd(&fd, i);
+	dup2(fd[i - 1][0], STDIN_FILENO);
+	if (cmd_list->cmds[i + 1].cmds != NULL)
+		dup2(fd[i][1], STDOUT_FILENO);
+	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
+	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
+		return (0) ;
+	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
+	final_cmds = clean_cmds(&(cmd_list->cmds[i]));
+	set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
+	cmd_info.id = cmd_list->cmds[i].id;
+	close(fd[i - 1][0]);
+	close(fd[i][1]);
+	res = solver(final_cmds, info, &cmd_info);
+	return(res);
+}
+
+int		first_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd)
+{
+	char		**final_cmds;
+	t_cmd_info	cmd_info;
+	int		res;
+	(void)		i;
+	(void) local;
+
+	cmd_info.fd_in_out[0] = 0;
+	cmd_info.fd_in_out[1] = 1;
+	cmd_info.in_out[0] = UNDEF;
+	cmd_info.in_out[1] = UNDEF;
+	if (cmd_list->cmds[1].cmds != NULL)
+	{	
+		close_fd(&fd, 0);
+		dup2(fd[0][1], STDOUT_FILENO);
+	}
+	define_input(&(cmd_list->cmds[0]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
+	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
+		return (0);
+	define_output(&(cmd_list->cmds[0]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
+	final_cmds = clean_cmds(&(cmd_list->cmds[0]));
+	set_id_flag_cmd(final_cmds, &(cmd_list->cmds[0].id));
+	cmd_info.id = cmd_list->cmds[0].id;
+	if (cmd_list->cmds[1].cmds != NULL)
+	{	
+		close(fd[0][1]);
+	}
+	res = solver(final_cmds, info, &cmd_info);
+	return(res);
 }
 
 void	set_id_flag_cmd(char **cmd, t_builtin *id)

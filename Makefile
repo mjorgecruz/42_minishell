@@ -1,4 +1,4 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,9 +6,9 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/20 09:24:54 by masoares         ###   ########.fr        #
+#    Updated: 2024/03/24 16:49:11 by masoares         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 RED = \033[31m
 GREEN = \033[32m
@@ -42,6 +42,7 @@ SRC := minishell.c \
 		parser/parser_parenthesis.c \
 		parser/special_mid_parser.c \
 		execution/solver.c \
+		execution/pipes.c \
 		execution/execve.c \
 		execution/out_setup_general.c \
 		execution/general_executor.c \

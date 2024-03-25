@@ -1,9 +1,13 @@
-Makefile
-README.md
 a
+a 
+b 
+c
 include
-lists.h
+includes
+libft
+Makefile
 minishell
 obj
+README.md
+srcs
 tests
-0

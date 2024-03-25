@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/18 08:26:19 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:16:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,9 @@ int			exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cm
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 
+ int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd);
 
+int             first_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd);
 
 /* ************************************************************************** */
 /*                                    ERRORS                                  */
@@ -384,6 +386,14 @@ int			execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local);
 int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
 
 void 		test_commands(char **cmds, char **p_path);
+
+/* ************************************************************************** */
+/*                                    PIPES                                   */
+/* ************************************************************************** */
+
+int		**pipe_creator(t_token cmds, int **pid);
+
+int		close_fd(int ***fd, int pid);
 
 
 #endif
