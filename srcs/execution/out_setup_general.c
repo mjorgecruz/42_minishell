@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 16:42:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:00:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -40,12 +40,12 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 				else
 					close(fd[i][0]);
 				close(fd[i][1]);
-				// pid[i] = fork();
-				// if (pid[i] == 0)
-				// {
+				pid[i] = fork();
+				if (pid[i] == 0)
+				{
 					res = inter_executioner(cmd_list, info, local, i);
-				//	exit(EXIT_SUCCESS);
-				//}	
+					exit(EXIT_SUCCESS);
+				}
 			}
 			else if (cmd_list->cmds[i + 1].cmds != NULL && i > 0)
 			{
