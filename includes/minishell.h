@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/24 23:16:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/25 11:10:59 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -277,7 +277,7 @@ int			exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cm
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 
- int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd);
+ int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
 int             first_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd);
 
@@ -394,6 +394,10 @@ void 		test_commands(char **cmds, char **p_path);
 int		**pipe_creator(t_token cmds, int **pid);
 
 int		close_fd(int ***fd, int pid);
+
+int		**fd_creator(t_token cmds, int **pid);
+
+int		*pipe_creator_2();
 
 
 #endif
