@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 18:02:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:04:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -54,6 +54,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 				i++;
 			}
 			i = 0;
+			close(stdin);
 			while (cmd_list->cmds[i].cmds)
 			{
 				wait(&res);
