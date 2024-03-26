@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/25 11:10:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:14:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -398,6 +398,8 @@ int		close_fd(int ***fd, int pid);
 int		**fd_creator(t_token cmds, int **pid);
 
 int		*pipe_creator_2();
+
+void	pid_creator(t_token cmds, int **pid);
 
 
 #endif

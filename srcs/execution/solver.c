@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 18:55:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:54:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,12 +15,24 @@
 int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
 	int		res;
-
+	int		fd;
+	
+	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
+	{
+		fd = dup(STDIN_FILENO);
+		dup2(cmd_info->fd_in_out[0], STDIN_FILENO);
+		close(cmd_info->fd_in_out[0]);
+	}
 	if (cmd_info->fd_in_out[1] == STDOUT_FILENO)
 		res = exec_correct_builtin(final_cmds, info, cmd_info->id, *cmd_info);
 	else if (cmd_info->fd_in_out[1] > STDOUT_FILENO)
 		res = cd_output_exec(final_cmds, info, cmd_info->id, *cmd_info);
-	return(res);
+	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
+	{
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	return (res);
 }
 
 int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
@@ -44,7 +56,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	i = 0;
 	file = NULL;
 	(*fd) = STDIN_FILENO;
-	while ((cmds->cmds)[i])
+	while ((cmds->cmds)[i] != 0)
 	{
 		if ((cmds->cmds)[i] == '<' && (cmds->cmds)[i + 1] != '<')
 		{
@@ -52,7 +64,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			if (file != NULL)
 				free(file);
 			file = create_file_name(cmds->cmds, &i);
-			*fd = open( file, O_RDWR);
+			*fd = open(file, O_RDWR);
 			if (*fd < 0)
 			{
 				perror("minishell");

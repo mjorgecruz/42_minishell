@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 16:09:06 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 10:30:16 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,6 +20,7 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 {
 	t_token	*cmd_list;
 	t_info	info;
+	(void) local;
 
 	cmd_list = NULL;
 	info.heredocs = heredocs;
@@ -59,7 +60,7 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
+		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&' || !input[i])
 		{
 			type = type_definer(input, &i);
 			token = token_creator(i, j, input, type);
@@ -219,7 +220,7 @@ int	tester_function(t_token **list)
 		i = 0;
 		printf("content: %s ", trav->content);
 		printf("pipe type: %d\n", trav->next_type);
-		if (trav ->down != NULL)
+		if (trav->down != NULL)
 		{
 			printf("down: %s , pipe type: %d, next: %s , pipe type: %d\n", trav->down->content, trav->down->next_type, trav->down->next->content, trav->down->next->next_type);
 			tester_function(&trav->down);

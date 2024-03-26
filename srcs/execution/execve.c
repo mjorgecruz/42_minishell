@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 18:22:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:59:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -53,7 +53,6 @@ void test_commands(char **cmds, char **p_path)
 
 int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
 {
-	int		pid;
 	int		status;
 	
 	status = 0;
@@ -62,90 +61,77 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	else if (cmd_info.in_out[0] == IN_DOC)
 	 	status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 	else
-	{
-		pid = fork();
-		if (pid == 0)
-			status = execve(cmds[0], cmds, local->content);
-		waitpid(pid, NULL, 0);
-	}
+		status = execve(cmds[0], cmds, local->content);
 	return(status);
 }
 
 int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 {
-	pid_t	pid1;
-	pid_t	pid2;
 	int		fd[2];
-	
+	int		stdin;
+	int		stdout;
+
+	stdin = dup(STDIN_FILENO);
+	stdout = dup(STDOUT_FILENO);
 	pipe(fd);
-	pid1 = fork();
-	if (pid1 < 0)
-		return (-1) ;
-	else if(pid1 == 0)
-	{
+	
+	// pid1 = fork();
+	// if (pid1 < 0)
+	// 	return (-1) ;
+	// else if(pid1 == 0)
+	// {
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		printf("%s", (*info.heredocs)[info.pos_heredoc]);
-		exit(EXIT_SUCCESS);
-	}
-	pid2 = fork();
-	if (pid2 < 0)
-		return (-2) ;
-	else if(pid2 == 0)
-	{
 		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
 		close(fd[1]);
+		close(fd[0]);
+		printf("%s", (*info.heredocs)[info.pos_heredoc]);
+		//exit(EXIT_SUCCESS);
+	//}
+	// pid2 = fork();
+	// if (pid2 < 0)
+	// 	return (-2) ;
+	// else if(pid2 == 0)
+	// {
+		dup2(stdout, STDOUT_FILENO);
+		close(stdout);
 		execve(cmds[0], cmds, local->content);
-	}
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+		dup2(stdin, STDIN_FILENO);
+		close(stdin);
+	//}
+	// close(fd[0]);
+	// close(fd[1]);
+	// waitpid(pid1, NULL, 0);
+	//waitpid(pid2, NULL, 0);
 	return (0);
 }
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
-	pid_t	pid1;
-	pid_t	pid2;
 	int		fd[2];
 	char	buffer[21];
 	int		bread;
+	int		stdin;
+	int		stdout;
+	int 	status;
+
 	(void) info;
-	
+	stdin = dup(STDIN_FILENO);
+	stdout = dup(STDOUT_FILENO);
 	pipe(fd);
-	pid1 = fork();
-	if (pid1 < 0)
-		return (-1);
-	else if(pid1 == 0)
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		while (bread > 0)
-		{
-			bread = read(fd_in, buffer, 20);
-			buffer[bread] = '\0';
-			printf("%s", buffer);
-		}
-		exit(EXIT_SUCCESS);
-	}
-	pid2 = fork();
-	if (pid2 < 0)
-		return (-2) ;
-	else if(pid2 == 0)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		execve(cmds[0], cmds, local->content);
-		exit(EXIT_SUCCESS);
-	}
+	dup2(fd[1], STDOUT_FILENO);
+	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
-	return (0);
+	while (bread > 0)
+	{
+		bread = read(fd_in, buffer, 20);
+		buffer[bread] = '\0';
+		printf("%s", buffer);
+	}
+	dup2(stdout, STDOUT_FILENO);
+	close(stdout);
+	status = execve(cmds[0], cmds, local->content);
+	dup2(stdin, STDIN_FILENO);
+	close(stdin);
+	return (status);
 }

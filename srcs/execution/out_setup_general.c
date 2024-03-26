@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/25 17:28:24 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:15:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,10 +16,11 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
 	int			i;
 	int			res;
-	int			**fd;
+	//int			**fd;
 	int			*pid;
 	int			stdout;
 	int			stdin;
+	int			fd;
 	
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
@@ -33,12 +34,13 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 		{
-			fd = fd_creator(*cmd_list, &pid);
+			pid_creator(*cmd_list, &pid);
+			//fd = fd_creator(*cmd_list, &pid);
 			while (cmd_list->cmds[i].cmds != NULL)
 			{
 				if (i == 0)
 				{
-					fd[i] = pipe_creator_2();
+					//fd[i] = pipe_creator_2();
 					if (cmd_list->cmds[i + 1].cmds != NULL)
 						dup2(fd[i][1], STDOUT_FILENO);
 					else
@@ -48,12 +50,12 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 					if (pid[i] == 0)
 					{
 						res = inter_executioner(cmd_list, info, local, i);
-						exit(EXIT_SUCCESS);
+						exit(res);
 					}
 				}
 				else if (cmd_list->cmds[i + 1].cmds != NULL && i > 0)
 				{
-					fd[i] = pipe_creator_2();
+					//fd[i] = pipe_creator_2();
 					dup2(fd[i - 1][0], STDIN_FILENO);
 					close(fd[i - 1][0]);
 					dup2(fd[i][1], STDOUT_FILENO);
@@ -62,7 +64,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 					if (pid[i] == 0)
 					{
 						res = inter_executioner(cmd_list, info, local, i);
-						exit(EXIT_SUCCESS);
+						exit(res);
 					}	
 				}
 				else if (cmd_list->cmds[i + 1].cmds == NULL && i > 0)
@@ -75,15 +77,19 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 					if (pid[i] == 0)
 					{
 						res = inter_executioner(cmd_list, info, local, i);
-						exit(EXIT_SUCCESS);
+						exit(res);
 					}	
 					dup2(stdin, STDIN_FILENO);
 					close(stdin);
 				}
 				i++;
 			}
-			waitpid(pid[0], NULL, 0);
-			waitpid(pid[1], NULL, 0);
+			i = 0;
+			while (cmd_list->cmds[i].cmds)
+			{
+				waitpid(pid[i], &res, 0);
+				i++;
+			}
 		}
 	}
 	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
@@ -98,8 +104,10 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	char		**final_cmds;
 	t_cmd_info	cmd_info;
 	int			res;
+	int			pid;
 	(void) local;
 
+	pid = 0;
 	cmd_info.fd_in_out[0] = 0;
 	cmd_info.fd_in_out[1] = 1;
 	cmd_info.in_out[0] = UNDEF;
@@ -111,7 +119,18 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]));
 	set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
 	cmd_info.id = cmd_list->cmds[i].id;
-	res = solver(final_cmds, info, &cmd_info);
+	if (cmd_info.id == UNDEFINED)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			res = solver(final_cmds, info, &cmd_info);
+			exit(res);
+		}
+		waitpid(pid, &res, 0);
+	}
+	else	
+		res = solver(final_cmds, info, &cmd_info);
 	return(res);
 }
 

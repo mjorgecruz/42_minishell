@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor_2.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/13 23:34:15 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:44:58 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file makes the segmentation of each part of the line read separated by 
 pipes. The strings must be divided in parts in an array of structs*/
@@ -123,6 +123,7 @@ char	*write_to_line(int count, char *content, int *pos)
 		(*pos)++;
 		j++;
 	}
+	line[j] = 0;
 	return (line);
 }
 
