@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 17:15:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:02:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,13 +17,11 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 	int			i;
 	int			res;
 	//int			**fd;
-	int			*pid;
-	int			stdout;
+	int			pid;
 	int			stdin;
-	int			fd;
+	int			fd[2];
 	
 	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
 	res = -1;
 	i = 0;
 	if (cmd_list->down != NULL)
@@ -34,60 +32,31 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 		{
-			pid_creator(*cmd_list, &pid);
-			//fd = fd_creator(*cmd_list, &pid);
-			while (cmd_list->cmds[i].cmds != NULL)
+			while (cmd_list->cmds[i].cmds)
 			{
-				if (i == 0)
+				pipe(fd);
+				pid = fork();
+				if (pid == 0)
 				{
-					//fd[i] = pipe_creator_2();
-					if (cmd_list->cmds[i + 1].cmds != NULL)
-						dup2(fd[i][1], STDOUT_FILENO);
-					else
-						close(fd[i][0]);
-					close(fd[i][1]);
-					pid[i] = fork();
-					if (pid[i] == 0)
-					{
-						res = inter_executioner(cmd_list, info, local, i);
-						exit(res);
-					}
+					if (cmd_list->cmds[i + 1].cmds)
+						dup2(fd[1], STDOUT_FILENO);
+					if(i > 0)
+						dup2(stdin, STDIN_FILENO);
+					close(fd[0]);
+					close(fd[1]);
+					close(stdin);					
+					res = inter_executioner(cmd_list, info, local, i);
+					exit(res);
 				}
-				else if (cmd_list->cmds[i + 1].cmds != NULL && i > 0)
-				{
-					//fd[i] = pipe_creator_2();
-					dup2(fd[i - 1][0], STDIN_FILENO);
-					close(fd[i - 1][0]);
-					dup2(fd[i][1], STDOUT_FILENO);
-					close(fd[i][1]);
-					pid[i] = fork();
-					if (pid[i] == 0)
-					{
-						res = inter_executioner(cmd_list, info, local, i);
-						exit(res);
-					}	
-				}
-				else if (cmd_list->cmds[i + 1].cmds == NULL && i > 0)
-				{
-					dup2(fd[i - 1][0], STDIN_FILENO);
-					close(fd[i - 1][0]);
-					dup2(stdout, STDOUT_FILENO);
-					close(stdout);
-					pid[i] = fork();
-					if (pid[i] == 0)
-					{
-						res = inter_executioner(cmd_list, info, local, i);
-						exit(res);
-					}	
-					dup2(stdin, STDIN_FILENO);
-					close(stdin);
-				}
+				dup2(fd[0], stdin);
+				close(fd[0]);
+				close(fd[1]);
 				i++;
 			}
 			i = 0;
 			while (cmd_list->cmds[i].cmds)
 			{
-				waitpid(pid[i], &res, 0);
+				wait(&res);
 				i++;
 			}
 		}

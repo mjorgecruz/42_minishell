@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 16:40:04 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 17:13:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:29:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -79,10 +79,10 @@ void	pid_creator(t_token cmds, int **pid)
 {
 	int		count;
 	//int		**fd;
-	int		i;
+	//int		i;
 	
 	count = 0;
-	i = 0;
+	//i = 0;
 	while (cmds.cmds[count + 1].cmds)
 		count++;
 	*pid =  (int *) malloc (sizeof(int) * (count + 1));
