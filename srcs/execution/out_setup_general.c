@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 09:28:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:32:35 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -85,10 +85,12 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	cmd_info.in_out[1] = UNDEF;
 	while (j < i)
 	{
-		define_input(&(cmd_list->cmds[j]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
+		define_input(&(cmd_list->cmds[j]), &(cmd_info.fd_in_out[0]),
+			&info.pos_heredoc, &(cmd_info.in_out[0]));
 		j++;
 	}
-	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
+	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),
+		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
 		return (0) ;
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
