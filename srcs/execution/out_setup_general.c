@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 09:32:35 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:21:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -33,7 +33,6 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 		{
 			while (cmd_list->cmds[i].cmds)
 			{
-				//define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), &info.pos_heredoc, &(cmd_info.in_out[0]));
 				pipe(fd);
 				pid = fork();
 				if (pid == 0)
@@ -94,7 +93,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
 		return (0) ;
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
-	final_cmds = clean_cmds(&(cmd_list->cmds[i]));
+	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
 	set_id_flag_cmd(final_cmds, &(cmd_list->cmds[i].id));
 	cmd_info.id = cmd_list->cmds[i].id;
 	if (cmd_info.id == UNDEFINED)

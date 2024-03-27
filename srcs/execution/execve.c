@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 18:12:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:59:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -54,6 +54,7 @@ void test_commands(char **cmds, char **p_path)
 int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
 {
 	int		status;
+	int		error;
 	
 	status = 0;
 	if (cmd_info.in_out[0] == HEREDOC)
@@ -61,7 +62,11 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	else if (cmd_info.in_out[0] == IN_DOC)
 	 	status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 	else
+	{
 		status = execve(cmds[0], cmds, local->content);
+		error = errno;
+		ft_printf("%d\n", error);
+	}
 	return(status);
 }
 

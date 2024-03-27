@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 09:26:15 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:30:07 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -155,13 +155,15 @@ char	*create_file_name(char *cmd, int *i)
 	return (file);
 }
 
-char	**clean_cmds(t_command *full_cmds)
+char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 {
-char	*clean;
-	char	**final_cmds;
+	char		*clean;
+	const char 	*trav;
+	char		**final_cmds;
 
 	clean = clean_str(full_cmds->cmds);
-	final_cmds = ft_split(clean, ' ');
+	trav = master_expander_out(clean, local);
+	final_cmds = ft_split(trav, ' ');
 	free(clean);
 	return (final_cmds);
 }

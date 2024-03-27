@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 10:30:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:21:18 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -60,7 +60,9 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&' || !input[i])
+		if (!input[i])
+			break;
+		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
 			token = token_creator(i, j, input, type);

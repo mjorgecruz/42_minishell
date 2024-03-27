@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/26 17:14:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:20:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -368,7 +368,7 @@ void	define_output(t_command *cmds, int *fd, int *out);
 
 char	*create_file_name(char *cmd, int *i);
 
-char	**clean_cmds(t_command *full_cmds);
+char	**clean_cmds(t_command *full_cmds, t_localenv *local);
 
 char	*clean_str(char *cmds);
 
