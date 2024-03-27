@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 16:54:33 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:26:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -110,6 +110,11 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			*fd = open(file, O_TRUNC);
 			close(*fd);
 			*fd = open(file, O_RDWR|O_CREAT, 0666);
+			if (*fd < 0)
+			{
+				perror("minishell");
+				return ;
+			}
 			*out = OUT_DOC; 
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
