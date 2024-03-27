@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/24 16:49:11 by masoares         ###   ########.fr        #
+#    Updated: 2024/03/27 17:11:10 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC := minishell.c \
 		finex.c \
 		errors/errors.c \
 		utils/str_utils.c \
+		utils/megasplit.c \
 		heredocs/heredocs.c \
 		heredocs/heredocs_2.c \
 		parser/parser_general.c \

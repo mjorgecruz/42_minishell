@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 11:30:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:12:58 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -163,7 +163,7 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 
 	clean = clean_str(full_cmds->cmds);
 	trav = master_expander_out(clean, local);
-	final_cmds = ft_split(trav, ' ');
+	final_cmds = ft_split_ignore_quotes(trav, " ");
 	free(clean);
 	return (final_cmds);
 }
