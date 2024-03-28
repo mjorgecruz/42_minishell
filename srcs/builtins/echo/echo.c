@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/25 17:22:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:14:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -37,6 +37,7 @@ int	command_echo(char **cmds, t_localenv *local)
 	int		i;
 	bool	n_flag;
 	char	*exp_temp;
+	(void)	local;
 
 	i = 0;
 	n_flag = false;
@@ -44,7 +45,8 @@ int	command_echo(char **cmds, t_localenv *local)
 		n_flag = true;
 	while (cmds[i] != NULL)
 	{
-		exp_temp = master_expander(cmds[i], local);
+		//exp_temp = master_expander(cmds[i], local);
+		exp_temp = cmds[i];
 		if (exp_temp)
 		{
 			printf("%s ", exp_temp);

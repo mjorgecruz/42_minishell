@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 10:21:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:21:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,11 +16,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
 	int			i;
 	int			res;
-	int			pid;
-	int			stdin;
-	int			fd[2];
-	
-	stdin = dup(STDIN_FILENO);
+
 	res = -1;
 	i = 0;
 	if (cmd_list->down != NULL)
@@ -31,34 +27,35 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 		{
-			while (cmd_list->cmds[i].cmds)
-			{
-				pipe(fd);
-				pid = fork();
-				if (pid == 0)
-				{
-					if (cmd_list->cmds[i + 1].cmds)
-						dup2(fd[1], STDOUT_FILENO);
-					if(i > 0)
-						dup2(stdin, STDIN_FILENO);
-					close(fd[0]);
-					close(fd[1]);
-					close(stdin);					
-					res = inter_executioner(cmd_list, info, local, i);
-					exit(res);
-				}
-				dup2(fd[0], stdin);
-				close(fd[0]);
-				close(fd[1]);
-				i++;
-			}
-			i = 0;
-			close(stdin);
-			while (cmd_list->cmds[i].cmds)
-			{
-				wait(&res);
-				i++;
-			}
+			res = mult_cmd_executer(cmd_list, info, local, i);
+			// while (cmd_list->cmds[i].cmds)
+			// {
+			// 	pipe(fd);
+			// 	pid = fork();
+			// 	if (pid == 0)
+			// 	{
+			// 		if (cmd_list->cmds[i + 1].cmds)
+			// 			dup2(fd[1], STDOUT_FILENO);
+			// 		if(i > 0)
+			// 			dup2(stdin, STDIN_FILENO);
+			// 		close(fd[0]);
+			// 		close(fd[1]);
+			// 		close(stdin);					
+			// 		res = inter_executioner(cmd_list, info, local, i);
+			// 		exit(res);
+			// 	}
+			// 	dup2(fd[0], stdin);
+			// 	close(fd[0]);
+			// 	close(fd[1]);
+			// 	i++;
+			// }
+			// i = 0;
+			// close(stdin);
+			// while (cmd_list->cmds[i].cmds)
+			// {
+			// 	wait(&res);
+			// 	i++;
+			// }
 		}
 	}
 	while (cmd_list->next != NULL && ((res == 0 && cmd_list->next_type == D_PIPE))) 
@@ -66,6 +63,46 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 	if (cmd_list->next != NULL)	
 		commands_sorter(cmd_list->next, info, local);
 	return ;
+}
+
+int		mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i)
+{
+	int			pid;
+	int			stdin;
+	int			fd[2];
+	int			res;
+	
+	stdin = dup(STDIN_FILENO);
+	res = -1;
+	while (cmd_list->cmds[i].cmds)
+	{
+		pipe(fd);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (cmd_list->cmds[i + 1].cmds)
+				dup2(fd[1], STDOUT_FILENO);
+			if(i > 0)
+				dup2(stdin, STDIN_FILENO);
+			close(fd[0]);
+			close(fd[1]);
+			close(stdin);					
+			res = inter_executioner(cmd_list, info, local, i);
+			exit(res);
+		}
+		dup2(fd[0], stdin);
+		close(fd[0]);
+		close(fd[1]);
+		i++;
+	}
+	i = 0;
+	close(stdin);
+	while (cmd_list->cmds[i].cmds)
+	{
+		wait(&res);
+		i++;
+	}
+	return(res);
 }
 
 int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
@@ -78,6 +115,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	
 	(void) local;
 	pid = 0;
+	j = 0;
 	cmd_info.fd_in_out[0] = 0;
 	cmd_info.fd_in_out[1] = 1;
 	cmd_info.in_out[0] = UNDEF;

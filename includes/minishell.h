@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/27 17:12:17 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:22:46 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -277,10 +277,9 @@ int			exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cm
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 
- int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
+int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
-int             first_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i, int **fd);
-
+int				mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
 /* ************************************************************************** */
 /*                                    ERRORS                                  */
 /* ************************************************************************** */
@@ -401,6 +400,6 @@ int		*pipe_creator_2();
 
 void	pid_creator(t_token cmds, int **pid);
 
-char	**ft_split_ignore_quotes(char *s, char *c);
+char	**ft_split_ignore_quotes(const char *s, char *c);
 
 #endif
