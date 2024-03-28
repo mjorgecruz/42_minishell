@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 10:59:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:24:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -65,9 +65,11 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	{
 		status = execve(cmds[0], cmds, local->content);
 		error = errno;
-		ft_printf("%d\n", error);
 	}
-	return(status);
+	if (status == -1)
+		return(error);
+	else
+		return (0);
 }
 
 int		execve_heredoc(t_info info, char **cmds, t_localenv *local)

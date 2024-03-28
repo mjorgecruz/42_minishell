@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/27 17:12:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:19:01 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -157,9 +157,9 @@ char	*create_file_name(char *cmd, int *i)
 
 char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 {
-	char		*clean;
-	const char 	*trav;
-	char		**final_cmds;
+	char	*clean;
+	char 	*trav;
+	char	**final_cmds;
 
 	clean = clean_str(full_cmds->cmds);
 	trav = master_expander_out(clean, local);

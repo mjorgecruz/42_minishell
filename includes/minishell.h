@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/28 10:22:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:46:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -280,6 +280,11 @@ void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
 int				mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
+
+int		waiter_function(t_token *cmd_list);
+
+int		pied_piper(t_token *cmd_list, int *fd, int i, int *stdin);
+
 /* ************************************************************************** */
 /*                                    ERRORS                                  */
 /* ************************************************************************** */
@@ -387,19 +392,9 @@ int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd
 void 		test_commands(char **cmds, char **p_path);
 
 /* ************************************************************************** */
-/*                                    PIPES                                   */
+/*                                  MEGASPLIT                                 */
 /* ************************************************************************** */
 
-int		**pipe_creator(t_token cmds, int **pid);
-
-int		close_fd(int ***fd, int pid);
-
-int		**fd_creator(t_token cmds, int **pid);
-
-int		*pipe_creator_2();
-
-void	pid_creator(t_token cmds, int **pid);
-
-char	**ft_split_ignore_quotes(const char *s, char *c);
+char	**ft_split_ignore_quotes(char *s, char *c);
 
 #endif
