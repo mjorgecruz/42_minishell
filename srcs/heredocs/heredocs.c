@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/13 23:26:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:45:35 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -76,6 +76,7 @@ void	add_heredocs(char ***new_heredocs, int cur_heredocs, char *line_read, int i
 	heredoc_count = 0;
 	while (line_read[j] && j <= i)
 	{
+		j = ignore_in_quotes(line_read, j);
 		if (line_read[j] == '<' && line_read[j - 1] == '<')
 		{
 			if (heredoc_count == cur_heredocs) 

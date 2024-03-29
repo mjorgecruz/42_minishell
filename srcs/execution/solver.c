@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/28 11:19:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:44:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -58,6 +58,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	(*fd) = STDIN_FILENO;
 	while ((cmds->cmds)[i] != 0)
 	{
+		i = ignore_in_quotes(cmds->cmds, i);
 		if ((cmds->cmds)[i] == '<' && (cmds->cmds)[i + 1] != '<')
 		{
 			i++;
@@ -99,6 +100,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 	file = NULL;
 	while (cmds->cmds[i])
 	{
+		i = ignore_in_quotes(cmds->cmds, i);
 		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
 		{
 			i++;
