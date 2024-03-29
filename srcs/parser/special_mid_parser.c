@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   special_mid_parser.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/07 11:17:47 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:28:22 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -25,11 +25,13 @@ bool mid_parser_iteration(char *str, int *i)
 		if (j >= 0 && str[j])
 		{
 			j = ignore_spaces(str, j);
+			j = ignore_in_quotes(str, j);
 			j = check_redirs(str, j);
 		}
 		if (j >= 0 && str[j])
 		{
 			j = ignore_spaces(str, j);
+			j = ignore_in_quotes(str, j);
 			j = check_uppersand(str, j);
 		}
 		if (j == -1)

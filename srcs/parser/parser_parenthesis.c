@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser_parenthesis.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/02/15 16:23:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:40:49 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file handles the first division of commands based on the existence of parenthesis*/
 #include "../../includes/minishell.h"
@@ -35,6 +35,7 @@ bool	check_operator_open_p(char *total_line, int *i)
 	j = 0;
 	while (total_line[k] && k <= *i)
 	{
+		k = ignore_in_quotes(total_line, k);
 		if (total_line[k] == '(')
 		{
 			j = k - 1;
@@ -62,6 +63,7 @@ bool	check_open_p_operator(char *total_line, int *i)
 	j = 0;
 	while (total_line[k] && k <= *i)
 	{
+		k = ignore_in_quotes(total_line, k);
 		if (total_line[k] == '(')
 		{
 			j = k + 1;
@@ -88,6 +90,7 @@ bool	check_operator_closed_p(char *total_line, int *i)
 	j = 0;
 	while (total_line[k] && k <= *i)
 	{
+		k = ignore_in_quotes(total_line, k);
 		if (total_line[k] == ')')
 		{
 			j = k - 1;
@@ -114,6 +117,7 @@ bool	check_closed_p_operator(char *total_line, int *i)
 	j = 0;
 	while (total_line[k] && k <= *i)
 	{
+		k = ignore_in_quotes(total_line, k);
 		if (total_line[k] == ')')
 		{
 			j = k + 1;
