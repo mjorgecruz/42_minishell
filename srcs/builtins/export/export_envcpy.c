@@ -6,12 +6,11 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/29 12:15:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:17:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
 
 /*
 Creates a copy of the environment variables at the start
@@ -38,6 +37,10 @@ t_localenv	*env_init(char **envirion)
 	return (new);
 }
 
+/*
+helper function of the copy_environment_variables
+recursive
+*/
 char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
 {
 	int	len;
@@ -57,6 +60,10 @@ char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
 	return (copy_env_var_utils(env + 1, num_vars + 1, env_copy));
 }
 
+/*
+alphabeticaly sorts the array of strings passed to it
+used to organize environment varibles order for the export command
+ */
 void	sort_strings(char **strings)
 {
 	int	i;
@@ -74,6 +81,11 @@ void	sort_strings(char **strings)
 		}
 	}
 }
+
+/*
+Creates and allocates memory for an array of strings
+copy of environment variables
+*/
 
 char	**copy_environment_variables(char **environ)
 {
@@ -94,6 +106,10 @@ char	**copy_environment_variables(char **environ)
 	return (copy_env_var_utils(environ, 0, env_copy));
 }
 
+/*
+adds quotation to the strings in the list of the export comand env vars
+and adds the prefix "declare -x"
+*/
 
 void	put_quotes_expdr(char **arrstr)
 {
@@ -123,7 +139,10 @@ void	put_quotes_expdr(char **arrstr)
 	}
 }
 
-void	print_sorted_strings(t_localenv *local)
+/*
+Just prints the array of strings no needed but 
+*/
+void	print_sorted_strings(char **sorted)
 {
-	put_quotes_expdr(local->sorted);
+	put_quotes_expdr(sorted);
 }

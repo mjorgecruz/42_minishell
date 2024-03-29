@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 11:49:30 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:33:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	command_env(t_localenv *local)
 {
 	if (local == NULL)
 	{
-		printf("Invalid argument: local environment is NULL\n");
+		perror("Invalid argument: local environment is NULL\n");
 		return (-1);
 	}
 	print_string_array(local->content);

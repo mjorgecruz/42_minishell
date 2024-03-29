@@ -6,11 +6,15 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:59 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:05:08 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:31:45 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+/*
+returns size of the array
+*/
 
 size_t	ft_strarrlen(char **arr)
 {
@@ -23,6 +27,10 @@ size_t	ft_strarrlen(char **arr)
 		len++;
 	return (len);
 }
+
+/*
+makes and returns a copy of the array of strings
+*/
 
 char	**ft_strarrdup(char **src)
 {
@@ -60,6 +68,9 @@ void	print_next_string(char **str)
 	}
 }
 
+/*
+used to swap srings in the array during the sort
+*/
 void	swap_strings(char **str1, char **str2)
 {
 	char	*temp;
