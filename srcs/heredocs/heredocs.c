@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 11:45:35 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:09:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -92,22 +92,68 @@ void	add_heredocs(char ***new_heredocs, int cur_heredocs, char *line_read, int i
 int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, int i)
 {
 	char	*str;
+	char	*final_str;
+	char	*temp2;
 	int		n_letters;
 	int		j;
+	int		fd[2];
+	int		pid;
+	int		bread;
+	char	buffer[21];
+	char	*temp;
+	int		k;
+	int		x;
 	
+	k = 0;
+	x = 0;
 	i = ignore_spaces(line_read, i + 1);
 	n_letters = 0;
 	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i+ n_letters])
 		&& line_read[i + n_letters] != '\0' && !ft_strchr("\'\"", line_read[i + n_letters]))
 		n_letters++;
-	str = ft_calloc(n_letters + 1, sizeof(char));
-	j = 0;
-	while (j < n_letters)
-		str[j++] = line_read[i++];
 	(*new_heredocs)[*cur_heredocs] = NULL;
-	add_partials(&((*new_heredocs)[*cur_heredocs]), str);
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close((fd)[0]);
+		close((fd)[1]);
+		str = ft_calloc(n_letters + 1, sizeof(char));
+		j = 0;
+		while (j < n_letters)
+			str[j++] = line_read[i++];
+		add_partials(&(final_str), str);
+		ft_printf("%s", final_str);
+		free(str);
+		free(final_str);
+		exit(EXIT_SUCCESS);
+	}
+	while (bread > 0)
+	{
+		bread = read(fd[0], buffer, 20);
+		temp = ft_calloc(ft_strlen((*new_heredocs)[*cur_heredocs]) + bread, sizeof(char));
+		if ((*new_heredocs)[*cur_heredocs])
+		{	
+			while(((*new_heredocs)[*cur_heredocs])[k])
+			{
+				temp[k] = ((*new_heredocs)[*cur_heredocs])[k];
+				k++;
+			}
+			while (x < bread)
+			{
+				temp[x + k] = ((*new_heredocs)[*cur_heredocs])[x + k];
+				x++;
+			}
+			temp2 = (*new_heredocs)[*cur_heredocs];
+			(*new_heredocs)[*cur_heredocs] = temp;
+			free(temp2);
+		}
+		
+	}
 	(*cur_heredocs)++;
-	free(str);
+	close(fd[0]);
+	close(fd[1]);
 	return (i);
 }
 
