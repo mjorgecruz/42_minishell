@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/27 11:29:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:23:09 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -16,6 +16,7 @@
 typedef struct s_localenv
 {
 	char	**content;
+	char	**sorted;
 }				t_localenv;
 
 typedef struct s_lstexpand
@@ -131,6 +132,7 @@ char	**copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char	**copy_environment_variables(char **environ);
 void	print_sorted_strings(t_localenv *local);
 void	put_quotes_expdr(char **arrstr);
+void	sort_strings(char **strings);
 
 /* ************************************************************************** */
 /*                             EXPORT_UTILS_SORT.c                            */

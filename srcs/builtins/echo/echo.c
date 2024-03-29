@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/28 10:14:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:01:17 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -26,12 +26,12 @@ bool	ft_find_n(char *str)
 			if (str[i] != 'n')
 				return (false);
 		}
-		return (true);
+		if(str[i - 1] == 'n')
+			return (true);
 	}
 	return (false);
 }
 
-// e se o expandido tive -n??
 int	command_echo(char **cmds, t_localenv *local)
 {
 	int		i;
@@ -49,7 +49,7 @@ int	command_echo(char **cmds, t_localenv *local)
 		exp_temp = cmds[i];
 		if (exp_temp)
 		{
-			printf("%s ", exp_temp);
+			ft_printf("%s ", exp_temp);
 			free(exp_temp);
 		}
 		i++;

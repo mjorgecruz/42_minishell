@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/19 11:19:12 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:15:45 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	**copy_environment(char **old_env, int num_vars)
 	return (new_env);
 }
 
+//needs to be 
 int	add_variable(const char *variable, t_localenv *local)
 {
 	int		num_vars;
@@ -93,6 +94,8 @@ int	add_variable(const char *variable, t_localenv *local)
 	local->content = new_env;
 	return (0);
 }
+
+//needs to be edited to update both sorted and normal one
 
 int	update_variable(const char *variable, t_localenv *local)
 {
@@ -127,12 +130,12 @@ int	command_export(char **cmds, t_localenv *local)
 	char	*variable;
 	char	*equal_sign;
 
-	if (cmds == NULL || local == NULL || local->content == NULL)
+	if (cmds == NULL || local == NULL || local->sorted == NULL)
 		return (-1);
 	if (cmds[1] == NULL)
 	{
 		print_sorted_strings(local);
-		return (-2);
+		return (0);
 	}
 	variable = cmds[1];
 	equal_sign = ft_strchr(variable, '=');

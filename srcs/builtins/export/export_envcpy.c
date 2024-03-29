@@ -6,11 +6,22 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/19 11:21:15 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:15:01 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+
+/*
+Creates a copy of the environment variables at the start
+should be used in a early scope. Returns a structure pointer 
+with the env variables in the format of an array of strings 
+and a sorted copy of the same to use in export.
+
+Keep in mind aditions and deletions should be 
+handled in both arrays for consistency
+*/
 
 t_localenv	*env_init(char **envirion)
 {
@@ -22,6 +33,8 @@ t_localenv	*env_init(char **envirion)
 		return (NULL);
 	}
 	new->content = copy_environment_variables(envirion);
+	new->sorted = copy_environment_variables(envirion);
+	sort_strings(new->sorted);
 	return (new);
 }
 
@@ -112,24 +125,5 @@ void	put_quotes_expdr(char **arrstr)
 
 void	print_sorted_strings(t_localenv *local)
 {
-	char	**temp_content;
-	char	**temp_content_start;
-
-	if (local == NULL || local->content == NULL)
-		return ;
-	temp_content = ft_strarrdup(local->content);
-	if (temp_content == NULL)
-		return ;
-	temp_content_start = temp_content;
-	sort_strings(temp_content);
-	//int	i = -1;
-	//while (temp_content[++i] != NULL)
-		//printf("declare -x %s\n", temp_content[i]);
-	put_quotes_expdr(temp_content);
-	while (*temp_content)
-	{
-		free(*temp_content);
-		temp_content++;
-	}
-	free(temp_content_start);
+	put_quotes_expdr(local->sorted);
 }

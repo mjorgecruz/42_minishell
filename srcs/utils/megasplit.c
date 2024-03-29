@@ -21,9 +21,9 @@ int quote_ignore(char *s, char c)
 int  all_quotes_ignore(char *s)
 {
     if (*s == '\"')
-        return (quote_ignore(s, D_QUOTE));
+        return (quote_ignore(s, D_QUOTE) + 1);
 	else if (*s == '\'')
-	    return (quote_ignore(s, S_QUOTE));
+	    return (quote_ignore(s, S_QUOTE) + 1);
     return (1);
 }
 

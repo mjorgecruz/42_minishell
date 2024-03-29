@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/29 11:55:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:49:30 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_string_array(char **strings)
 		return ;
 	i = -1;
 	while (strings[++i] != NULL)
-		printf("%s\n", strings[i]);
+		ft_printf("%s\n", strings[i]);
 }
 
 int	command_env(t_localenv *local)
