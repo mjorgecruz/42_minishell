@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 11:44:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:12:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -175,12 +175,26 @@ char	*clean_str(char *cmds)
 	char	*clean;
 	int		i;
 	int		j;
+	char	c;
 	
 	i = 0;
 	j = 0;
 	clean = ft_calloc(ft_strlen(cmds) + 1, sizeof(char));
 	while (cmds[i])
 	{
+		if  (cmds[i] == '\"' || cmds[i] == '\'')
+		{
+			c = cmds[i];
+			clean[j] = cmds[i];
+			i++;
+			j++;
+			while (cmds[i] != c)
+			{
+				clean[j] = cmds[i];
+				i++;
+				j++;
+			}
+		}
 		if (cmds[i] == '<' || cmds[i] == '>') 
 		{
 			while(cmds[i] == '<' || cmds[i] == '>')
@@ -188,11 +202,10 @@ char	*clean_str(char *cmds)
 			i = ignore_spaces(cmds, i);
 			while(cmds[i] && cmds[i] != ' ')
 		i++;
-	}
-	clean[j] = cmds[i];
+		}
+		clean[j] = cmds[i];
 		i++;
 		j++;
 	}
 	return (clean);
-
 }
