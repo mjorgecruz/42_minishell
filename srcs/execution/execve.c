@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 14:43:32 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/01 09:42:07 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -77,6 +77,7 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	int		fd[2];
 	int		stdin;
 	int		stdout;
+	int 	status;
 
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
@@ -88,10 +89,10 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	ft_printf("%s\n", (*info.heredocs)[info.pos_heredoc]);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
-	execve(cmds[0], cmds, local->content);
+	status = execve(cmds[0], cmds, local->content);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
-	return (0);
+	return (status);
 }
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 14:52:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/01 09:44:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -97,11 +97,11 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	char		**final_cmds;
 	t_cmd_info	cmd_info;
 	int			res;
-	//int			pid;
+	int			pid;
 	int			j;
 	
 	(void) local;
-	//pid = 0;
+	pid = 0;
 	j = 0;
 	cmd_info.fd_in_out[0] = 0;
 	cmd_info.fd_in_out[1] = 1;
@@ -123,13 +123,13 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	cmd_info.id = cmd_list->cmds[i].id;
 	if (cmd_info.id == UNDEFINED)
 	{
-		//pid = fork();
-		// if (pid == 0)
-		// {
+		pid = fork();
+		if (pid == 0)
+		{
 			res = solver(final_cmds, info, &cmd_info);
 			exit(res);
-		// }
-		// waitpid(pid, &res, 0);
+		}
+		waitpid(pid, &res, 0);
 	}
 	else	
 		res = solver(final_cmds, info, &cmd_info);
