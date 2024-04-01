@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 15:33:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:18:53 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ void	print_string_array(char **strings)
 		ft_printf("%s\n", strings[i]);
 }
 
+void	prtstr_arr_env(char **strings)
+{
+	int	i;
+
+	if (strings == NULL)
+		return ;
+	i = -1;
+	while (strings[++i] != NULL)
+	{
+		if (ft_strchr(strings[i], '='))
+			ft_printf("%s\n", strings[i]);
+		
+	}
+}
+
 int	command_env(t_localenv *local)
 {
 	if (local == NULL)
@@ -43,7 +58,7 @@ int	command_env(t_localenv *local)
 		perror("Invalid argument: local environment is NULL\n");
 		return (-1);
 	}
-	print_string_array(local->content);
+	prtstr_arr_env(local->content);   // modificar para nao imprimir variabeis sem igual ok
 	return (0);
 }
 
@@ -55,12 +70,15 @@ int	unset_variable(const char *variable, t_localenv *local)
 	if (index != -1)
 	{
 		free(local->content[index]);
+		free(local->sorted[index]);
 		while (local->content[index] != NULL)
 		{
 			local->content[index] = local->content[index + 1];
+			local->sorted[index] = local->sorted[index + 1];
 			index++;
 		}
 		local->content[index] = NULL;
+		local->sorted[index] = NULL;
 		return (0);
 	}
 	else

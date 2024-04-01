@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/29 15:07:49 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/01 11:26:38 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ int		command_echo(char **cmds, t_localenv *local);
 
 char	*extract_variable_name(const char *variable);
 char	**copy_environment(char **old_env, int num_vars);
-int		add_variable(const char *variable, t_localenv *local);
-int		update_variable(const char *variable, t_localenv *local);
 int		command_export(char **cmds, t_localenv *local);
+int	update_variable(const char *variable, t_localenv *local);
+int	add_variable(const char *variable, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                EXPORT_UTILS.c                              */
@@ -122,6 +122,8 @@ int		find_variable_index_recursive(const char *name, char **env, int index);
 int		find_variable_index(const char *variable, char **env);
 char	*ft_strncpy(char *dst, const char *src, size_t n);
 void	*ft_memalloc(size_t size);
+
+
 
 /* ************************************************************************** */
 /*                               EXPORT_ENVCPY.c                              */

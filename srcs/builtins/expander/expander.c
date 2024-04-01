@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/11 08:20:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:16:41 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 	return (expanded_str);
 }
 // codigo de erro???? pid? o que ??? linha 59 e outros codigos dos   $!?
+
+//$$ gets pid processo atual optional
+//$? exit status of current iteration
 
 char	*join_list_contents(t_lstexpand *head)
 {

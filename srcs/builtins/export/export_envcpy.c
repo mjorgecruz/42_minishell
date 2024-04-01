@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/29 15:17:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/01 11:52:01 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	put_quotes_expdr(char **arrstr)
 		j = 0;
 		equal = false;
 		ft_putstr_fd("declare -x ", 1);
-		while (arrstr[i][j] != '\0')
+		while (arrstr[i][j])
 		{
 			ft_putchar_fd(arrstr[i][j], 1);
 			if (arrstr[i][j] == '=' && !equal)
@@ -133,7 +133,8 @@ void	put_quotes_expdr(char **arrstr)
 			}
 			j++;
 		}
-		ft_putchar_fd('"', 1);
+		if (ft_strchr(arrstr[i], '='))
+			ft_putchar_fd('"', 1);
 		ft_putchar_fd('\n', 1);
 		i++;
 	}
