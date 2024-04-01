@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 14:12:43 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/01 08:46:01 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -121,7 +121,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
 		{
-			i++;
+			i+=2;
 			if (*fd > 1)
 				close(*fd);
 			if (file != NULL)
