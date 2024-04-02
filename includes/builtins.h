@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/01 11:26:38 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:43:09 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,7 @@ char	*ft_getenv(const char *name, char **envp);
 /* ************************************************************************** */
 
 void	command_exit(t_localenv *local);
+
+int	command_printenv(char **cmds, t_localenv *local);
 
 #endif

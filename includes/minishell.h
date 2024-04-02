@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/29 12:07:31 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:30:21 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_builtin
 	EXPORT,
 	UNSET,
 	EXIT,
+	PRINTENV,
 }	t_builtin;
 
 /*Define special characters that separate strings*/

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 12:05:35 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:31:05 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,9 @@ t_builtin	get_builtin_id(const char *str)
 	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "\"pwd\"")
 		|| !ft_strcmp(str, "\'pwd\'"))
 		return (PWD);
+	if (!ft_strcmp(str, "printenv") || !ft_strcmp(str, "\"printenv\"")
+		|| !ft_strcmp(str, "\'printenv\'"))
+		return (PRINTENV);
 	return (UNDEFINED);
 }
 
@@ -181,6 +184,8 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 		return (command_env(local));
 	else if (id == UNSET)
 		return (command_unset(cmds, local));
+	else if (id == PRINTENV)
+		return (command_printenv(cmds, local));
 	// // else if (id == EXIT)
 	// // {
 	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
