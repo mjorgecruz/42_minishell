@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/29 12:04:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:03:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -36,6 +36,7 @@
 
 # include "parser.h"
 # include "builtins.h"
+# include "wildcards.h"
 
 #define S_QUOTE 39
 #define D_QUOTE 34

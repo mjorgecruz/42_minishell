@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/03/28 11:45:05 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/01 14:09:18 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -61,6 +61,9 @@ SRC := minishell.c \
 		builtins/exit/exit_command.c \
 		builtins/cd/cd_command.c \
 		builtins/cd/cd_utils.c \
+		wildcards/wildcards.c \
+		wildcards/wildcards_utils.c \
+		
 
 
 LIBRARY = 

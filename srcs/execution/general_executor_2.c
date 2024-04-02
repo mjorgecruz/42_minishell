@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/26 15:44:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:44:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -60,6 +60,8 @@ void	fill_cmds(t_token *cmd_list, int pipes)
 		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
 			&& (cmd_list->content[pos] == ' '))
 			pos++;
+		if (wildcard_checker(cmd_list->cmds[i].cmds))
+			cmd_list->cmds[i].cmds = wildcardings(cmd_list->cmds[i].cmds);
 		i++;
 	}
 	cmd_list->cmds[i].cmds = NULL;
