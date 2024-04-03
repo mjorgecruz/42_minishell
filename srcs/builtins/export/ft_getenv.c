@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:28 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/02 16:56:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:40:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ char	*ft_getenv(const char *name, char **envp)
 	return (NULL);
 }
 
-
-
-
-//necessita alteracao para so imprimir o que esta depois do igual e nao o nome da propria variavel
-
+////////////////////////////////////////////////////////////////////////////
+//                                                                        //
+//                             PRINTENV                                   //
+//                                                                        //
+////////////////////////////////////////////////////////////////////////////
+                                                                      
 int index_locator(char *var, t_localenv *local)
 {
     int ret;
@@ -48,12 +49,12 @@ int index_locator(char *var, t_localenv *local)
 
 int	command_printenv(char **cmds, t_localenv *local)
 {
-	int i;
+	int	i;
 	int index;
 
 	i = 1;
 	if (cmds == NULL || local == NULL || local->content == NULL)
-		return (ft_printf("Error: Invalid command or local environment.\n") - 100);
+		return (EXIT_FAILURE);
 	if (cmds[i] == NULL)
 		return (command_env(local));
 	if (cmds[i])
@@ -62,13 +63,13 @@ int	command_printenv(char **cmds, t_localenv *local)
 		{
 			index = index_locator(cmds[i], local);
 			if	(index < 0)
-				return (-1);
+				return (EXIT_FAILURE);
 			else
 				ft_printf("%s\n", local->content[index] + ft_strlen(cmds[i]) + 1);
 			i++;
 		}
+		if (i > 1)
+			return (EXIT_SUCCESS);
 	}
-	else
-		return (ft_printf("Variable '%s' not found.\n", cmds[1]) - 100);
-	return (2);
+	return (EXIT_FAILURE);
 }

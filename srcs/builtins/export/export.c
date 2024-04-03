@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/01 16:23:23 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:54:18 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,26 @@ int	add_variable(const char *variable, t_localenv *local)
 	char	**new_env;
 
 	if (!local)
-		return (-1);
+		return (EXIT_FAILURE);
 	num_vars = 0;
 	while (local->sorted[num_vars] != NULL)
 		num_vars++;
 	new_env = copy_environment(local->sorted, num_vars);
 	if (!new_env)
-		return (-1);
+		return (EXIT_FAILURE);
 	new_env[num_vars] = ft_strdup(variable);
 	if (!new_env[num_vars])
 	{
 		while (num_vars > 0)
 			free(new_env[--num_vars]);
 		free(new_env);
-		return (-1);
+		return (EXIT_FAILURE);
 	}
 	num_vars = -1;
 	while (local->sorted[++num_vars])
 		free(local->sorted[num_vars]);
 	local->sorted = new_env;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	update_variable(const char *variable, t_localenv *local)
@@ -105,26 +105,50 @@ int	update_variable(const char *variable, t_localenv *local)
 	int		index;
 
 	if (!local || !local->sorted)
-		return (-1);
+		return (EXIT_FAILURE);
 	index = find_variable_index(variable, local->sorted);
 	if (index != -1)
 	{
 		variable_copy = ft_strdup(variable);
 		if (!variable_copy)
-			return (-1);
+			return (EXIT_FAILURE);
 		equal_sign = ft_strchr(variable_copy, '=');
 		if (!equal_sign)
 		{
 			free(variable_copy);
-			return (-1);
+			return (EXIT_SUCCESS);
 		}
 		free(local->sorted[index]);
 		local->sorted[index] = variable_copy;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
 		return (add_variable(variable, local));
 }
+
+
+// export: `$': not a valid identifier  todos os simbolos que nao forem os aceites tem de dar codigo 1 e imprimir
+//export: `$': not a valid identifier
+
+/*
+TO DO:
+
+EXPORT:
+	Reduzir para 25 linhas
+	erros em todas as mensagens para STDERR_FILENO
+	criar function
+	dont allow invalid chars
+	
+SIGNALS: to do;
+
+CD: redo;
+
+PWD: verificar 
+
+ECHO: verificar
+
+EXIT: todo;
+*/
 
 int command_export(char **cmds, t_localenv *local)
 {
@@ -132,39 +156,31 @@ int command_export(char **cmds, t_localenv *local)
 	char *equal_sign;
     int i;
 
-	i = 1;
-    if (cmds == NULL || local == NULL || (local->content == NULL && local->sorted))
-    {
-        ft_printf("Error: Invalid command or local environment.\n");
-        return (-1);
-    }
+	i = 0;
     if (cmds[1] == NULL)
     {
         print_sorted_strings(local->sorted);
-        return (0);
+        return (EXIT_SUCCESS);
     }
-    while (cmds[i] != NULL)
+    while (cmds[++i] != NULL)
     {
         variable = cmds[i];
         equal_sign = ft_strchr(variable, '=');
-        if (equal_sign == variable)
+        if (equal_sign == variable)               // alterar para uma function que deteta invalid cases
         {
-            ft_printf("Error: Invalid variable format: %s\n", variable);
-            return (-1);
+            ft_printf("export: `%s': not a valid identifier\n", variable);
+            return (EXIT_FAILURE);
         }
         if (find_variable_index(variable, local->sorted) == -1)
 		{	
-			if ( add_variable(variable, local) != 0 || add_var_cont(variable, local) != 0)
-				return(-1);
+			if (add_variable(variable, local) || add_var_cont(variable, local))
+				return(EXIT_FAILURE );
 		}
-        if (update_variable(variable, local) != 0 || update_var_cont(variable, local) != 0)
-            return (0);
-        i++;
+        if (update_variable(variable, local) || update_var_cont(variable, local))
+            return (EXIT_FAILURE);
     }
-    return (0);
+    return (EXIT_SUCCESS);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////export env
 
 int	add_var_cont(const char *variable, t_localenv *local)
 {
@@ -172,26 +188,26 @@ int	add_var_cont(const char *variable, t_localenv *local)
 	char	**new_env;
 
 	if (!local)
-		return (-1);
+		return (EXIT_FAILURE);
 	num_vars = 0;
 	while (local->content[num_vars] != NULL)
 		num_vars++;
 	new_env = copy_environment(local->content, num_vars);
 	if (!new_env)
-		return (-1);
+		return (EXIT_FAILURE);
 	new_env[num_vars] = ft_strdup(variable);
 	if (!new_env[num_vars])
 	{
 		while (num_vars > 0)
 			free(new_env[--num_vars]);
 		free(new_env);
-		return (-1);
+		return (EXIT_FAILURE);
 	}
 	num_vars = -1;
 	while (local->content[++num_vars])
 		free(local->content[num_vars]);
 	local->content = new_env;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	update_var_cont(const char *variable, t_localenv *local)
@@ -200,23 +216,21 @@ int	update_var_cont(const char *variable, t_localenv *local)
 	char	*variable_copy;
 	int		index;
 
-	if (!local || !local->content)
-		return (-1);
 	index = find_variable_index(variable, local->content);
 	if (index != -1)
 	{
 		variable_copy = ft_strdup(variable);
 		if (!variable_copy)
-			return (-1);
+			return (EXIT_FAILURE);
 		equal_sign = ft_strchr(variable_copy, '=');
 		if (!equal_sign)
 		{
 			free(variable_copy);
-			return (-1);
+			return (EXIT_SUCCESS);
 		}
 		free(local->content[index]);
 		local->content[index] = variable_copy;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
 		return (add_var_cont(variable, local));

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/01 16:18:53 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:40:17 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	prtstr_arr_env(char **strings)
 	{
 		if (ft_strchr(strings[i], '='))
 			ft_printf("%s\n", strings[i]);
-		
 	}
 }
 
@@ -55,11 +54,11 @@ int	command_env(t_localenv *local)
 {
 	if (local == NULL)
 	{
-		perror("Invalid argument: local environment is NULL\n");
-		return (-1);
+		ft_printf("local environment is NULL\n");
+		return (EXIT_FAILURE);
 	}
-	prtstr_arr_env(local->content);   // modificar para nao imprimir variabeis sem igual ok
-	return (0);
+	prtstr_arr_env(local->content);
+	return (EXIT_SUCCESS);
 }
 
 int	unset_variable(const char *variable, t_localenv *local)
@@ -79,32 +78,23 @@ int	unset_variable(const char *variable, t_localenv *local)
 		}
 		local->content[index] = NULL;
 		local->sorted[index] = NULL;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
-		return (-1);
+		return (EXIT_FAILURE);
 }
 
 int	command_unset(char **cmds, t_localenv *local)
 {
 	if (cmds == NULL || local == NULL || local->content == NULL)
 	{
-		printf("Error: Invalid command or local environment.\n");
-		return (-1);
+		ft_printf("Invalid command or local environment.\n");
+		return (EXIT_FAILURE);
 	}
 	if (cmds[1] == NULL)
-	{
-		printf("Error: No variable specified for unset.\n");
-		return (-1);
-	}
+		return (EXIT_SUCCESS);
 	if (unset_variable(cmds[1], local) == 0)
-	{
-		printf("Variable '%s' unset.\n", cmds[1]);
-		return (0);
-	}
+		return (EXIT_SUCCESS);
 	else
-	{
-		printf("Variable '%s' not found.\n", cmds[1]);
-		return (-1);
-	}
+		return (EXIT_FAILURE);
 }
