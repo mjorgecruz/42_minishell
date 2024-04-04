@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 13:44:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:56:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,6 +19,7 @@ char    *wildcardings(char *str)
 	struct dirent	*dp;
 	char			**wild;
 	int				i;
+	char			*final;
 
 	i = 0;
 	new = (char **) malloc (sizeof(char *) * (wildcards_counter(str) + 1));
@@ -49,32 +50,44 @@ char    *wildcardings(char *str)
     	closedir(dirp);
 		i++;
 	}
-	return (wild_rewriter(&str, new));
+	final = wild_rewriter(str, new, wild);
+	free_split(new);
+	free_split(wild);
+	free(str);
+	return (final);
 }
 
-char	*wild_rewriter(char *str, char **wild)
+char	*wild_rewriter(char *str, char **new, char **wild)
 {
-	char	*new;
+	char	*final;
 	int		count;
 	int		i;
 	int		j;
+	int		k;
 	
 	i = 0;
 	j = 0;
 	count = ft_strlen(str);
-	while (wild[i])
+	while (new[i])
 	{
-		count +=  ft_strlen(wild[i]) + 1;
+		count +=  ft_strlen(new[i]) + 1;
 		i++;
 	}
-	count ++;
-	new = ft_calloc(count, sizeof(char));
-	while (wild[j])
+	count++;
+	k = 0;
+	final = ft_calloc(count, sizeof(char));
+	while (new[j] || str[i])
 	{
-		
-		j++;
+		if (mega_wildcmp(wild[i], str, j))
+		{
+			k = ft_strlcat(final, &str[i], count);	
+			j++;
+		}
+		else
+			final[k] = str[i]; 
+		i++;
 	}
-	return(NULL);
+	return(final);
 }
 
 void	add_wildcard(char **wild, char *origin)
