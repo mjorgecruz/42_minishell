@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:04:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/03 14:18:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:57:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,13 +25,15 @@ typedef enum    e_wildtype
 }   t_wildtype;
 
 char    *wildcardings(char *str);
-char	*wild_rewriter(char *str,char **wild);
+char	*wild_rewriter(char *str,char **new, char **wild);
+void	add_wildcard(char **wild, char *origin);
 
 /* ************************************************************************** */
 /*                        WILDCARDS_UTILS                                     */
 /* ************************************************************************** */
 int     wildcard_checker(char *str);
 int		wildcards_counter(char *str);
+int		order_cmp(char *letters, char *str);
 
 /* ************************************************************************** */
 /*                        WILDCARDS_UTILS2                                    */
@@ -47,5 +49,17 @@ char	*add_middle_wildcard(char *str, int *i);
 /* ************************************************************************** */
 
 int		mega_strncmp(char *str, char *comp);
+
+/* ************************************************************************** */
+/*                        WILDCARDS_UTILS4                                    */
+/* ************************************************************************** */
+
+int	wfront(char *str, char *comp);
+int	wback(char *str, char *comp);
+int	wmiddle(char *str, char *comp);
+int	wedges(char *str, char *comp);
+int	wmega_back(char *str, char *comp);
+int	wmega(char *str, char *comp);
+int	mega_wildcmp(char *wildcard, char *comp, int start);
 
 #endif

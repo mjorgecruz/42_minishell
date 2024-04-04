@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:08:39 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/02 16:35:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 09:12:50 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -46,4 +46,27 @@ int		wildcards_counter(char *str)
 		i++;
 	}
 	return (counter);
+}
+
+int		order_cmp(char *letters, char *str)
+{
+	int		i;
+	int 	j;
+
+	i = 0;
+	j = 0;
+
+	while (str[i] && letters[j])
+	{
+		if (str[i] == letters[j])
+		{
+			i++;
+			j++;
+		}
+		else
+			i++;
+	}
+	if (!letters[j])
+		return (1);
+	return (0);
 }

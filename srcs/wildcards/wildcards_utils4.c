@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/03 16:39:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:48:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -141,16 +141,46 @@ int	wmega_back(char *str, char *comp)
 		}
 		i++;
 	}
-	//order compare
-	
+	i = 0;
+	while (str[i] != '*')
+		i++;
+	res += order_cmp(wildcard, &comp[i]);
+	if (res < 2)
+		return (free(wildcard), free(letter), 0);
+	return(free(wildcard), free(letter), 1);
 }
 
 int	wmega(char *str, char *comp)
 {
-	
+	int		res;
+	int		i;
+	char	*wildcard;
+	char	*prev;
+	char	*letter;
+
+	i = 0;
+	res = 0;
+	wildcard = NULL;
+	letter = ft_calloc(2, sizeof(char));
+	if (res == 0)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] != '*')
+		{
+			prev = wildcard;
+			letter[0] = str[i];
+			wildcard = ft_strjoin(prev, letter);
+			if (prev != NULL)
+				free(prev);
+		}
+		i++;
+	}
+	res = order_cmp(wildcard, comp);
+	return (res);
 }
 
-int		mega_wildcmp(char *wildcard, char *comp, int start)
+int	mega_wildcmp(char *wildcard, char *comp, int start)
 {
 	int		i;
 

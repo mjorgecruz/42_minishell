@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/01 09:36:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:37:16 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,6 +17,7 @@ int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 	int		res;
 	int		fd;
 	
+	res = 0;
 	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
 	{
 		fd = dup(STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 16:09:32 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:36:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -104,6 +104,7 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, in
 	int		k;
 	int		x;
 	
+	bread = 0;
 	k = 0;
 	x = 0;
 	i = ignore_spaces(line_read, i + 1);
