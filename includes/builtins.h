@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/02 16:43:09 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:32:26 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	*ft_memalloc(size_t size);
 t_localenv	*env_init(char **envirion);
 char	**copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char	**copy_environment_variables(char **environ);
-void	print_sorted_strings(char **sorted);
+int		print_sorted_strings(char **sorted);
 void	put_quotes_expdr(char **arrstr);
 void	sort_strings(char **strings);
 
@@ -158,5 +158,7 @@ char	*ft_getenv(const char *name, char **envp);
 void	command_exit(t_localenv *local);
 
 int	command_printenv(char **cmds, t_localenv *local);
+int builtin_errors(char *str1, char *str2, char *str3);
+
 
 #endif

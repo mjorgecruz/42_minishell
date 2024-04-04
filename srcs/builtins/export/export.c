@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/03 14:54:18 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:33:37 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,14 +141,38 @@ EXPORT:
 	
 SIGNALS: to do;
 
-CD: redo;
+CD: check working with ~ and others
 
-PWD: verificar 
+PWD: check 
 
-ECHO: verificar
+ECHO: verificar $? $_
 
 EXIT: todo;
 */
+
+bool isvar_valid(const char *name)
+{
+    if (name == NULL || ft_isdigit(*name))
+        return false;
+    while (*name)
+    {
+        if (!ft_isalnum(*name) && *name != '_')
+            return false;
+        name++;
+    }
+    return true;
+}
+
+bool variable_name_check(const char *var)
+{
+	char *name;
+	bool ret;
+	
+	name = extract_variable_name(var);
+	ret = isvar_valid(name);
+	free(name);
+	return (ret);
+}
 
 int command_export(char **cmds, t_localenv *local)
 {
@@ -158,17 +182,14 @@ int command_export(char **cmds, t_localenv *local)
 
 	i = 0;
     if (cmds[1] == NULL)
-    {
-        print_sorted_strings(local->sorted);
-        return (EXIT_SUCCESS);
-    }
+        return (print_sorted_strings(local->sorted));
     while (cmds[++i] != NULL)
     {
         variable = cmds[i];
-        equal_sign = ft_strchr(variable, '=');
-        if (equal_sign == variable)               // alterar para uma function que deteta invalid cases
+        equal_sign = ft_strchr(variable, '=');  // aqui
+        if (equal_sign == variable || !variable_name_check(variable)) // adicionar function that checks if it is a valid variable
         {
-            ft_printf("export: `%s': not a valid identifier\n", variable);
+			builtin_errors("export: `", variable, "': not a valid identifier\n");
             return (EXIT_FAILURE);
         }
         if (find_variable_index(variable, local->sorted) == -1)

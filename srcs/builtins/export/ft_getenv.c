@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:28 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/03 13:40:16 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:57:08 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,6 @@ int	command_printenv(char **cmds, t_localenv *local)
 	}
 	return (EXIT_FAILURE);
 }
+
+//necessario dar update da env _
+

@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/28 11:19:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:14:56 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -17,6 +17,7 @@ int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 	int		res;
 	int		fd;
 	
+	res = 1; //aded this shit this was not initialized check it
 	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
 	{
 		fd = dup(STDIN_FILENO);

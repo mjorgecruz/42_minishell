@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/03 14:40:17 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:39:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ void	prtstr_arr_env(char **strings)
 int	command_env(t_localenv *local)
 {
 	if (local == NULL)
-	{
-		ft_printf("local environment is NULL\n");
-		return (EXIT_FAILURE);
-	}
+		return (builtin_errors("local environment is NULL", "\n", ""));
 	prtstr_arr_env(local->content);
 	return (EXIT_SUCCESS);
 }
@@ -87,14 +84,19 @@ int	unset_variable(const char *variable, t_localenv *local)
 int	command_unset(char **cmds, t_localenv *local)
 {
 	if (cmds == NULL || local == NULL || local->content == NULL)
-	{
-		ft_printf("Invalid command or local environment.\n");
-		return (EXIT_FAILURE);
-	}
+		return (builtin_errors("Invalid command or local environment.", "\n", ""));
 	if (cmds[1] == NULL)
 		return (EXIT_SUCCESS);
 	if (unset_variable(cmds[1], local) == 0)
 		return (EXIT_SUCCESS);
 	else
 		return (EXIT_FAILURE);
+}
+
+int builtin_errors(char *str1, char *str2, char *str3)
+{
+		ft_putstr_fd(str1, STDERR_FILENO);
+		ft_putstr_fd(str2, STDERR_FILENO);
+		ft_putstr_fd(str3, STDERR_FILENO);
+	return(1);
 }

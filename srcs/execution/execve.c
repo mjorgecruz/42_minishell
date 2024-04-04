@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/28 11:24:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:16:15 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -104,6 +104,7 @@ int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 	int 	status;
 
 	(void) info;
+	bread = 1; // also added this shit check it
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	pipe(fd);

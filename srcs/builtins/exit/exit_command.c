@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:04:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:56:47 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,13 @@ on my side only the t_local env has to be cleared
     }
 	free(local_env);
 
+
+
+
+errors: 
+
+
+too many arguments
+numeric argument requiered
 
 */

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/01 11:52:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:19:09 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ void	put_quotes_expdr(char **arrstr)
 /*
 Just prints the array of strings no needed but 
 */
-void	print_sorted_strings(char **sorted)
+int	print_sorted_strings(char **sorted)
 {
 	put_quotes_expdr(sorted);
+	return (EXIT_SUCCESS);
 }
