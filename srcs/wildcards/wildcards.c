@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 17:56:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:57:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -44,7 +44,8 @@ char    *wildcardings(char *str)
                 add_wildcard(&new[i], dp->d_name);
 			dp = readdir(dirp);
     	}
-		ft_printf("%s \n", new[i]);
+		if (new[i] != NULL)
+			ft_printf("%s \n", new[i]);
     	if (errno != 0)
         	perror("Error reading directory");
     	closedir(dirp);
@@ -75,17 +76,27 @@ char	*wild_rewriter(char *str, char **new, char **wild)
 	}
 	count++;
 	k = 0;
+	i = 0;
 	final = ft_calloc(count, sizeof(char));
-	while (new[j] || str[i])
+	while (new[i] || str[j])
 	{
 		if (mega_wildcmp(wild[i], str, j))
 		{
-			k = ft_strlcat(final, &str[i], count);	
-			j++;
+			if (new[i] != NULL)
+			{
+				k = ft_strlcat(final, new[i], count);
+				j++;
+			}	
+			else
+				j += (ft_strlen(wild[i]));	
+			i++;
 		}
 		else
-			final[k] = str[i]; 
-		i++;
+		{
+			final[k] = str[j]; 
+			k++;
+			j++;
+		}
 	}
 	return(final);
 }
