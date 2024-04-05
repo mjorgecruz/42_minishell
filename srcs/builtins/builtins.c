@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 18:58:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:12:50 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	command_unset(char **cmds, t_localenv *local)
 
 int builtin_errors(char *str1, char *str2, char *str3)
 {
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str1, STDERR_FILENO);
 		ft_putstr_fd(str2, STDERR_FILENO);
 		ft_putstr_fd(str3, STDERR_FILENO);

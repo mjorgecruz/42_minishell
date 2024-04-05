@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 11:35:05 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:02:58 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char *expand_tilde(char *dir, t_localenv *local)
     return (ft_strdup(dir));
 }
 
-int command_cd(char **cmds, t_localenv *local)
+int command_cd(char **cmds, t_localenv *local, int err)
 {
     char *target_dir;
     char cwd[PATH_MAX];
@@ -103,7 +103,7 @@ int command_cd(char **cmds, t_localenv *local)
         target_dir = expand_tilde(cmds[1], local);
     if (!target_dir)
         return EXIT_FAILURE;
-    int err = change_directory(target_dir);
+    err = change_directory(target_dir);
     if (err == 13)
         return builtin_errors("cd: ", "", ": Permission denied\n");
     if (err == 2)

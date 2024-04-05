@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/02 16:31:05 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:00:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	// // 	return ;
 	// // }
 	else if (id == CD)
-		return (command_cd(cmds, local));
+		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
 	free(local);

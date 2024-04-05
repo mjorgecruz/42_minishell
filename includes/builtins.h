@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/04 18:55:42 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:59:48 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		change_directory(const char *path);
 char	*get_home_directory(t_localenv *local);
 char	*get_previous_directory(t_localenv *local);
 int		update_directories(t_localenv *local, char *cwd);
-int		command_cd(char **cmds, t_localenv *local);
+int		command_cd(char **cmds, t_localenv *local, int err);
 
 /* ************************************************************************** */
 /*                                  CD_UTILS.C                                */
