@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 10:37:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:18:31 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -168,6 +168,7 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 	trav = master_expander_out(clean, local);
 	final_cmds = ft_split_ignore_quotes(trav, " ");
 	free(clean);
+	free(trav);
 	return (final_cmds);
 }
 

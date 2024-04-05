@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/03 11:58:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:58:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -38,6 +38,7 @@ char	**wild_splitter(char *str)
 		}
 		i++;
 	}
+	wild[j] = NULL;
 	return (wild);
 }
 
@@ -46,7 +47,7 @@ char	*add_simple_wildcard(char *str, int *i)
 	char	*wildcard;
 
 	(void) str;
-	wildcard = (char *) malloc(sizeof(char) * (1 + 1));
+	wildcard = ft_calloc(1 + 1, sizeof(char));
 	wildcard[0] = '*';
 	(*i)++;
 	wildcard[*i] = '\0';

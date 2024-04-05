@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 19:57:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:56:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -51,6 +51,7 @@ char    *wildcardings(char *str)
     	closedir(dirp);
 		i++;
 	}
+	new[i] = NULL;
 	final = wild_rewriter(str, new, wild);
 	free_split(new);
 	free_split(wild);
@@ -80,15 +81,13 @@ char	*wild_rewriter(char *str, char **new, char **wild)
 	final = ft_calloc(count, sizeof(char));
 	while (new[i] || str[j])
 	{
-		if (mega_wildcmp(wild[i], str, j))
+		if (wild[i] && mega_wildcmp(wild[i], str, j))
 		{
 			if (new[i] != NULL)
 			{
 				k = ft_strlcat(final, new[i], count);
-				j++;
+				j += (ft_strlen(wild[i]));
 			}	
-			else
-				j += (ft_strlen(wild[i]));	
 			i++;
 		}
 		else

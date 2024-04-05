@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 11:48:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:01:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -89,7 +89,9 @@ int	wmiddle(char *str, char *comp)
 	while (comp[i])
 	{
 		res = mega_wildcmp(wildcard, comp, i);
-		i++;	
+		i++;
+		if (res > 0)
+			break;
 	}
 	free(wildcard);
 	return (res);
