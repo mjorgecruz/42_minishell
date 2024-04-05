@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 15:39:16 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:58:01 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,35 +62,65 @@ int	unset_variable(const char *variable, t_localenv *local)
 {
 	int	index;
 
-	index = find_variable_index(variable, local->content);
+	index = find_variable_index_recursive(variable, local->sorted, 0);
+	if (index != -1)
+	{
+		free(local->sorted[index]);
+		if (index != 0)
+		{
+			while (local->sorted[index] != NULL)
+			{
+				local->sorted[index] = local->sorted[index + 1];
+				index++;
+			}
+		}
+		local->sorted[index] = NULL;
+	}
+	return (0);
+}
+
+int	unset_variable2(const char *variable, t_localenv *local)
+{
+	int	index;
+
+	index = find_variable_index_recursive(variable, local->content, 0);
 	if (index != -1)
 	{
 		free(local->content[index]);
-		free(local->sorted[index]);
-		while (local->content[index] != NULL)
+		if (index != 0)
 		{
-			local->content[index] = local->content[index + 1];
-			local->sorted[index] = local->sorted[index + 1];
-			index++;
+			while (local->content[index] != NULL)
+			{
+				local->content[index] = local->content[index + 1];
+				index++;
+			}
 		}
 		local->content[index] = NULL;
-		local->sorted[index] = NULL;
-		return (EXIT_SUCCESS);
 	}
-	else
-		return (EXIT_FAILURE);
+	return (0);
 }
 
 int	command_unset(char **cmds, t_localenv *local)
 {
+	int i;
 	if (cmds == NULL || local == NULL || local->content == NULL)
 		return (builtin_errors("Invalid command or local environment.", "\n", ""));
 	if (cmds[1] == NULL)
 		return (EXIT_SUCCESS);
-	if (unset_variable(cmds[1], local) == 0)
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
+	
+	if (!isvar_valid(cmds[1]))
+		return (EXIT_FAILURE + 1);
+
+	i = 1;
+	while (cmds[i] != NULL)
+	{
+		if (unset_variable(cmds[i], local) != 0)
+			return (EXIT_FAILURE);
+		if (unset_variable2(cmds[i], local) != 0)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (0);
 }
 
 int builtin_errors(char *str1, char *str2, char *str3)

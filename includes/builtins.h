@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/04 15:32:26 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:55:42 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,17 @@ char	*ft_getenv(const char *name, char **envp);
 
 void	command_exit(t_localenv *local);
 
+
+
+
+
+
+
+
+
+
 int	command_printenv(char **cmds, t_localenv *local);
 int builtin_errors(char *str1, char *str2, char *str3);
-
+bool isvar_valid(const char *name);
 
 #endif
