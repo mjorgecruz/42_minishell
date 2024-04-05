@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:56:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 10:26:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:03:06 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -33,9 +33,7 @@ int		mega_strncmp(char *str, char *comp)
 		return(wmiddle(str, comp));
     else if (wild_type == WILD_EDGES)
         return(wedges(str, comp));
-    else if (wild_type == WILD_MEGA_BACK)
-        return(wmega_back(str, comp));
-    else if (wild_type == MEGA_WILD)
+    else if (wild_type == MEGA_WILD || wild_type == WILD_MEGA_BACK)
         return(wmega(str, comp));
 	else
 		return(0);	

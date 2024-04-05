@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 10:01:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:59:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -164,22 +164,34 @@ int	wmega(char *str, char *comp)
 	res = 0;
 	wildcard = NULL;
 	letter = ft_calloc(2, sizeof(char));
-	if (res == 0)
-		return (0);
-	while (str[i])
+	while (str[i] == '*')
+		i++;
+	wildcard = ft_strdup("*");
+	while(str[i])
 	{
-		if (str[i] != '*')
+		while(str[i] && str[i] != '*')
 		{
 			prev = wildcard;
 			letter[0] = str[i];
 			wildcard = ft_strjoin(prev, letter);
-			if (prev != NULL)
-				free(prev);
+			free(prev);
+			i++;
 		}
-		i++;
+		if (str[i] == '*')
+		{
+			prev = wildcard;
+			letter[0] = str[i];
+			wildcard = ft_strjoin(prev, letter);
+			free(prev);
+			i++;
+		}
+		res = order_cmp(wildcard, &comp[res]);
+		if (res == 0)
+			return (free(wildcard), free(letter), res);
+		free(wildcard);
+		wildcard = ft_strdup("*");
 	}
-	res = order_cmp(wildcard, comp);
-	return (res);
+	return (free(wildcard), free(letter), res);
 }
 
 int	mega_wildcmp(char *wildcard, char *comp, int start)
@@ -192,7 +204,7 @@ int	mega_wildcmp(char *wildcard, char *comp, int start)
 	while (wildcard[i] && wildcard[i] == comp[i + start])
 		i++;
 	if (!wildcard[i])
-		return (1);
+		return (i + start);
 	else
 		return (0);
 }

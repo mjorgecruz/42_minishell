@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:08:39 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 09:12:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:59:01 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -48,25 +48,21 @@ int		wildcards_counter(char *str)
 	return (counter);
 }
 
-int		order_cmp(char *letters, char *str)
+int		order_cmp(char *wildcard, char *str)
 {
-	int		i;
-	int 	j;
-
-	i = 0;
-	j = 0;
-
-	while (str[i] && letters[j])
+	int		res;
+	
+	res = 0;
+	if (wildcard[0] == '*')
 	{
-		if (str[i] == letters[j])
-		{
-			i++;
-			j++;
-		}
+		if (wildcard[ft_strlen(wildcard) - 1] == '*')
+			res = wmiddle(wildcard, &str[res]);
 		else
-			i++;
+			res = wfront(wildcard, &str[res]);
 	}
-	if (!letters[j])
-		return (1);
-	return (0);
+	else
+	{
+		res = wback(wildcard, &str[res]);
+	}
+	return (res);
 }
