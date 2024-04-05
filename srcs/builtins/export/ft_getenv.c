@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:28 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/04 15:57:08 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:25:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_getenv(const char *name, char **envp)
 	{
 		if (ft_strncmp(name, *env_var, len) == 0 && (*env_var)[len] == '=')
 		{
-			return (*env_var + len + 1);
+			return (ft_strdup(*env_var + len + 1));
 		}
 		env_var++;
 	}
