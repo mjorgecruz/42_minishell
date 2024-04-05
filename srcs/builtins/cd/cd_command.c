@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 12:02:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:48:19 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	change_directory(const char *path)
 {
 	int error;
-	
+
 	if (chdir(path) == -1)
 	{
 		error = errno;
@@ -56,7 +56,7 @@ int	update_directories(t_localenv *local, char *cwd)
 char *space_saver_tilde(char *home_dir, char *dir)
 {
 	char *expanded_dir;
-	
+
 	expanded_dir = ft_strjoin(home_dir, dir + 1);
 	free(home_dir);
 	return(expanded_dir);
@@ -67,11 +67,11 @@ char *expand_tilde(char *dir, t_localenv *local)
 	char *home_dir;
 	char *expanded_dir;
 
-    if (dir[0] == '~')
+	if (dir[0] == '~')
 	{
-        home_dir = get_home_directory(local);
+		home_dir = get_home_directory(local);
 		if (!home_dir)
-            return (NULL);
+			return (NULL);
 		if (!dir[1])
 			return (home_dir);
 		if (dir[1] == '/')
@@ -83,36 +83,36 @@ char *expand_tilde(char *dir, t_localenv *local)
 		}
 		else
 			expanded_dir = space_saver_tilde(home_dir, dir);
-        return (expanded_dir);
-    }
-    return (ft_strdup(dir));
+		return (expanded_dir);
+	}
+	return (ft_strdup(dir));
 }
 
 int command_cd(char **cmds, t_localenv *local, int err)
 {
-    char *target_dir;
-    char cwd[PATH_MAX];
-    
-	if (cmds[2] != NULL)
-        return (builtin_errors("cd: too many arguments", "", ""));
-    if (cmds[1] == NULL || cmds[1][0] == '\0')
-        target_dir = get_home_directory(local);
-    else if (strcmp(cmds[1], "-") == 0)
-        target_dir = get_previous_directory(local);
-    else
-        target_dir = expand_tilde(cmds[1], local);
-    if (!target_dir)
-        return EXIT_FAILURE;
-    err = change_directory(target_dir);
-    if (err == 13)
-        return builtin_errors("cd: ", "", ": Permission denied\n");
-    if (err == 2)
-        return builtin_errors("cd: ", cmds[1], ": no such file or directory\n");
-    if (!getcwd(cwd, sizeof(cwd)))
-        return EXIT_FAILURE;
-    if (update_directories(local, cwd) == -1)
-        return EXIT_FAILURE;
-    if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
-        free(target_dir);
-    return EXIT_SUCCESS;
+	char *target_dir;
+	char cwd[PATH_MAX];
+
+	if (cmds[1] && cmds[2])
+		return (builtin_errors("cd: too many arguments", "\n", ""));
+	if (cmds[1] == NULL || cmds[1][0] == '\0')
+		target_dir = get_home_directory(local);
+	else if (strcmp(cmds[1], "-") == 0)
+		target_dir = get_previous_directory(local);
+	else
+		target_dir = expand_tilde(cmds[1], local);
+	if (!target_dir)
+		return EXIT_FAILURE;
+	err = change_directory(target_dir);
+	if (err == 13)
+		return builtin_errors("cd: ", "", ": Permission denied\n");
+	if (err == 2)
+		return builtin_errors("cd: ", cmds[1], ": no such file or directory\n");
+	if (!getcwd(cwd, sizeof(cwd)))
+		return EXIT_FAILURE;
+	if (update_directories(local, cwd) == -1)
+		return EXIT_FAILURE;
+	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
+		free(target_dir);
+	return (EXIT_SUCCESS);
 }
