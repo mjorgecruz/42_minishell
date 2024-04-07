@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:08:22 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/07 02:43:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/07 16:15:18 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,18 @@
 void		sig_handler_initial(int sig)
 {
 	(void) sig;
-	ft_printf("\n");
+	write(STDIN_FILENO, "\n", 2);
 	return ;
 }
 
 void		sig_handler_kill(int sig)
 {
 	(void)	sig;
-	char	*pwd;
-
+	
 	rl_replace_line("", 0);
-	pwd = create_pc_name();
 	ft_printf("\n");
 	rl_done = 1;
-	write(STDIN_FILENO, "", 1);
 	rl_on_new_line();
-	free(pwd);
 	return ;
 }
 
