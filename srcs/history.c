@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/01 23:18:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:41:53 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*get_line(char *total_line, char ***heredocs)
 	char	*pwd;
 	
 	*heredocs = NULL;
+	switch_sig_readline();
 	pwd = create_pc_name();
 	line_read = readline(pwd);
 	if (!line_read)
@@ -39,7 +40,7 @@ char	*get_line(char *total_line, char ***heredocs)
 		}
 	}
 	if (total_line)
-		add_history(total_line);
+		add_history(total_line);	
 	return (free(pwd), total_line);
 }
 
@@ -64,9 +65,13 @@ bool	join_to_line(char **total_line, char ***heredocs)
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0
 		|| open_parenthesis(*total_line) > 0)
 		{
+			g_signal = 1;
 			line_read = readline("> ");
-			if (!line_read)
+			if (!line_read || rl_done)
+			{
+				write(STDIN_FILENO, "\0", 1);	
 				return (false);
+			}
 			if (is_only_spaces(line_read) == 0)
 				continue ;
 			add_space_line(total_line, line_read);

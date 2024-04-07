@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -6,11 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 09:36:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:40:25 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int g_signal = 0;
 
 int	main(int ac, char **av, char **env)
 {
@@ -24,17 +26,22 @@ int	main(int ac, char **av, char **env)
 	local_env = env_init(env);
 	input = NULL;
 	i = 0;
+	switch_sig_function();
 	while (1)
 	{
 		input = get_line(input, &heredocs);
 		if (input == NULL)
 			continue;
-		if (input != NULL && *input)
+		if (input != NULL && *input && input[ft_strlen(input) - 1] != 0x03)
 		{
 			if (input[ignore_spaces(input, i)])
 				general_executer(input, &heredocs, local_env);
 			free(input);
+			input = NULL;
 		}
+		if (input != NULL)
+			free(input);
+		g_signal = 0;
 	}
 	//necessario dar free disto no scope correto ... nao pode ser na clean comds list que la da erro.
 	//if (local_env && local_env->content) //corresponde em media se nao forem inseridos comandos a 4820 bytes e esta e a forma correta de lhe dar free
