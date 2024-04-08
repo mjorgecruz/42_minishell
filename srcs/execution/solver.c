@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 16:17:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:52:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -190,7 +190,7 @@ char	*clean_str(char *cmds)
 			clean[j] = cmds[i];
 			i++;
 			j++;
-			while (cmds[i] != c)
+			while (cmds[i] && cmds[i] != c)
 			{
 				clean[j] = cmds[i];
 				i++;
@@ -209,5 +209,6 @@ char	*clean_str(char *cmds)
 		i++;
 		j++;
 	}
+	clean[j] = 0;
 	return (clean);
 }

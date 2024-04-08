@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 16:15:26 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:50:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -189,6 +189,7 @@ t_token	*create_node(int init, int end, char *input, t_type type)
 			j++;
 		}
 	}
+	new_node->content[i] = 0;
 	new_node->cmds = NULL;
 	return (new_node);
 }

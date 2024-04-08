@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 17:52:52 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:36:57 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -94,7 +94,7 @@ char	*join_list_contents(t_lstexpand *head)
 			total_length += ft_strlen(cur->content);
 		cur = cur->next;
 	}
-	joined_content = malloc((total_length + 1) * sizeof(char));
+	joined_content = ft_calloc((total_length + 1), sizeof(char));
 	if (!joined_content)
 		return (NULL);
 	joined_content[0] = '\0';
