@@ -6,11 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 09:56:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:56:06 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../../includes/minishell.h"
+
+static int	free_wild_split(char **splitted);
 
 char    *wildcardings(char *str)
 {
@@ -33,7 +35,7 @@ char    *wildcardings(char *str)
 	closedir(dirp);
 	while (wild[i])
 	{
-		new[i] = NULL;
+		new[i] = ft_strdup("");
 		ft_printf("%s\n", wild[i]);
 		dirp = opendir(".");
 		dp = readdir(dirp);
@@ -53,8 +55,8 @@ char    *wildcardings(char *str)
 	}
 	new[i] = NULL;
 	final = wild_rewriter(str, new, wild);
-	free_split(new);
-	free_split(wild);
+	free_wild_split(new);
+	free_wild_split(wild);
 	free(str);
 	return (final);
 }
@@ -115,4 +117,19 @@ void	add_wildcard(char **wild, char *origin)
 	trav = *wild;
 	*wild = ft_strjoin(*wild, origin);
 	free(trav);
+}
+
+
+static int	free_wild_split(char **splitted)
+{
+	int	i;
+
+	i = 0;
+	while (splitted[i])
+	{
+		free(splitted[i]);
+		i++;
+	}
+	free(splitted);
+	return (0);
 }
