@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/06 22:01:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:59:30 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 extern int g_signal;
 
@@ -348,6 +348,8 @@ void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
 void		add_partials(char **heredoc, char *str);
 
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
+
+char	*ft_strjoin_2(char *s1, char const *s2);
 
 /* ************************************************************************** */
 /*                             PARSER_PARENTHESIS                             */

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 10:36:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:59:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -93,20 +93,16 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, in
 {
 	char	*str;
 	char	*final_str;
-	char	*temp2;
 	int		n_letters;
 	int		j;
 	int		fd[2];
 	int		pid;
 	int		bread;
-	char	buffer[21];
+	char	*buffer;
 	char	*temp;
-	int		k;
-	int		x;
-	
+
+	final_str = NULL;
 	bread = 0;
-	k = 0;
-	x = 0;
 	i = ignore_spaces(line_read, i + 1);
 	n_letters = 0;
 	while (line_read[i + n_letters] != ' ' && !is_special_char(line_read[i+ n_letters])
@@ -117,44 +113,33 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, in
 	pid = fork();
 	if (pid == 0)
 	{
-		dup2(fd[1], STDOUT_FILENO);
-		close((fd)[0]);
-		close((fd)[1]);
+		switch_sig_default();
+		close(fd[0]);
 		str = ft_calloc(n_letters + 1, sizeof(char));
 		j = 0;
 		while (j < n_letters)
 			str[j++] = line_read[i++];
 		add_partials(&(final_str), str);
-		ft_printf("%s", final_str);
+		write(fd[1], final_str, ft_strlen(final_str));
 		free(str);
 		free(final_str);
 		exit(EXIT_SUCCESS);
 	}
+	switch_sig_function();
+	waitpid(0, NULL, 0);
+	close(fd[1]);
+	buffer = ft_calloc(21, sizeof(char));
+	bread = read(fd[0], buffer, 20);
+	temp = ft_strdup("");
 	while (bread > 0)
 	{
+		temp = ft_strjoin_2(temp, buffer);
 		bread = read(fd[0], buffer, 20);
-		temp = ft_calloc(ft_strlen((*new_heredocs)[*cur_heredocs]) + bread, sizeof(char));
-		if ((*new_heredocs)[*cur_heredocs])
-		{	
-			while(((*new_heredocs)[*cur_heredocs])[k])
-			{
-				temp[k] = ((*new_heredocs)[*cur_heredocs])[k];
-				k++;
-			}
-			while (x < bread)
-			{
-				temp[x + k] = ((*new_heredocs)[*cur_heredocs])[x + k];
-				x++;
-			}
-			temp2 = (*new_heredocs)[*cur_heredocs];
-			(*new_heredocs)[*cur_heredocs] = temp;
-			free(temp2);
-		}
-		
+		buffer[bread] = 0;
 	}
+	(*new_heredocs)[*cur_heredocs] = temp;
 	(*cur_heredocs)++;
-	close(fd[0]);
-	close(fd[1]);
+	free(buffer);
 	return (i);
 }
 
@@ -173,4 +158,30 @@ void	add_newline_line(char **total_line, char *line_read)
 	}
 	else
 		*total_line = line_read;
+}
+char	*ft_strjoin_2(char *s1, char const *s2)
+{
+	size_t	i1;
+	size_t	i2;
+	size_t	j;
+	char	*s;
+
+	j = 0;
+	i1 = ft_strlen(s1);
+	i2 = ft_strlen(s2);
+	s = (char *) malloc (sizeof(char) * (i1 + i2 + 1));
+	if (s == NULL)
+		return (NULL);
+	while (j < i1)
+	{
+		s[j] = s1[j];
+		j++;
+	}
+	while (j < i1 + i2)
+	{
+		s[j] = s2[j - i1];
+		j++;
+	}
+	s[j] = '\0';
+	return (free(s1), s);
 }

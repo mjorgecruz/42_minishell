@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/07 16:14:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:14:40 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file contains functions related to the history of the terminal*/
 
@@ -26,7 +26,7 @@ char	*get_line(char *total_line, char ***heredocs)
 	
 	*heredocs = NULL;
 	switch_sig_readline();
-	rl_event_hook=event;
+	rl_event_hook = event;
 	pwd = create_pc_name();
 	line_read = readline(pwd);
 	if (!line_read)
@@ -47,8 +47,6 @@ char	*get_line(char *total_line, char ***heredocs)
 	}
 	if (total_line)
 		add_history(total_line);	
-	// if (g_signal == 2)
-	// 	rl_replace_line(pwd, 0);
 	return (free(pwd), total_line);
 }
 
