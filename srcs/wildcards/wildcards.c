@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 22:11:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:41:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ char	*wild_rewriter(char *str, char **new, char **wild)
 			else
 			{
 				if (decider[i] < 0)
-					write(STDERR_FILENO, "lala", 4);
+				{	
+					ft_printf("ambiguous redirect");
+					return(free(final), free(decider), "");
+				}
 				final[k] = str[j]; 
 				k++;
 				j++;
@@ -170,6 +173,7 @@ static int	*check_wild_redirs(char *str, char **wild, char **new)
 		if (wild[i] && mega_wildcmp(wild[i], str, j))
 		{
 			k = j;
+			k--;
 			while (k >= 0 && is_space(str[k]))
 				k--;
 			if (k == -1 || (str[k] != '<' && str[k] != '>'))
@@ -206,11 +210,11 @@ static int 	wild_words(char *s)
 			i++;
 		if (s[i] != '\0')
 			count++;
-		i = ignore_in_quotes(s, i);
+		//i = ignore_in_quotes(s, i);
 		while (!is_space(s[i]) && s[i] != '\0')
 		{	
-			if (s[i] == '\"' || s[i] == '\'' )
-				i = ignore_in_quotes(s, i);
+			// if (s[i] == '\"' || s[i] == '\'' )
+			// 	i = ignore_in_quotes(s, i);
 			i++;
 		}
 	}

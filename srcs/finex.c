@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/12 22:04:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:42:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 		{
 			while (cmd_list->cmds[i].cmds)
 			{
-				free((cmd_list->cmds[i].cmds));
+				if(cmd_list->cmds[i].cmds[0] != 0)
+					free((cmd_list->cmds[i].cmds));
 				i++;
 			}
 		}

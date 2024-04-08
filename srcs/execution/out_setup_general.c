@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 20:52:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:38:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 		commands_sorter(cmd_list->down, info, local);
 	if (cmd_list && cmd_list->cmds)
 	{
-		if (cmd_list->cmds[i + 1].cmds == NULL)
+		if (cmd_list->cmds[i + 1].cmds == NULL && cmd_list->cmds[i].cmds[0] != 0)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 			res = mult_cmd_executer(cmd_list, info, local, i);
@@ -47,17 +47,20 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	res = -1;
 	while (cmd_list->cmds[i].cmds)
 	{
-		pipe(fd);
-		pid = fork();
-		if (pid == 0)
+		if (cmd_list->cmds[i].cmds[0] != 0)
 		{
-			pied_piper(cmd_list, fd, i, &stdin);
-			res = inter_executioner(cmd_list, info, local, i);
-			exit(res);
+			pipe(fd);
+			pid = fork();
+			if (pid == 0)
+			{
+				pied_piper(cmd_list, fd, i, &stdin);
+				res = inter_executioner(cmd_list, info, local, i);
+				exit(res);
+			}
+			dup2(fd[0], stdin);
+			close(fd[0]);
+			close(fd[1]);
 		}
-		dup2(fd[0], stdin);
-		close(fd[0]);
-		close(fd[1]);
 		i++;
 	}
 	close(stdin);
