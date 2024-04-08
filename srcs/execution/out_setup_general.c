@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 16:16:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:52:55 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -55,7 +55,6 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i)
 			res = inter_executioner(cmd_list, info, local, i);
 			exit(res);
 		}
-		//waitpid(pid, NULL, 0);
 		dup2(fd[0], stdin);
 		close(fd[0]);
 		close(fd[1]);
