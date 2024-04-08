@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/02 15:44:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:44:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -85,7 +85,7 @@ int	pipe_counter(t_token *cmd_list)
 			while (cmd_list->content[pos] != cmd_list->content[asp_place])
 				pos++;
 		}
-		else if (ft_strchr("|", cmd_list->content[pos]))
+		else if (ft_strchr("|", cmd_list->content[pos]) && !ft_strchr(">", cmd_list->content[pos - 1]))
 		{
 			while (ft_strchr("|", cmd_list->content[pos]))
 				pos++;
@@ -167,7 +167,7 @@ int	find_next_stop(char *content, int pos)
 
 	asp_place = 0;
 	count = count_spaces(&pos, content);
-	while (content[pos] && !ft_strchr("|", content[pos]))
+	while (content[pos] && (!ft_strchr("|", content[pos])))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
