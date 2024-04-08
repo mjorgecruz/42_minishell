@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:37 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/05 00:04:40 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:35:36 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_list(t_lstexpand *head)
 {
 	while (head != NULL)
 	{
-		printf("Status: %d, Content: %s\n", head->status, head->content);
+		ft_printf("Status: %d, Content: %s\n", head->status, head->content);
 		head = head->next;
 	}
 }

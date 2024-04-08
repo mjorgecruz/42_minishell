@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 12:51:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:16:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -165,6 +165,9 @@ t_builtin	get_builtin_id(const char *str)
 	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "\"pwd\"")
 		|| !ft_strcmp(str, "\'pwd\'"))
 		return (PWD);
+	if (!ft_strcmp(str, "printenv") || !ft_strcmp(str, "\"printenv\"")
+		|| !ft_strcmp(str, "\'printenv\'"))
+		return (PRINTENV);
 	return (UNDEFINED);
 }
 
@@ -183,13 +186,15 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 		return (command_env(local));
 	else if (id == UNSET)
 		return (command_unset(cmds, local));
+	else if (id == PRINTENV)
+		return (command_printenv(cmds, local));
 	// // else if (id == EXIT)
 	// // {
 	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
 	// // 	return ;
 	// // }
 	else if (id == CD)
-		return (command_cd(cmds, local));
+		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
 	free(local);

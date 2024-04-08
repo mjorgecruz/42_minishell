@@ -6,11 +6,21 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/19 11:21:15 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:19:09 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+/*
+Creates a copy of the environment variables at the start
+should be used in a early scope. Returns a structure pointer 
+with the env variables in the format of an array of strings 
+and a sorted copy of the same to use in export.
+
+Keep in mind aditions and deletions should be 
+handled in both arrays for consistency
+*/
 
 t_localenv	*env_init(char **envirion)
 {
@@ -22,9 +32,15 @@ t_localenv	*env_init(char **envirion)
 		return (NULL);
 	}
 	new->content = copy_environment_variables(envirion);
+	new->sorted = copy_environment_variables(envirion);
+	sort_strings(new->sorted);
 	return (new);
 }
 
+/*
+helper function of the copy_environment_variables
+recursive
+*/
 char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
 {
 	int	len;
@@ -44,6 +60,10 @@ char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
 	return (copy_env_var_utils(env + 1, num_vars + 1, env_copy));
 }
 
+/*
+alphabeticaly sorts the array of strings passed to it
+used to organize environment varibles order for the export command
+ */
 void	sort_strings(char **strings)
 {
 	int	i;
@@ -61,6 +81,11 @@ void	sort_strings(char **strings)
 		}
 	}
 }
+
+/*
+Creates and allocates memory for an array of strings
+copy of environment variables
+*/
 
 char	**copy_environment_variables(char **environ)
 {
@@ -81,6 +106,10 @@ char	**copy_environment_variables(char **environ)
 	return (copy_env_var_utils(environ, 0, env_copy));
 }
 
+/*
+adds quotation to the strings in the list of the export comand env vars
+and adds the prefix "declare -x"
+*/
 
 void	put_quotes_expdr(char **arrstr)
 {
@@ -94,7 +123,7 @@ void	put_quotes_expdr(char **arrstr)
 		j = 0;
 		equal = false;
 		ft_putstr_fd("declare -x ", 1);
-		while (arrstr[i][j] != '\0')
+		while (arrstr[i][j])
 		{
 			ft_putchar_fd(arrstr[i][j], 1);
 			if (arrstr[i][j] == '=' && !equal)
@@ -104,32 +133,18 @@ void	put_quotes_expdr(char **arrstr)
 			}
 			j++;
 		}
-		ft_putchar_fd('"', 1);
+		if (ft_strchr(arrstr[i], '='))
+			ft_putchar_fd('"', 1);
 		ft_putchar_fd('\n', 1);
 		i++;
 	}
 }
 
-void	print_sorted_strings(t_localenv *local)
+/*
+Just prints the array of strings no needed but 
+*/
+int	print_sorted_strings(char **sorted)
 {
-	char	**temp_content;
-	char	**temp_content_start;
-
-	if (local == NULL || local->content == NULL)
-		return ;
-	temp_content = ft_strarrdup(local->content);
-	if (temp_content == NULL)
-		return ;
-	temp_content_start = temp_content;
-	sort_strings(temp_content);
-	//int	i = -1;
-	//while (temp_content[++i] != NULL)
-		//printf("declare -x %s\n", temp_content[i]);
-	put_quotes_expdr(temp_content);
-	while (*temp_content)
-	{
-		free(*temp_content);
-		temp_content++;
-	}
-	free(temp_content_start);
+	put_quotes_expdr(sorted);
+	return (EXIT_SUCCESS);
 }

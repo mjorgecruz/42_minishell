@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/11 08:20:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:52:52 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 }
 // codigo de erro???? pid? o que ??? linha 59 e outros codigos dos   $!?
 
+//$$ gets pid processo atual optional
+//$? exit status of current iteration
+
 char	*join_list_contents(t_lstexpand *head)
 {
 	int			total_length;
@@ -88,7 +91,7 @@ char	*join_list_contents(t_lstexpand *head)
 	while (cur != NULL)
 	{
 		if (cur->content != NULL)
-			total_length += strlen(cur->content);
+			total_length += ft_strlen(cur->content);
 		cur = cur->next;
 	}
 	joined_content = malloc((total_length + 1) * sizeof(char));
@@ -113,14 +116,14 @@ void	clean_quotes_in_list(t_lstexpand *head, int len)
 	cur = head;
 	while (cur != NULL)
 	{
-		if ((strcmp(cur->content, "''") == 0) || (strcmp(cur->content, "\"\"") == 0))
+		if ((ft_strcmp(cur->content, "''") == 0) || (ft_strcmp(cur->content, "\"\"") == 0))
 		{
 			free(cur->content);
 			cur->content = NULL;
 		}
 		else
 		{
-			len = strlen(cur->content);
+			len = ft_strlen(cur->content);
 			if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') || (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
 			{
 				temp = strdup(cur->content + 1);

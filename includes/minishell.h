@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/08 12:59:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:16:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -55,6 +55,7 @@ typedef enum e_builtin
 	EXPORT,
 	UNSET,
 	EXIT,
+	PRINTENV,
 }	t_builtin;
 
 /*Define special characters that separate strings*/
