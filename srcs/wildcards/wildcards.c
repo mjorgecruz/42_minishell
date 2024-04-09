@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 22:41:02 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:58:40 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -174,18 +174,19 @@ static int	*check_wild_redirs(char *str, char **wild, char **new)
 		{
 			k = j;
 			k--;
+			decider[i] = 0;
 			while (k >= 0 && is_space(str[k]))
 				k--;
 			if (k == -1 || (str[k] != '<' && str[k] != '>'))
 				decider[i] = 0;
-			else if ((str[k] == '<' && str[k - 1] == '<'))
+			else if (str[k] == '<' && str[k - 1] == '<')
 				decider[i] = 1;
-			else if ((str[k] == '<'))
+			else if (str[k] == '<')
 			{
 				if (wild_words(new[i]) > 1)
 					decider[i] = -1;
 			}
-			else if ((str[k] == '>'))
+			else if (str[k] == '>')
 			{
 				if (wild_words(new[i]) > 1)
 					decider[i] = -2;

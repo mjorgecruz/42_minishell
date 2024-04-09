@@ -83,5 +83,7 @@ char	**ft_split_ignore_quotes(char *s, char *c)
 			i += all_quotes_ignore(s + i);
 	}
 	str_array[j] = 0;
+	if (j == 0 && str_array[j] == NULL)
+		str_array[j] = strdup("");
 	return (str_array);
 }

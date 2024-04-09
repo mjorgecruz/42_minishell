@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 22:38:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:36:19 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -115,6 +115,8 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 			&info.pos_heredoc, &(cmd_info.in_out[0]));
 		j++;
 	}
+	if (wildcard_checker(cmd_list->cmds[i].cmds))
+		cmd_list->cmds[i].cmds = wildcardings(cmd_list->cmds[i].cmds);
 	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
