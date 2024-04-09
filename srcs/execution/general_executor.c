@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 16:50:25 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:08:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,9 +20,19 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 {
 	t_token	*cmd_list;
 	t_info	info;
+	int		i;
 
+	i = 0;
 	cmd_list = NULL;
 	info.heredocs = heredocs;
+	if (heredocs != NULL)
+	{
+		while((*heredocs)[i])
+		{
+			(*heredocs)[i] = expander_heredocs((*heredocs)[i], local);
+			i++;
+		}
+	}
 	info.pos_heredoc = -1;
 	info.local = local;
 	info.local = local;

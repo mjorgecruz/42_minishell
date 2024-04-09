@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 11:59:48 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:59:03 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -73,6 +73,8 @@ void	print_list(t_lstexpand *head);
 
 char	*master_expander(char *cmd, t_localenv *local);
 char	*master_expander_out(char *cmd, t_localenv *local);
+char	*expander_heredocs(char *cmd, t_localenv *local);
+
 
 /* ************************************************************************** */
 /*                                  CD_COMMAND.C                              */
