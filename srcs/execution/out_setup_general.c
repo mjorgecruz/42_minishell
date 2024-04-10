@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/09 11:36:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:15:23 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -192,11 +192,8 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 		return (command_unset(cmds, local));
 	else if (id == PRINTENV)
 		return (command_printenv(cmds, local));
-	// // else if (id == EXIT)
-	// // {
-	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
-	// // 	return ;
-	// // }
+	else if (id == EXIT)
+		return(command_exit(info));
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)

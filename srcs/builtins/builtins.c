@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 12:12:50 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:19:42 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,10 @@ int builtin_errors(char *str1, char *str2, char *str3)
 		ft_putstr_fd(str2, STDERR_FILENO);
 		ft_putstr_fd(str3, STDERR_FILENO);
 	return(1);
+}
+
+int ex_code(int code)
+{
+	g_signal = code;
+	return(g_signal);
 }

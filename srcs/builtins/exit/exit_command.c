@@ -6,22 +6,30 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/04 15:56:47 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:24:34 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-// void command_exit(t_localenv *local, t_token *cmd_list, char ***heredocs)
-// {
-//     clean_cmd_list(cmd_list, heredocs);
-//     if (local && local->content)
-//     {
-//         free_split(local->content);
-//         local->content = NULL;
-//     }
-// 	free(local);
-// }
+void command_exit(t_info info)
+{
+
+
+
+    // all the frees must come here
+    rl_clear_history();
+    exit(ex_code(g_signal));
+
+    
+    // clean_cmd_list(cmd_list, heredocs);
+    // if (local && local->content)
+    // {
+    //     free_split(local->content);
+    //     local->content = NULL;
+    // }
+	// free(local);
+}
 
 /*no fucking clue what commands should be inside to clear all the memory so i nedd your help
 
