@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 10:19:42 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:29:01 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ int	command_pwd(void)
 	if (getcwd(cwd, PATH_MAX))
 	{
 		ft_putendl_fd(cwd, 1);
-		return (EXIT_SUCCESS);
+		return (ex_code(EXIT_SUCCESS));
 	}
-	else
-		return (EXIT_FAILURE);
+	return (ex_code(EXIT_FAILURE));
 }
 
 void	print_string_array(char **strings)
@@ -55,7 +54,7 @@ int	command_env(t_localenv *local)
 	if (local == NULL)
 		return (builtin_errors("local environment is NULL", "\n", ""));
 	prtstr_arr_env(local->content);
-	return (EXIT_SUCCESS);
+	return (ex_code(EXIT_SUCCESS));
 }
 
 int	unset_variable(const char *variable, t_localenv *local)
@@ -76,7 +75,7 @@ int	unset_variable(const char *variable, t_localenv *local)
 		}
 		local->sorted[index] = NULL;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	unset_variable2(const char *variable, t_localenv *local)
@@ -103,6 +102,7 @@ int	unset_variable2(const char *variable, t_localenv *local)
 int	command_unset(char **cmds, t_localenv *local)
 {
 	int i;
+
 	if (cmds == NULL || local == NULL || local->content == NULL)
 		return (builtin_errors("Invalid command or local environment.", "\n", ""));
 	if (cmds[1] == NULL)
@@ -110,17 +110,16 @@ int	command_unset(char **cmds, t_localenv *local)
 	
 	if (!isvar_valid(cmds[1]))
 		return (EXIT_FAILURE + 1);
-
 	i = 1;
 	while (cmds[i] != NULL)
 	{
 		if (unset_variable(cmds[i], local) != 0)
-			return (EXIT_FAILURE);
+			return (ex_code(EXIT_FAILURE));
 		if (unset_variable2(cmds[i], local) != 0)
-			return (EXIT_FAILURE);
+			return (ex_code(EXIT_FAILURE));
 		i++;
 	}
-	return (0);
+	return (ex_code(EXIT_SUCCESS));
 }
 
 int builtin_errors(char *str1, char *str2, char *str3)
@@ -134,6 +133,20 @@ int builtin_errors(char *str1, char *str2, char *str3)
 
 int ex_code(int code)
 {
-	g_signal = code;
+
+	if (code < 0)
+	{
+		g_signal = code;
+        return (0);
+    }
+	else if (code >= 256)
+	{
+		while(code >= 256)
+			code = code - 256;
+		g_signal = code;
+		return (g_signal);
+    }
+	else
+		g_signal = code;
 	return(g_signal);
 }

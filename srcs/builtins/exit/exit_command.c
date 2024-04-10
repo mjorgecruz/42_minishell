@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 10:24:34 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:05:08 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 void command_exit(t_info info)
 {
-
-
-
-    // all the frees must come here
+    (void) info;
     rl_clear_history();
     exit(ex_code(g_signal));
-
-    
     // clean_cmd_list(cmd_list, heredocs);
     // if (local && local->content)
     // {

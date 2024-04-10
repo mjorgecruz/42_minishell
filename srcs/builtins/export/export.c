@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 10:25:56 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:00:55 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,30 +126,6 @@ int	update_variable(const char *variable, t_localenv *local)
 		return (add_variable(variable, local));
 }
 
-
-// export: `$': not a valid identifier  todos os simbolos que nao forem os aceites tem de dar codigo 1 e imprimir
-//export: `$': not a valid identifier
-
-/*
-TO DO:
-
-EXPORT:
-	Reduzir para 25 linhas
-	erros em todas as mensagens para STDERR_FILENO
-	criar function
-	dont allow invalid chars
-	
-SIGNALS: to do;
-
-CD: check working with ~ and others
-
-PWD: check 
-
-ECHO: verificar $? $_
-
-EXIT: todo;
-*/
-
 bool isvar_valid(const char *name)
 {
     if (name == NULL || ft_isdigit(*name))
@@ -200,7 +176,7 @@ int command_export(char **cmds, t_localenv *local)
         if (update_variable(variable, local) || update_var_cont(variable, local))
             return (ex_code(EXIT_FAILURE));
     }
-    return (EXIT_SUCCESS);
+    return (ex_code(EXIT_SUCCESS));
 }
 
 int	add_var_cont(const char *variable, t_localenv *local)

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 10:15:23 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:29:08 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,11 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == PRINTENV)
 		return (command_printenv(cmds, local));
 	else if (id == EXIT)
-		return(command_exit(info));
+		command_exit(info);
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
-	free(local);
+	//free(local);
 	return (1);
 }
