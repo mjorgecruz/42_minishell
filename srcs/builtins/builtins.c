@@ -1,27 +1,28 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 16:29:01 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:07:35 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
-int	command_pwd(void)
+int	command_pwd(t_localenv *local_env)
 {
-	static char	cwd[PATH_MAX];
-
+	char	cwd[PATH_MAX];
+	
 	if (getcwd(cwd, PATH_MAX))
 	{
 		ft_putendl_fd(cwd, 1);
 		return (ex_code(EXIT_SUCCESS));
 	}
-	return (ex_code(EXIT_FAILURE));
+	ft_putendl_fd(ft_getenv("PWD", local_env->content), 1);
+	return (ex_code(EXIT_SUCCESS));
 }
 
 void	print_string_array(char **strings)

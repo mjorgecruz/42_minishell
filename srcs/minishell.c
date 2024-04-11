@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 08:59:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:26:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av, char **env)
 	switch_sig_function();
 	while (1)
 	{
-		input = get_line(input, &heredocs);
+		input = get_line(input, &heredocs, local_env);
 		if (input == NULL)
 			continue;
 		if (input != NULL && *input && input[ft_strlen(input) - 1] != 0x03)

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 11:32:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:58:05 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -197,7 +197,7 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	if (id == ECHOS)
 		return (command_echo(cmds, local));
 	else if (id == PWD)
-		return (command_pwd());
+		return (command_pwd(local));
 	else if (id == EXPORT)
 		return (command_export(cmds, local)) ;
 	else if (id == ENV)

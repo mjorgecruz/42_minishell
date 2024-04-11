@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 14:02:33 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:01:50 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -30,7 +30,7 @@ typedef struct s_lstexpand
 /*                                    BUILTINS                                */
 /* ************************************************************************** */
 
-int		command_pwd(void);
+int		command_pwd(t_localenv *local_env);
 void	print_string_array(char **strings);
 int		command_env(t_localenv *local);
 int		unset_variable(const char *variable, t_localenv *local);

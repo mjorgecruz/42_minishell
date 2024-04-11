@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/10 14:02:40 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:41:35 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 extern int g_signal;
 
@@ -162,7 +162,7 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char		*get_line(char *line_read, char ***heredocs);
+char		*get_line(char *total_line, char ***heredocs, t_localenv *local_env);
 
 bool		join_to_line(char **total_line, char ***heredocs);
 
@@ -174,9 +174,9 @@ void		add_space_line(char **total_line, char *line_read);
 
 int			open_parenthesis(char *total_line);
 
-char		*create_pc_name(void);
+char		*create_pc_name(t_localenv *local_env);
 
-char		*get_end_path(void);
+char		*get_end_path(t_localenv *local_env);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/08 12:14:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:37:28 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,7 +19,7 @@ int event(void)
 	return (0);
 }
 
-char	*get_line(char *total_line, char ***heredocs)
+char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
 	char	*line_read;
 	char	*pwd;
@@ -27,7 +27,7 @@ char	*get_line(char *total_line, char ***heredocs)
 	*heredocs = NULL;
 	switch_sig_readline();
 	rl_event_hook = event;
-	pwd = create_pc_name();
+	pwd = create_pc_name(local_env);
 	line_read = readline(pwd);
 	if (!line_read)
 	{
@@ -162,13 +162,13 @@ int		open_parenthesis(char *total_line)
 	return (count_open);
 }
 
-char	*create_pc_name(void)
+char	*create_pc_name(t_localenv *local_env)
 {
 	char	*pwd;
 	char	*name;
 	char	*vai_fora;
 	
-	pwd = get_end_path();
+	pwd = get_end_path(local_env);
 	name = ft_strjoin("masoares&&luis-ffe@", "minishell:");
 	vai_fora = name;
 	name = ft_strjoin(name, pwd);
@@ -177,7 +177,7 @@ char	*create_pc_name(void)
 	return (name);
 }
 
-char	*get_end_path(void)
+char	*get_end_path(t_localenv *local_env)
 {
 	char	*garbage;
 	char	*rest;
@@ -185,7 +185,7 @@ char	*get_end_path(void)
 	int		j;
 	int		count_bars;
 	
-	garbage = getcwd(NULL, 0);
+	garbage = ft_getenv("PWD", local_env->content);
 	i = 0;
 	j = 2;
 	count_bars = 0;
