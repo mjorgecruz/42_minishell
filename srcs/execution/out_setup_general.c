@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 09:07:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 08:59:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -192,15 +192,12 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 		return (command_unset(cmds, local));
 	else if (id == PRINTENV)
 		return (command_printenv(cmds, local));
-	// // else if (id == EXIT)
-	// // {
-	// // 	command_exit(local_env, t_token *cmd_list, char ***heredocs);    como fazer?
-	// // 	return ;
-	// // }
+	else if (id == EXIT)
+		command_exit(info);
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
-	free(local);
+	//free(local);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 14:39:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 08:59:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -41,8 +41,8 @@ int	main(int ac, char **av, char **env)
 		}
 		if (input != NULL)
 			free(input);
-		g_signal = 0;
 	}
+}
 	//necessario dar free disto no scope correto ... nao pode ser na clean comds list que la da erro.
 	//if (local_env && local_env->content) //corresponde em media se nao forem inseridos comandos a 4820 bytes e esta e a forma correta de lhe dar free
    // {
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char **env)
  //       local_env->content = NULL;
   //  }
 	//free(local_env);
-}
 
 void	clear_terminal(char *paths)
 {

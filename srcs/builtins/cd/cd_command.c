@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 13:45:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 08:58:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -94,7 +94,7 @@ int command_cd(char **cmds, t_localenv *local, int err)
 	char cwd[PATH_MAX];
 
 	if (cmds[1] && cmds[2])
-		return (builtin_errors("cd: too many arguments", "\n", ""));
+		return (ex_code(builtin_errors("cd: too many arguments", "\n", "")));
 	if (cmds[1] == NULL || cmds[1][0] == '\0')
 		target_dir = get_home_directory(local);
 	else if (ft_strcmp(cmds[1], "-") == 0)
@@ -102,17 +102,17 @@ int command_cd(char **cmds, t_localenv *local, int err)
 	else
 		target_dir = expand_tilde(cmds[1], local);
 	if (!target_dir)
-		return EXIT_FAILURE;
+		return (ex_code(EXIT_FAILURE));
 	err = change_directory(target_dir);
 	if (err == 13)
-		return builtin_errors("cd: ", "", ": Permission denied\n");
+		return (ex_code(builtin_errors("cd: ", "", ": Permission denied\n")));
 	if (err == 2)
-		return builtin_errors("cd: ", cmds[1], ": no such file or directory\n");
+		return (ex_code(builtin_errors("cd: ", cmds[1], ": no such file or directory\n")));
 	if (!getcwd(cwd, sizeof(cwd)))
-		return EXIT_FAILURE;
+		return (ex_code(EXIT_FAILURE));
 	if (update_directories(local, cwd) == -1)
-		return EXIT_FAILURE;
+		return (ex_code(EXIT_FAILURE));
 	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
 		free(target_dir);
-	return (EXIT_SUCCESS);
+	return (ex_code(EXIT_SUCCESS));
 }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 15:01:43 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 08:59:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -68,17 +68,13 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 		if (!code_word || is_str_empty(code_word))
 			break ;
 		if (!ft_strncmp(code_word, "$?", 2))
-			env = ft_itoa(getpid());
+			env = ft_itoa(g_signal);
 		else
 			env = ft_getenv(code_word, local->content);
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
 	return (expanded_str);
 }
-// codigo de erro???? pid? o que ??? linha 59 e outros codigos dos   $!?
-
-//$$ gets pid processo atual optional
-//$? exit status of current iteration
 
 char	*join_list_contents(t_lstexpand *head)
 {

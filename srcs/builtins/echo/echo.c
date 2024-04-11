@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/04 15:53:21 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:22:39 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	command_echo(char **cmds, t_localenv *local)
 		n_flag = true;
 	while (cmds[i] != NULL)
 	{
-		//exp_temp = master_expander(cmds[i], local);
 		exp_temp = cmds[i];
 		if (exp_temp)
 		{
@@ -56,7 +55,7 @@ int	command_echo(char **cmds, t_localenv *local)
 	}
 	if (!n_flag)
 		ft_printf("\n");
-    return (EXIT_SUCCESS);
+    return (ex_code(EXIT_SUCCESS));
 }
 
 //
