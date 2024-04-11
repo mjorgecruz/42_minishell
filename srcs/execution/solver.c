@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/09 11:35:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:44:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -72,7 +72,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 				perror("minishell");
 				return ;
 			}
-			*in = IN_DOC; 
+			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
 		{
@@ -99,7 +99,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 	i = 0;
 	*fd = 1;
 	file = NULL;
-	while (cmds->cmds[i])
+	while (i < ft_strlen(cmds->cmds) && cmds->cmds[i])
 	{
 		i = ignore_in_quotes(cmds->cmds, i);
 		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
@@ -188,8 +188,10 @@ char	*clean_str(char *cmds)
 	
 	i = 0;
 	j = 0;
+	if (!cmds)
+		return (NULL);
 	clean = ft_calloc(ft_strlen(cmds) + 1, sizeof(char));
-	while (cmds[i])
+	while  (cmds[i])
 	{
 		if  (cmds[i] == '\"' || cmds[i] == '\'')
 		{
@@ -210,7 +212,9 @@ char	*clean_str(char *cmds)
 				i++;
 			i = ignore_spaces(cmds, i);
 			while(cmds[i] && cmds[i] != ' ')
-		i++;
+				i++;
+			if (!cmds[i])
+				break;
 		}
 		clean[j] = cmds[i];
 		i++;

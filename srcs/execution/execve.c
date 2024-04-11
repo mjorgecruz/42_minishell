@@ -1,22 +1,25 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 14:33:57 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:53:55 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
 int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
 {
 	char	**p_path;
-
-	p_path = ft_split(ft_getenv("PATH", local->content), ':');
+	char	*paths;
+	
+	paths = ft_getenv("PATH", local->content);
+	p_path = ft_split(paths, ':');
+	free(paths);
 	if (ft_strchr(cmds[0], '/'))
 		ex_code(execve_decider(cmds, local, info, cmd_info));
 	else
@@ -24,7 +27,8 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 		test_commands(cmds, p_path);
 		ex_code(execve_decider(cmds, local, info, cmd_info));
 	}
-	return (free_split(p_path), g_signal);
+	free_split(p_path);
+	return (g_signal);
 }
 
 void test_commands(char **cmds, char **p_path)

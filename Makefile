@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/11 10:31:06 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/11 11:07:58 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -22,7 +22,7 @@ NAME = minishell
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log
+VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log -s
 
 INCDIR:=srcs
 ODIR:=obj
