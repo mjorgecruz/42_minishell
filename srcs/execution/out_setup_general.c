@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 14:58:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:38:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -31,7 +31,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 			res = mult_cmd_executer(cmd_list, info, local, i);
-		ft_printf("%d\n", res);
+		//ft_printf("%d\n", res);
 	}
 	while (cmd_list->next != NULL 
 		&& ((res == 0 && cmd_list->next_type == D_PIPE))) 
@@ -152,7 +152,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 	}
 	else	
 		res = solver(final_cmds, info, cmd_info);
-	return(res);
+	return(free_split(final_cmds), res);
 }
 
 void	set_id_flag_cmd(char **cmd, t_builtin *id)
@@ -212,6 +212,5 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
-	//free(local);
 	return (1);
 }

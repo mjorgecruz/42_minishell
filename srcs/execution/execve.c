@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 13:59:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:46:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -26,7 +26,7 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 	{
 		test_commands(cmds, p_path);
 		ex_code(execve_decider(cmds, local, info, cmd_info));
-		printf("%d", g_signal);
+		//printf("%d", g_signal);
 		free_split(cmds);
 	}
 	free_split(p_path);
@@ -123,7 +123,6 @@ int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 	{
 		bread = read(fd_in, buffer, 20);
 		buffer[bread] = '\0';
-		printf("%s", buffer);
 	}
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
