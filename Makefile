@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/10 13:43:52 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/11 10:31:06 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,6 +35,7 @@ SRC := minishell.c \
 		utils/megasplit.c \
 		heredocs/heredocs.c \
 		heredocs/heredocs_2.c \
+		heredocs/heredocs_3.c \
 		parser/parser_general.c \
 		parser/parser_quotes.c \
 		parser/parser_special.c \
