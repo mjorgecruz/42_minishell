@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 17:48:19 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:45:44 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -97,7 +97,7 @@ int command_cd(char **cmds, t_localenv *local, int err)
 		return (builtin_errors("cd: too many arguments", "\n", ""));
 	if (cmds[1] == NULL || cmds[1][0] == '\0')
 		target_dir = get_home_directory(local);
-	else if (strcmp(cmds[1], "-") == 0)
+	else if (ft_strcmp(cmds[1], "-") == 0)
 		target_dir = get_previous_directory(local);
 	else
 		target_dir = expand_tilde(cmds[1], local);

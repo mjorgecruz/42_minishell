@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/08 16:36:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:01:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -102,7 +102,7 @@ char	*join_list_contents(t_lstexpand *head)
 	while (cur != NULL)
 	{
 		if (cur->content != NULL)
-			strcat(joined_content, cur->content);
+			ft_strlcat(joined_content, cur->content, ft_strlen(joined_content) + ft_strlen(cur->content) + 1);
 		cur = cur->next;
 	}
 	return (joined_content);
@@ -126,7 +126,7 @@ void	clean_quotes_in_list(t_lstexpand *head, int len)
 			len = ft_strlen(cur->content);
 			if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') || (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
 			{
-				temp = strdup(cur->content + 1);
+				temp = ft_strdup(cur->content + 1);
 				temp[len - 2] = '\0';
 				free(cur->content);
 				cur->content = temp;

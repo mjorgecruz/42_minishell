@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/09 09:36:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:24:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -34,7 +34,7 @@ void	commands_separator(t_token *cmd_list)
 			{
 				pipes = pipe_counter(cmd_list);
 				cmd_list->cmds = (t_command *)malloc
-				(sizeof(t_command) * (pipes + 1));
+				(sizeof(t_command) * (pipes + 2));
 			}
 			fill_cmds(cmd_list, pipes);	
 		}

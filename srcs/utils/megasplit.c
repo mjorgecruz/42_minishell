@@ -84,6 +84,6 @@ char	**ft_split_ignore_quotes(char *s, char *c)
 	}
 	str_array[j] = 0;
 	if (j == 0 && str_array[j] == NULL)
-		str_array[j] = strdup("");
+		str_array[j] = ft_strdup("");
 	return (str_array);
 }

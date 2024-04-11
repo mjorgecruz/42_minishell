@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#******************************************************************************#
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,9 +6,9 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/06 17:05:32 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/10 13:43:52 by masoares         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
+#******************************************************************************#
 
 RED = \033[31m
 GREEN = \033[32m
@@ -22,7 +22,7 @@ NAME = minishell
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log 
+VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --log-file=leaks.log
 
 INCDIR:=srcs
 ODIR:=obj
