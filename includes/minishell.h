@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/12 09:19:22 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:32:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_info
 	char	***heredocs;
 	int		pos_heredoc;
 	t_localenv	*local;
+	t_token		*token;
 	
 } t_info;
 
@@ -409,5 +410,5 @@ char	**ft_split_ignore_quotes(char *s, char *c);
 
 
 
-void	command_exit(t_info info, char **cmds);
+void command_exit(t_info info, char **cmds);
 #endif

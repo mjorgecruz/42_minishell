@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/12 11:15:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:32:12 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	int			j;
 	
 	(void) local;
+	info.token = cmd_list;
 	//pid = 0;
 	j = 0;
 	cmd_info_starter(&cmd_info);

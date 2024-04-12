@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/12 10:09:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:46:44 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,64 @@ static bool exit_args_checker(char **cmds)
         return(ex_code(1), false);
 }
 
-//necessari oadicionar todas as estruturas que temos de dar free
+void free_t_info(t_info info)
+{
+    int i;
+
+    i = 0;
+    while(info.heredocs[i])
+    {
+        free(info.heredocs[i]);
+        i++;
+    }
+    free(info.heredocs);
+}
+void    free_info_andlocal_env(t_info info)
+{
+    int i;
+
+    i = 0;
+    while(info.local->content[i])
+    {
+        free(info.local->content[i]);
+        i++;
+    }
+    i = 0;
+    while(info.local->sorted[i])
+    {
+        free(info.local->sorted[i]);
+        i++;
+    }
+    free(info.local->content);
+    free(info.local->sorted);
+    free(info.local);
+    free_t_info(info);
+}
+
+
+void free_t_token(t_token tok)
+{
+    t_token head;
+
+    head = tok;
+    
+    while(head.content)
+    {
+        if (head.cmds->cmds)
+            free(head.cmds->cmds);    
+        free(head.content);
+        free_t_token(*head.down);
+        free_t_token(*head.next);
+    }
+}
+
 void command_exit(t_info info, char **cmds)
 {
     (void) info;
-
     if (!exit_args_checker(cmds))
         return ;
+    free_info_andlocal_env(info);
+    free_t_token(*info.token);
     rl_clear_history();
     exit(ex_code(g_signal));
 }
