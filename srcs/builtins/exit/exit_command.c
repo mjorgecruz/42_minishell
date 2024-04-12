@@ -6,15 +6,39 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 14:05:08 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 08:01:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void command_exit(t_info info)
+
+int exit_args_checker(char **cmds)
+{
+    if (!cmds[1])
+        return(0);
+    if (cmds[2])
+        return (-1);
+    if (cmds[1] && !cmds[2])
+        return(ft_atoi(cmds[1]));
+
+        //numeric argument required
+        //check str for numbers minus signals and shit
+        //if bigger than x dont worry thre ex_code funtion already adjusts number size
+        //error messages needed
+    else
+        return(127); ///??????
+}
+
+
+
+void command_exit(t_info info, char **cmds)
 {
     (void) info;
+    (void) cmds;
+    int code;
+
+    g_signal = exit_args_checker(cmds);
     rl_clear_history();
     exit(ex_code(g_signal));
     // clean_cmd_list(cmd_list, heredocs);
