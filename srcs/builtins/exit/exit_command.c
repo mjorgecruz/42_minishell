@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/12 12:46:44 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:47:52 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void free_t_info(t_info info)
     }
     free(info.heredocs);
 }
+
 void    free_info_andlocal_env(t_info info)
 {
     int i;
@@ -93,20 +94,26 @@ void    free_info_andlocal_env(t_info info)
     free_t_info(info);
 }
 
-
+// need to implement binary tree free shit for this 
 void free_t_token(t_token tok)
 {
-    t_token head;
-
-    head = tok;
+    t_token node;
     
-    while(head.content)
+    if (tok.content == NULL)
+        return;
+    if (tok.content != NULL)
+        free(tok.content);
+    if (tok.cmds->cmds != NULL)
+        free(tok.cmds->cmds);
+    if (tok.next)
     {
-        if (head.cmds->cmds)
-            free(head.cmds->cmds);    
-        free(head.content);
-        free_t_token(*head.down);
-        free_t_token(*head.next);
+        node = *tok.next;
+        free_t_token(node);
+    }
+    if (tok.down)
+    {
+        node = *tok.down;
+        free_t_token(node);
     }
 }
 
