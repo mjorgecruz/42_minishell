@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 15:48:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:30:26 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -89,7 +89,7 @@ static int	heredoc_reader(char ***new_heredocs, int *cur_heredocs, int fd)
 		
 	buffer = ft_calloc(21, sizeof(char));
 	bread = read(fd, buffer, 20);
-	temp = ft_strdup("");
+	temp = NULL;
 	while (bread > 0)
 	{
 		temp = ft_strjoin_2(temp, buffer);

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:25:24 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 09:43:35 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:26:23 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -68,7 +68,7 @@ char	*ft_strjoin_2(char *s1, char const *s2)
 	s = (char *) malloc (sizeof(char) * (i1 + i2 + 1));
 	if (s == NULL)
 		return (NULL);
-	while (j < i1)
+	while (s1 && j < i1)
 	{
 		s[j] = s1[j];
 		j++;

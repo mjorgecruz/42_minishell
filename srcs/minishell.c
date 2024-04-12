@@ -6,13 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 14:26:02 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:10:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../includes/minishell.h"
 
-int g_signal = 0;
+int g_signal;
 
 int	main(int ac, char **av, char **env)
 {
@@ -27,6 +27,7 @@ int	main(int ac, char **av, char **env)
 	input = NULL;
 	i = 0;
 	switch_sig_function();
+	g_signal = 0;
 	while (1)
 	{
 		input = get_line(input, &heredocs, local_env);

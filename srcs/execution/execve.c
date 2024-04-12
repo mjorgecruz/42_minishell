@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 15:46:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:49:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -92,7 +92,11 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
 	close(fd[0]);
-	ft_printf("%s\n", (*info.heredocs)[info.pos_heredoc]);
+	if ((*info.heredocs)[info.pos_heredoc])
+	{
+		ft_printf("%s", (*info.heredocs)[info.pos_heredoc]);
+		free((*info.heredocs)[info.pos_heredoc]);
+	}
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
 	status = execve(cmds[0], cmds, local->content);
