@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:25:24 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/12 09:26:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:44:31 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,28 +29,23 @@ void	add_partials(char **heredoc, char *str)
 		if (heredoc_line == NULL)
 			return (errors(HEREDOC_EOF, str));
 	}
+	free(heredoc_line);
 	if (!*heredoc)
 	{
 		*heredoc = ft_calloc(2, sizeof(char));
 		*heredoc[0] = '\n';
 	}	
 	else
-		*heredoc = ft_strjoin(*heredoc, "\n");
+		*heredoc = ft_strjoin_2(*heredoc, "\n");
 }
 
 
 void	add_newline_line(char **total_line, char *line_read)
 {
-	char *garbage;
-	
-	garbage = *total_line;
 	if (*total_line != NULL)
 	{
-		*total_line = ft_strjoin(*total_line, "\n");
-		free(garbage);
-		garbage = *total_line;
-		*total_line = ft_strjoin(*total_line, line_read);
-		free(garbage);
+		*total_line = ft_strjoin_2(*total_line, "\n");
+		*total_line = ft_strjoin_2(*total_line, line_read);
 	}
 	else
 		*total_line = line_read;

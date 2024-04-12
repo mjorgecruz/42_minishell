@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 10:22:39 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:37:49 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -45,10 +45,10 @@ int	command_echo(char **cmds, t_localenv *local)
 		n_flag = true;
 	while (cmds[i] != NULL)
 	{
-		exp_temp = cmds[i];
+		exp_temp = ft_strdup(cmds[i]);
 		if (exp_temp)
 		{
-			ft_printf("%s ", exp_temp);
+			ft_printf("%s", exp_temp);
 			free(exp_temp);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/11 14:41:35 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:33:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -107,7 +107,6 @@ typedef struct s_info
 	char	***heredocs;
 	int		pos_heredoc;
 	t_localenv	*local;
-	
 } t_info;
 
 typedef struct s_cmd_info

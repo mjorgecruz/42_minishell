@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/11 08:58:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:44:53 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -46,10 +46,20 @@ char	*get_previous_directory(t_localenv *local)
 
 int	update_directories(t_localenv *local, char *cwd)
 {
-	if (ft_setenv("OLDPWD", ft_getenv("PWD", local->content), local) == -1)
+	char	*pwd;
+
+	pwd = ft_getenv("PWD", local->content);
+	if (ft_setenv("OLDPWD", pwd, local) == -1)
+	{
+		free(pwd);
 		return (-1);
+	}	
 	if (ft_setenv("PWD", cwd, local) == -1)
+	{
+		free(pwd);
 		return (-1);
+	}
+	free(pwd);
 	return (EXIT_SUCCESS);
 }
 
@@ -83,7 +93,7 @@ char *expand_tilde(char *dir, t_localenv *local)
 		}
 		else
 			expanded_dir = space_saver_tilde(home_dir, dir);
-		return (expanded_dir);
+		return (free(home_dir), expanded_dir);
 	}
 	return (ft_strdup(dir));
 }
@@ -113,6 +123,8 @@ int command_cd(char **cmds, t_localenv *local, int err)
 	if (update_directories(local, cwd) == -1)
 		return (ex_code(EXIT_FAILURE));
 	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
+		free(target_dir);
+	else if (target_dir)
 		free(target_dir);
 	return (ex_code(EXIT_SUCCESS));
 }

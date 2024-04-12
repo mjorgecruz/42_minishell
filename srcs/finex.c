@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 10:54:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:12:09 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -47,7 +47,7 @@ int	free_split(char **splitted)
 	int	i;
 
 	i = 0;
-	while (splitted[i] && *splitted[i])
+	while (splitted && splitted[i] && *splitted[i])
 	{
 		free(splitted[i]);
 		i++;
