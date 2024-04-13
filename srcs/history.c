@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 14:37:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 15:15:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -33,6 +33,9 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	{
 		printf("exit\n");
 		free(pwd);
+		free_split(local_env->content);
+		free_split(local_env->sorted);
+		free(local_env);
 		exit(EXIT_SUCCESS);
 	}
 	total_line = line_read;

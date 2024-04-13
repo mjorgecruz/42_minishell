@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/11 15:01:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:42:14 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -168,11 +168,12 @@ char	*ft_getenv(const char *name, char **envp);
 
 
 
-int	command_printenv(char **cmds, t_localenv *local);
-int builtin_errors(char *str1, char *str2, char *str3);
-bool isvar_valid(const char *name);
+int		command_printenv(char **cmds, t_localenv *local);
+int		builtin_errors(char *str1, char *str2, char *str3);
+bool	isvar_valid(const char *name);
 
 
-int ex_code(int code);
+
+int		ex_code(int code);
 
 #endif

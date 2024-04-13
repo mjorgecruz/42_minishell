@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 13:19:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 15:08:21 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,6 +22,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 
 	res = -1;
 	i = 0;
+	info.token = cmd_list;
 	if (cmd_list->down != NULL)
 		commands_sorter(cmd_list->down, info, local);
 	if (cmd_list && cmd_list->cmds)
@@ -31,7 +32,6 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = inter_executioner(cmd_list, info, local, i);
 		else
 			res = mult_cmd_executer(cmd_list, info, local, i);
-		//ft_printf("%d\n", res);
 	}
 	while (cmd_list->next != NULL 
 		&& ((res == 0 && cmd_list->next_type == D_PIPE))) 
@@ -47,6 +47,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 	int			pid;
 	int			stdin;
 	int			fd[2];
+	int			res;
 	
 	stdin = dup(STDIN_FILENO);
 	while (cmd_list->cmds[i].cmds)
@@ -58,7 +59,11 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 			if (pid == 0)
 			{
 				pied_piper(cmd_list, fd, i, &stdin);
-				exit(inter_executioner(cmd_list, info, local, i));
+				res = inter_executioner(cmd_list, info, local, i);
+				free_info_andenv(info);
+    			free_t_token(info.token);
+    			free(info.token);
+				exit(res);
 			}
 			dup2(fd[0], stdin);
 			close(fd[0]);
@@ -101,10 +106,9 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	char		**final_cmds;
 	t_cmd_info	cmd_info;
 	int			j;
+	int			res;
 	
-	(void) local;
-	info.token = cmd_list;
-	//pid = 0;
+	res = 0;
 	j = 0;
 	cmd_info_starter(&cmd_info);
 	while (j < i)
@@ -121,7 +125,8 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 		return (0) ;
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
-	return(all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]));
+	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
+	return (res);
 }
 
 static void cmd_info_starter(t_cmd_info	*cmd_info)
@@ -146,7 +151,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		{
 			switch_sig_default();
 			res = solver(final_cmds, info, cmd_info);
-			//free_info here
+			//command_exit(info, final_cmds);
 			exit(res);
 		}
 		waitpid(pid, &res, 0);

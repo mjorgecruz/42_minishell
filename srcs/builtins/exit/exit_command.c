@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exit_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/13 12:22:33 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/13 15:21:32 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -95,20 +95,30 @@ void    free_info_andenv(t_info info)
 }
 
 // need to implement binary tree free shit for this 
-void free_t_token(t_token tok)
+void free_t_token(t_token *tok)
 { 
+    int i;
 
-    if (tok.content != NULL)
-        free(tok.content);
-    if (tok.cmds->cmds != NULL)
+    i = 0;
+    if (tok)
     {
-        free(tok.cmds->cmds);
-        free(tok.cmds);
+        if (tok->content != NULL)
+            free(tok->content);
+        if (tok->cmds->cmds != NULL)
+        {
+            i = 0;
+            while (tok->cmds[i].cmds)
+            {
+                free(tok->cmds[i].cmds);
+                i++;
+            }
+            free(tok->cmds);
+        }
+        if (tok->down)
+            free_t_token(tok->down);
+        if (tok->next)
+            free_t_token(tok->next);
     }
-    if (tok.down)
-        free_t_token(*tok.down);
-    if (tok.next)
-        free_t_token(*tok.next);
 }
 
 void command_exit(t_info info, char **cmds)
@@ -117,7 +127,7 @@ void command_exit(t_info info, char **cmds)
     if (!exit_args_checker(cmds))
         return ;
     free_info_andenv(info);
-    free_t_token(*info.token);
+    free_t_token(info.token);
     free(info.token);
     free_split(cmds);
     rl_clear_history();
