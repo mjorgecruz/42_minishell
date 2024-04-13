@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 15:15:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:55:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -39,7 +39,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 		exit(EXIT_SUCCESS);
 	}
 	total_line = line_read;
-	if (!join_to_line(&total_line, heredocs))
+	if (!join_to_line(&total_line, heredocs, local_env))
 	{
 		if (total_line && *total_line)
 		{
@@ -53,7 +53,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	return (free(pwd), total_line);
 }
 
-bool	join_to_line(char **total_line, char ***heredocs)
+bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
 	char 	*line_read;
 	int		i;
@@ -62,10 +62,10 @@ bool	join_to_line(char **total_line, char ***heredocs)
 	line_read = "";
 	if(!ft_parser(*total_line, &i))
 	{
-		heredoc_writer(*total_line, heredocs, i);
+		heredoc_writer(*total_line, heredocs, i, local);
 		return (false);
 	}
-	heredoc_writer(*total_line, heredocs, i);
+	heredoc_writer(*total_line, heredocs, i, local);
 	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
 		i = 0;
@@ -86,10 +86,10 @@ bool	join_to_line(char **total_line, char ***heredocs)
 			add_space_line(total_line, line_read);
 			if(!ft_parser(*total_line, &i))
 			{
-				heredoc_writer(*total_line, heredocs, i);
+				heredoc_writer(*total_line, heredocs, i, local);
 				return (false);
 			}
-			heredoc_writer(line_read, heredocs, i);
+			heredoc_writer(line_read, heredocs, i, local);
 		}
 	}
 	i = 0;

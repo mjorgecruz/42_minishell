@@ -6,35 +6,36 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/12 09:30:26 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:40:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../../includes/minishell.h"
 
 static int	heredoc_reader(char ***new_heredocs, int *cur_heredocs, int fd);
-static int	*forking_heredocs(char *final_str, char *line_read, int n_letters, int i);
+static int	*forking_heredocs(char *final_str, t_heredocker heredocker, int n_letters, t_localenv *local);
 static int write_to_fd(char *final_str, char *line_read,int *fd, int n_letters);
 
-int heredoc_creator(char ***new_heredocs, int *cur_heredocs, char *line_read, int i)
+int heredoc_creator(char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local)
 {
 	char	*final_str;
 	int		n_letters;
 	int		*fd;
+	(void)	local;
 
 	final_str = NULL;
-	i = ignore_spaces(line_read, i + 1);
+	heredocker.i = ignore_spaces(heredocker.line_read, heredocker.i + 1);
 	n_letters = 0;
 	(*new_heredocs)[*cur_heredocs] = NULL;
-	if (ft_strchr("\'\"", line_read[i]))
-		i++;
-	fd = forking_heredocs(final_str, line_read, n_letters, i);
+	if (ft_strchr("\'\"", heredocker.line_read[heredocker.i]))
+		heredocker.i++;
+	fd = forking_heredocs(final_str, heredocker, n_letters, local);
 	heredoc_reader(new_heredocs, cur_heredocs, fd[0]);
 	free(fd);
-	return (i);
+	return (heredocker.i);
 }
 
-static int	*forking_heredocs(char *final_str, char *line_read, int n_letters, int i)
+static int	*forking_heredocs(char *final_str, t_heredocker heredocker, int n_letters, t_localenv *local)
 {
 	int		pid;
 	int		*fd;
@@ -42,17 +43,20 @@ static int	*forking_heredocs(char *final_str, char *line_read, int n_letters, in
 	fd = ft_calloc(2, sizeof(int));
 	// j = 0;
 	n_letters = 0;
-	if (ft_strchr("\'\"", line_read[i]))
-		i++;
-	while (!is_space(line_read[i + n_letters]) && !is_special_char(line_read[i+ n_letters])
-		&& line_read[i + n_letters] != '\0' && !ft_strchr("\'\"", line_read[i + n_letters]))
+	if (ft_strchr("\'\"", heredocker.line_read[heredocker.i]))
+		heredocker.i++;
+	while (!is_space(heredocker.line_read[heredocker.i + n_letters]) && !is_special_char(heredocker.line_read[heredocker.i+ n_letters])
+		&& heredocker.line_read[heredocker.i + n_letters] != '\0' && !ft_strchr("\'\"", heredocker.line_read[heredocker.i + n_letters]))
 		n_letters++;
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		switch_sig_default();
-		write_to_fd(final_str, &line_read[i], fd, n_letters);
+		write_to_fd(final_str, &(heredocker.line_read[heredocker.i]), fd, n_letters);
+		free_split(local->content);
+		free_split(local->sorted);
+		free(local);
 		exit(EXIT_SUCCESS);
 	}
 	switch_sig_function();

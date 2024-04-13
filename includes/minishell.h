@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/13 14:11:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:28:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -118,6 +118,16 @@ typedef struct s_cmd_info
 	t_builtin	id;	
 }	t_cmd_info;
 
+typedef struct s_heredocker
+{
+	char ***heredocs;
+	int n_heredocs;
+	char *line_read;
+	int i;
+}	t_heredocker;
+
+
+
 /*Definition of error cases*/
 enum e_ERRORS
 {
@@ -165,7 +175,7 @@ Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
 char		*get_line(char *total_line, char ***heredocs, t_localenv *local_env);
 
-bool		join_to_line(char **total_line, char ***heredocs);
+bool		join_to_line(char **total_line, char ***heredocs, t_localenv *local);
 
 bool		end_pipe_and(char *total_line);
 
@@ -208,19 +218,19 @@ bool		parser_quotes(char *input, int *i);
 /* ************************************************************************** */
 
 /**/
-void	general_executer(char *input, char ***heredocs, t_localenv *local_env);
+void		general_executer(char *input, char ***heredocs, t_localenv *local_env);
 
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
 
 /*function used to divide the full line read into parts separated by pipes*/
-void			command_divider(t_token **list, char *input, t_type	type, t_token *token);
+void		command_divider(t_token **list, char *input, t_type	type, t_token *token);
 
-t_type type_definer(char *input, int *i);
+t_type		type_definer(char *input, int *i);
 
-bool token_has_par(t_token *token);
+bool		token_has_par(t_token *token);
 
-char *trim_string(char *str);
+char 		*trim_string(char *str);
 /*Function to find the next '"' or '''*/ 
 int			find_next(char *input, int init_pos);
 
@@ -229,7 +239,7 @@ t_token		*create_node(int init, int end, char *input, t_type type);
 
 int			find_closed(char *input, int i);
 
-t_token *token_creator (int i, int j, char *input, int type);
+t_token 	*token_creator (int i, int j, char *input, int type);
 
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */
@@ -274,7 +284,7 @@ t_builtin	get_builtin_id(const char *str);
 
 /*gest the previous function working and seting the structure id of the comand
 to the correct comand enum id flag*/
-void	set_id_flag_cmd(char **cmd, t_builtin *id);
+void		set_id_flag_cmd(char **cmd, t_builtin *id);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
@@ -284,13 +294,13 @@ int			exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cm
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
 
-int             inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
+int			inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
-int				mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
+int			mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
-int		waiter_function(t_token *cmd_list);
+int			waiter_function(t_token *cmd_list);
 
-int		pied_piper(t_token *cmd_list, int *fd, int i, int *stdin);
+int			pied_piper(t_token *cmd_list, int *fd, int i, int *stdin);
 
 /* ************************************************************************** */
 /*                                    ERRORS                                  */
@@ -337,21 +347,21 @@ void		add_token(t_token **tokens, t_token *new);
 /*                                    HEREDOCS                                */
 /* ************************************************************************** */
 
-void		heredoc_writer(char *line_read, char ***heredocs, int i);
+void		heredoc_writer(char *line_read, char ***heredocs, int i, t_localenv *local);
 
 int			heredoc_counter(char *line_read, int i);
 
-int			adjust_heredocs(char ***heredocs, int n_heredocs, char *line_read, int i);
+int			adjust_heredocs(t_heredocker heredocker, t_localenv *local);
 
 void		add_newline_line(char **total_line, char *line_read);
 
-void		add_heredocs(char ***new_heredocs, int j, char *line_read, int i);
+void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
 
 void		add_partials(char **heredoc, char *str);
 
-int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, char *line_read, int i);
+int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local);
 
-char	*ft_strjoin_2(char *s1, char const *s2);
+char		*ft_strjoin_2(char *s1, char const *s2);
 
 /* ************************************************************************** */
 /*                             PARSER_PARENTHESIS                             */
