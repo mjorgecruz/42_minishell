@@ -1,102 +1,20 @@
-==75337== Memcheck, a memory error detector
-==75337== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==75337== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==75337== Command: ./minishell
-==75337== Parent PID: 75336
-==75337== 
-==75482== 
-==75482== HEAP SUMMARY:
-==75482==     in use at exit: 204,239 bytes in 225 blocks
-==75482==   total heap usage: 5,442 allocs, 5,217 frees, 301,157 bytes allocated
-==75482== 
-==75482== 8 bytes in 1 blocks are still reachable in loss record 4 of 66
-==75482==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75482==    by 0x40E6ED: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
-==75482==    by 0x403499: forking_heredocs (heredocs_3.c:43)
-==75482==    by 0x40343E: heredoc_creator (heredocs_3.c:32)
-==75482==    by 0x403079: add_heredocs (heredocs.c:90)
-==75482==    by 0x402F5B: adjust_heredocs (heredocs.c:72)
-==75482==    by 0x402E2F: heredoc_writer (heredocs.c:44)
-==75482==    by 0x401777: join_to_line (history.c:68)
-==75482==    by 0x401618: get_line (history.c:42)
-==75482==    by 0x401358: main (minishell.c:33)
-==75482== 
-==75482== 16 bytes in 1 blocks are still reachable in loss record 12 of 66
-==75482==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75482==    by 0x402EBE: adjust_heredocs (heredocs.c:63)
-==75482==    by 0x402E2F: heredoc_writer (heredocs.c:44)
-==75482==    by 0x401777: join_to_line (history.c:68)
-==75482==    by 0x401618: get_line (history.c:42)
-==75482==    by 0x401358: main (minishell.c:33)
-==75482== 
-==75482== 58 bytes in 1 blocks are still reachable in loss record 19 of 66
-==75482==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75482==    by 0x40F04A: ft_strjoin (in /home/masoares/Documents/mega_minishell/minishell/minishell)
-==75482==    by 0x4016DA: create_pc_name (history.c:177)
-==75482==    by 0x4015A0: get_line (history.c:30)
-==75482==    by 0x401358: main (minishell.c:33)
-==75482== 
-==75482== LEAK SUMMARY:
-==75482==    definitely lost: 0 bytes in 0 blocks
-==75482==    indirectly lost: 0 bytes in 0 blocks
-==75482==      possibly lost: 0 bytes in 0 blocks
-==75482==    still reachable: 82 bytes in 3 blocks
-==75482==         suppressed: 204,157 bytes in 222 blocks
-==75482== 
-==75482== For lists of detected and suppressed errors, rerun with: -s
-==75482== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==75569== 
-==75569== HEAP SUMMARY:
-==75569==     in use at exit: 208,301 bytes in 229 blocks
-==75569==   total heap usage: 5,469 allocs, 5,240 frees, 305,728 bytes allocated
-==75569== 
-==75569== 8 bytes in 1 blocks are still reachable in loss record 4 of 70
-==75569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75569==    by 0x40E6ED: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
-==75569==    by 0x403499: forking_heredocs (heredocs_3.c:43)
-==75569==    by 0x40343E: heredoc_creator (heredocs_3.c:32)
-==75569==    by 0x403079: add_heredocs (heredocs.c:90)
-==75569==    by 0x402F5B: adjust_heredocs (heredocs.c:72)
-==75569==    by 0x402E2F: heredoc_writer (heredocs.c:44)
-==75569==    by 0x401777: join_to_line (history.c:68)
-==75569==    by 0x401618: get_line (history.c:42)
-==75569==    by 0x401358: main (minishell.c:33)
-==75569== 
-==75569== 16 bytes in 1 blocks are still reachable in loss record 14 of 70
-==75569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75569==    by 0x402EBE: adjust_heredocs (heredocs.c:63)
-==75569==    by 0x402E2F: heredoc_writer (heredocs.c:44)
-==75569==    by 0x401777: join_to_line (history.c:68)
-==75569==    by 0x401618: get_line (history.c:42)
-==75569==    by 0x401358: main (minishell.c:33)
-==75569== 
-==75569== 58 bytes in 1 blocks are still reachable in loss record 22 of 70
-==75569==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==75569==    by 0x40F04A: ft_strjoin (in /home/masoares/Documents/mega_minishell/minishell/minishell)
-==75569==    by 0x4016DA: create_pc_name (history.c:177)
-==75569==    by 0x4015A0: get_line (history.c:30)
-==75569==    by 0x401358: main (minishell.c:33)
-==75569== 
-==75569== LEAK SUMMARY:
-==75569==    definitely lost: 0 bytes in 0 blocks
-==75569==    indirectly lost: 0 bytes in 0 blocks
-==75569==      possibly lost: 0 bytes in 0 blocks
-==75569==    still reachable: 82 bytes in 3 blocks
-==75569==         suppressed: 208,219 bytes in 226 blocks
-==75569== 
-==75569== For lists of detected and suppressed errors, rerun with: -s
-==75569== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==75337== 
-==75337== HEAP SUMMARY:
-==75337==     in use at exit: 208,402 bytes in 231 blocks
-==75337==   total heap usage: 5,585 allocs, 5,354 frees, 373,289 bytes allocated
-==75337== 
-==75337== LEAK SUMMARY:
-==75337==    definitely lost: 0 bytes in 0 blocks
-==75337==    indirectly lost: 0 bytes in 0 blocks
-==75337==      possibly lost: 0 bytes in 0 blocks
-==75337==    still reachable: 0 bytes in 0 blocks
-==75337==         suppressed: 208,402 bytes in 231 blocks
-==75337== 
-==75337== For lists of detected and suppressed errors, rerun with: -s
-==75337== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==90353== Memcheck, a memory error detector
+==90353== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==90353== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==90353== Command: ./minishell
+==90353== Parent PID: 90352
+==90353== 
+==90397== 
+==90397== HEAP SUMMARY:
+==90397==     in use at exit: 204,170 bytes in 223 blocks
+==90397==   total heap usage: 5,859 allocs, 5,636 frees, 307,075 bytes allocated
+==90397== 
+==90397== LEAK SUMMARY:
+==90397==    definitely lost: 0 bytes in 0 blocks
+==90397==    indirectly lost: 0 bytes in 0 blocks
+==90397==      possibly lost: 0 bytes in 0 blocks
+==90397==    still reachable: 0 bytes in 0 blocks
+==90397==         suppressed: 204,170 bytes in 223 blocks
+==90397== 
+==90397== For lists of detected and suppressed errors, rerun with: -s
+==90397== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

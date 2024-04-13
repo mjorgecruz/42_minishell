@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 19:30:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 22:15:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -48,7 +48,6 @@ int		adjust_heredocs(t_heredocker heredocker, t_localenv *local)
 {
 	int		k;
 	int		total_heredocs;
-	//t_heredocker new_heredocker;
 	char	**new_heredocs;
 	int		j;
 

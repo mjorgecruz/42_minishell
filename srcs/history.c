@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 17:55:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 22:25:39 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,10 +29,11 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	rl_event_hook = event;
 	pwd = create_pc_name(local_env);
 	line_read = readline(pwd);
+	free(pwd);
 	if (!line_read)
 	{
 		printf("exit\n");
-		free(pwd);
+		//free(pwd);
 		free_split(local_env->content);
 		free_split(local_env->sorted);
 		free(local_env);
@@ -50,7 +51,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	}
 	if (total_line)
 		add_history(total_line);	
-	return (free(pwd), total_line);
+	return (total_line);
 }
 
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
