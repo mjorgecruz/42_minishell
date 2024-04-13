@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/04 16:51:10 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:29:55 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,40 @@
 
 #include "../../includes/minishell.h"
 
+
+void	code_2(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	ex_code(2);
+}
+
 void	errors(int error_code, char *cmd)
 {
 	if (error_code == SYNTAX_NEWLINE)
-		ft_printf("minishell:syntax error near unexpected token `newline'\n");
+		code_2("newline");
 	else if (error_code == SYNTAX_CLOSE_P)
-		ft_printf("minishell:syntax error near unexpected token `)'\n");
+		code_2(")");
 	else if (error_code == SYNTAX_OPEN_P)
-		ft_printf("minishell:syntax error near unexpected token `('\n");
+		code_2("(");
 	else if (error_code == SYNTAX_PIPE)
-		ft_printf("minishell:syntax error near unexpected token `|'\n");
+		code_2("|");
 	else if (error_code == SYNTAX_D_PIPE)
-		printf("minishell:syntax error near unexpected token `||'\n");
+		code_2("||");
 	else if (error_code == SYNTAX_PIPE_AMP)
-		ft_printf("minishell:syntax error near unexpected token `|&'\n");
+		code_2("|&");
 	else if (error_code == SYNTAX_AMP)
-		ft_printf("minishell:syntax error near unexpected token `&'\n");
+		code_2("&");
 	else if (error_code == SYNTAX_D_AMP)
-		ft_printf("minishell:syntax error near unexpected token `&&'\n");
+		code_2("&&");
 	else if (error_code == SYNTAX_AMP_PIPE)
-		ft_printf("minishell:syntax error near unexpected token `||'\n");
+		code_2("||");
 	else if (error_code == SYNTAX_CMD)
-		ft_printf("minishell:syntax error near unexpected token `%s'\n", cmd);
+		code_2(cmd);
 	else if (error_code == SYNTAX_ASP)
-		ft_printf("minishell:syntax error near unexpected token `\"'\n");
+		code_2("\"");
 	else
 		errors_2(error_code, cmd);
 }
@@ -45,22 +55,26 @@ void	errors(int error_code, char *cmd)
 void	errors_2(int error_code, char *cmd)
 {
 	if (error_code == SYNTAX_L_S_REDIR)
-		ft_printf("minishell:syntax error near unexpected token `<'\n");
+		code_2("<");
 	else if (error_code == SYNTAX_S_ASP)
-		ft_printf("minishell:syntax error near unexpected token `\''\n");
+		code_2("\'");
 	else if (error_code == SYNTAX_R_S_REDIR)
-		ft_printf("minishell:syntax error near unexpected token `>'\n");
+		code_2(">");
 	else if (error_code == SYNTAX_L_D_REDIR)
-		ft_printf("minishell:syntax error near unexpected token `<<'\n");
+		code_2("<<");
 	else if (error_code == SYNTAX_R_D_REDIR)
-		ft_printf("minishell:syntax error near unexpected token `>>'\n");
+		code_2(">>");
 	else if (error_code == SYNTAX_BACKSLASH)
-		ft_printf("minishell:syntax error near unexpected token `\\'\n");
+		code_2("\\");
 	else if (error_code == SYNTAX_COLON)
-		ft_printf("minishell:syntax error near unexpected token `;'\n");
+		code_2(";");
 	else if (error_code == HEREDOC_EOF)
-		ft_printf("minishell:warning: here-document delimited\
-by end-of-file (wanted `%s')\n", cmd);
+	{
+		builtin_errors("warning: here-document delimited by end-of-file (wanted `", "", "");
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd("')", STDERR_FILENO);
+		ex_code(2);
+	}
 }
 
 int	error_definer(char *cmd)
@@ -87,7 +101,6 @@ int	error_definer(char *cmd)
 		j = ignore_spaces(cmd, j + 2);
 	while (cmd[j] && i < 2 && is_special_char(cmd[j]))
 		err[i++] = cmd[j++];
-	return \
-	(printf("minishell:syntax error near unexpected token `%s'\n", err), 1);
+	return (code_2(err), 1);
 }
 
