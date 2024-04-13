@@ -1,6 +1,194 @@
-==212420== Memcheck, a memory error detector
-==212420== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==212420== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==212420== Command: ./minishell
-==212420== Parent PID: 212419
-==212420== 
+==285200== Memcheck, a memory error detector
+==285200== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==285200== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==285200== Command: ./minishell
+==285200== Parent PID: 285199
+==285200== 
+==285822== 
+==285822== HEAP SUMMARY:
+==285822==     in use at exit: 218,897 bytes in 433 blocks
+==285822==   total heap usage: 1,000 allocs, 567 frees, 291,686 bytes allocated
+==285822== 
+==285822== 744 bytes in 1 blocks are definitely lost in loss record 51 of 95
+==285822==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285822==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285822==    by 0x111FA2: env_init (export_envcpy.c:34)
+==285822==    by 0x10955A: main (minishell.c:26)
+==285822== 
+==285822== 744 bytes in 1 blocks are definitely lost in loss record 52 of 95
+==285822==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285822==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285822==    by 0x111FB5: env_init (export_envcpy.c:35)
+==285822==    by 0x10955A: main (minishell.c:26)
+==285822== 
+==285822== LEAK SUMMARY:
+==285822==    definitely lost: 1,488 bytes in 2 blocks
+==285822==    indirectly lost: 0 bytes in 0 blocks
+==285822==      possibly lost: 0 bytes in 0 blocks
+==285822==    still reachable: 8,548 bytes in 194 blocks
+==285822==         suppressed: 208,861 bytes in 237 blocks
+==285822== Reachable blocks (those to which a pointer was found) are not shown.
+==285822== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==285822== 
+==285822== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--285822-- 
+--285822-- used_suppression:     74 leak readline sup:10 suppressed: 204,782 bytes in 233 blocks
+--285822-- used_suppression:      4 leak add_history sup:16 suppressed: 4,079 bytes in 4 blocks
+==285822== 
+==285822== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==285823== 
+==285823== HEAP SUMMARY:
+==285823==     in use at exit: 218,897 bytes in 433 blocks
+==285823==   total heap usage: 1,004 allocs, 571 frees, 291,927 bytes allocated
+==285823== 
+==285823== 744 bytes in 1 blocks are definitely lost in loss record 51 of 95
+==285823==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285823==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285823==    by 0x111FA2: env_init (export_envcpy.c:34)
+==285823==    by 0x10955A: main (minishell.c:26)
+==285823== 
+==285823== 744 bytes in 1 blocks are definitely lost in loss record 52 of 95
+==285823==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285823==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285823==    by 0x111FB5: env_init (export_envcpy.c:35)
+==285823==    by 0x10955A: main (minishell.c:26)
+==285823== 
+==285823== LEAK SUMMARY:
+==285823==    definitely lost: 1,488 bytes in 2 blocks
+==285823==    indirectly lost: 0 bytes in 0 blocks
+==285823==      possibly lost: 0 bytes in 0 blocks
+==285823==    still reachable: 8,548 bytes in 194 blocks
+==285823==         suppressed: 208,861 bytes in 237 blocks
+==285823== Reachable blocks (those to which a pointer was found) are not shown.
+==285823== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==285823== 
+==285823== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--285823-- 
+--285823-- used_suppression:     74 leak readline sup:10 suppressed: 204,782 bytes in 233 blocks
+--285823-- used_suppression:      4 leak add_history sup:16 suppressed: 4,079 bytes in 4 blocks
+==285823== 
+==285823== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==286031== 
+==286031== HEAP SUMMARY:
+==286031==     in use at exit: 220,477 bytes in 440 blocks
+==286031==   total heap usage: 1,224 allocs, 784 frees, 300,858 bytes allocated
+==286031== 
+==286031== 744 bytes in 1 blocks are definitely lost in loss record 47 of 93
+==286031==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286031==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==286031==    by 0x111FA2: env_init (export_envcpy.c:34)
+==286031==    by 0x10955A: main (minishell.c:26)
+==286031== 
+==286031== 744 bytes in 1 blocks are definitely lost in loss record 48 of 93
+==286031==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286031==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==286031==    by 0x111FB5: env_init (export_envcpy.c:35)
+==286031==    by 0x10955A: main (minishell.c:26)
+==286031== 
+==286031== 752 bytes in 1 blocks are definitely lost in loss record 49 of 93
+==286031==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286031==    by 0x111ECA: ft_memalloc (export_utils.c:44)
+==286031==    by 0x1115C5: copy_environment (export.c:53)
+==286031==    by 0x111715: add_variable (export.c:83)
+==286031==    by 0x111AA8: command_export (export.c:173)
+==286031==    by 0x10EE51: exec_correct_builtin (out_setup_general.c:200)
+==286031==    by 0x10D542: solver (solver.c:28)
+==286031==    by 0x10EABF: all_data_to_solver (out_setup_general.c:152)
+==286031==    by 0x10E98F: inter_executioner (out_setup_general.c:122)
+==286031==    by 0x10E50D: commands_sorter (out_setup_general.c:31)
+==286031==    by 0x10F036: general_executer (general_executor.c:41)
+==286031==    by 0x109612: main (minishell.c:39)
+==286031== 
+==286031== 752 bytes in 1 blocks are definitely lost in loss record 50 of 93
+==286031==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286031==    by 0x111ECA: ft_memalloc (export_utils.c:44)
+==286031==    by 0x1115C5: copy_environment (export.c:53)
+==286031==    by 0x111B9B: add_var_cont (export.c:192)
+==286031==    by 0x111ABF: command_export (export.c:173)
+==286031==    by 0x10EE51: exec_correct_builtin (out_setup_general.c:200)
+==286031==    by 0x10D542: solver (solver.c:28)
+==286031==    by 0x10EABF: all_data_to_solver (out_setup_general.c:152)
+==286031==    by 0x10E98F: inter_executioner (out_setup_general.c:122)
+==286031==    by 0x10E50D: commands_sorter (out_setup_general.c:31)
+==286031==    by 0x10F036: general_executer (general_executor.c:41)
+==286031==    by 0x109612: main (minishell.c:39)
+==286031== 
+==286031== LEAK SUMMARY:
+==286031==    definitely lost: 2,992 bytes in 4 blocks
+==286031==    indirectly lost: 0 bytes in 0 blocks
+==286031==      possibly lost: 0 bytes in 0 blocks
+==286031==    still reachable: 8,572 bytes in 196 blocks
+==286031==         suppressed: 208,913 bytes in 240 blocks
+==286031== Reachable blocks (those to which a pointer was found) are not shown.
+==286031== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==286031== 
+==286031== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+--286031-- 
+--286031-- used_suppression:     74 leak readline sup:10 suppressed: 204,834 bytes in 236 blocks
+--286031-- used_suppression:      4 leak add_history sup:16 suppressed: 4,079 bytes in 4 blocks
+==286031== 
+==286031== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==286032== 
+==286032== HEAP SUMMARY:
+==286032==     in use at exit: 218,949 bytes in 436 blocks
+==286032==   total heap usage: 1,038 allocs, 602 frees, 292,685 bytes allocated
+==286032== 
+==286032== 744 bytes in 1 blocks are definitely lost in loss record 51 of 95
+==286032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286032==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==286032==    by 0x111FA2: env_init (export_envcpy.c:34)
+==286032==    by 0x10955A: main (minishell.c:26)
+==286032== 
+==286032== 744 bytes in 1 blocks are definitely lost in loss record 52 of 95
+==286032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==286032==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==286032==    by 0x111FB5: env_init (export_envcpy.c:35)
+==286032==    by 0x10955A: main (minishell.c:26)
+==286032== 
+==286032== LEAK SUMMARY:
+==286032==    definitely lost: 1,488 bytes in 2 blocks
+==286032==    indirectly lost: 0 bytes in 0 blocks
+==286032==      possibly lost: 0 bytes in 0 blocks
+==286032==    still reachable: 8,548 bytes in 194 blocks
+==286032==         suppressed: 208,913 bytes in 240 blocks
+==286032== Reachable blocks (those to which a pointer was found) are not shown.
+==286032== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==286032== 
+==286032== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--286032-- 
+--286032-- used_suppression:     74 leak readline sup:10 suppressed: 204,834 bytes in 236 blocks
+--286032-- used_suppression:      4 leak add_history sup:16 suppressed: 4,079 bytes in 4 blocks
+==286032== 
+==286032== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==285200== 
+==285200== HEAP SUMMARY:
+==285200==     in use at exit: 218,755 bytes in 428 blocks
+==285200==   total heap usage: 1,027 allocs, 599 frees, 292,529 bytes allocated
+==285200== 
+==285200== 744 bytes in 1 blocks are definitely lost in loss record 44 of 88
+==285200==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285200==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285200==    by 0x111FA2: env_init (export_envcpy.c:34)
+==285200==    by 0x10955A: main (minishell.c:26)
+==285200== 
+==285200== 744 bytes in 1 blocks are definitely lost in loss record 45 of 88
+==285200==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==285200==    by 0x1121F8: copy_environment_variables (export_envcpy.c:103)
+==285200==    by 0x111FB5: env_init (export_envcpy.c:35)
+==285200==    by 0x10955A: main (minishell.c:26)
+==285200== 
+==285200== LEAK SUMMARY:
+==285200==    definitely lost: 1,488 bytes in 2 blocks
+==285200==    indirectly lost: 0 bytes in 0 blocks
+==285200==      possibly lost: 0 bytes in 0 blocks
+==285200==    still reachable: 8,406 bytes in 189 blocks
+==285200==         suppressed: 208,861 bytes in 237 blocks
+==285200== Reachable blocks (those to which a pointer was found) are not shown.
+==285200== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==285200== 
+==285200== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+--285200-- 
+--285200-- used_suppression:     71 leak readline sup:10 suppressed: 204,782 bytes in 233 blocks
+--285200-- used_suppression:      4 leak add_history sup:16 suppressed: 4,079 bytes in 4 blocks
+==285200== 
+==285200== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 15:38:33 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 11:28:33 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -100,11 +100,9 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 {
 	char		**final_cmds;
 	t_cmd_info	cmd_info;
-	int			pid;
 	int			j;
 	
 	(void) local;
-	pid = 0;
 	j = 0;
 	cmd_info_starter(&cmd_info);
 	while (j < i)
@@ -146,6 +144,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		{
 			switch_sig_default();
 			res = solver(final_cmds, info, cmd_info);
+			//free_info here
 			exit(res);
 		}
 		waitpid(pid, &res, 0);

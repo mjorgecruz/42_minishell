@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/12 12:44:53 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 11:13:33 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -115,13 +115,13 @@ int command_cd(char **cmds, t_localenv *local, int err)
 		return (ex_code(EXIT_FAILURE));
 	err = change_directory(target_dir);
 	if (err == 13)
-		return (ex_code(builtin_errors("cd: ", "", ": Permission denied\n")));
-	if (err == 2)
-		return (ex_code(builtin_errors("cd: ", cmds[1], ": no such file or directory\n")));
+		return (free(target_dir), ex_code(builtin_errors("cd: ", "", ": Permission denied\n")));
+	if (err == 20)
+		return (free(target_dir), ex_code(builtin_errors("cd: ", cmds[1], ": no such file or directory\n")));
 	if (!getcwd(cwd, sizeof(cwd)))
-		return (ex_code(EXIT_FAILURE));
+		return (free(target_dir), ex_code(EXIT_FAILURE));
 	if (update_directories(local, cwd) == -1)
-		return (ex_code(EXIT_FAILURE));
+		return (free(target_dir), ex_code(EXIT_FAILURE));
 	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
 		free(target_dir);
 	else if (target_dir)

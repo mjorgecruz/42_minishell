@@ -43,3 +43,8 @@
 
 heredoc with "" ''
 >|
+execve errors
+cd + export
+errors not appearing for cd
+syntax errors are in printfs
+free the info in the all_data_to_solver function in out_setup_general
