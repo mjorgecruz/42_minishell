@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/11 10:30:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:09:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,7 +21,8 @@ int	heredoc_counter(char *line_read, int i)
 	j = 0;
 	while (line_read[j] && j <= i)
 	{
-		if (j - 1 >= 0 && line_read[j] == '<' && line_read[j - 1] == '<')
+		j = ignore_in_quotes(line_read, j);
+		if (j - 1 >= 0 && line_read[j] && line_read[j] == '<' && line_read[j - 1] == '<')
 			heredocs++;
 		j++;
 	}
