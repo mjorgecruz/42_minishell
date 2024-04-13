@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 18:20:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:47:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 		free_split(cmds);
 	}
 	free_split(p_path);
+	ft_printf("%d", g_signal);
 	return (g_signal);
 }
 
