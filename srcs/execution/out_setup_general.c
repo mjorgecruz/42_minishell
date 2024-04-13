@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 15:08:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:09:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -151,13 +151,17 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		{
 			switch_sig_default();
 			res = solver(final_cmds, info, cmd_info);
-			//command_exit(info, final_cmds);
+			free_info_andenv(info);
+			free_t_token(info.token);
+			free(info.token);
 			exit(res);
 		}
 		waitpid(pid, &res, 0);
 	}
 	else	
+	{
 		res = solver(final_cmds, info, cmd_info);
+	}
 	return(free_split(final_cmds), res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 13:46:02 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:35:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -33,7 +33,7 @@ t_localenv	*env_init(char **envirion)
 	}
 	new->content = copy_environment_variables(envirion);
 	new->sorted = copy_environment_variables(envirion);
-	sort_strings(new->sorted);
+	sort_strings(new->sorted, 0, 0, 0);
 	return (new);
 }
 
@@ -64,22 +64,34 @@ char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
 alphabeticaly sorts the array of strings passed to it
 used to organize environment varibles order for the export command
  */
-void	sort_strings(char **strings)
-{
-	int	i;
-	int	j;
 
-	i = -1;
-	while (strings[++i] != NULL)
+void sort_strings(char **strings, int i, int j, int k)
+{
+    char *temp;
+	char *var_name1;
+    char *var_name2;
+
+    while (strings[j] != NULL)
+        j++;
+    while (i < j - 1)
 	{
-		j = i + 1;
-		while (strings[j] != NULL)
+        k = 0;
+        while (k < j - i - 1)
 		{
-			if (ft_strcmp(strings[i], strings[j]) > 0)
-				swap_strings(&strings[i], &strings[j]);
-			j++;
-		}
-	}
+            var_name1 = extract_variable_name(strings[k]);
+            var_name2 = extract_variable_name(strings[k + 1]);
+            if (ft_strncmp(var_name1, var_name2, ft_strlen(var_name1)) > 0)
+			{
+                temp = strings[k];
+                strings[k] = strings[k + 1];
+                strings[k + 1] = temp;
+            }
+            free(var_name1);
+            free(var_name2);
+            k++;
+        }
+        i++;
+    }
 }
 
 /*

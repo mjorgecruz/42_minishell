@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/13 13:42:14 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:27:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -136,7 +136,7 @@ char	**copy_env_var_utils(char **env, int num_vars, char **env_copy);
 char	**copy_environment_variables(char **environ);
 int		print_sorted_strings(char **sorted);
 void	put_quotes_expdr(char **arrstr);
-void	sort_strings(char **strings);
+void	sort_strings(char **strings, int i, int j, int k);
 
 /* ************************************************************************** */
 /*                             EXPORT_UTILS_SORT.c                            */

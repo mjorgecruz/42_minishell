@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 14:08:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:00:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -168,14 +168,25 @@ char	*create_file_name(char *cmd, int *i)
 char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 {
 	char	*clean;
-	char 	*trav;
+	char 	**trav;
 	char	**final_cmds;
+	int		i;
 
 	clean = clean_str(full_cmds->cmds);
-	trav = master_expander_out(clean, local);
-	final_cmds = ft_split_ignore_quotes(trav, " ");
+	trav = ft_split_ignore_quotes(clean, " ");
+	i = 0;
+	while (trav[i])
+		i++; 
+	final_cmds = (char **)malloc(sizeof(char *) * (i + 1));
+	final_cmds[i] = 0;
+	i = 0;
+	while (trav[i])
+	{
+		final_cmds[i] = master_expander_out(trav[i], local);
+		i++;
+	}
 	free(clean);
-	free(trav);
+	free_split(trav);
 	return (final_cmds);
 }
 

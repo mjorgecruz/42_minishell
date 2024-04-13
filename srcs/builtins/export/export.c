@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 14:00:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:14:20 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -94,6 +94,7 @@ int	add_variable(const char *variable, t_localenv *local)
 	num_vars = -1;
 	while (local->sorted[++num_vars])
 		free(local->sorted[num_vars]);
+	free(local->sorted);
 	local->sorted = new_env;
 	return (EXIT_SUCCESS);
 }
@@ -203,6 +204,7 @@ int	add_var_cont(const char *variable, t_localenv *local)
 	num_vars = -1;
 	while (local->content[++num_vars])
 		free(local->content[num_vars]);
+	free(local->content);
 	local->content = new_env;
 	return (EXIT_SUCCESS);
 }

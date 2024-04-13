@@ -44,9 +44,9 @@
 heredoc with "" ''
 >|
 execve errors
-cd + export
-errors not appearing for cd
 syntax errors are in printfs
-free the info in the all_data_to_solver function in out_setup_general
+V  cd + export
+V  errors not appearing for cd
+V  free the info in the all_data_to_solver function in out_setup_general
 words get separated inside aspas on export var="fsajgaf akdas"
  
