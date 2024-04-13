@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/13 19:28:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 22:39:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -408,7 +408,7 @@ int			execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local);
 
 int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
 
-void 		test_commands(char **cmds, char **p_path);
+char	*test_commands(char **cmds, char **p_path);
 
 /* ************************************************************************** */
 /*                                  MEGASPLIT                                 */
