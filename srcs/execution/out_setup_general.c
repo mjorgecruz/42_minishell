@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 11:28:33 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:19:30 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -103,6 +103,8 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	int			j;
 	
 	(void) local;
+	info.token = cmd_list;
+	//pid = 0;
 	j = 0;
 	cmd_info_starter(&cmd_info);
 	while (j < i)
@@ -206,7 +208,7 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == PRINTENV)
 		return (command_printenv(cmds, local));
 	else if (id == EXIT)
-		command_exit(info);
+		command_exit(info, cmds);
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)

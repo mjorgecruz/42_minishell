@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/12 12:37:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:18:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -57,9 +57,3 @@ int	command_echo(char **cmds, t_localenv *local)
 		ft_printf("\n");
     return (ex_code(EXIT_SUCCESS));
 }
-
-//
-
-//
-
-//
