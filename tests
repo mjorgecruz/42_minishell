@@ -48,5 +48,5 @@ V  cd + export
 V  errors not appearing for cd
 V  free the info in the all_data_to_solver function in out_setup_general
 V  words get separated inside aspas on export var="fsajgaf akdas"
-leaks on heredocs from env_list
+V  leaks on heredocs from env_list
 heredoc with "" ''
