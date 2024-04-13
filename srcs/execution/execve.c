@@ -1,22 +1,31 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/12 09:49:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:20:55 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void exec_not(char *cmd)
+{
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	ex_code(127);
+}
 
 int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
 {
 	char	**p_path;
 	char	*paths;
+	char *origin_cmd;
 	
+	origin_cmd = NULL;
 	paths = ft_getenv("PATH", local->content);
 	p_path = ft_split(paths, ':');
 	free(paths);
@@ -24,16 +33,21 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 		ex_code(execve_decider(cmds, local, info, cmd_info));
 	else
 	{
-		test_commands(cmds, p_path);
-		ex_code(execve_decider(cmds, local, info, cmd_info));
-		//printf("%d", g_signal);
+		origin_cmd = test_commands(cmds, p_path);
+		if (!origin_cmd)
+			ex_code(execve_decider(cmds, local, info, cmd_info));
+		else
+		{
+			exec_not(origin_cmd);
+			free(origin_cmd);	
+		}
 		free_split(cmds);
 	}
 	free_split(p_path);
 	return (g_signal);
 }
 
-void test_commands(char **cmds, char **p_path)
+char	*test_commands(char **cmds, char **p_path)
 {
 	char	*line;
 	char	*cmd_0;
@@ -54,7 +68,10 @@ void test_commands(char **cmds, char **p_path)
 		free(line);
 		i++;
 	}
-	free (cmd_0);
+	if (p_path[i])
+		return (free(cmd_0), NULL);
+	else
+		return(cmd_0);
 }
 
 int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
@@ -70,6 +87,7 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	else
 	{
 		status = execve(cmds[0], cmds, local->content);
+		exec_not(cmds[0]); //perror
 		error = errno;
 	}
 	if (status == -1)
@@ -100,6 +118,7 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
 	status = execve(cmds[0], cmds, local->content);
+	exec_not(cmds[0]);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
 	return (status);
@@ -115,7 +134,7 @@ int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 	int 	status;
 
 	(void) info;
-	bread = 1; // also added this shit check it
+	bread = 1;
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	pipe(fd);
@@ -131,6 +150,7 @@ int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
 	status = execve(cmds[0], cmds, local->content);
+	exec_not(cmds[0]);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
 	return (status);

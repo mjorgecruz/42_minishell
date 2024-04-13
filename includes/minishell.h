@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/13 14:11:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:13:25 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 extern int g_signal;
 
@@ -398,7 +398,7 @@ int			execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local);
 
 int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
 
-void 		test_commands(char **cmds, char **p_path);
+char	*test_commands(char **cmds, char **p_path);
 
 /* ************************************************************************** */
 /*                                  MEGASPLIT                                 */

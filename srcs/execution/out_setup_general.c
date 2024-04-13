@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 16:09:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:27:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -221,6 +221,6 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
-		return(command_execve(cmds, local, info, cmd_info));
+		return(ex_code(command_execve(cmds, local, info, cmd_info)));
 	return (1);
 }
