@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:08:39 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 11:59:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:13:54 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,13 +15,24 @@
 int     wildcard_checker(char *str)
 {
 	int     i;
+	int		j;
 
 	i = 0;
 	while(str[i])
 	{
 		i = ignore_in_quotes(str, i);
 		if (str[i] == '*')
-			return (1);
+		{
+			j = i - 1;
+			while (j >= 0 && !is_special_char(str[j]))
+			{
+				if (str[j] != '<')  
+					return (1);
+				if (str[j] == '<' && j > 0 && str[j - 1] != '<')
+					return(1);
+				j--;
+			}
+		}
 		i++;
 	}
 	return (0);

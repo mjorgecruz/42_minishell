@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/10 14:24:54 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 09:55:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -141,7 +141,7 @@ int	ft_count_words(char *content, int pos)
 				count++;
 			pass_quotes(content, &pos);
 		}
-		else if (ft_strchr("|", content[pos]))
+		else if (ft_strchr("|", content[pos]) && ft_strchr(">", content[pos - 1]))
 			count++;
 		pos++;
 	}
@@ -165,7 +165,8 @@ int	find_next_stop(char *content, int pos)
 
 	asp_place = 0;
 	count = count_spaces(&pos, content);
-	while (content[pos] && (!ft_strchr("|", content[pos])))
+	while (content[pos] && (!ft_strchr("|", content[pos])
+		|| (ft_strchr("|", content[pos]) && !ft_strchr(">", content[pos]))))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
@@ -180,9 +181,9 @@ int	find_next_stop(char *content, int pos)
 		count++;
 		pos++;
 	}
-	if (!ft_strchr("|", content[pos]) || !content[pos])
-		return (count);
-	else
+	// if (!ft_strchr("|", content[pos]) || !content[pos])
+	// 	return (count);
+	// else
 		return (count);
 }
 

@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 19:34:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:16:27 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -126,29 +126,15 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
-	int		fd[2];
-	char	buffer[21];
-	int		bread;
 	int		stdin;
 	int		stdout;
 	int 	status;
 
 	(void) info;
-	bread = 1;
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
-	pipe(fd);
-	dup2(fd[1], STDOUT_FILENO);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-	while (bread > 0)
-	{
-		bread = read(fd_in, buffer, 20);
-		buffer[bread] = '\0';
-	}
-	dup2(stdout, STDOUT_FILENO);
-	close(stdout);
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
 	status = execve(cmds[0], cmds, local->content);
 	exec_not(cmds[0]);
 	dup2(stdin, STDIN_FILENO);

@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 18:40:56 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:34:30 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -134,6 +134,9 @@ int builtin_errors(char *str1, char *str2, char *str3)
 
 int ex_code(int code)
 {
-	g_signal = WEXITSTATUS(code);
+	if (code >= 256)
+		g_signal = WEXITSTATUS(code);
+	else
+		g_signal = code;
 	return(g_signal);
 }

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 17:00:48 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:20:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -66,7 +66,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			if (file != NULL)
 				free(file);
 			file = create_file_name(cmds->cmds, &i);
-			*fd = open(file, O_RDWR);
+			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
 			{
 				perror("minishell");
@@ -105,6 +105,8 @@ void	define_output(t_command *cmds, int *fd, int *out)
 		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
 		{
 			i++;
+			if (cmds->cmds[i] == '|')
+				i++;
 			if (*fd > 1)
 				close(*fd);
 			if (file != NULL)
@@ -116,6 +118,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			if (*fd < 0)
 			{
 				perror("minishell");
+				free(file);
 				return ;
 			}
 			*out = OUT_DOC; 
@@ -131,7 +134,8 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			*fd = open(file, O_RDWR|O_APPEND|O_CREAT, 0660);
 			*out = OUT_DOC; 
 		}
-		i++;
+		if (cmds->cmds[i])
+			i++;
 	}
 	if (file != NULL)
 		free(file);
@@ -175,7 +179,7 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 	clean = clean_str(full_cmds->cmds);
 	trav = ft_split_ignore_quotes(clean, " ");
 	i = 0;
-	while (trav[i])
+	while (trav && trav[i] != 0)
 		i++; 
 	final_cmds = (char **)malloc(sizeof(char *) * (i + 1));
 	final_cmds[i] = 0;
@@ -219,7 +223,7 @@ char	*clean_str(char *cmds)
 		}
 		if (cmds[i] == '<' || cmds[i] == '>') 
 		{
-			while(cmds[i] == '<' || cmds[i] == '>')
+			while(cmds[i] == '<' || cmds[i] == '>' || cmds[i] == '|')
 				i++;
 			i = ignore_spaces(cmds, i);
 			while(cmds[i] && cmds[i] != ' ')

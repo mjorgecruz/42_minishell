@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/09 11:58:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:41:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -38,7 +38,6 @@ char    *wildcardings(char *str)
 	while (wild[i])
 	{
 		new[i] = ft_strdup("");
-		ft_printf("%s\n", wild[i]);
 		dirp = opendir(".");
 		dp = readdir(dirp);
 		while (dp != NULL)
@@ -48,8 +47,6 @@ char    *wildcardings(char *str)
                 add_wildcard(&new[i], dp->d_name);
 			dp = readdir(dirp);
     	}
-		if (new[i] != NULL)
-			ft_printf("%s \n", new[i]);
     	if (errno != 0)
         	perror("Error reading directory");
     	closedir(dirp);

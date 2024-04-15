@@ -82,8 +82,8 @@ char	**ft_split_ignore_quotes(char *s, char *c)
 		while (!ft_strchr(c, s[i]) && s[i] != '\0')
 			i += all_quotes_ignore(s + i);
 	}
-	str_array[j] = 0;
-	if (j == 0 && str_array[j] == NULL)
-		str_array[j] = ft_strdup("");
+	str_array[j] = NULL;
+	// if (j == 0 && str_array[j] == NULL)
+	// 	str_array[j] = ft_strdup("");
 	return (str_array);
 }

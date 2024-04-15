@@ -1,73 +1,112 @@
-==108969== Memcheck, a memory error detector
-==108969== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==108969== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==108969== Command: ./minishell
-==108969== Parent PID: 108968
-==108969== 
-==108991== 
-==108991== Process terminating with default action of signal 2 (SIGINT)
-==108991==    at 0x490775B: kill (syscall-template.S:120)
-==108991==    by 0x48A4F39: _rl_signal_handler (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==108991==    by 0x48A53A6: rl_read_key (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==108991==    by 0x4889C86: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==108991==    by 0x4892D14: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==108991==    by 0x4030EE: add_partials (heredocs_2.c:19)
-==108991==    by 0x4037A4: write_to_fd (heredocs_3.c:100)
-==108991==    by 0x4034CE: forking_heredocs (heredocs_3.c:51)
-==108991==    by 0x40341B: heredoc_creator (heredocs_3.c:31)
-==108991==    by 0x403089: add_heredocs (heredocs.c:89)
-==108991==    by 0x402F6B: adjust_heredocs (heredocs.c:71)
-==108991==    by 0x402E3F: heredoc_writer (heredocs.c:44)
-==108991== 
-==108991== HEAP SUMMARY:
-==108991==     in use at exit: 210,348 bytes in 247 blocks
-==108991==   total heap usage: 5,842 allocs, 5,595 frees, 306,839 bytes allocated
-==108991== 
-==108991== LEAK SUMMARY:
-==108991==    definitely lost: 0 bytes in 0 blocks
-==108991==    indirectly lost: 0 bytes in 0 blocks
-==108991==      possibly lost: 0 bytes in 0 blocks
-==108991==    still reachable: 0 bytes in 0 blocks
-==108991==         suppressed: 210,348 bytes in 247 blocks
-==108991== 
-==108991== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---108991-- 
---108991-- used_suppression:     77 leak readline sup:10 suppressed: 210,348 bytes in 247 blocks
-==108991== 
-==108991== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==109038== 
-==109038== HEAP SUMMARY:
-==109038==     in use at exit: 208,217 bytes in 226 blocks
-==109038==   total heap usage: 5,871 allocs, 5,645 frees, 311,435 bytes allocated
-==109038== 
-==109038== LEAK SUMMARY:
-==109038==    definitely lost: 0 bytes in 0 blocks
-==109038==    indirectly lost: 0 bytes in 0 blocks
-==109038==      possibly lost: 0 bytes in 0 blocks
-==109038==    still reachable: 0 bytes in 0 blocks
-==109038==         suppressed: 208,217 bytes in 226 blocks
-==109038== 
-==109038== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---109038-- 
---109038-- used_suppression:     63 leak readline sup:10 suppressed: 204,156 bytes in 222 blocks
---109038-- used_suppression:      4 leak add_history sup:16 suppressed: 4,061 bytes in 4 blocks
-==109038== 
-==109038== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==109101== 
-==109101== HEAP SUMMARY:
-==109101==     in use at exit: 208,262 bytes in 229 blocks
-==109101==   total heap usage: 5,906 allocs, 5,677 frees, 312,191 bytes allocated
-==109101== 
-==109101== LEAK SUMMARY:
-==109101==    definitely lost: 0 bytes in 0 blocks
-==109101==    indirectly lost: 0 bytes in 0 blocks
-==109101==      possibly lost: 0 bytes in 0 blocks
-==109101==    still reachable: 0 bytes in 0 blocks
-==109101==         suppressed: 208,262 bytes in 229 blocks
-==109101== 
-==109101== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---109101-- 
---109101-- used_suppression:     63 leak readline sup:10 suppressed: 204,156 bytes in 222 blocks
---109101-- used_suppression:      4 leak add_history sup:16 suppressed: 4,106 bytes in 7 blocks
-==109101== 
-==109101== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==169523== Memcheck, a memory error detector
+==169523== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==169523== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==169523== Command: ./minishell
+==169523== Parent PID: 169522
+==169523== 
+==169543== 
+==169543== HEAP SUMMARY:
+==169543==     in use at exit: 204,151 bytes in 222 blocks
+==169543==   total heap usage: 5,413 allocs, 5,191 frees, 300,582 bytes allocated
+==169543== 
+==169543== LEAK SUMMARY:
+==169543==    definitely lost: 0 bytes in 0 blocks
+==169543==    indirectly lost: 0 bytes in 0 blocks
+==169543==      possibly lost: 0 bytes in 0 blocks
+==169543==    still reachable: 0 bytes in 0 blocks
+==169543==         suppressed: 204,151 bytes in 222 blocks
+==169543== 
+==169543== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--169543-- 
+--169543-- used_suppression:     63 leak readline sup:10 suppressed: 204,151 bytes in 222 blocks
+==169543== 
+==169543== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==169613== 
+==169613== HEAP SUMMARY:
+==169613==     in use at exit: 208,208 bytes in 226 blocks
+==169613==   total heap usage: 5,440 allocs, 5,214 frees, 305,136 bytes allocated
+==169613== 
+==169613== LEAK SUMMARY:
+==169613==    definitely lost: 0 bytes in 0 blocks
+==169613==    indirectly lost: 0 bytes in 0 blocks
+==169613==      possibly lost: 0 bytes in 0 blocks
+==169613==    still reachable: 0 bytes in 0 blocks
+==169613==         suppressed: 208,208 bytes in 226 blocks
+==169613== 
+==169613== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--169613-- 
+--169613-- used_suppression:     63 leak readline sup:10 suppressed: 204,152 bytes in 222 blocks
+--169613-- used_suppression:      4 leak add_history sup:16 suppressed: 4,056 bytes in 4 blocks
+==169613== 
+==169613== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==169523== Invalid read of size 1
+==169523==    at 0x40D0D2: wildcards_counter (wildcards_utils.c:48)
+==169523==    by 0x40C72B: wildcardings (wildcards.c:29)
+==169523==    by 0x406FD6: inter_executioner (out_setup_general.c:121)
+==169523==    by 0x406E24: commands_sorter (out_setup_general.c:32)
+==169523==    by 0x407B60: general_executer (general_executor.c:41)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523==  Address 0x4bcb035 is 0 bytes after a block of size 5 alloc'd
+==169523==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==169523==    by 0x40EC5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==169523==    by 0x408A5C: write_to_line (general_executor_2.c:117)
+==169523==    by 0x40880F: mega_divider (general_executor_2.c:105)
+==169523==    by 0x4086AD: fill_cmds (general_executor_2.c:56)
+==169523==    by 0x4084C8: commands_separator (general_executor_2.c:39)
+==169523==    by 0x407B2D: general_executer (general_executor.c:40)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523== 
+==169523== Invalid read of size 1
+==169523==    at 0x40D0D2: wildcards_counter (wildcards_utils.c:48)
+==169523==    by 0x40D252: wild_splitter (wildcards_utils2.c:25)
+==169523==    by 0x40C747: wildcardings (wildcards.c:30)
+==169523==    by 0x406FD6: inter_executioner (out_setup_general.c:121)
+==169523==    by 0x406E24: commands_sorter (out_setup_general.c:32)
+==169523==    by 0x407B60: general_executer (general_executor.c:41)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523==  Address 0x4bcb035 is 0 bytes after a block of size 5 alloc'd
+==169523==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==169523==    by 0x40EC5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==169523==    by 0x408A5C: write_to_line (general_executor_2.c:117)
+==169523==    by 0x40880F: mega_divider (general_executor_2.c:105)
+==169523==    by 0x4086AD: fill_cmds (general_executor_2.c:56)
+==169523==    by 0x4084C8: commands_separator (general_executor_2.c:39)
+==169523==    by 0x407B2D: general_executer (general_executor.c:40)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523== 
+==169523== Invalid write of size 1
+==169523==    at 0x40D736: add_simple_wildcard (wildcards_utils2.c:78)
+==169523==    by 0x40D3F1: wild_splitter (wildcards_utils2.c:43)
+==169523==    by 0x40C747: wildcardings (wildcards.c:30)
+==169523==    by 0x406FD6: inter_executioner (out_setup_general.c:121)
+==169523==    by 0x406E24: commands_sorter (out_setup_general.c:32)
+==169523==    by 0x407B60: general_executer (general_executor.c:41)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523==  Address 0x4bcb124 is 2 bytes after a block of size 2 alloc'd
+==169523==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==169523==    by 0x40EC5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==169523==    by 0x40D714: add_simple_wildcard (wildcards_utils2.c:75)
+==169523==    by 0x40D3F1: wild_splitter (wildcards_utils2.c:43)
+==169523==    by 0x40C747: wildcardings (wildcards.c:30)
+==169523==    by 0x406FD6: inter_executioner (out_setup_general.c:121)
+==169523==    by 0x406E24: commands_sorter (out_setup_general.c:32)
+==169523==    by 0x407B60: general_executer (general_executor.c:41)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523== 
+==169523== Invalid read of size 1
+==169523==    at 0x40D26E: wild_splitter (wildcards_utils2.c:26)
+==169523==    by 0x40C747: wildcardings (wildcards.c:30)
+==169523==    by 0x406FD6: inter_executioner (out_setup_general.c:121)
+==169523==    by 0x406E24: commands_sorter (out_setup_general.c:32)
+==169523==    by 0x407B60: general_executer (general_executor.c:41)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523==  Address 0x4bcb035 is 0 bytes after a block of size 5 alloc'd
+==169523==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==169523==    by 0x40EC5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==169523==    by 0x408A5C: write_to_line (general_executor_2.c:117)
+==169523==    by 0x40880F: mega_divider (general_executor_2.c:105)
+==169523==    by 0x4086AD: fill_cmds (general_executor_2.c:56)
+==169523==    by 0x4084C8: commands_separator (general_executor_2.c:39)
+==169523==    by 0x407B2D: general_executer (general_executor.c:40)
+==169523==    by 0x401409: main (minishell.c:39)
+==169523== 

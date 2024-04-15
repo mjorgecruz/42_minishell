@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 09:58:14 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:08:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,6 +17,8 @@ char	**wild_splitter(char *str)
 	char	**wild;
 	int		i;
 	int		j;
+	int		k;
+
 
 	i = 0;
 	j = 0;
@@ -26,13 +28,29 @@ char	**wild_splitter(char *str)
 		i = ignore_in_quotes(str, i);
 		if (str[i] == '*')
 		{
-			if((i == 0 || is_space(str[i - 1])) && (!str[i + 1] || is_space(str[i + 1])))
+			k = i - 1;
+			while (str[k] && !is_special_char(str[j]))
+			{
+				if (str[k] == '<' && k > 0 && str[k - 1] == '<')
+					k = -10;
+				k--;
+			}
+			if (k < -5)
+				continue;
+			else if((i == 0 || is_space(str[i - 1]) || is_special_char(str[i - 1]))
+				&& (!str[i + 1] || is_space(str[i + 1])
+				|| is_special_char(str[i + 1])))
 				wild[j] = add_simple_wildcard(str, &i);
-			else if ((i == 0 || is_space(str[i - 1])) && (str[i + 1] && !is_space(str[i + 1])))
+			else if ((i == 0 || is_space(str[i - 1]) 
+				|| is_special_char(str[i - 1])) && (str[i + 1] 
+				&& !is_space(str[i + 1]) && !is_special_char(str[i + 1])))
 				wild[j] = add_forw_wildcard(str, &i);
-			else if ((i != 0 && !is_space(str[i - 1])) && is_space(str[i + 1]))
+			else if ((i != 0 && !is_space(str[i - 1])
+				&& !is_special_char(str[i - 1])) && (is_space(str[i + 1])
+				|| is_special_char(str[i + 1])))
 				wild[j] = add_back_wildcard(str, &i);
-			else if (!is_space(str[i - 1]) && !is_space(str[i + 1]))
+			else if (!is_space(str[i - 1]) && !is_special_char(str[i - 1])
+				&& !is_space(str[i + 1]) && !is_special_char(str[i + 1]))
 				wild[j] = add_middle_wildcard(str, &i);
 			j++;
 		}
@@ -45,8 +63,15 @@ char	**wild_splitter(char *str)
 char	*add_simple_wildcard(char *str, int *i)
 {
 	char	*wildcard;
+	int 	j;
 
-	(void) str;
+	j = *i - 1;
+	while (str[j] && !is_special_char(str[j]))
+	{
+		if (str[j] == '<' && j >0 && str[j - 1] == '<')
+			return ("");
+		j--;
+	}
 	wildcard = ft_calloc(1 + 1, sizeof(char));
 	wildcard[0] = '*';
 	(*i)++;
@@ -63,7 +88,7 @@ char	*add_forw_wildcard(char *str, int *i)
 
 	beg = *i;
 	(*i)++;
-	while (str[*i] && !is_space(str[*i]))
+	while (str[*i] && !is_space(str[*i]) && !is_special_char(str[*i]))
 		(*i)++;
 	end = *i - 1;
 	j = 0;
@@ -87,7 +112,15 @@ char	*add_back_wildcard(char *str, int *i)
 
 	end = *i;
 	beg = *i;
-	while (str[beg] && !is_space(str[beg]))
+
+	j = *i - 1;
+	while (str[j] && !is_special_char(str[j]))
+	{
+		if (str[j] == '<' && j >0 && str[j - 1] == '<')
+			return("");
+		j--;
+	}
+	while (str[beg] && !is_space(str[beg]) && !is_special_char(str[beg]))
 		(beg)--;
 	(beg)++;
 	j = 0;
@@ -110,11 +143,11 @@ char	*add_middle_wildcard(char *str, int *i)
 	int		j;
 
 	j = 0;
-	while (str[*i] && !is_space(str[*i]))
+	while (str[*i] && !is_space(str[*i]) && !is_special_char(str[*i]))
 		(*i)++;
 	end = *i;
 	(*i)--;
-	while ((*i) != 0 && !is_space(str[*i]))
+	while ((*i) != 0 && !is_space(str[*i]) && !is_special_char(str[*i]))
 		(*i)--;
 	beg = *i + 1;
 	wildcard = (char *) malloc(sizeof(char) * (end - beg + 1));

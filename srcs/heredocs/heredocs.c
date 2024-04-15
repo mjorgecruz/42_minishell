@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 22:15:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:12:08 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -83,7 +83,7 @@ void	add_heredocs(char ***new_heredocs, int cur_heredocs, t_heredocker heredocke
 	while (heredocker.line_read[heredocker.i] && heredocker.i <= j)
 	{
 		j = ignore_in_quotes(heredocker.line_read, j);
-		if (heredocker.line_read[heredocker.i] == '<' && heredocker.line_read[heredocker.i - 1] == '<')
+		if (heredocker.line_read[heredocker.i] == '<' && heredocker.i > 0 && heredocker.line_read[heredocker.i - 1] == '<')
 		{
 			if (heredoc_count == cur_heredocs) 
 				heredocker.i = heredoc_creator(new_heredocs, &cur_heredocs, heredocker, local);

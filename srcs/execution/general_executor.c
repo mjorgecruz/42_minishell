@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 14:38:15 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:24:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -39,7 +39,6 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
 	commands_sorter(cmd_list, info, local);
-	//tester_function(&cmd_list);
 	clean_cmd_list(cmd_list, heredocs);
 }
 
@@ -219,46 +218,4 @@ int	find_closed(char *input, int i)
 		i++;
 	}
 	return (i);
-}
-
-int	tester_function(t_token **list)
-{
-	t_token	*trav;
-	int		i;
-
-	trav = *list;
-	i = 0;
-	while (trav)
-	{
-		i = 0;
-		printf("content: %s ", trav->content);
-		printf("pipe type: %d\n", trav->next_type);
-		if (trav->down != NULL)
-		{
-			printf("down: %s , pipe type: %d, next: %s , pipe type: %d\n", trav->down->content, trav->down->next_type, trav->down->next->content, trav->down->next->next_type);
-			tester_function(&trav->down);
-		}
-		if (trav->content == NULL)
-		{
-			printf("cmd( %d , %d ) -> ", 0, 0);
-			printf("(null) \n");
-
-		}
-		else
-		{
-			while (i < pipe_counter(trav) + 1)
-			{
-				if (trav->cmds)
-				{
-					printf("id: %d\n", trav->cmds[i].id);
-					printf("cmd(%d) -> ", i);
-					printf("%s \n", trav->cmds[i].cmds);
-					printf("cmd_redir: %d\n", trav->cmds[i].type);
-				}
-				i++;
-			}
-		}
-		trav = trav->next;
-	}
-	return (1);
 }
