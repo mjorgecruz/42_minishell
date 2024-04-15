@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/15 16:42:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:58:50 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -106,7 +106,11 @@ int	command_cd(char **cmds, t_localenv *local, int err)
 	if (cmds[1] && cmds[2])
 		return (builtin_errors("cd: too many arguments", "\n", ""));
 	if (cmds[1] == NULL || cmds[1][0] == '\0')
+	{
 		target_dir = get_home_directory(local);
+		if (target_dir == NULL)
+			builtin_errors("cd: ", "", ": HOME not set\n");
+	}
 	else if (ft_strcmp(cmds[1], "-") == 0)
 		target_dir = get_previous_directory(local);
 	else

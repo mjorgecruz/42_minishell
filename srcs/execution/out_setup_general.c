@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 15:27:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:19:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -147,7 +147,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 	if (!final_cmds[0] || final_cmds[0][0] == 0)
 		return(free_split(final_cmds), res);
 	(*cmd_info).id = cmds.id;
-	if ((*cmd_info).id == UNDEFINED)
+	if ((*cmd_info).id == UNDEFINED || (*cmd_info).id == ECHO)
 	{
 		pid = fork();
 		if (pid == 0)
