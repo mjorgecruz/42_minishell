@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 12:21:53 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:05:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -188,7 +188,9 @@ char	*get_end_path(t_localenv *local_env)
 	int		j;
 	int		count_bars;
 	
-	garbage = ft_getenv("PWD", local_env->content);
+	garbage = getcwd(NULL, 0);
+	if (garbage == NULL)
+		garbage = ft_getenv("PWD", local_env->content);
 	i = 0;
 	j = 2;
 	count_bars = 0;

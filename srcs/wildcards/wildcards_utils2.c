@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 12:08:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:49:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -54,7 +54,8 @@ char	**wild_splitter(char *str)
 				wild[j] = add_middle_wildcard(str, &i);
 			j++;
 		}
-		i++;
+		if(str[i])
+			i++;
 	}
 	wild[j] = NULL;
 	return (wild);
@@ -68,14 +69,13 @@ char	*add_simple_wildcard(char *str, int *i)
 	j = *i - 1;
 	while (str[j] && !is_special_char(str[j]))
 	{
-		if (str[j] == '<' && j >0 && str[j - 1] == '<')
+		if (str[j] == '<' && j > 0 && str[j - 1] == '<')
 			return ("");
 		j--;
 	}
 	wildcard = ft_calloc(1 + 1, sizeof(char));
 	wildcard[0] = '*';
-	(*i)++;
-	wildcard[*i] = '\0';
+	wildcard[1] = '\0';
 	return (wildcard);
 }
 
@@ -92,7 +92,7 @@ char	*add_forw_wildcard(char *str, int *i)
 		(*i)++;
 	end = *i - 1;
 	j = 0;
-	wildcard = (char *) malloc(sizeof(char) * (end - beg + 1));
+	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));
 	while (beg <= end)
 	{
 		wildcard[j] = str[beg];
@@ -124,7 +124,7 @@ char	*add_back_wildcard(char *str, int *i)
 		(beg)--;
 	(beg)++;
 	j = 0;
-	wildcard = (char *) malloc(sizeof(char) * (end - beg + 1));
+	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));
 	while (beg <= end)
 	{
 		wildcard[j] = str[beg];
@@ -150,7 +150,7 @@ char	*add_middle_wildcard(char *str, int *i)
 	while ((*i) != 0 && !is_space(str[*i]) && !is_special_char(str[*i]))
 		(*i)--;
 	beg = *i + 1;
-	wildcard = (char *) malloc(sizeof(char) * (end - beg + 1));
+	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));
 	while (beg <= end)
 	{
 		wildcard[j] = str[beg];

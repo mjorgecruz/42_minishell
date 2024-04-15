@@ -42,6 +42,7 @@
 > )
 
 execve errors
+errors on cd do not appear
 V  >|
 V  syntax errors are in printfs
 V  cd + export
@@ -52,5 +53,9 @@ V  leaks on heredocs from env_list
 V  heredoc with "" ''
 V  cat < README*
 V  export um=1 123 dois=2 || env
+V  << *
 (asdsaas || sdsad) || merdaa || echo gaita
-<< *
+~
+V  unset all vars and run export
+command /ls error should be of no directory
+cd with redirects
