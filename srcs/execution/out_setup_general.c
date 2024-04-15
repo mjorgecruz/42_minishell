@@ -205,25 +205,25 @@ t_builtin	get_builtin_id(const char *str)
 int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
 	t_localenv *local;
-	
+
 	local = info.local;
 	if (id == ECHOS)
-		return (command_echo(cmds, local));
+		return (command_echo(cmds));//done
 	else if (id == PWD)
 		return (command_pwd(local));
 	else if (id == EXPORT)
-		return (command_export(cmds, local)) ;
+		return (command_export(cmds, local)) ;//done
 	else if (id == ENV)
-		return (command_env(local));
+		return (command_env(local));//done
 	else if (id == UNSET)
-		return (command_unset(cmds, local));
+		return (command_unset(cmds, local));//done
 	else if (id == PRINTENV)
-		return (command_printenv(cmds, local));
+		return (command_printenv(cmds, local));//done
 	else if (id == EXIT)
-		command_exit(info, cmds);
+		command_exit(info, cmds);//erros tratados
 	else if (id == CD)
-		return (command_cd(cmds, local, 0));
+		return (ex_code(command_cd(cmds, local, 0)));//erros tratados
 	else if (id == UNDEFINED)
-		return(command_execve(cmds, local, info, cmd_info));
-	return (1);
+		ex_code(command_execve(cmds, local, info, cmd_info)); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
+	return (ex_code(EXIT_FAILURE));
 }

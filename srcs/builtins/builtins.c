@@ -15,7 +15,7 @@
 int	command_pwd(t_localenv *local_env)
 {
 	char	cwd[PATH_MAX];
-	
+
 	if (getcwd(cwd, PATH_MAX))
 	{
 		ft_putendl_fd(cwd, 1);
@@ -108,7 +108,6 @@ int	command_unset(char **cmds, t_localenv *local)
 		return (builtin_errors("Invalid command or local environment.", "\n", ""));
 	if (cmds[1] == NULL)
 		return (EXIT_SUCCESS);
-	
 	if (!isvar_valid(cmds[1]))
 		return (EXIT_FAILURE + 1);
 	i = 1;
@@ -123,20 +122,23 @@ int	command_unset(char **cmds, t_localenv *local)
 	return (ex_code(EXIT_SUCCESS));
 }
 
-int builtin_errors(char *str1, char *str2, char *str3)
+int	builtin_errors(char *str1, char *str2, char *str3)
 {
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(str1, STDERR_FILENO);
-		ft_putstr_fd(str2, STDERR_FILENO);
-		ft_putstr_fd(str3, STDERR_FILENO);
-	return(1);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str1, STDERR_FILENO);
+	ft_putstr_fd(str2, STDERR_FILENO);
+	ft_putstr_fd(str3, STDERR_FILENO);
+	return (ex_code(EXIT_FAILURE));
 }
 
 int ex_code(int code)
 {
-	if (code >= 256)
+	if (code >= 256 || code <= -256)
+	{
 		g_signal = WEXITSTATUS(code);
+		return (g_signal);
+	}
 	else
 		g_signal = code;
-	return(g_signal);
+	return (g_signal);
 }

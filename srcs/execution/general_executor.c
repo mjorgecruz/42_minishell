@@ -22,6 +22,7 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 	t_info	info;
 	int		i;
 
+
 	i = 0;
 	cmd_list = NULL;
 	info.heredocs = heredocs;

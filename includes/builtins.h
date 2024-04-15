@@ -103,7 +103,7 @@ int		ft_setenv(char *name, char *value, t_localenv *local);
 folowed by n n_times else returns false*/
 
 bool	ft_find_n(char *str);
-int		command_echo(char **cmds, t_localenv *local);
+int		command_echo(char **cmds);
 
 /* ************************************************************************** */
 /*                                 EXPORT.c                                   */

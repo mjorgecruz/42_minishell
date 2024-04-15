@@ -44,7 +44,6 @@ char	*extract_variable_name(const char *variable)
 	return (name);
 }
 
-
 char	**copy_environment(char **old_env, int num_vars)
 {
 	char	**new_env;
@@ -127,17 +126,17 @@ int	update_variable(const char *variable, t_localenv *local)
 		return (add_variable(variable, local));
 }
 
-bool isvar_valid(const char *name)
+bool	isvar_valid(const char *name)
 {
-    if (name == NULL || ft_isdigit(*name))
-        return false;
-    while (*name)
-    {
-        if (!ft_isalnum(*name) && *name != '_')
-            return false;
-        name++;
-    }
-    return true;
+	if (name == NULL || ft_isdigit(*name))
+		return false;
+	while (*name)
+	{
+		if (!ft_isalnum(*name) && *name != '_')
+			return false;
+		name++;
+	}
+	return true;
 }
 
 bool variable_name_check(const char *var)
@@ -151,33 +150,33 @@ bool variable_name_check(const char *var)
 	return (ret);
 }
 
-int command_export(char **cmds, t_localenv *local)
+int	command_export(char **cmds, t_localenv *local)
 {
-	char *variable;
-	char *equal_sign;
-    int i;
+	char	*variable;
+	char	*equal_sign;
+	int		i;
 
 	i = 0;
-    if (cmds[1] == NULL)
-        return (ex_code(print_sorted_strings(local->sorted)));
-    while (cmds[++i] != NULL)
-    {
-        variable = cmds[i];
-        equal_sign = ft_strchr(variable, '=');  // aqui
-        if (equal_sign == variable || !variable_name_check(variable)) // adicionar function that checks if it is a valid variable
-        {
+	if (cmds[1] == NULL)
+		return (ex_code(print_sorted_strings(local->sorted)));
+	while (cmds[++i] != NULL)
+	{
+		variable = cmds[i];
+		equal_sign = ft_strchr(variable, '=');
+		if (equal_sign == variable || !variable_name_check(variable))
+		{
 			builtin_errors("export: `", variable, "': not a valid identifier\n");
-            return (ex_code(EXIT_FAILURE));
-        }
-        if (find_variable_index(variable, local->sorted) == -1)
-		{	
-			if (add_variable(variable, local) || add_var_cont(variable, local))
-				return(ex_code(EXIT_FAILURE));
+			return (ex_code(EXIT_FAILURE));
 		}
-        if (update_variable(variable, local) || update_var_cont(variable, local))
-            return (ex_code(EXIT_FAILURE));
-    }
-    return (ex_code(EXIT_SUCCESS));
+		if (find_variable_index(variable, local->sorted) == -1)
+		{
+			if (add_variable(variable, local) || add_var_cont(variable, local))
+				return (ex_code(EXIT_FAILURE));
+		}
+		if (update_variable(variable, local) || update_var_cont(variable, local))
+			return (ex_code(EXIT_FAILURE));
+	}
+	return (ex_code(EXIT_SUCCESS));
 }
 
 int	add_var_cont(const char *variable, t_localenv *local)

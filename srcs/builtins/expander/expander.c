@@ -98,7 +98,8 @@ char	*join_list_contents(t_lstexpand *head)
 	while (cur != NULL)
 	{
 		if (cur->content != NULL)
-			ft_strlcat(joined_content, cur->content, ft_strlen(joined_content) + ft_strlen(cur->content) + 1);
+			ft_strlcat(joined_content, cur->content, \
+				ft_strlen(joined_content) + ft_strlen(cur->content) + 1);
 		cur = cur->next;
 	}
 	return (joined_content);

@@ -73,6 +73,3 @@ int	command_printenv(char **cmds, t_localenv *local)
 	}
 	return (EXIT_FAILURE);
 }
-
-//necessario dar update da env _
-

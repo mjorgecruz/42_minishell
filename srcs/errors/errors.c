@@ -14,7 +14,6 @@
 
 #include "../../includes/minishell.h"
 
-
 void	code_2(char *str)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -70,7 +69,8 @@ void	errors_2(int error_code, char *cmd)
 		code_2(";");
 	else if (error_code == HEREDOC_EOF)
 	{
-		builtin_errors("warning: here-document delimited by end-of-file (wanted `", "", "");
+		builtin_errors("warning: here-document \
+		delimited by end-of-file (wanted `", "", "");
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd("')", STDERR_FILENO);
 		ex_code(2);
@@ -103,4 +103,3 @@ int	error_definer(char *cmd)
 		err[i++] = cmd[j++];
 	return (code_2(err), 1);
 }
-

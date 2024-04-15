@@ -65,33 +65,33 @@ alphabeticaly sorts the array of strings passed to it
 used to organize environment varibles order for the export command
  */
 
-void sort_strings(char **strings, int i, int j, int k)
+void	sort_strings(char **strings, int i, int j, int k)
 {
-    char *temp;
-	char *var_name1;
-    char *var_name2;
+	char	*temp;
+	char	*var_name1;
+	char	*var_name2;
 
-    while (strings[j] != NULL)
-        j++;
-    while (i < j - 1)
+	while (strings[j] != NULL)
+		j++;
+	while (i < j - 1)
 	{
-        k = 0;
-        while (k < j - i - 1)
+		k = 0;
+		while (k < j - i - 1)
 		{
-            var_name1 = extract_variable_name(strings[k]);
-            var_name2 = extract_variable_name(strings[k + 1]);
-            if (ft_strncmp(var_name1, var_name2, ft_strlen(var_name1)) > 0)
+			var_name1 = extract_variable_name(strings[k]);
+			var_name2 = extract_variable_name(strings[k + 1]);
+			if (ft_strncmp(var_name1, var_name2, ft_strlen(var_name1)) > 0)
 			{
-                temp = strings[k];
-                strings[k] = strings[k + 1];
-                strings[k + 1] = temp;
-            }
-            free(var_name1);
-            free(var_name2);
-            k++;
-        }
-        i++;
-    }
+				temp = strings[k];
+				strings[k] = strings[k + 1];
+				strings[k + 1] = temp;
+			}
+			free(var_name1);
+			free(var_name2);
+			k++;
+		}
+		i++;
+	}
 }
 
 /*
