@@ -41,7 +41,7 @@
 > )
 > )
 
-execve errors
+.  execve errors
 V  errors on cd do not appear
 V  >|
 V  syntax errors are in printfs
