@@ -12,13 +12,12 @@
 
 #include "../../../includes/minishell.h"
 
-static char *check_for_tilde(char *str,  t_localenv *local);
+static char	*check_for_tilde(char *str, t_localenv *local);
 
 char	*master_expander(char *cmd, t_localenv *local)
 {
 	t_lstexpand	*in_cmd_list;
 	char		*joined_content;
-	(void)		local;
 
 	in_cmd_list = NULL;
 	create_list_quotes(cmd, &in_cmd_list);
@@ -61,14 +60,14 @@ char	*expander_heredocs(char *cmd, t_localenv *local)
 	return (joined_content);
 }
 
-static char *check_for_tilde(char *str,  t_localenv *local)
+static char	*check_for_tilde(char *str,  t_localenv *local)
 {
 	char	*home_dir;
 	int		i;
 	char	*new_str;
 	int		j;
 	int		k;
-	
+
 	i = 0;
 	j = 0;
 	k = 0;

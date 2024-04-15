@@ -26,18 +26,17 @@ bool	ft_find_n(char *str)
 			if (str[i] != 'n')
 				return (false);
 		}
-		if(str[i - 1] == 'n')
+		if (str[i - 1] == 'n')
 			return (true);
 	}
 	return (false);
 }
 
-int	command_echo(char **cmds, t_localenv *local)
+int	command_echo(char **cmds)
 {
 	int		i;
 	bool	n_flag;
 	char	*exp_temp;
-	(void)	local;
 
 	i = 0;
 	n_flag = false;
@@ -55,5 +54,5 @@ int	command_echo(char **cmds, t_localenv *local)
 	}
 	if (!n_flag)
 		ft_printf("\n");
-    return (ex_code(EXIT_SUCCESS));
+	return (ex_code(EXIT_SUCCESS));
 }

@@ -50,7 +50,6 @@ we can reuse the command_exit at the end of the main loop to free all shits
 and exit the program with the corret exit code
 */
 
-
 void	clear_terminal(char *paths)
 {
 	char	**cmd;
