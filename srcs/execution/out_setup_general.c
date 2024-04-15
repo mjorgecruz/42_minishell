@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 20:00:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 23:02:05 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -60,12 +60,8 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 			{
 				pied_piper(cmd_list, fd, i, &stdin);
 				res = inter_executioner(cmd_list, info, local, i);
-				free_info_andenv(info);
-    			free_t_token(info.token);
-    			free(info.token);
 				exit(res);
 			}
-			wait(&res);
 			dup2(fd[0], stdin);
 			close(fd[0]);
 			close(fd[1]);
@@ -123,7 +119,10 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
+	{
 		cmd_info.fd_in_out[0] = STDIN_FILENO;
+		return (res);
+	}
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);

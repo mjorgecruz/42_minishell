@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 19:46:01 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 23:03:21 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -56,7 +56,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 		
 	i = 0;
 	file = NULL;
-	(*fd) = STDIN_FILENO;
+	(*fd) = dup(STDIN_FILENO);
 	while ((cmds->cmds)[i] != 0)
 	{
 		i = ignore_in_quotes(cmds->cmds, i);
@@ -68,11 +68,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
-			{
 				ex_code(errno);
-					//ror("minishell");
-			// 	//return ;
-			}
 			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
@@ -87,6 +83,10 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			i++;
 		}
 		i++;
+	}
+	if (file && *fd < 0)
+	{
+		builtin_errors(file, ": No such file or directory", "\n");
 	}
 	if (file != NULL)
 		free(file);
@@ -145,32 +145,39 @@ void	define_output(t_command *cmds, int *fd, int *out)
 char	*create_file_name(char *cmd, int *i)
 {
 	int		j;
-	int		k;
 	char	*file;
+	char	*trav;
+	char	*garbage;
 	
-	k = 0;
+	file = ft_strdup("");
+	trav = ft_calloc(2, sizeof(char));
 	*i = ignore_spaces(cmd, *i);
 	j = *i;
-	if (ft_strchr("\"\'", cmd[*i]))
+	while (cmd[j] && !ft_strchr("<>|& \t\n", cmd[j]))
 	{
-		j++;
-		while (cmd[j] && cmd[j] != cmd[*i])
+		if (ft_strchr("\"\'", cmd[*i]))
+		{
 			j++;
-		(*i)++;
-	}
-	else
-	{
-		while (cmd[j] && !ft_strchr("<>|& \t\n\"\'", cmd[j]))
+			while (cmd[j] && cmd[j] != cmd[*i])
+			{
+				garbage = file;
+				trav[0] = cmd[j];
+				file = ft_strjoin(file, trav);
+				free(garbage);
+				j++;
+			}
 			j++;
+		}
+		else
+		{
+			garbage = file;
+			trav[0] = cmd[j];
+			file = ft_strjoin(file, trav);
+			free(garbage);
+			j++;
+		}
 	}
-	j--;
-	file = ft_calloc(j - (*i) + 2, sizeof(char));
-	while (*i <= j)
-	{
-		file[k] = cmd[*i]; 
-		(*i)++;
-		k++;
-	} 
+	*i = j;
 	return (file);
 }
 
@@ -231,6 +238,7 @@ char	*clean_str(char *cmds)
 			while(cmds[i] == '<' || cmds[i] == '>' || cmds[i] == '|')
 				i++;
 			i = ignore_spaces(cmds, i);
+			i = ignore_in_quotes(cmds, i);
 			while(cmds[i] && cmds[i] != ' ')
 				i++;
 			if (!cmds[i])
