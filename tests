@@ -42,7 +42,7 @@
 > )
 
 execve errors
-errors on cd do not appear
+V  errors on cd do not appear
 V  >|
 V  syntax errors are in printfs
 V  cd + export
@@ -54,8 +54,11 @@ V  heredoc with "" ''
 V  cat < README*
 V  export um=1 123 dois=2 || env
 V  << *
-(asdsaas || sdsad) || merdaa || echo gaita
-~
+V  ~
 V  unset all vars and run export
-command /ls error should be of no directory
-cd with redirects
+V  cd with redirects
+V  command /ls error should be of no directory
+V  exit with numbers in front not ais not a
+ls     *
+ls *"'aosdahas'"
+(asdsaas || sdsad) || merdaa || echo gaita

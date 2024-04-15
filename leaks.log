@@ -1,43 +1,116 @@
-==189244== Memcheck, a memory error detector
-==189244== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==189244== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==189244== Command: ./minishell
-==189244== Parent PID: 189243
-==189244== 
-==189286== 
-==189286== HEAP SUMMARY:
-==189286==     in use at exit: 208,345 bytes in 228 blocks
-==189286==   total heap usage: 5,870 allocs, 5,642 frees, 315,502 bytes allocated
-==189286== 
-==189286== 16 bytes in 1 blocks are still reachable in loss record 11 of 69
-==189286==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==189286==    by 0x406430: clean_cmds (solver.c:184)
-==189286==    by 0x407093: inter_executioner (out_setup_general.c:127)
-==189286==    by 0x406E34: commands_sorter (out_setup_general.c:32)
-==189286==    by 0x407B70: general_executer (general_executor.c:41)
-==189286==    by 0x401409: main (minishell.c:39)
-==189286== 
-==189286== 16 bytes in 1 blocks are still reachable in loss record 12 of 69
-==189286==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==189286==    by 0x40EC9D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
-==189286==    by 0x40A057: check_for_tilde (expander_main.c:82)
-==189286==    by 0x409F56: master_expander_out (expander_main.c:43)
-==189286==    by 0x406473: clean_cmds (solver.c:189)
-==189286==    by 0x407093: inter_executioner (out_setup_general.c:127)
-==189286==    by 0x406E34: commands_sorter (out_setup_general.c:32)
-==189286==    by 0x407B70: general_executer (general_executor.c:41)
-==189286==    by 0x401409: main (minishell.c:39)
-==189286== 
-==189286== LEAK SUMMARY:
-==189286==    definitely lost: 0 bytes in 0 blocks
-==189286==    indirectly lost: 0 bytes in 0 blocks
-==189286==      possibly lost: 0 bytes in 0 blocks
-==189286==    still reachable: 32 bytes in 2 blocks
-==189286==         suppressed: 208,313 bytes in 226 blocks
-==189286== 
-==189286== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---189286-- 
---189286-- used_suppression:     63 leak readline sup:10 suppressed: 204,259 bytes in 222 blocks
---189286-- used_suppression:      4 leak add_history sup:16 suppressed: 4,054 bytes in 4 blocks
-==189286== 
-==189286== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==199032== Memcheck, a memory error detector
+==199032== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==199032== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==199032== Command: ./minishell
+==199032== Parent PID: 199031
+==199032== 
+==199081== 
+==199081== HEAP SUMMARY:
+==199081==     in use at exit: 208,317 bytes in 226 blocks
+==199081==   total heap usage: 5,441 allocs, 5,215 frees, 309,296 bytes allocated
+==199081== 
+==199081== LEAK SUMMARY:
+==199081==    definitely lost: 0 bytes in 0 blocks
+==199081==    indirectly lost: 0 bytes in 0 blocks
+==199081==      possibly lost: 0 bytes in 0 blocks
+==199081==    still reachable: 0 bytes in 0 blocks
+==199081==         suppressed: 208,317 bytes in 226 blocks
+==199081== 
+==199081== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--199081-- 
+--199081-- used_suppression:     63 leak readline sup:10 suppressed: 204,261 bytes in 222 blocks
+--199081-- used_suppression:      4 leak add_history sup:16 suppressed: 4,056 bytes in 4 blocks
+==199081== 
+==199081== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==199032== Invalid read of size 1
+==199032==    at 0x40D3AD: wild_splitter (wildcards_utils2.c:32)
+==199032==    by 0x40C817: wildcardings (wildcards.c:30)
+==199032==    by 0x4070A6: inter_executioner (out_setup_general.c:121)
+==199032==    by 0x406EF4: commands_sorter (out_setup_general.c:32)
+==199032==    by 0x407C30: general_executer (general_executor.c:41)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032==  Address 0x4bcd7cf is 1 bytes before a block of size 7 alloc'd
+==199032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==199032==    by 0x40ED5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==199032==    by 0x40893C: write_to_line (general_executor_2.c:117)
+==199032==    by 0x4086EF: mega_divider (general_executor_2.c:105)
+==199032==    by 0x40858D: fill_cmds (general_executor_2.c:56)
+==199032==    by 0x4083A8: commands_separator (general_executor_2.c:39)
+==199032==    by 0x407BFD: general_executer (general_executor.c:40)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032== 
+==199032== Invalid read of size 1
+==199032==    at 0x40D784: add_simple_wildcard (wildcards_utils2.c:70)
+==199032==    by 0x40D4F1: wild_splitter (wildcards_utils2.c:43)
+==199032==    by 0x40C817: wildcardings (wildcards.c:30)
+==199032==    by 0x4070A6: inter_executioner (out_setup_general.c:121)
+==199032==    by 0x406EF4: commands_sorter (out_setup_general.c:32)
+==199032==    by 0x407C30: general_executer (general_executor.c:41)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032==  Address 0x4bcd7cf is 1 bytes before a block of size 7 alloc'd
+==199032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==199032==    by 0x40ED5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==199032==    by 0x40893C: write_to_line (general_executor_2.c:117)
+==199032==    by 0x4086EF: mega_divider (general_executor_2.c:105)
+==199032==    by 0x40858D: fill_cmds (general_executor_2.c:56)
+==199032==    by 0x4083A8: commands_separator (general_executor_2.c:39)
+==199032==    by 0x407BFD: general_executer (general_executor.c:40)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032== 
+==199032== 
+==199032== HEAP SUMMARY:
+==199032==     in use at exit: 208,389 bytes in 234 blocks
+==199032==   total heap usage: 5,650 allocs, 5,416 frees, 428,243 bytes allocated
+==199032== 
+==199032== LEAK SUMMARY:
+==199032==    definitely lost: 0 bytes in 0 blocks
+==199032==    indirectly lost: 0 bytes in 0 blocks
+==199032==      possibly lost: 0 bytes in 0 blocks
+==199032==    still reachable: 0 bytes in 0 blocks
+==199032==         suppressed: 208,389 bytes in 234 blocks
+==199032== 
+==199032== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==199032== 
+==199032== 1 errors in context 1 of 2:
+==199032== Invalid read of size 1
+==199032==    at 0x40D784: add_simple_wildcard (wildcards_utils2.c:70)
+==199032==    by 0x40D4F1: wild_splitter (wildcards_utils2.c:43)
+==199032==    by 0x40C817: wildcardings (wildcards.c:30)
+==199032==    by 0x4070A6: inter_executioner (out_setup_general.c:121)
+==199032==    by 0x406EF4: commands_sorter (out_setup_general.c:32)
+==199032==    by 0x407C30: general_executer (general_executor.c:41)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032==  Address 0x4bcd7cf is 1 bytes before a block of size 7 alloc'd
+==199032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==199032==    by 0x40ED5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==199032==    by 0x40893C: write_to_line (general_executor_2.c:117)
+==199032==    by 0x4086EF: mega_divider (general_executor_2.c:105)
+==199032==    by 0x40858D: fill_cmds (general_executor_2.c:56)
+==199032==    by 0x4083A8: commands_separator (general_executor_2.c:39)
+==199032==    by 0x407BFD: general_executer (general_executor.c:40)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032== 
+==199032== 
+==199032== 1 errors in context 2 of 2:
+==199032== Invalid read of size 1
+==199032==    at 0x40D3AD: wild_splitter (wildcards_utils2.c:32)
+==199032==    by 0x40C817: wildcardings (wildcards.c:30)
+==199032==    by 0x4070A6: inter_executioner (out_setup_general.c:121)
+==199032==    by 0x406EF4: commands_sorter (out_setup_general.c:32)
+==199032==    by 0x407C30: general_executer (general_executor.c:41)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032==  Address 0x4bcd7cf is 1 bytes before a block of size 7 alloc'd
+==199032==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==199032==    by 0x40ED5D: ft_calloc (in /home/masoares/Documents/mega_minishell/minishell/minishell)
+==199032==    by 0x40893C: write_to_line (general_executor_2.c:117)
+==199032==    by 0x4086EF: mega_divider (general_executor_2.c:105)
+==199032==    by 0x40858D: fill_cmds (general_executor_2.c:56)
+==199032==    by 0x4083A8: commands_separator (general_executor_2.c:39)
+==199032==    by 0x407BFD: general_executer (general_executor.c:40)
+==199032==    by 0x401409: main (minishell.c:39)
+==199032== 
+--199032-- 
+--199032-- used_suppression:     62 leak readline sup:10 suppressed: 204,209 bytes in 221 blocks
+--199032-- used_suppression:      4 leak add_history sup:16 suppressed: 4,180 bytes in 13 blocks
+==199032== 
+==199032== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

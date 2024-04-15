@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/14 00:19:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:58:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,13 +20,11 @@ static int	write_to_fd(char *final_str, int *fd, char *str);
 int heredoc_creator(char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local)
 {
 	char	*final_str;
-	int		n_letters;
 	int		fd;
 	(void)	local;
 
 	final_str = NULL;
 	heredocker.i = ignore_spaces(heredocker.line_read, heredocker.i + 1);
-	n_letters = 0;
 	(*new_heredocs)[*cur_heredocs] = NULL;
 	fd = forking_heredocs(final_str, heredocker, local, new_heredocs);
 	heredoc_reader(new_heredocs, cur_heredocs, fd);

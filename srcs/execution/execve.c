@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 11:16:27 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:53:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,9 +14,31 @@
 
 void exec_not(char *cmd)
 {
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	ex_code(32512);
+	int i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		i = ignore_in_quotes(cmd, i);
+		if (cmd[i] == '/')
+			count++;
+		if (cmd[i])
+			i++;
+	}
+	if (count > 1)
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		ex_code(32512);
+	}
+	else
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory \n", STDERR_FILENO);
+		ex_code(32512);
+	}
 }
 
 int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
@@ -87,7 +109,7 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	else
 	{
 		status = execve(cmds[0], cmds, local->content);
-		exec_not(cmds[0]); //perror
+		exec_not(cmds[0]);
 		error = errno;
 	}
 	if (status == -1)

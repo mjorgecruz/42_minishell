@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 12:20:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:20:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -134,7 +134,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			*fd = open(file, O_RDWR|O_APPEND|O_CREAT, 0660);
 			*out = OUT_DOC; 
 		}
-		if (cmds->cmds[i])
+		if (cmds->cmds && cmds->cmds[i])
 			i++;
 	}
 	if (file != NULL)

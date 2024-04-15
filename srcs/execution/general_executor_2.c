@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 09:55:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:22:33 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -114,7 +114,7 @@ char	*write_to_line(int count, char *content, int *pos)
 	char	*line;
 
 	j = 0;
-	line = ft_calloc(count + 1, sizeof(char));
+	line = ft_calloc(count + 2, sizeof(char));
 	while (content[*pos] == ' ')
 		(*pos)++;
 	while (j < count)
