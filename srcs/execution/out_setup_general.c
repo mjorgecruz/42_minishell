@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 19:43:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:00:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -65,6 +65,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
     			free(info.token);
 				exit(res);
 			}
+			wait(&res);
 			dup2(fd[0], stdin);
 			close(fd[0]);
 			close(fd[1]);
