@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 15:20:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:47:10 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -56,7 +56,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 		
 	i = 0;
 	file = NULL;
-	(*fd) = STDIN_FILENO;
+	(*fd) = dup(STDIN_FILENO);
 	while ((cmds->cmds)[i] != 0)
 	{
 		i = ignore_in_quotes(cmds->cmds, i);
