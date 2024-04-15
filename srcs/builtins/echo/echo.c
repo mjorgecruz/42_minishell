@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/13 13:18:43 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:22:00 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -49,6 +49,8 @@ int	command_echo(char **cmds)
 		{
 			ft_printf("%s", exp_temp);
 			free(exp_temp);
+			if (cmds[i + 1] != NULL)
+				ft_printf(" ");
 		}
 		i++;
 	}

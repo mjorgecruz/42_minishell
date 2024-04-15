@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/15 16:58:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:22:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -121,7 +121,7 @@ int	command_cd(char **cmds, t_localenv *local, int err)
 	if (err == 13)
 		return (free(target_dir), builtin_errors("cd: ", "", ": Permission denied\n"));
 	if (err == 2)
-		return (free(target_dir), builtin_errors("cd: ", cmds[1], ": no such file or directory\n"));
+		return (free(target_dir), builtin_errors("cd: ", cmds[1], ": No such file or directory\n"));
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (free(target_dir), EXIT_FAILURE);
 	if (update_directories(local, cwd) == -1)

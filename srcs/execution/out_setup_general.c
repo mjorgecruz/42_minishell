@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 17:36:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:43:17 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -122,7 +122,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
-		return (0) ;
+		cmd_info.fd_in_out[0] = STDIN_FILENO;
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
@@ -157,7 +157,6 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 			free_info_andenv(info);
 			free_t_token(info.token);
 			free(info.token);
-			free_split(final_cmds);
 			exit(res);
 		}
 		waitpid(pid, &res, 0);
@@ -225,6 +224,6 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == CD)
 		return (ex_code(command_cd(cmds, local, 0)));//erros tratados
 	else if (id == UNDEFINED)
-		ex_code(command_execve(cmds, local, info, cmd_info)); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
-	return (ex_code(EXIT_FAILURE));
+		return(ex_code(command_execve(cmds, local, info, cmd_info))); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
+	return (g_signal);
 }

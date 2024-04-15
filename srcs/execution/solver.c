@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 17:47:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:46:01 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -56,7 +56,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 		
 	i = 0;
 	file = NULL;
-	(*fd) = dup(STDIN_FILENO);
+	(*fd) = STDIN_FILENO;
 	while ((cmds->cmds)[i] != 0)
 	{
 		i = ignore_in_quotes(cmds->cmds, i);
@@ -69,8 +69,9 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
 			{
-				perror("minishell");
-				return ;
+				ex_code(errno);
+					//ror("minishell");
+			// 	//return ;
 			}
 			*in = IN_DOC;
 		}
@@ -150,22 +151,26 @@ char	*create_file_name(char *cmd, int *i)
 	k = 0;
 	*i = ignore_spaces(cmd, *i);
 	j = *i;
-	while (cmd[j] && !ft_strchr("<>|& ", cmd[j]))
-		j++;
 	if (ft_strchr("\"\'", cmd[*i]))
 	{
+		j++;
 		while (cmd[j] && cmd[j] != cmd[*i])
 			j++;
 		(*i)++;
-		j--;
-	} 
+	}
+	else
+	{
+		while (cmd[j] && !ft_strchr("<>|& \t\n\"\'", cmd[j]))
+			j++;
+	}
+	j--;
 	file = ft_calloc(j - (*i) + 2, sizeof(char));
 	while (*i <= j)
 	{
 		file[k] = cmd[*i]; 
 		(*i)++;
 		k++;
-	}
+	} 
 	return (file);
 }
 

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 11:34:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:16:08 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -140,5 +140,13 @@ int ex_code(int code)
 	}
 	else
 		g_signal = code;
+	return (g_signal);
+}
+
+int exit_code(int code)
+{
+	while (code >= 256)
+		code -= 256;
+	g_signal = code;
 	return (g_signal);
 }

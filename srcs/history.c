@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 17:59:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:10:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -25,7 +25,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	char	*pwd;
 	
 	*heredocs = NULL;
-	//switch_sig_readline();
+	switch_sig_readline();
 	// rl_event_hook = event;
 	pwd = create_pc_name(local_env);
 	line_read = readline(pwd);

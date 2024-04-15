@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/13 16:27:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:17:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -175,5 +175,5 @@ bool	isvar_valid(const char *name);
 
 
 int		ex_code(int code);
-
+int		exit_code(int code);
 #endif
