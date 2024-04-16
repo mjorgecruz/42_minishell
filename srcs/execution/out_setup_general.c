@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 10:36:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:02:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -228,6 +228,6 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == CD)
 		return (ex_code(command_cd(cmds, local, 0)));//erros tratados
 	else if (id == UNDEFINED)
-		return(ex_code(command_execve(cmds, local, info, cmd_info))); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
+		return(command_execve(cmds, local, info, cmd_info)); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
 	return (g_signal);
 }
