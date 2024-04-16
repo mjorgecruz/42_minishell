@@ -41,7 +41,6 @@
 > )
 > )
 
-.  execve errors
 V  errors on cd do not appear
 V  >|
 V  syntax errors are in printfs
@@ -59,9 +58,11 @@ V  unset all vars and run export
 V  cd with redirects
 V  command /ls error should be of no directory
 V  exit with numbers in front not ais not a
+execve errors
 ls     *
 ls *"'aosdahas'"
 (asdsaas || sdsad) || merdaa || echo gaita
 unst HOME
 echo hello world
 change readline to a fork
+$? -> $?
