@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 23:02:05 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 09:48:57 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -121,7 +121,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
 	{
 		cmd_info.fd_in_out[0] = STDIN_FILENO;
-		return (res);
+		return (1);
 	}
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);

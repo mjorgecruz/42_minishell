@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 23:03:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 09:37:46 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -68,7 +68,15 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
+			{
+				if (errno == ENOENT)
+					builtin_errors(file, " : No such file or Directory", "\n");
+				else if (errno == EACCES)
+					builtin_errors(file, " : Permission denied", "\n");
+				// else
+				// 	builtin_errors(file, " : Is a directory");
 				ex_code(errno);
+			}
 			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
@@ -118,7 +126,12 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			*fd = open(file, O_RDWR|O_CREAT, 0666);
 			if (*fd < 0)
 			{
-				perror("minishell");
+				if (errno == ENOENT)
+					builtin_errors(file, " : No such file or Directory", "\n");
+				else if (errno == EACCES)
+					builtin_errors(file, " : Permission denied", "\n");
+				// else
+				// 	builtin_errors(file, " : Is a directory");
 				free(file);
 				return ;
 			}
