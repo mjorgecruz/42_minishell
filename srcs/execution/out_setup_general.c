@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 09:48:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:36:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -49,6 +49,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 	int			fd[2];
 	int			res;
 	
+	res = 0;
 	stdin = dup(STDIN_FILENO);
 	while (cmd_list->cmds[i].cmds)
 	{
@@ -65,6 +66,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 			dup2(fd[0], stdin);
 			close(fd[0]);
 			close(fd[1]);
+			ex_code(res);
 		}
 		i++;
 	}
@@ -160,10 +162,12 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 			exit(res);
 		}
 		waitpid(pid, &res, 0);
+		ex_code(res);
 	}
 	else	
 	{
 		res = solver(final_cmds, info, cmd_info);
+		ex_code(res);
 	}
 	return(free_split(final_cmds), res);
 }

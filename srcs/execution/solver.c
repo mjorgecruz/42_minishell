@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 09:50:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:00:58 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -87,7 +87,7 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	if (file && *fd < 0)
 	{
 		if (errno == ENOENT)
-			builtin_errors(file, " : No such file or Directory", "\n");
+			builtin_errors(file, " : No such file or directory", "\n");
 		else if (errno == EACCES)
 			builtin_errors(file, " : Permission denied", "\n");
 		// else
@@ -121,17 +121,6 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			*fd = open(file, O_TRUNC);
 			close(*fd);
 			*fd = open(file, O_RDWR|O_CREAT, 0666);
-			if (*fd < 0)
-			{
-				if (errno == ENOENT)
-					builtin_errors(file, " : No such file or Directory", "\n");
-				else if (errno == EACCES)
-					builtin_errors(file, " : Permission denied", "\n");
-				// else
-				// 	builtin_errors(file, " : Is a directory");
-				free(file);
-				return ;
-			}
 			*out = OUT_DOC; 
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
@@ -143,10 +132,22 @@ void	define_output(t_command *cmds, int *fd, int *out)
 				free(file);
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDWR|O_APPEND|O_CREAT, 0660);
+			
 			*out = OUT_DOC; 
 		}
 		if (cmds->cmds && cmds->cmds[i])
 			i++;
+	}
+	if (file && *fd < 0)
+	{
+		if (errno == ENOENT)
+			builtin_errors(file, " : No such file or directory", "\n");
+		else if (errno == EACCES)
+			builtin_errors(file, " : Permission denied", "\n");
+		// else
+		// 	builtin_errors(file, " : Is a directory");
+		free(file);
+		return ;
 	}
 	if (file != NULL)
 		free(file);
