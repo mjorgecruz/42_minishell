@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/15 18:03:19 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/16 17:37:26 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -29,6 +29,7 @@ ODIR:=obj
 
 SRC := minishell.c \
 		history.c \
+		history_2.c \
 		finex.c \
 		errors/errors.c \
 		utils/str_utils.c \

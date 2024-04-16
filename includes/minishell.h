@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/13 22:39:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:58:15 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -188,6 +188,12 @@ int			open_parenthesis(char *total_line);
 char		*create_pc_name(t_localenv *local_env);
 
 char		*get_end_path(t_localenv *local_env);
+
+void    first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd);
+
+void	line_reader(int fd0, int fd1, char **total_line);
+
+void	extra_fork(int fd0, int fd1, t_localenv *local, char * line_read);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */

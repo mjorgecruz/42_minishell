@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 14:58:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:05:37 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -47,6 +47,7 @@ static int	forking_heredocs(char *final_str, t_heredocker heredocker, t_localenv
 		free(local);
 		free_split(*new_heredocs);
 		write_to_fd(final_str, fd, word);
+		free(heredocker.line_read);
 		exit(EXIT_SUCCESS);
 	}
 	switch_sig_function();

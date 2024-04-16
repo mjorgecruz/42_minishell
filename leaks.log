@@ -1,0 +1,83 @@
+==518671== Memcheck, a memory error detector
+==518671== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==518671== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==518671== Command: ./minishell
+==518671== Parent PID: 518670
+==518671== 
+==518672== 
+==518672== HEAP SUMMARY:
+==518672==     in use at exit: 204,266 bytes in 222 blocks
+==518672==   total heap usage: 5,407 allocs, 5,185 frees, 304,579 bytes allocated
+==518672== 
+==518672== LEAK SUMMARY:
+==518672==    definitely lost: 0 bytes in 0 blocks
+==518672==    indirectly lost: 0 bytes in 0 blocks
+==518672==      possibly lost: 0 bytes in 0 blocks
+==518672==    still reachable: 0 bytes in 0 blocks
+==518672==         suppressed: 204,266 bytes in 222 blocks
+==518672== 
+==518672== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--518672-- 
+--518672-- used_suppression:     63 leak readline sup:10 suppressed: 204,266 bytes in 222 blocks
+==518672== 
+==518672== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==518722== 
+==518722== HEAP SUMMARY:
+==518722==     in use at exit: 204,156 bytes in 222 blocks
+==518722==   total heap usage: 5,410 allocs, 5,188 frees, 304,489 bytes allocated
+==518722== 
+==518722== 9 bytes in 1 blocks are still reachable in loss record 5 of 63
+==518722==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==518722==    by 0x40357A: ft_strjoin_2 (heredocs_2.c:63)
+==518722==    by 0x401F30: line_reader (history_2.c:46)
+==518722==    by 0x4015F3: get_line (history.c:33)
+==518722==    by 0x401378: main (minishell.c:33)
+==518722== 
+==518722== LEAK SUMMARY:
+==518722==    definitely lost: 0 bytes in 0 blocks
+==518722==    indirectly lost: 0 bytes in 0 blocks
+==518722==      possibly lost: 0 bytes in 0 blocks
+==518722==    still reachable: 9 bytes in 1 blocks
+==518722==         suppressed: 204,147 bytes in 221 blocks
+==518722== 
+==518722== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--518722-- 
+--518722-- used_suppression:     62 leak readline sup:10 suppressed: 204,147 bytes in 221 blocks
+==518722== 
+==518722== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==518738== 
+==518738== HEAP SUMMARY:
+==518738==     in use at exit: 204,158 bytes in 223 blocks
+==518738==   total heap usage: 5,411 allocs, 5,188 frees, 304,501 bytes allocated
+==518738== 
+==518738== 2 bytes in 1 blocks are definitely lost in loss record 1 of 64
+==518738==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==518738==    by 0x40357A: ft_strjoin_2 (heredocs_2.c:63)
+==518738==    by 0x403848: heredoc_reader (heredocs_3.c:117)
+==518738==    by 0x403717: heredoc_creator (heredocs_3.c:30)
+==518738==    by 0x403357: add_heredocs (heredocs.c:89)
+==518738==    by 0x40322B: adjust_heredocs (heredocs.c:71)
+==518738==    by 0x4030FF: heredoc_writer (heredocs.c:44)
+==518738==    by 0x401799: join_to_line (history.c:74)
+==518738==    by 0x401667: get_line (history.c:44)
+==518738==    by 0x401378: main (minishell.c:33)
+==518738== 
+==518738== 9 bytes in 1 blocks are still reachable in loss record 6 of 64
+==518738==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==518738==    by 0x40357A: ft_strjoin_2 (heredocs_2.c:63)
+==518738==    by 0x401F30: line_reader (history_2.c:46)
+==518738==    by 0x4015F3: get_line (history.c:33)
+==518738==    by 0x401378: main (minishell.c:33)
+==518738== 
+==518738== LEAK SUMMARY:
+==518738==    definitely lost: 2 bytes in 1 blocks
+==518738==    indirectly lost: 0 bytes in 0 blocks
+==518738==      possibly lost: 0 bytes in 0 blocks
+==518738==    still reachable: 9 bytes in 1 blocks
+==518738==         suppressed: 204,147 bytes in 221 blocks
+==518738== 
+==518738== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+--518738-- 
+--518738-- used_suppression:     62 leak readline sup:10 suppressed: 204,147 bytes in 221 blocks
+==518738== 
+==518738== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

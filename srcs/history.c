@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 14:58:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:00:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,12 +16,9 @@
 
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
-	char	*line_read;
 	char	*pwd;
 	int		pid;
 	int		fd[2];
-	char	buffer[21];
-	int		bread;
 	int		res;
 	
 	res = 0;
@@ -30,36 +27,18 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
-	{
-		close(fd[0]);
-		line_read = readline(pwd);
-		free(pwd);
-		if (!line_read)
-		{
-			res = 10;
-			exit(res);
-		}
-		total_line = line_read;
-		write(fd[1], total_line, ft_strlen(total_line));
-		exit(res);
-	}
+		first_fork(fd[0], fd[1], local_env, pwd);
 	switch_sig_function();
 	waitpid(0, &res, 0);
-	close(fd[1]);	
-	bread = read(fd[0], buffer, 20);
-	total_line = NULL;
-	while (bread > 0)
-	{
-		total_line = ft_strjoin_2(total_line, buffer);
-		bread = read(fd[0], buffer, 20);
-		buffer[bread] = 0;
-	}
+	line_reader(fd[0], fd[1], &total_line);
+	free(pwd);
 	if (WEXITSTATUS(res) == 10)
 	{
 		printf("exit\n");
 		free_split(local_env->content);
 		free_split(local_env->sorted);
 		free(local_env);
+		free(total_line);
 		exit(10);
 	}
 	if (!join_to_line(&total_line, heredocs, local_env))
@@ -87,7 +66,6 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 	char	buffer[21];
 
 	i = 0;
-	line_read = "";
 	if(!ft_parser(*total_line, &i))
 	{
 		heredoc_writer(*total_line, heredocs, i, local);
@@ -99,7 +77,7 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 		i = 0;
 		if(!ft_parser(*total_line, &i))
 			return (false);
-		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0
+		while (end_pipe_and(*total_line) || is_only_spaces(line_read) >= 0
 			|| open_parenthesis(*total_line) > 0)
 		{
 			res = 0;
@@ -107,25 +85,22 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 			pid = fork();
 			if (pid == 0)
 			{
-				close(fd[0]);
-				res = 0;
-				g_signal = 0;
-				line_read = readline("> ");
-				if (!line_read)
-				{
-					res = 10;
-					exit(res);
-				}
-				if (is_only_spaces(line_read) == 0)
-				{
-					res = 20;
-					exit(res);
-				}
-				write(fd[1], line_read, ft_strlen(*total_line));
-				exit(res);	
+				free(*total_line);
+				extra_fork(fd[0], fd[1], local, line_read);
 			}
 			wait(&res);
 			close(fd[1]);
+			bread = read(fd[0], buffer, 20);
+			buffer[bread] = 0;
+			line_read = *total_line;
+			while (bread > 0)
+			{
+				line_read = ft_strjoin_2(line_read, buffer);
+				bread = read(fd[0], buffer, 20);
+				buffer[bread] = 0;
+			}
+			//add_space_line(total_line, line_read);
+			*total_line = line_read;
 			if (WEXITSTATUS(res) == 10)
 			{
 				write(STDIN_FILENO, "\0", 1);
@@ -133,31 +108,17 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 			}
 			else if (WEXITSTATUS(res) == 20)
 				continue;
-			else
-			{
-				free(*total_line);
-				line_read = NULL;
-				bread = read(fd[0], buffer, 20);
-				buffer[bread] = 0;
-				while (bread > 0)
-				{
-					line_read = ft_strjoin_2(line_read, buffer);
-					bread = read(fd[0], buffer, 20);
-					buffer[bread] = 0;
-				}
-				add_space_line(total_line, line_read);
-			}
-			if(!ft_parser(*total_line, &i))
-			{
-				heredoc_writer(*total_line, heredocs, i, local);
-				return (false);
-			}
-			heredoc_writer(line_read, heredocs, i, local);
 		}
 	}
+	if(!ft_parser(*total_line, &i))
+	{
+		heredoc_writer(*total_line, heredocs, i, local);
+		return (false);
+	}
+	heredoc_writer(*total_line, heredocs, i, local);
 	i = 0;
 	if(!ft_parser(*total_line, &i))
-		return (false);
+		return (free(total_line), false);
 	return (true);
 }
 

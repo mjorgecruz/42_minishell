@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:25:24 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/14 00:08:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:33:06 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -74,5 +74,7 @@ char	*ft_strjoin_2(char *s1, char const *s2)
 		j++;
 	}
 	s[j] = '\0';
-	return (free(s1), s);
+	if (s1 && *s1)
+		free(s1);
+	return (s);
 }
