@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs_3.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 19:05:37 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:11:23 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -69,7 +69,7 @@ static void	heredoc_word(char *str, char *word)
 	i = 0;
 	while (str[i] && is_space(str[i]))
 		i++;
-	while (str[i] != '\0' && !is_special_char(str[i]))
+	while (str[i] != '\0' && !is_special_char(str[i]) && !is_space(str[i]))
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 		{
@@ -95,10 +95,9 @@ static void	heredoc_word(char *str, char *word)
 static int write_to_fd(char *final_str, int *fd, char *str)
 {
 	close(fd[0]);
-	switch_sig_function2(str);
+	switch_sig_default();
 	add_partials(&(final_str), str);
 	write(fd[1], final_str, ft_strlen(final_str));
-	//free(str);
 	free(final_str);
 	return (0);
 }

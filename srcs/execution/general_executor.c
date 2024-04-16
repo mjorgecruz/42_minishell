@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 16:19:31 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:13:09 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /* General execution file. Receives a valid full string and makes all organizes
 all necessary operations This file contains the functions to divide the full
@@ -21,7 +21,6 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 	t_token	*cmd_list;
 	t_info	info;
 	int		i;
-
 
 	i = 0;
 	cmd_list = NULL;
@@ -38,9 +37,10 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 	info.local = local;
 	info.local = local;
 	(void) input;
-	// cmd_list = command_organizer(input);
-	// commands_separator(cmd_list);
-	// commands_sorter(cmd_list, info, local);
+	cmd_list = command_organizer(input);
+	commands_separator(cmd_list);
+	info.head = cmd_list;
+	commands_sorter(cmd_list, info, local);
 	clean_cmd_list(cmd_list, heredocs);
 }
 

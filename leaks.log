@@ -1,40 +1,571 @@
-==519198== Memcheck, a memory error detector
-==519198== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==519198== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==519198== Command: ./minishell
-==519198== Parent PID: 519197
-==519198== 
-==519199== 
-==519199== HEAP SUMMARY:
-==519199==     in use at exit: 204,266 bytes in 222 blocks
-==519199==   total heap usage: 5,407 allocs, 5,185 frees, 304,579 bytes allocated
-==519199== 
-==519199== LEAK SUMMARY:
-==519199==    definitely lost: 0 bytes in 0 blocks
-==519199==    indirectly lost: 0 bytes in 0 blocks
-==519199==      possibly lost: 0 bytes in 0 blocks
-==519199==    still reachable: 0 bytes in 0 blocks
-==519199==         suppressed: 204,266 bytes in 222 blocks
-==519199== 
-==519199== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---519199-- 
---519199-- used_suppression:     63 leak readline sup:10 suppressed: 204,266 bytes in 222 blocks
-==519199== 
-==519199== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==519228== 
-==519228== HEAP SUMMARY:
-==519228==     in use at exit: 204,147 bytes in 221 blocks
-==519228==   total heap usage: 5,410 allocs, 5,189 frees, 304,489 bytes allocated
-==519228== 
-==519228== LEAK SUMMARY:
-==519228==    definitely lost: 0 bytes in 0 blocks
-==519228==    indirectly lost: 0 bytes in 0 blocks
-==519228==      possibly lost: 0 bytes in 0 blocks
-==519228==    still reachable: 0 bytes in 0 blocks
-==519228==         suppressed: 204,147 bytes in 221 blocks
-==519228== 
-==519228== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---519228-- 
---519228-- used_suppression:     62 leak readline sup:10 suppressed: 204,147 bytes in 221 blocks
-==519228== 
-==519228== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==413249== Memcheck, a memory error detector
+==413249== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==413249== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==413249== Command: ./minishell
+==413249== Parent PID: 413248
+==413249== 
+==413250== 
+==413250== Process terminating with default action of signal 2 (SIGINT)
+==413250==    at 0x490175B: kill (syscall-template.S:120)
+==413250==    by 0x489EF39: _rl_signal_handler (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==413250==    by 0x489FBEC: rl_getc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==413250==    by 0x489F460: rl_read_key (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==413250==    by 0x4883C86: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==413250==    by 0x488CD14: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==413250==    by 0x10A076: first_fork (history_2.c:23)
+==413250==    by 0x109811: get_line (history.c:30)
+==413250==    by 0x109598: main (minishell.c:33)
+==413250== 
+==413250== HEAP SUMMARY:
+==413250==     in use at exit: 222,149 bytes in 458 blocks
+==413250==   total heap usage: 9,059 allocs, 8,601 frees, 386,624 bytes allocated
+==413250== 
+==413250== 8 bytes in 1 blocks are still reachable in loss record 1 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250== 
+==413250== 8 bytes in 1 blocks are still reachable in loss record 2 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250== 
+==413250== 14 bytes in 1 blocks are still reachable in loss record 10 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 14 bytes in 1 blocks are still reachable in loss record 11 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 16 bytes in 1 blocks are still reachable in loss record 15 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112997: env_init (export_envcpy.c:29)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 20 bytes in 1 blocks are still reachable in loss record 17 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 20 bytes in 1 blocks are still reachable in loss record 18 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 25 bytes in 1 blocks are still reachable in loss record 23 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 25 bytes in 1 blocks are still reachable in loss record 24 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 30 bytes in 1 blocks are still reachable in loss record 26 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 30 bytes in 1 blocks are still reachable in loss record 27 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 33 bytes in 1 blocks are still reachable in loss record 29 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 33 bytes in 1 blocks are still reachable in loss record 30 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 33 bytes in 1 blocks are still reachable in loss record 31 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 33 bytes in 1 blocks are still reachable in loss record 32 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 53 bytes in 1 blocks are still reachable in loss record 36 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x116C19: ft_strjoin (in /home/masoares/Documents/minishell/minishell/minishell)
+==413250==    by 0x109EBE: create_pc_name (history.c:202)
+==413250==    by 0x1097DE: get_line (history.c:26)
+==413250==    by 0x109598: main (minishell.c:33)
+==413250== 
+==413250== 62 bytes in 2 blocks are still reachable in loss record 39 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250== 
+==413250== 66 bytes in 1 blocks are still reachable in loss record 40 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 66 bytes in 1 blocks are still reachable in loss record 41 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 87 bytes in 1 blocks are still reachable in loss record 45 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 87 bytes in 1 blocks are still reachable in loss record 46 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 744 bytes in 1 blocks are still reachable in loss record 66 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112CA5: copy_environment_variables (export_envcpy.c:115)
+==413250==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 744 bytes in 1 blocks are still reachable in loss record 67 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112CA5: copy_environment_variables (export_envcpy.c:115)
+==413250==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413250==    by 0x10955A: main (minishell.c:26)
+==413250== 
+==413250== 6,188 bytes in 164 blocks are still reachable in loss record 97 of 111
+==413250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413250==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413250== 
+==413250== LEAK SUMMARY:
+==413250==    definitely lost: 0 bytes in 0 blocks
+==413250==    indirectly lost: 0 bytes in 0 blocks
+==413250==      possibly lost: 0 bytes in 0 blocks
+==413250==    still reachable: 8,439 bytes in 188 blocks
+==413250==         suppressed: 213,710 bytes in 270 blocks
+==413250== 
+==413250== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--413250-- 
+--413250-- used_suppression:     87 leak readline sup:10 suppressed: 213,710 bytes in 270 blocks
+==413250== 
+==413250== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==413249== Invalid read of size 1
+==413249==    at 0x10A9CE: ignore_spaces (str_utils.c:34)
+==413249==    by 0x10C8F7: is_invalid_start_sign (parser_piper.c:70)
+==413249==    by 0x10B9E2: ft_parser (parser_general.c:20)
+==413249==    by 0x10996C: join_to_line (history.c:71)
+==413249==    by 0x1098C5: get_line (history.c:44)
+==413249==    by 0x109598: main (minishell.c:33)
+==413249==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==413249== 
+==413249== 
+==413249== Process terminating with default action of signal 11 (SIGSEGV)
+==413249==  Access not within mapped region at address 0x0
+==413249==    at 0x10A9CE: ignore_spaces (str_utils.c:34)
+==413249==    by 0x10C8F7: is_invalid_start_sign (parser_piper.c:70)
+==413249==    by 0x10B9E2: ft_parser (parser_general.c:20)
+==413249==    by 0x10996C: join_to_line (history.c:71)
+==413249==    by 0x1098C5: get_line (history.c:44)
+==413249==    by 0x109598: main (minishell.c:33)
+==413249==  If you believe this happened as a result of a stack
+==413249==  overflow in your program's main thread (unlikely but
+==413249==  possible), you can try to increase the size of the
+==413249==  main thread stack using the --main-stacksize= flag.
+==413249==  The main thread stack size used in this run was 8388608.
+==413249== 
+==413249== HEAP SUMMARY:
+==413249==     in use at exit: 8,386 bytes in 187 blocks
+==413249==   total heap usage: 8,564 allocs, 8,377 frees, 151,225 bytes allocated
+==413249== 
+==413249== 8 bytes in 1 blocks are still reachable in loss record 1 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249== 
+==413249== 8 bytes in 1 blocks are still reachable in loss record 2 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249== 
+==413249== 14 bytes in 1 blocks are still reachable in loss record 3 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 14 bytes in 1 blocks are still reachable in loss record 4 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 16 bytes in 1 blocks are still reachable in loss record 5 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112997: env_init (export_envcpy.c:29)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 20 bytes in 1 blocks are still reachable in loss record 6 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 20 bytes in 1 blocks are still reachable in loss record 7 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 25 bytes in 1 blocks are still reachable in loss record 8 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 25 bytes in 1 blocks are still reachable in loss record 9 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 30 bytes in 1 blocks are still reachable in loss record 10 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 30 bytes in 1 blocks are still reachable in loss record 11 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 33 bytes in 1 blocks are still reachable in loss record 12 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 33 bytes in 1 blocks are still reachable in loss record 13 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 33 bytes in 1 blocks are still reachable in loss record 14 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 33 bytes in 1 blocks are still reachable in loss record 15 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 62 bytes in 2 blocks are still reachable in loss record 16 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249== 
+==413249== 66 bytes in 1 blocks are still reachable in loss record 17 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 66 bytes in 1 blocks are still reachable in loss record 18 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 87 bytes in 1 blocks are still reachable in loss record 19 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 87 bytes in 1 blocks are still reachable in loss record 20 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112CCC: copy_environment_variables (export_envcpy.c:118)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 744 bytes in 1 blocks are still reachable in loss record 21 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112CA5: copy_environment_variables (export_envcpy.c:115)
+==413249==    by 0x1129B5: env_init (export_envcpy.c:34)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 744 bytes in 1 blocks are still reachable in loss record 22 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112CA5: copy_environment_variables (export_envcpy.c:115)
+==413249==    by 0x1129C8: env_init (export_envcpy.c:35)
+==413249==    by 0x10955A: main (minishell.c:26)
+==413249== 
+==413249== 6,188 bytes in 164 blocks are still reachable in loss record 23 of 23
+==413249==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==413249==    by 0x112A75: copy_env_var_utils (export_envcpy.c:54)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249==    by 0x112AE7: copy_env_var_utils (export_envcpy.c:60)
+==413249== 
+==413249== LEAK SUMMARY:
+==413249==    definitely lost: 0 bytes in 0 blocks
+==413249==    indirectly lost: 0 bytes in 0 blocks
+==413249==      possibly lost: 0 bytes in 0 blocks
+==413249==    still reachable: 8,386 bytes in 187 blocks
+==413249==         suppressed: 0 bytes in 0 blocks
+==413249== 
+==413249== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==413249== 
+==413249== 1 errors in context 1 of 1:
+==413249== Invalid read of size 1
+==413249==    at 0x10A9CE: ignore_spaces (str_utils.c:34)
+==413249==    by 0x10C8F7: is_invalid_start_sign (parser_piper.c:70)
+==413249==    by 0x10B9E2: ft_parser (parser_general.c:20)
+==413249==    by 0x10996C: join_to_line (history.c:71)
+==413249==    by 0x1098C5: get_line (history.c:44)
+==413249==    by 0x109598: main (minishell.c:33)
+==413249==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==413249== 
+==413249== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

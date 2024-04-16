@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 19:00:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:47:51 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains functions related to the history of the terminal*/
 
@@ -25,10 +25,10 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	*heredocs = NULL;
 	pwd = create_pc_name(local_env);
 	pipe(fd);
+	switch_sig_function();
 	pid = fork();
 	if (pid == 0)
 		first_fork(fd[0], fd[1], local_env, pwd);
-	switch_sig_function();
 	waitpid(0, &res, 0);
 	line_reader(fd[0], fd[1], &total_line);
 	free(pwd);
@@ -54,6 +54,8 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 		add_history(total_line);	
 	return (total_line);
 }
+
+
 
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
@@ -99,7 +101,6 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 				bread = read(fd[0], buffer, 20);
 				buffer[bread] = 0;
 			}
-			//add_space_line(total_line, line_read);
 			*total_line = line_read;
 			if (WEXITSTATUS(res) == 10)
 			{
@@ -108,15 +109,15 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 			}
 			else if (WEXITSTATUS(res) == 20)
 				continue;
+			if(!ft_parser(*total_line, &i))
+			{
+				heredoc_writer(*total_line, heredocs, i, local);
+				return (false);
+			}
+			heredoc_writer(*total_line, heredocs, i, local);
+			i = 0;
 		}
 	}
-	if(!ft_parser(*total_line, &i))
-	{
-		heredoc_writer(*total_line, heredocs, i, local);
-		return (false);
-	}
-	heredoc_writer(*total_line, heredocs, i, local);
-	i = 0;
 	if(!ft_parser(*total_line, &i))
 		return (free(total_line), false);
 	return (true);
@@ -163,7 +164,6 @@ void	add_space_line(char **total_line, char *line_read)
 	garbage = *total_line;
 	*total_line = ft_strjoin(*total_line, line_read);
 	free(garbage);
-	//ft_parser(*total_line);
 }
 
 

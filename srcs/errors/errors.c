@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/13 17:29:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:16:24 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	errors_2(int error_code, char *cmd)
 		code_2(";");
 	else if (error_code == HEREDOC_EOF)
 	{
-		builtin_errors("warning: here-document \
-		delimited by end-of-file (wanted `", "", "");
+		builtin_errors("warning: here-document ",
+		 "delimited by end-of-file (wanted `", "");
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd("')", STDERR_FILENO);
+		ft_putstr_fd("')\n", STDERR_FILENO);
 		ex_code(2);
 	}
 }

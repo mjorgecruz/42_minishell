@@ -1,33 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 16:08:22 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 00:08:06 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/17 00:04:49 by masoares          #+#    #+#             */
+/*   Updated: 2024/04/17 00:08:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	switch_sig_function(void)
+void	update_status_sigint(int sig)
 {
-	signal(SIGINT, sig_handler_int);
-	signal(SIGQUIT, SIG_IGN);
+	if (sig == SIGINT)
+		g_signal = 130;
 }
 
-
-void	switch_sig_default(void)
+void	update_status_sigquit(int sig)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (sig == SIGQUIT)
+		g_signal = 131;
 }
-
-
-void	handle_sigint_status(void)
+void	sig_handler_quit(int sig)
 {
-	signal(SIGINT, update_status_sigint);
-	signal(SIGQUIT, update_status_sigquit);
+	(void) sig;
+	write(STDIN_FILENO, "\n", 1);
+	g_signal = 131;
+	return ;
+}
+void		sig_handler_int(int sig)
+{
+	(void)	sig;
+	
+	rl_replace_line("", 0);
+	ft_printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
+	g_signal = 130;
+	return ;
 }
