@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/03/12 09:01:56 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:20:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	ignore_in_quotes(char *str, int pos)
 
 int	ignore_spaces(char *str, int pos)
 {
-	while (str[pos] && is_space(str[pos]))
-		pos++;
+	if (str)
+	{
+		while (str[pos] && is_space(str[pos]))
+			pos++;
+	}
 	return(pos);
 }
 

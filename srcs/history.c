@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 23:47:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:50:57 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	res = 0;
 	*heredocs = NULL;
 	pwd = create_pc_name(local_env);
-	pipe(fd);
 	switch_sig_function();
+	total_line = ft_strdup("");
+	pipe(fd);
 	pid = fork();
 	if (pid == 0)
-		first_fork(fd[0], fd[1], local_env, pwd);
+	{
+		free(total_line);
+	 	first_fork(fd[0], fd[1], local_env, pwd);
+	}
 	waitpid(0, &res, 0);
 	line_reader(fd[0], fd[1], &total_line);
 	free(pwd);

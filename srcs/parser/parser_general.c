@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_general.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/05 00:08:12 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:44:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ the terminal*/
 
 bool	ft_parser(char *line_read, int *i)
 {
+	if (!line_read || !line_read[0])
+		return (true);
 	if (is_invalid_start_sign(line_read))
 		return (0);
 	while (line_read[*i])
@@ -39,7 +41,7 @@ bool	ft_parser(char *line_read, int *i)
 			return (false);
 		(*i)++;
 	}	
-	if (open_parenthesis(line_read) < 0)
+	if (line_read[0] && open_parenthesis(line_read) < 0)
 		return(errors(SYNTAX_CLOSE_P, NULL), false);
 	return (true);
 }

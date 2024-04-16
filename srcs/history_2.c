@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:31:08 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 23:31:16 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:36:18 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void    line_reader(int fd0, int fd1, char **total_line)
     int     bread;
     char	buffer[21];
     
-    close(fd1);
+    if(!(*total_line))
+		*total_line = ft_strdup("");
+	close(fd1);
 	bread = read(fd0, buffer, 20);
 	buffer[bread] = 0;
 	while (bread > 0)
