@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 13:49:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:32:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,7 @@ char	**wild_splitter(char *str)
 		if (str[i] == '*')
 		{
 			k = i - 1;
-			while (str[k] && !is_special_char(str[j]))
+			while (k >= 0 && !is_special_char(str[k]))
 			{
 				if (str[k] == '<' && k > 0 && str[k - 1] == '<')
 					k = -10;
@@ -67,7 +67,7 @@ char	*add_simple_wildcard(char *str, int *i)
 	int 	j;
 
 	j = *i - 1;
-	while (str[j] && !is_special_char(str[j]))
+	while (j >= 0 && !is_special_char(str[j]))
 	{
 		if (str[j] == '<' && j > 0 && str[j - 1] == '<')
 			return ("");

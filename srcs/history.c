@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 19:10:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:58:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,31 +14,54 @@
 
 #include "../includes/minishell.h"
 
-int event(void)
-{
-	return (0);
-}
-
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
 	char	*line_read;
 	char	*pwd;
+	int		pid;
+	int		fd[2];
+	char	buffer[21];
+	int		bread;
+	int		res;
 	
+	res = 0;
 	*heredocs = NULL;
-	switch_sig_readline();
-	// rl_event_hook = event;
 	pwd = create_pc_name(local_env);
-	line_read = readline(pwd);
-	free(pwd);
-	if (!line_read)
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		line_read = readline(pwd);
+		free(pwd);
+		if (!line_read)
+		{
+			res = 10;
+			exit(res);
+		}
+		total_line = line_read;
+		write(fd[1], total_line, ft_strlen(total_line));
+		exit(res);
+	}
+	switch_sig_function();
+	waitpid(0, &res, 0);
+	close(fd[1]);	
+	bread = read(fd[0], buffer, 20);
+	total_line = NULL;
+	while (bread > 0)
+	{
+		total_line = ft_strjoin_2(total_line, buffer);
+		bread = read(fd[0], buffer, 20);
+		buffer[bread] = 0;
+	}
+	if (WEXITSTATUS(res) == 10)
 	{
 		printf("exit\n");
 		free_split(local_env->content);
 		free_split(local_env->sorted);
 		free(local_env);
-		exit(EXIT_SUCCESS);
+		exit(10);
 	}
-	total_line = line_read;
 	if (!join_to_line(&total_line, heredocs, local_env))
 	{
 		if (total_line && *total_line)
@@ -48,7 +71,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 			total_line = NULL;
 		}
 	}
-	if (total_line)
+	else
 		add_history(total_line);	
 	return (total_line);
 }
@@ -57,7 +80,12 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
 	char 	*line_read;
 	int		i;
-	
+	int		pid;
+	int		fd[2];
+	int		res;
+	int		bread;
+	char	buffer[21];
+
 	i = 0;
 	line_read = "";
 	if(!ft_parser(*total_line, &i))
@@ -72,18 +100,53 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 		if(!ft_parser(*total_line, &i))
 			return (false);
 		while (end_pipe_and(line_read) || is_only_spaces(line_read) >= 0
-		|| open_parenthesis(*total_line) > 0)
+			|| open_parenthesis(*total_line) > 0)
 		{
-			g_signal = 1;
-			line_read = readline("> ");
-			if (!line_read || rl_done)
+			res = 0;
+			pipe(fd);
+			pid = fork();
+			if (pid == 0)
 			{
-				write(STDIN_FILENO, "\0", 1);	
+				close(fd[0]);
+				res = 0;
+				g_signal = 0;
+				line_read = readline("> ");
+				if (!line_read)
+				{
+					res = 10;
+					exit(res);
+				}
+				if (is_only_spaces(line_read) == 0)
+				{
+					res = 20;
+					exit(res);
+				}
+				write(fd[1], line_read, ft_strlen(*total_line));
+				exit(res);	
+			}
+			wait(&res);
+			close(fd[1]);
+			if (WEXITSTATUS(res) == 10)
+			{
+				write(STDIN_FILENO, "\0", 1);
 				return (false);
 			}
-			if (is_only_spaces(line_read) == 0)
-				continue ;
-			add_space_line(total_line, line_read);
+			else if (WEXITSTATUS(res) == 20)
+				continue;
+			else
+			{
+				free(*total_line);
+				line_read = NULL;
+				bread = read(fd[0], buffer, 20);
+				buffer[bread] = 0;
+				while (bread > 0)
+				{
+					line_read = ft_strjoin_2(line_read, buffer);
+					bread = read(fd[0], buffer, 20);
+					buffer[bread] = 0;
+				}
+				add_space_line(total_line, line_read);
+			}
 			if(!ft_parser(*total_line, &i))
 			{
 				heredoc_writer(*total_line, heredocs, i, local);

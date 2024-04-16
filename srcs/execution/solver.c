@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 10:00:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:50:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -200,7 +200,7 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 	int		i;
 
 	clean = clean_str(full_cmds->cmds);
-	trav = ft_split_ignore_quotes(clean, " ");
+	trav = ft_split_ignore_quotes(clean, " \t\n");
 	i = 0;
 	while (trav && trav[i] != 0)
 		i++; 

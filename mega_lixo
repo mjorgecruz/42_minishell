@@ -58,11 +58,12 @@ V  unset all vars and run export
 V  cd with redirects
 V  command /ls error should be of no directory
 V  exit with numbers in front not ais not a
+V  echo hello world
+V  $? -> $?
+V  unst HOME
 execve errors
-ls     *
+V  ls     *
 ls *"'aosdahas'"
 (asdsaas || sdsad) || merdaa || echo gaita
-unst HOME
-echo hello world
 change readline to a fork
-$? -> $?
+SHLVL
