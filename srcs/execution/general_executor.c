@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 15:46:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:46:36 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /* General execution file. Receives a valid full string and makes all organizes
 all necessary operations This file contains the functions to divide the full
@@ -73,8 +73,8 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		// if (!input[i])
-		// 	break;
+		if (!input[i])
+			break;
 		if (!input[i] || (input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
@@ -91,10 +91,16 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 		if (input[i])
 			i++;
 	}
-	if (j <= ft_strlen(input))
+	if (j < ft_strlen(input))
 	{
 		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
 		add_token(list, token);
+		if (token_has_par(token))
+		{
+			trimmed = trim_string(token->content);
+			command_divider(&(token->down), trimmed, type, token);
+			free(trimmed);
+		}
 	}
 }
 
@@ -117,9 +123,11 @@ bool token_has_par(t_token *token)
 	i = 0;
 	while (token->content && token->content[i])
 	{
+		i = ignore_in_quotes(token->content, i);
 		if (token->content[i] == '(')
 			return (true);
-		i++;
+		if (token->content[i])
+			i++;
 	}
 	return (false);
 }
