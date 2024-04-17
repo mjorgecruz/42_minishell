@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 17:57:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:46:04 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -180,7 +180,6 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		}
 		handle_sigint_status();
 		waitpid(pid, &res, 0);
-		ex_code(res);
 		if (res == 2)
 			printf("\n");
 		else if (res == 131)
@@ -192,7 +191,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		res = solver(final_cmds, info, cmd_info);
 		ex_code(res);
 	}
-	return(free_split(final_cmds), res);
+	return(free_split(final_cmds), g_signal);
 }
 
 void	set_id_flag_cmd(char **cmd, t_builtin *id)

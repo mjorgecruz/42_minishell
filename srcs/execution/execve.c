@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:56:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:28:12 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 void set_mesage(char *cmd, int code, char *msg)
@@ -119,11 +119,12 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 	int		status;
 	int		error;
 	
+	error = 0;
 	status = 0;
 	if (cmd_info.in_out[0] == HEREDOC)
-		status = execve_heredoc(info, cmds, local);
+		error = execve_heredoc(info, cmds, local);
 	else if (cmd_info.in_out[0] == IN_DOC)
-	 	status = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
+	 	error = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 	else
 	{
 		status = execve(cmds[0], cmds, local->content);
@@ -141,7 +142,6 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	int		fd[2];
 	int		stdin;
 	int		stdout;
-	int 	status;
 
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
@@ -157,27 +157,26 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	}
 	dup2(stdout, STDOUT_FILENO);
 	close(stdout);
-	status = execve(cmds[0], cmds, local->content);
+	execve(cmds[0], cmds, local->content);
 	exec_not(cmds[0]);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
-	return (status);
+	return (errno);
 }
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
 	int		stdin;
 	int		stdout;
-	int 	status;
 
 	(void) info;
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
-	status = execve(cmds[0], cmds, local->content);
+	execve(cmds[0], cmds, local->content);
 	exec_not(cmds[0]);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
-	return (status);
+	return (errno);
 }

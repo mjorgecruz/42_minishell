@@ -53,7 +53,6 @@ PWD=/home/masoares/Documents/minishell/minishell
 QT_ACCESSIBILITY=1
 QT_IM_MODULE=ibus
 SESSION_MANAGER=local/masoares-GL702VMK:@/tmp/.ICE-unix/2144,unix/masoares-GL702VMK:/tmp/.ICE-unix/2144
-SHELL=/bin/bash
 SSH_AGENT_LAUNCHER=gnome-keyring
 SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 SYSTEMD_EXEC_PID=2206
