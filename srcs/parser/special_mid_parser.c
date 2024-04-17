@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   special_mid_parser.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 11:28:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 03:08:00 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -34,6 +34,8 @@ bool mid_parser_iteration(char *str, int *i)
 			j = ignore_in_quotes(str, j);
 			j = check_uppersand(str, j);
 		}
+		j = check_pipes(str, j);
+		j = check_redirs(str, j);
 		if (j == -1)
 			return false;
 		if (!str[j])
@@ -74,7 +76,7 @@ int check_pipes(char *str, int pos)
 
 int check_redirs(char *str, int pos)
 {
-	if (str[pos] == '>' || str[pos] == '<')
+	if (pos < ft_strlen(str) && (str[pos] == '>' || str[pos] == '<'))
 	{
 		if (!str[pos + 1])
 			return (error_definer(&str[pos + 1]), -1);
@@ -92,9 +94,9 @@ int check_redirs(char *str, int pos)
 				return (pos);
 			return (error_definer(&str[pos]), -1);
 		}
-		else if (str[pos + 1] && str[pos] == '>' && is_special_char(str[pos + 1]))
+		else if (str[pos] == '>' && str[pos + 1] && is_special_char(str[pos + 1]))
 			pos = check_redirs_rr_sc(str, pos);
-		else if (str[pos + 1] && str[pos] == '<' && is_special_char(str[pos + 1]))
+		else if (str[pos] == '<' && str[pos + 1] && is_special_char(str[pos + 1]))
 			pos = check_redirs_lr_sc(str, pos);
 	}
 	return (pos);

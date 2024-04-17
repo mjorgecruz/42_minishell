@@ -61,10 +61,12 @@ V  exit with numbers in front not ais not a
 V  echo hello world
 V  $? -> $?
 V  unst HOME
-execve errors
 V  ls     *
 V  change readline to a fork
 V  heredocs define heredoc wrong
 ls *"'aosdahas'"
+ls |	|
 (asdsaas || sdsad) || merdaa || echo gaita
+(asdsaas || sdsad) || merdaa | cat < lol || echo gaita
 SHLVL
+execve errors

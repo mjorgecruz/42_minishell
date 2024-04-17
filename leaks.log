@@ -1,160 +1,117 @@
-==479284== Memcheck, a memory error detector
-==479284== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==479284== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==479284== Command: ./minishell
-==479284== Parent PID: 479283
-==479284== 
-==479285== 
-==479285== HEAP SUMMARY:
-==479285==     in use at exit: 204,290 bytes in 222 blocks
-==479285==   total heap usage: 9,063 allocs, 8,841 frees, 386,652 bytes allocated
-==479285== 
-==479285== LEAK SUMMARY:
-==479285==    definitely lost: 0 bytes in 0 blocks
-==479285==    indirectly lost: 0 bytes in 0 blocks
-==479285==      possibly lost: 0 bytes in 0 blocks
-==479285==    still reachable: 0 bytes in 0 blocks
-==479285==         suppressed: 204,290 bytes in 222 blocks
-==479285== 
-==479285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479285-- 
---479285-- used_suppression:     63 leak readline sup:10 suppressed: 204,290 bytes in 222 blocks
-==479285== 
-==479285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==479332== 
-==479332== HEAP SUMMARY:
-==479332==     in use at exit: 4,138 bytes in 5 blocks
-==479332==   total heap usage: 8,633 allocs, 8,628 frees, 156,504 bytes allocated
-==479332== 
-==479332== 43 bytes in 1 blocks are still reachable in loss record 3 of 5
-==479332==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479332==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
-==479332==    by 0x10A168: line_reader (history_2.c:46)
-==479332==    by 0x109859: get_line (history.c:37)
-==479332==    by 0x109593: main (minishell.c:33)
-==479332== 
-==479332== LEAK SUMMARY:
-==479332==    definitely lost: 0 bytes in 0 blocks
-==479332==    indirectly lost: 0 bytes in 0 blocks
-==479332==      possibly lost: 0 bytes in 0 blocks
-==479332==    still reachable: 43 bytes in 1 blocks
-==479332==         suppressed: 4,095 bytes in 4 blocks
-==479332== 
-==479332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479332-- 
---479332-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
-==479332== 
-==479332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==479333== 
-==479333== HEAP SUMMARY:
-==479333==     in use at exit: 4,138 bytes in 5 blocks
-==479333==   total heap usage: 8,641 allocs, 8,636 frees, 156,566 bytes allocated
-==479333== 
-==479333== 43 bytes in 1 blocks are still reachable in loss record 3 of 5
-==479333==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479333==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
-==479333==    by 0x10A168: line_reader (history_2.c:46)
-==479333==    by 0x109859: get_line (history.c:37)
-==479333==    by 0x109593: main (minishell.c:33)
-==479333== 
-==479333== LEAK SUMMARY:
-==479333==    definitely lost: 0 bytes in 0 blocks
-==479333==    indirectly lost: 0 bytes in 0 blocks
-==479333==      possibly lost: 0 bytes in 0 blocks
-==479333==    still reachable: 43 bytes in 1 blocks
-==479333==         suppressed: 4,095 bytes in 4 blocks
-==479333== 
-==479333== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479333-- 
---479333-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
-==479333== 
-==479333== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==479334== 
-==479334== HEAP SUMMARY:
-==479334==     in use at exit: 4,138 bytes in 5 blocks
-==479334==   total heap usage: 8,649 allocs, 8,644 frees, 156,670 bytes allocated
-==479334== 
-==479334== 43 bytes in 1 blocks are still reachable in loss record 3 of 5
-==479334==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479334==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
-==479334==    by 0x10A168: line_reader (history_2.c:46)
-==479334==    by 0x109859: get_line (history.c:37)
-==479334==    by 0x109593: main (minishell.c:33)
-==479334== 
-==479334== LEAK SUMMARY:
-==479334==    definitely lost: 0 bytes in 0 blocks
-==479334==    indirectly lost: 0 bytes in 0 blocks
-==479334==      possibly lost: 0 bytes in 0 blocks
-==479334==    still reachable: 43 bytes in 1 blocks
-==479334==         suppressed: 4,095 bytes in 4 blocks
-==479334== 
-==479334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479334-- 
---479334-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
-==479334== 
-==479334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==479335== 
-==479335== HEAP SUMMARY:
-==479335==     in use at exit: 4,173 bytes in 8 blocks
-==479335==   total heap usage: 8,629 allocs, 8,621 frees, 156,193 bytes allocated
-==479335== 
-==479335== 11 bytes in 2 blocks are still reachable in loss record 1 of 7
-==479335==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479335==    by 0x11653E: ft_calloc (in /home/masoares/Documents/minishell/minishell/minishell)
-==479335==    by 0x111534: join_list_contents (expander.c:93)
-==479335==    by 0x111CC1: master_expander_out (expander_main.c:41)
-==479335==    by 0x10E388: clean_cmds (solver.c:212)
-==479335==    by 0x10F2CE: inter_executioner (out_setup_general.c:129)
-==479335==    by 0x10EE54: commands_sorter (out_setup_general.c:32)
-==479335==    by 0x10EEF1: commands_sorter (out_setup_general.c:40)
-==479335==    by 0x10EEF1: commands_sorter (out_setup_general.c:40)
-==479335==    by 0x10FA6A: general_executer (general_executor.c:42)
-==479335==    by 0x10960D: main (minishell.c:39)
-==479335== 
-==479335== 24 bytes in 1 blocks are still reachable in loss record 4 of 7
-==479335==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479335==    by 0x10E324: clean_cmds (solver.c:207)
-==479335==    by 0x10F2CE: inter_executioner (out_setup_general.c:129)
-==479335==    by 0x10EE54: commands_sorter (out_setup_general.c:32)
-==479335==    by 0x10EEF1: commands_sorter (out_setup_general.c:40)
-==479335==    by 0x10EEF1: commands_sorter (out_setup_general.c:40)
-==479335==    by 0x10FA6A: general_executer (general_executor.c:42)
-==479335==    by 0x10960D: main (minishell.c:39)
-==479335== 
-==479335== 43 bytes in 1 blocks are still reachable in loss record 5 of 7
-==479335==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==479335==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
-==479335==    by 0x10A168: line_reader (history_2.c:46)
-==479335==    by 0x109859: get_line (history.c:37)
-==479335==    by 0x109593: main (minishell.c:33)
-==479335== 
-==479335== LEAK SUMMARY:
-==479335==    definitely lost: 0 bytes in 0 blocks
-==479335==    indirectly lost: 0 bytes in 0 blocks
-==479335==      possibly lost: 0 bytes in 0 blocks
-==479335==    still reachable: 78 bytes in 4 blocks
-==479335==         suppressed: 4,095 bytes in 4 blocks
-==479335== 
-==479335== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479335-- 
---479335-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
-==479335== 
-==479335== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==479336== 
-==479336== HEAP SUMMARY:
-==479336==     in use at exit: 208,343 bytes in 226 blocks
-==479336==   total heap usage: 9,130 allocs, 8,904 frees, 395,836 bytes allocated
-==479336== 
-==479336== LEAK SUMMARY:
-==479336==    definitely lost: 0 bytes in 0 blocks
-==479336==    indirectly lost: 0 bytes in 0 blocks
-==479336==      possibly lost: 0 bytes in 0 blocks
-==479336==    still reachable: 0 bytes in 0 blocks
-==479336==         suppressed: 208,343 bytes in 226 blocks
-==479336== 
-==479336== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---479336-- 
---479336-- used_suppression:     63 leak readline sup:10 suppressed: 204,248 bytes in 222 blocks
---479336-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
-==479336== 
-==479336== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==496874== Memcheck, a memory error detector
+==496874== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==496874== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==496874== Command: ./minishell
+==496874== Parent PID: 496873
+==496874== 
+==496878== 
+==496878== HEAP SUMMARY:
+==496878==     in use at exit: 204,253 bytes in 222 blocks
+==496878==   total heap usage: 9,087 allocs, 8,865 frees, 387,021 bytes allocated
+==496878== 
+==496878== LEAK SUMMARY:
+==496878==    definitely lost: 0 bytes in 0 blocks
+==496878==    indirectly lost: 0 bytes in 0 blocks
+==496878==      possibly lost: 0 bytes in 0 blocks
+==496878==    still reachable: 0 bytes in 0 blocks
+==496878==         suppressed: 204,253 bytes in 222 blocks
+==496878== 
+==496878== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--496878-- 
+--496878-- used_suppression:     63 leak readline sup:10 suppressed: 204,253 bytes in 222 blocks
+==496878== 
+==496878== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==497073== 
+==497073== HEAP SUMMARY:
+==497073==     in use at exit: 4,066 bytes in 6 blocks
+==497073==   total heap usage: 8,583 allocs, 8,577 frees, 155,352 bytes allocated
+==497073== 
+==497073== 2 bytes in 1 blocks are definitely lost in loss record 1 of 6
+==497073==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==497073==    by 0x1165A3: ft_calloc (in /home/masoares/Documents/minishell/minishell/minishell)
+==497073==    by 0x110557: write_to_line (general_executor_2.c:117)
+==497073==    by 0x1104F2: mega_divider (general_executor_2.c:105)
+==497073==    by 0x11026D: fill_cmds (general_executor_2.c:56)
+==497073==    by 0x1101E0: commands_separator (general_executor_2.c:39)
+==497073==    by 0x10FAA1: general_executer (general_executor.c:40)
+==497073==    by 0x10960D: main (minishell.c:39)
+==497073== 
+==497073== 6 bytes in 1 blocks are still reachable in loss record 2 of 6
+==497073==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==497073==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
+==497073==    by 0x10A168: line_reader (history_2.c:46)
+==497073==    by 0x109859: get_line (history.c:37)
+==497073==    by 0x109593: main (minishell.c:33)
+==497073== 
+==497073== LEAK SUMMARY:
+==497073==    definitely lost: 2 bytes in 1 blocks
+==497073==    indirectly lost: 0 bytes in 0 blocks
+==497073==      possibly lost: 0 bytes in 0 blocks
+==497073==    still reachable: 6 bytes in 1 blocks
+==497073==         suppressed: 4,058 bytes in 4 blocks
+==497073== 
+==497073== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+--497073-- 
+--497073-- used_suppression:      4 leak add_history sup:16 suppressed: 4,058 bytes in 4 blocks
+==497073== 
+==497073== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==497075== 
+==497075== HEAP SUMMARY:
+==497075==     in use at exit: 208,328 bytes in 229 blocks
+==497075==   total heap usage: 9,085 allocs, 8,856 frees, 395,032 bytes allocated
+==497075== 
+==497075== 2 bytes in 1 blocks are definitely lost in loss record 3 of 70
+==497075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==497075==    by 0x1165A3: ft_calloc (in /home/masoares/Documents/minishell/minishell/minishell)
+==497075==    by 0x110557: write_to_line (general_executor_2.c:117)
+==497075==    by 0x1104F2: mega_divider (general_executor_2.c:105)
+==497075==    by 0x11026D: fill_cmds (general_executor_2.c:56)
+==497075==    by 0x1101E0: commands_separator (general_executor_2.c:39)
+==497075==    by 0x10FAA1: general_executer (general_executor.c:40)
+==497075==    by 0x10960D: main (minishell.c:39)
+==497075== 
+==497075== LEAK SUMMARY:
+==497075==    definitely lost: 2 bytes in 1 blocks
+==497075==    indirectly lost: 0 bytes in 0 blocks
+==497075==      possibly lost: 0 bytes in 0 blocks
+==497075==    still reachable: 0 bytes in 0 blocks
+==497075==         suppressed: 208,326 bytes in 228 blocks
+==497075== 
+==497075== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+--497075-- 
+--497075-- used_suppression:     68 leak readline sup:10 suppressed: 204,310 bytes in 227 blocks
+--497075-- used_suppression:      1 leak add_history sup:16 suppressed: 4,016 bytes in 1 blocks
+==497075== 
+==497075== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==496874== Invalid read of size 1
+==496874==    at 0x10D461: check_redirs (special_mid_parser.c:79)
+==496874==    by 0x10D1E8: mid_parser_iteration (special_mid_parser.c:38)
+==496874==    by 0x10C014: parser_special_module_two (parser_special.c:33)
+==496874==    by 0x10C06B: parser_special (parser_special.c:42)
+==496874==    by 0x10BA76: ft_parser (parser_general.c:28)
+==496874==    by 0x109981: join_to_line (history.c:75)
+==496874==    by 0x1098DA: get_line (history.c:48)
+==496874==    by 0x109593: main (minishell.c:33)
+==496874==  Address 0x4bd72ef is 1 bytes before a block of size 7 alloc'd
+==496874==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==496874==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
+==496874==    by 0x10A168: line_reader (history_2.c:46)
+==496874==    by 0x109859: get_line (history.c:37)
+==496874==    by 0x109593: main (minishell.c:33)
+==496874== 
+==496874== Invalid read of size 1
+==496874==    at 0x10D475: check_redirs (special_mid_parser.c:79)
+==496874==    by 0x10D1E8: mid_parser_iteration (special_mid_parser.c:38)
+==496874==    by 0x10C014: parser_special_module_two (parser_special.c:33)
+==496874==    by 0x10C06B: parser_special (parser_special.c:42)
+==496874==    by 0x10BA76: ft_parser (parser_general.c:28)
+==496874==    by 0x109981: join_to_line (history.c:75)
+==496874==    by 0x1098DA: get_line (history.c:48)
+==496874==    by 0x109593: main (minishell.c:33)
+==496874==  Address 0x4bd72ef is 1 bytes before a block of size 7 alloc'd
+==496874==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==496874==    by 0x10B48B: ft_strjoin_2 (heredocs_2.c:63)
+==496874==    by 0x10A168: line_reader (history_2.c:46)
+==496874==    by 0x109859: get_line (history.c:37)
+==496874==    by 0x109593: main (minishell.c:33)
+==496874== 
