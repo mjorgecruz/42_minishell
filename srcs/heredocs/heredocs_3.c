@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs_3.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 00:11:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:39:14 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -36,6 +36,7 @@ static int	forking_heredocs(char *final_str, t_heredocker heredocker, t_localenv
 	int		pid;
 	int		fd[2];
 	char	word[4096];
+	int		res;
 
 	heredoc_word(&(heredocker.line_read[heredocker.i]), word);
 	pipe(fd);
@@ -50,8 +51,10 @@ static int	forking_heredocs(char *final_str, t_heredocker heredocker, t_localenv
 		free(heredocker.line_read);
 		exit(EXIT_SUCCESS);
 	}
-	switch_sig_function();
-	waitpid(0, NULL, 0);
+	handle_sigint_status();
+	waitpid(0, &res, 0);
+	if (res == 2)
+		printf("\n");
 	close(fd[1]);
 	return (fd[0]);
 }
@@ -95,7 +98,7 @@ static void	heredoc_word(char *str, char *word)
 static int write_to_fd(char *final_str, int *fd, char *str)
 {
 	close(fd[0]);
-	switch_sig_default();
+	switch_sig_new();
 	add_partials(&(final_str), str);
 	write(fd[1], final_str, ft_strlen(final_str));
 	free(final_str);

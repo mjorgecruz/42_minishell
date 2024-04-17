@@ -67,9 +67,10 @@ V  heredocs define heredoc wrong
 V  ls |	|
 V  (asdsaas || sdsad) || merdaa || echo gaita
 V  (asdsaas || sdsad) || merdaa | cat < lol || echo gaita
+V  review signals
 ls *"'aosdahas'"
 (asdsaas || sdsad)
 SHLVL
 execve errors
-review signals
 organize files
+<< re >>>

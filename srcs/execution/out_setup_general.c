@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 09:10:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:47:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -59,6 +59,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 			pid = fork();
 			if (pid == 0)
 			{
+				switch_sig_default();
 				pied_piper(cmd_list, fd, i, &stdin);
 				res = inter_executioner(cmd_list, info, local, i);
 				tree_cleaner(info.head);
@@ -68,11 +69,16 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 			dup2(fd[0], stdin);
 			close(fd[0]);
 			close(fd[1]);
-			ex_code(res);
 		}
 		i++;
 	}
-	return(close(stdin), waiter_function(cmd_list));
+	handle_sigint_status();
+	waiter_function(cmd_list);
+	if (res == 2)
+		printf("\n");
+	else if (res == 131)
+		builtin_errors("Quit (core dumped)", "\n", "");
+	return(close(stdin));
 }
 
 int		pied_piper(t_token *cmd_list, int *fd, int i, int *stdin)
@@ -163,7 +169,12 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 			free_split(final_cmds);
 			exit(res);
 		}
+		handle_sigint_status();
 		waitpid(pid, &res, 0);
+		if (res == 2)
+			printf("\n");
+		else if (res == 131)
+			builtin_errors("Quit (core dumped)", "\n", "");
 		ex_code(res);
 	}
 	else	

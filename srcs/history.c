@@ -6,13 +6,15 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 10:20:39 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:37:12 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 /*This file contains functions related to the history of the terminal*/
 
 #include "../includes/minishell.h"
+
+static void	free_onexit(t_localenv *local_env, char *total_line);
 
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
@@ -24,7 +26,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	res = 0;
 	*heredocs = NULL;
 	pwd = create_pc_name(local_env);
-	switch_sig_function();
+	handle_sigint_status();
 	total_line = ft_strdup("");
 	pipe(fd);
 	pid = fork();
@@ -38,14 +40,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	line_reader(fd[0], fd[1], &total_line);
 	free(pwd);
 	if (WEXITSTATUS(res) == 10)
-	{
-		printf("exit\n");
-		free_split(local_env->content);
-		free_split(local_env->sorted);
-		free(local_env);
-		free(total_line);
-		exit(10);
-	}
+		free_onexit(local_env, total_line);
 	if (!join_to_line(&total_line, heredocs, local_env))
 	{
 		if (total_line && *total_line)
@@ -60,7 +55,15 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	return (total_line);
 }
 
-
+static void	free_onexit(t_localenv *local_env, char *total_line)
+{
+	printf("exit\n");
+	free_split(local_env->content);
+	free_split(local_env->sorted);
+	free(local_env);
+	free(total_line);
+	exit(10);
+}
 
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
@@ -76,6 +79,7 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 	if(!ft_parser(*total_line, &i))
 	{
 		heredoc_writer(*total_line, heredocs, i, local);
+		free_split(*heredocs);
 		return (false);
 	}
 	heredoc_writer(*total_line, heredocs, i, local);
@@ -97,6 +101,11 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 			}
 			handle_sigint_status();
 			wait(&res);
+			if (res == 2)
+			{
+				printf("\n");
+				break;
+			}
 			close(fd[1]);
 			bread = read(fd[0], buffer, 20);
 			buffer[bread] = 0;
@@ -118,6 +127,7 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 			if(!ft_parser(*total_line, &i))
 			{
 				heredoc_writer(*total_line, heredocs, i, local);
+				free_split(*heredocs);
 				return (false);
 			}
 			heredoc_writer(*total_line, heredocs, i, local);
@@ -127,113 +137,4 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 	if(!ft_parser(*total_line, &i))
 		return (free(total_line), false);
 	return (true);
-}
-
-bool end_pipe_and(char *total_line)
-{
-	int		i;
-
-	i = ft_strlen(total_line) - 1;
-	while (i >= 0 && total_line[i] == ' ')
-		i--;
-	if (i >= 0 && (total_line[i] == '|' || total_line[i] == '&'))
-		return (true);
-	else
-		return (false);
-}
-
-int is_only_spaces(char *total_line)
-{
-	int		i;
-	int		count;
-
-	count = 0;
-	i = ft_strlen(total_line) - 1;
-	while (total_line[i] == ' ' && i >= 0)
-	{
-		i--;
-		count++;
-	}
-	if (total_line[0] == ' ' || total_line[0] == '\0')
-		return (count);
-	else
-		return (-1);
-}
-
-void	add_space_line(char **total_line, char *line_read)
-{
-	char *garbage;
-	
-	garbage = *total_line;
-	*total_line = ft_strjoin(*total_line, " ");
-	free(garbage);
-	garbage = *total_line;
-	*total_line = ft_strjoin(*total_line, line_read);
-	free(garbage);
-}
-
-
-int		open_parenthesis(char *total_line)
-{
-	int		i;
-	int		count_open;
-
-	i = 0;
-	count_open = 0;
-	while(total_line[i])
-	{
-		if (total_line[i] == '\'' || total_line[i] == '"')
-			pass_quotes(total_line, &i);
-		if (total_line[i] == '(')
-			count_open++;
-		if (total_line[i] == ')')
-			count_open--;
-		if (count_open < 0)
-			return (-1);
-		i++;
-	}
-	return (count_open);
-}
-
-char	*create_pc_name(t_localenv *local_env)
-{
-	char	*pwd;
-	char	*name;
-	char	*vai_fora;
-	
-	pwd = get_end_path(local_env);
-	name = ft_strjoin("masoares&&luis-ffe@", "minishell:");
-	vai_fora = name;
-	name = ft_strjoin(name, pwd);
-	free(vai_fora);
-	free(pwd);
-	return (name);
-}
-
-char	*get_end_path(t_localenv *local_env)
-{
-	char	*garbage;
-	char	*rest;
-	int		i;
-	int		j;
-	int		count_bars;
-	
-	garbage = getcwd(NULL, 0);
-	if (garbage == NULL)
-		garbage = ft_getenv("PWD", local_env->content);
-	i = 0;
-	j = 2;
-	count_bars = 0;
-	while (garbage[i] != '\0' && count_bars < 4)
-	{
-		if (garbage[i] == '/')
-			count_bars++;
-		i++;
-	}
-	rest = ft_calloc(ft_strlen(garbage) - i + 1 + 4, sizeof(char));
-	rest[0] = '~';
-	rest[1] = '/';
-	while (garbage[i] != '\0')
-		rest[j++] = garbage[i++];
-	return (rest[j] = '$', rest[j + 1] = ' ', rest[j + 2] = '\0', free(garbage), rest);
 }

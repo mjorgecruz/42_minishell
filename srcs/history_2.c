@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:31:08 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 10:20:54 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:31:50 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,7 +17,7 @@ void    first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd)
     char    *line_read;
     int     res;
 
-	switch_sig_default();
+	switch_sig_function();
     res = 0;
     close(fd0);
 	line_read = readline(pwd);
@@ -55,7 +55,7 @@ void    extra_fork(int fd0, int fd1, t_localenv *local, char * line_read)
     int     res;
     
     close(fd0);
-	switch_sig_default();
+	switch_sig_new();
 	free_split(local->content);
 	free_split(local->sorted);
 	free(local);
@@ -76,4 +76,32 @@ void    extra_fork(int fd0, int fd1, t_localenv *local, char * line_read)
 	write(fd1, line_read, ft_strlen(line_read));
 	free(line_read);
 	exit(res);
+}
+
+char	*get_end_path(t_localenv *local_env)
+{
+	char	*garbage;
+	char	*rest;
+	int		i;
+	int		j;
+	int		count_bars;
+	
+	garbage = getcwd(NULL, 0);
+	if (garbage == NULL)
+		garbage = ft_getenv("PWD", local_env->content);
+	i = 0;
+	j = 2;
+	count_bars = 0;
+	while (garbage[i] != '\0' && count_bars < 4)
+	{
+		if (garbage[i] == '/')
+			count_bars++;
+		i++;
+	}
+	rest = ft_calloc(ft_strlen(garbage) - i + 1 + 4, sizeof(char));
+	rest[0] = '~';
+	rest[1] = '/';
+	while (garbage[i] != '\0')
+		rest[j++] = garbage[i++];
+	return (rest[j] = '$', rest[j + 1] = ' ', rest[j + 2] = '\0', free(garbage), rest);
 }
