@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 02:00:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:20:39 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file contains functions related to the history of the terminal*/
 
@@ -33,6 +33,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 		free(total_line);
 	 	first_fork(fd[0], fd[1], local_env, pwd);
 	}
+	handle_sigint_status();
 	waitpid(0, &res, 0);
 	line_reader(fd[0], fd[1], &total_line);
 	free(pwd);
@@ -94,6 +95,7 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 				free(*total_line);
 				extra_fork(fd[0], fd[1], local, line_read);
 			}
+			handle_sigint_status();
 			wait(&res);
 			close(fd[1]);
 			bread = read(fd[0], buffer, 20);

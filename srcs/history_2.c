@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history_2.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:31:08 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 01:55:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:20:54 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../includes/minishell.h"
 
@@ -17,6 +17,7 @@ void    first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd)
     char    *line_read;
     int     res;
 
+	switch_sig_default();
     res = 0;
     close(fd0);
 	line_read = readline(pwd);
@@ -54,6 +55,7 @@ void    extra_fork(int fd0, int fd1, t_localenv *local, char * line_read)
     int     res;
     
     close(fd0);
+	switch_sig_default();
 	free_split(local->content);
 	free_split(local->sorted);
 	free(local);

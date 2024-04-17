@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 08:44:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:16:48 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -24,7 +24,6 @@ int	main(void)
 	local_env = env_init(__environ);
 	input = NULL;
 	i = 0;
-	switch_sig_function();
 	g_signal = 0;
 	while (1)
 	{
