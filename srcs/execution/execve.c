@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 11:00:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:39:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -81,7 +81,6 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 			exec_not(origin_cmd);
 			free(origin_cmd);	
 		}
-		free_split(cmds);
 	}
 	free_split(p_path);
 	return (g_signal);

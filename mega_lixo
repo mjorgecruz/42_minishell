@@ -64,9 +64,10 @@ V  unst HOME
 V  ls     *
 V  change readline to a fork
 V  heredocs define heredoc wrong
+V  ls |	|
+V  (asdsaas || sdsad) || merdaa || echo gaita
+V  (asdsaas || sdsad) || merdaa | cat < lol || echo gaita
 ls *"'aosdahas'"
-ls |	|
-(asdsaas || sdsad) || merdaa || echo gaita
-(asdsaas || sdsad) || merdaa | cat < lol || echo gaita
+(asdsaas || sdsad)
 SHLVL
 execve errors

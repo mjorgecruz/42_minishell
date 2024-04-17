@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 09:03:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:13:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -59,6 +59,7 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 	char	*code_word;
 	char	*expanded_str;
 
+	env = NULL;
 	expanded_str = ft_strdup(cmd);
 	if (*expanded_str == '\'' && quotes_counter(expanded_str) % 2)
 		return (expanded_str);

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   finex.c                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 02:07:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:31:50 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file contains all functions related to memory cleaning*/
 
@@ -50,12 +50,15 @@ int	free_split(char **splitted)
 	int	i;
 
 	i = 0;
-	while (splitted && splitted[i] && *splitted[i])
+	if (splitted)
 	{
-		free(splitted[i]);
-		i++;
+		while (splitted && splitted[i])
+		{
+			free(splitted[i]);
+			i++;
+		}
+		free(splitted);
 	}
-	free(splitted);
 	return (0);
 }
 
