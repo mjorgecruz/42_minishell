@@ -116,3 +116,44 @@
 --558957-- used_suppression:      3 leak add_history sup:16 suppressed: 92 bytes in 6 blocks
 ==558957== 
 ==558957== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==559040== 
+==559040== Process terminating with default action of signal 2 (SIGINT)
+==559040==    at 0x490775B: kill (syscall-template.S:120)
+==559040==    by 0x48A4F39: _rl_signal_handler (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==559040==    by 0x48A5BEC: rl_getc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==559040==    by 0x48A5460: rl_read_key (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==559040==    by 0x4889C86: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==559040==    by 0x4892D14: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==559040==    by 0x4033FE: add_partials (heredocs_2.c:19)
+==559040==    by 0x403B00: write_to_fd (heredocs_3.c:99)
+==559040==    by 0x4037F5: forking_heredocs (heredocs_3.c:49)
+==559040==    by 0x403734: heredoc_creator (heredocs_3.c:29)
+==559040==    by 0x403397: add_heredocs (heredocs.c:89)
+==559040==    by 0x40326B: adjust_heredocs (heredocs.c:71)
+==559040== 
+==559040== HEAP SUMMARY:
+==559040==     in use at exit: 214,433 bytes in 254 blocks
+==559040==   total heap usage: 5,467 allocs, 5,213 frees, 317,677 bytes allocated
+==559040== 
+==559040== 10 bytes in 1 blocks are still reachable in loss record 6 of 81
+==559040==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==559040==    by 0x4035BA: ft_strjoin_2 (heredocs_2.c:63)
+==559040==    by 0x401F30: line_reader (history_2.c:46)
+==559040==    by 0x4015ED: get_line (history.c:37)
+==559040==    by 0x40135F: main (minishell.c:31)
+==559040== 
+==559040== LEAK SUMMARY:
+==559040==    definitely lost: 0 bytes in 0 blocks
+==559040==    indirectly lost: 0 bytes in 0 blocks
+==559040==      possibly lost: 0 bytes in 0 blocks
+==559040==    still reachable: 10 bytes in 1 blocks
+==559040==         suppressed: 214,423 bytes in 253 blocks
+==559040== 
+==559040== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--559040-- 
+--559040-- used_suppression:     45 name sup:2 suppressed: 212,508 bytes in 215 blocks
+--559040-- used_suppression:     32 leak readline sup:10 suppressed: 1,823 bytes in 32 blocks
+--559040-- used_suppression:      3 leak add_history sup:16 suppressed: 92 bytes in 6 blocks
+==559040== 
+==559040== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==559158== Warning: invalid file descriptor -1 in syscall close()
