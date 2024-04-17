@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   finex.c                                            :+:      :+:    :+:   */
@@ -6,41 +6,46 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/12 12:12:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:34:51 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains all functions related to memory cleaning*/
 
 #include "../includes/minishell.h"
 
+static int		tree_cleaner(t_token *cmd_list);
+
 void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 {
-	int		i;
-	t_token	*prev;
-
 	if (*heredocs)
 		free_split(*heredocs);
-	while (cmd_list)
-	{
-		i = 0;
-		if (cmd_list->cmds)
-		{
-			while (cmd_list->cmds[i].cmds)
-			{
-				if(cmd_list->cmds[i].cmds[0] != 0)
-					free((cmd_list->cmds[i].cmds));
-				i++;
-			}
-		}
-		free(cmd_list->cmds);
-		free(cmd_list->content);
-		prev = cmd_list;
-		cmd_list = cmd_list->next;
-		free(prev);
-	}
+	tree_cleaner(cmd_list);
 }
 
+static int		tree_cleaner(t_token *cmd_list)
+{
+	int		i;
+	
+	i = 0;
+	if (cmd_list->down)
+		tree_cleaner(cmd_list->down);
+	if (cmd_list->cmds)
+	{
+		while (cmd_list->cmds[i].cmds)
+		{
+			if(cmd_list->cmds[i].cmds[0] != 0)
+				free((cmd_list->cmds[i].cmds));
+			i++;
+		}
+	}
+	free(cmd_list->cmds);
+	free(cmd_list->content);
+	if (cmd_list->next)
+		tree_cleaner(cmd_list->next);
+	free(cmd_list);
+	return(1);
+}
 
 int	free_split(char **splitted)
 {

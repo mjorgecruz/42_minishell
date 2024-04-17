@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser_parenthesis.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/03/29 11:40:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:15:09 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file handles the first division of commands based on the existence of parenthesis*/
 #include "../../includes/minishell.h"
@@ -39,7 +39,7 @@ bool	check_operator_open_p(char *total_line, int *i)
 		if (total_line[k] == '(')
 		{
 			j = k - 1;
-			while (total_line[j])
+			while (j >= 0 &&total_line[j])
 			{
 				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&'
 				&& total_line[j - 1] == '&') || (total_line[j] == '|' && total_line[j - 1] == '|'))

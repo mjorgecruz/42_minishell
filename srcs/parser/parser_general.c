@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 00:44:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:07:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	parenthesis_after_command(char *line_read, int *i)
 	if (line_read[*i] == '(')
 	{
 		j = (*i) - 1;
-		if (line_read[j] == '*')
+		if (j < 0 || line_read[j] == '*')
 			return (false);
 		while (j >= 0 && line_read[j] == ' ')
 			j--;

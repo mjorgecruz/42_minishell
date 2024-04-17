@@ -63,8 +63,8 @@ V  $? -> $?
 V  unst HOME
 execve errors
 V  ls     *
+V  change readline to a fork
+V  heredocs define heredoc wrong
 ls *"'aosdahas'"
 (asdsaas || sdsad) || merdaa || echo gaita
-change readline to a fork
 SHLVL
-heredocs define heredoc wrong

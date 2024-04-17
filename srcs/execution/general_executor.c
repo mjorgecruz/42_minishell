@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 23:13:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:40:12 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ line read into segments separated by pipes*/
 void	general_executer(char *input, char ***heredocs, t_localenv *local)
 {
 	t_token	*cmd_list;
-	t_info	info;
+	//t_info	info;
 	int		i;
 
 	i = 0;
 	cmd_list = NULL;
-	info.heredocs = heredocs;
+	//info.heredocs = heredocs;
 	if ((*heredocs))
 	{
 		while((*heredocs)[i] && (*heredocs)[i][0])
@@ -33,14 +33,14 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 			i++;
 		}
 	}
-	info.pos_heredoc = -1;
-	info.local = local;
-	info.local = local;
+	//info.pos_heredoc = -1;
+	//info.local = local;
+	//info.local = local;
 	(void) input;
 	cmd_list = command_organizer(input);
 	commands_separator(cmd_list);
-	info.head = cmd_list;
-	commands_sorter(cmd_list, info, local);
+	//info.head = cmd_list;
+	//commands_sorter(cmd_list, info, local);
 	clean_cmd_list(cmd_list, heredocs);
 }
 
@@ -59,12 +59,14 @@ t_token	*command_organizer(char *input)
 
 void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 {
-	int			i;
-	int			j;
+	int		i;
+	int		j;
+	char	*trimmed;
 
 	i = 0;
 	j = 0;
 	type = 0;
+	trimmed = NULL;
 	while (input[i])
 	{
 		if (input[i] == 34 || input[i] == 39)
@@ -79,7 +81,11 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			token = token_creator(i, j, input, type);
 			add_token(list, token);
 			if (token_has_par(token))
-				command_divider(&(token->down), trim_string(token->content), type, token);
+			{
+				trimmed = trim_string(token->content);
+				command_divider(&(token->down), trimmed, type, token);
+				free(trimmed);
+			}
 			j = i + 1;
 		}
 		i++;
