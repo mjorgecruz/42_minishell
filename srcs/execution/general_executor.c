@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 09:56:02 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:46:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -73,9 +73,9 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			i = find_next(input, i);
 		if (input[i] == '(')
 			i = find_closed(input, i);
-		if (!input[i])
-			break;
-		if ((input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
+		// if (!input[i])
+		// 	break;
+		if (!input[i] || (input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
 			token = token_creator(i, j, input, type);
@@ -88,10 +88,14 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 			}
 			j = i + 1;
 		}
-		i++;
+		if (input[i])
+			i++;
 	}
-	token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
-	add_token(list, token);
+	if (j <= ft_strlen(input))
+	{
+		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
+		add_token(list, token);
+	}
 }
 
 t_token *token_creator (int i, int j, char *input, int type)

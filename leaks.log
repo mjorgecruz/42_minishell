@@ -1,0 +1,294 @@
+==717711== Memcheck, a memory error detector
+==717711== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==717711== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==717711== Command: ./minishell
+==717711== Parent PID: 717710
+==717711== 
+==717745== 
+==717745== HEAP SUMMARY:
+==717745==     in use at exit: 208,364 bytes in 225 blocks
+==717745==   total heap usage: 5,474 allocs, 5,249 frees, 310,062 bytes allocated
+==717745== 
+==717745== LEAK SUMMARY:
+==717745==    definitely lost: 0 bytes in 0 blocks
+==717745==    indirectly lost: 0 bytes in 0 blocks
+==717745==      possibly lost: 0 bytes in 0 blocks
+==717745==    still reachable: 0 bytes in 0 blocks
+==717745==         suppressed: 208,364 bytes in 225 blocks
+==717745== 
+==717745== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717745-- 
+--717745-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717745-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717745== 
+==717745== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717746== 
+==717746== HEAP SUMMARY:
+==717746==     in use at exit: 208,364 bytes in 225 blocks
+==717746==   total heap usage: 5,482 allocs, 5,257 frees, 310,124 bytes allocated
+==717746== 
+==717746== LEAK SUMMARY:
+==717746==    definitely lost: 0 bytes in 0 blocks
+==717746==    indirectly lost: 0 bytes in 0 blocks
+==717746==      possibly lost: 0 bytes in 0 blocks
+==717746==    still reachable: 0 bytes in 0 blocks
+==717746==         suppressed: 208,364 bytes in 225 blocks
+==717746== 
+==717746== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717746-- 
+--717746-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717746-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717746== 
+==717746== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717748== 
+==717748== HEAP SUMMARY:
+==717748==     in use at exit: 208,364 bytes in 225 blocks
+==717748==   total heap usage: 5,454 allocs, 5,229 frees, 309,486 bytes allocated
+==717748== 
+==717748== LEAK SUMMARY:
+==717748==    definitely lost: 0 bytes in 0 blocks
+==717748==    indirectly lost: 0 bytes in 0 blocks
+==717748==      possibly lost: 0 bytes in 0 blocks
+==717748==    still reachable: 0 bytes in 0 blocks
+==717748==         suppressed: 208,364 bytes in 225 blocks
+==717748== 
+==717748== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717748-- 
+--717748-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717748-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717748== 
+==717748== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717749== 
+==717749== HEAP SUMMARY:
+==717749==     in use at exit: 208,364 bytes in 225 blocks
+==717749==   total heap usage: 5,491 allocs, 5,266 frees, 310,236 bytes allocated
+==717749== 
+==717749== LEAK SUMMARY:
+==717749==    definitely lost: 0 bytes in 0 blocks
+==717749==    indirectly lost: 0 bytes in 0 blocks
+==717749==      possibly lost: 0 bytes in 0 blocks
+==717749==    still reachable: 0 bytes in 0 blocks
+==717749==         suppressed: 208,364 bytes in 225 blocks
+==717749== 
+==717749== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717749-- 
+--717749-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717749-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717749== 
+==717749== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717747== 
+==717747== HEAP SUMMARY:
+==717747==     in use at exit: 208,364 bytes in 225 blocks
+==717747==   total heap usage: 5,457 allocs, 5,232 frees, 309,566 bytes allocated
+==717747== 
+==717747== LEAK SUMMARY:
+==717747==    definitely lost: 0 bytes in 0 blocks
+==717747==    indirectly lost: 0 bytes in 0 blocks
+==717747==      possibly lost: 0 bytes in 0 blocks
+==717747==    still reachable: 0 bytes in 0 blocks
+==717747==         suppressed: 208,364 bytes in 225 blocks
+==717747== 
+==717747== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717747-- 
+--717747-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717747-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717747== 
+==717747== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717750== 
+==717750== HEAP SUMMARY:
+==717750==     in use at exit: 208,364 bytes in 225 blocks
+==717750==   total heap usage: 5,463 allocs, 5,238 frees, 309,631 bytes allocated
+==717750== 
+==717750== LEAK SUMMARY:
+==717750==    definitely lost: 0 bytes in 0 blocks
+==717750==    indirectly lost: 0 bytes in 0 blocks
+==717750==      possibly lost: 0 bytes in 0 blocks
+==717750==    still reachable: 0 bytes in 0 blocks
+==717750==         suppressed: 208,364 bytes in 225 blocks
+==717750== 
+==717750== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717750-- 
+--717750-- used_suppression:     62 leak readline sup:10 suppressed: 204,257 bytes in 221 blocks
+--717750-- used_suppression:      4 leak add_history sup:16 suppressed: 4,107 bytes in 4 blocks
+==717750== 
+==717750== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717835== 
+==717835== HEAP SUMMARY:
+==717835==     in use at exit: 208,455 bytes in 230 blocks
+==717835==   total heap usage: 5,566 allocs, 5,336 frees, 315,919 bytes allocated
+==717835== 
+==717835== LEAK SUMMARY:
+==717835==    definitely lost: 0 bytes in 0 blocks
+==717835==    indirectly lost: 0 bytes in 0 blocks
+==717835==      possibly lost: 0 bytes in 0 blocks
+==717835==    still reachable: 0 bytes in 0 blocks
+==717835==         suppressed: 208,455 bytes in 230 blocks
+==717835== 
+==717835== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717835-- 
+--717835-- used_suppression:     67 leak readline sup:10 suppressed: 204,362 bytes in 226 blocks
+--717835-- used_suppression:      4 leak add_history sup:16 suppressed: 4,093 bytes in 4 blocks
+==717835== 
+==717835== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717836== 
+==717836== HEAP SUMMARY:
+==717836==     in use at exit: 208,455 bytes in 230 blocks
+==717836==   total heap usage: 5,574 allocs, 5,344 frees, 315,981 bytes allocated
+==717836== 
+==717836== LEAK SUMMARY:
+==717836==    definitely lost: 0 bytes in 0 blocks
+==717836==    indirectly lost: 0 bytes in 0 blocks
+==717836==      possibly lost: 0 bytes in 0 blocks
+==717836==    still reachable: 0 bytes in 0 blocks
+==717836==         suppressed: 208,455 bytes in 230 blocks
+==717836== 
+==717836== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717836-- 
+--717836-- used_suppression:     67 leak readline sup:10 suppressed: 204,362 bytes in 226 blocks
+--717836-- used_suppression:      4 leak add_history sup:16 suppressed: 4,093 bytes in 4 blocks
+==717836== 
+==717836== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717838== 
+==717838== HEAP SUMMARY:
+==717838==     in use at exit: 208,455 bytes in 230 blocks
+==717838==   total heap usage: 5,546 allocs, 5,316 frees, 315,343 bytes allocated
+==717838== 
+==717838== LEAK SUMMARY:
+==717838==    definitely lost: 0 bytes in 0 blocks
+==717838==    indirectly lost: 0 bytes in 0 blocks
+==717838==      possibly lost: 0 bytes in 0 blocks
+==717838==    still reachable: 0 bytes in 0 blocks
+==717838==         suppressed: 208,455 bytes in 230 blocks
+==717838== 
+==717838== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717838-- 
+--717838-- used_suppression:     67 leak readline sup:10 suppressed: 204,362 bytes in 226 blocks
+--717838-- used_suppression:      4 leak add_history sup:16 suppressed: 4,093 bytes in 4 blocks
+==717838== 
+==717838== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717839== 
+==717839== HEAP SUMMARY:
+==717839==     in use at exit: 208,455 bytes in 230 blocks
+==717839==   total heap usage: 5,583 allocs, 5,353 frees, 316,093 bytes allocated
+==717839== 
+==717839== LEAK SUMMARY:
+==717839==    definitely lost: 0 bytes in 0 blocks
+==717839==    indirectly lost: 0 bytes in 0 blocks
+==717839==      possibly lost: 0 bytes in 0 blocks
+==717839==    still reachable: 0 bytes in 0 blocks
+==717839==         suppressed: 208,455 bytes in 230 blocks
+==717839== 
+==717839== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717839-- 
+--717839-- used_suppression:     67 leak readline sup:10 suppressed: 204,362 bytes in 226 blocks
+--717839-- used_suppression:      4 leak add_history sup:16 suppressed: 4,093 bytes in 4 blocks
+==717839== 
+==717839== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717837== 
+==717837== HEAP SUMMARY:
+==717837==     in use at exit: 208,455 bytes in 230 blocks
+==717837==   total heap usage: 5,549 allocs, 5,319 frees, 315,423 bytes allocated
+==717837== 
+==717837== LEAK SUMMARY:
+==717837==    definitely lost: 0 bytes in 0 blocks
+==717837==    indirectly lost: 0 bytes in 0 blocks
+==717837==      possibly lost: 0 bytes in 0 blocks
+==717837==    still reachable: 0 bytes in 0 blocks
+==717837==         suppressed: 208,455 bytes in 230 blocks
+==717837== 
+==717837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717837-- 
+--717837-- used_suppression:     67 leak readline sup:10 suppressed: 204,362 bytes in 226 blocks
+--717837-- used_suppression:      4 leak add_history sup:16 suppressed: 4,093 bytes in 4 blocks
+==717837== 
+==717837== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717887== 
+==717887== HEAP SUMMARY:
+==717887==     in use at exit: 208,780 bytes in 236 blocks
+==717887==   total heap usage: 5,628 allocs, 5,392 frees, 321,563 bytes allocated
+==717887== 
+==717887== LEAK SUMMARY:
+==717887==    definitely lost: 0 bytes in 0 blocks
+==717887==    indirectly lost: 0 bytes in 0 blocks
+==717887==      possibly lost: 0 bytes in 0 blocks
+==717887==    still reachable: 0 bytes in 0 blocks
+==717887==         suppressed: 208,780 bytes in 236 blocks
+==717887== 
+==717887== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717887-- 
+--717887-- used_suppression:     70 leak readline sup:10 suppressed: 204,685 bytes in 232 blocks
+--717887-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
+==717887== 
+==717887== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717888== 
+==717888== HEAP SUMMARY:
+==717888==     in use at exit: 208,780 bytes in 236 blocks
+==717888==   total heap usage: 5,636 allocs, 5,400 frees, 321,625 bytes allocated
+==717888== 
+==717888== LEAK SUMMARY:
+==717888==    definitely lost: 0 bytes in 0 blocks
+==717888==    indirectly lost: 0 bytes in 0 blocks
+==717888==      possibly lost: 0 bytes in 0 blocks
+==717888==    still reachable: 0 bytes in 0 blocks
+==717888==         suppressed: 208,780 bytes in 236 blocks
+==717888== 
+==717888== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717888-- 
+--717888-- used_suppression:     70 leak readline sup:10 suppressed: 204,685 bytes in 232 blocks
+--717888-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
+==717888== 
+==717888== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717890== 
+==717890== HEAP SUMMARY:
+==717890==     in use at exit: 208,780 bytes in 236 blocks
+==717890==   total heap usage: 5,608 allocs, 5,372 frees, 320,987 bytes allocated
+==717890== 
+==717890== LEAK SUMMARY:
+==717890==    definitely lost: 0 bytes in 0 blocks
+==717890==    indirectly lost: 0 bytes in 0 blocks
+==717890==      possibly lost: 0 bytes in 0 blocks
+==717890==    still reachable: 0 bytes in 0 blocks
+==717890==         suppressed: 208,780 bytes in 236 blocks
+==717890== 
+==717890== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717890-- 
+--717890-- used_suppression:     70 leak readline sup:10 suppressed: 204,685 bytes in 232 blocks
+--717890-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
+==717890== 
+==717890== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717891== 
+==717891== HEAP SUMMARY:
+==717891==     in use at exit: 208,780 bytes in 236 blocks
+==717891==   total heap usage: 5,645 allocs, 5,409 frees, 321,737 bytes allocated
+==717891== 
+==717891== LEAK SUMMARY:
+==717891==    definitely lost: 0 bytes in 0 blocks
+==717891==    indirectly lost: 0 bytes in 0 blocks
+==717891==      possibly lost: 0 bytes in 0 blocks
+==717891==    still reachable: 0 bytes in 0 blocks
+==717891==         suppressed: 208,780 bytes in 236 blocks
+==717891== 
+==717891== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717891-- 
+--717891-- used_suppression:     70 leak readline sup:10 suppressed: 204,685 bytes in 232 blocks
+--717891-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
+==717891== 
+==717891== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==717889== 
+==717889== HEAP SUMMARY:
+==717889==     in use at exit: 208,780 bytes in 236 blocks
+==717889==   total heap usage: 5,611 allocs, 5,375 frees, 321,067 bytes allocated
+==717889== 
+==717889== LEAK SUMMARY:
+==717889==    definitely lost: 0 bytes in 0 blocks
+==717889==    indirectly lost: 0 bytes in 0 blocks
+==717889==      possibly lost: 0 bytes in 0 blocks
+==717889==    still reachable: 0 bytes in 0 blocks
+==717889==         suppressed: 208,780 bytes in 236 blocks
+==717889== 
+==717889== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--717889-- 
+--717889-- used_suppression:     70 leak readline sup:10 suppressed: 204,685 bytes in 232 blocks
+--717889-- used_suppression:      4 leak add_history sup:16 suppressed: 4,095 bytes in 4 blocks
+==717889== 
+==717889== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

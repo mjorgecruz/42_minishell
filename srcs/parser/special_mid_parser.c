@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   special_mid_parser.c                               :+:      :+:    :+:   */
@@ -6,43 +6,39 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 03:08:00 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:27:38 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
-bool mid_parser_iteration(char *str, int *i)
+bool	mid_parser_iteration(char *str, int *i)
 {
 	int		j;
 	
 	j = 0;
 	while (str[j] && j <= *i)
 	{
-		j = ignore_in_quotes(str, j);
-		if (j >= 0 && str[j])
-			j = check_pipes(str, j);
+		j = ignore_spaces(str, j);
 		if (j >= 0 && str[j])
 		{
-			j = ignore_spaces(str, j);
+			j = ignore_in_quotes(str, j);
+			j = check_pipes(str, j);
+			if (j == -1)
+				return (false);
 			j = ignore_in_quotes(str, j);
 			j = check_redirs(str, j);
-		}
-		if (j >= 0 && str[j])
-		{
-			j = ignore_spaces(str, j);
+			if (j == -1)
+				return (false);
 			j = ignore_in_quotes(str, j);
 			j = check_uppersand(str, j);
+			if (j == -1)
+				return (false);
 		}
-		j = check_pipes(str, j);
-		j = check_redirs(str, j);
-		if (j == -1)
-			return false;
-		if (!str[j])
-			break;
-		j++;
+		if (str[j])
+			j++;
 	}
-	return true;
+	return (true);
 }
 
 int check_pipes(char *str, int pos)

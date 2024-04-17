@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/17 02:07:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:15:34 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 extern int g_signal;
 
@@ -305,7 +305,7 @@ int			inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i
 
 int			mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
 
-int			waiter_function(t_token *cmd_list);
+int			waiter_function(t_token *cmd_list, int res);
 
 int			pied_piper(t_token *cmd_list, int *fd, int i, int *stdin);
 

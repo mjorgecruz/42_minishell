@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:39:14 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:34:42 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -97,11 +97,15 @@ static void	heredoc_word(char *str, char *word)
 
 static int write_to_fd(char *final_str, int *fd, char *str)
 {
+	char	*here;
+	
+	(void) final_str;
+	here = NULL;
 	close(fd[0]);
 	switch_sig_new();
-	add_partials(&(final_str), str);
-	write(fd[1], final_str, ft_strlen(final_str));
-	free(final_str);
+	add_partials(&(here), str);
+	write(fd[1], here, ft_strlen(final_str));
+	free(here);
 	return (0);
 }
 

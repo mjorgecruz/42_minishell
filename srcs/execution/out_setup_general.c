@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 12:00:43 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:57:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -44,23 +44,27 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 int		mult_cmd_executer(t_token *cmd_list, t_info info,
 		t_localenv *local, int i)
 {
-	int			pid;
+	int			*pid;
 	int			stdin;
 	int			fd[2];
 	int			res;
 	
-	res = 0;
+	while (cmd_list->cmds[i].cmds)
+	 	i++;
+	pid = (int *)malloc(sizeof(int) * i);
+	i = 0;	
 	stdin = dup(STDIN_FILENO);
 	while (cmd_list->cmds[i].cmds)
 	{
 		if (cmd_list->cmds[i].cmds[0] != 0)
 		{
 			pipe(fd);
-			pid = fork();
-			if (pid == 0)
+			pid[i] = fork();
+			if (pid[i] == 0)
 			{
 				switch_sig_default();
 				pied_piper(cmd_list, fd, i, &stdin);
+				free(pid);
 				res = inter_executioner(cmd_list, info, local, i);
 				tree_cleaner(info.head);
 				free_info_andenv(info);
@@ -73,12 +77,19 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 		i++;
 	}
 	handle_sigint_status();
-	waiter_function(cmd_list);
+	i = 0;
+	while (cmd_list->cmds[i].cmds)
+	{
+		waitpid(pid[i], &res, 0);
+		i++;
+	}
+	ex_code(res);
 	if (res == 2)
 		printf("\n");
 	else if (res == 131)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	return(close(stdin));
+	close(stdin);
+	return(free(pid), res);
 }
 
 int		pied_piper(t_token *cmd_list, int *fd, int i, int *stdin)
@@ -93,12 +104,10 @@ int		pied_piper(t_token *cmd_list, int *fd, int i, int *stdin)
 	return (1);
 }
 
-int		waiter_function(t_token *cmd_list)
+int		waiter_function(t_token *cmd_list, int res)
 {
 	int		i;
-	int		res;
 	
-	res = 0;
 	i = 0;
 	while (cmd_list->cmds[i].cmds)
 	{
@@ -171,6 +180,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		}
 		handle_sigint_status();
 		waitpid(pid, &res, 0);
+		ex_code(res);
 		if (res == 2)
 			printf("\n");
 		else if (res == 131)
