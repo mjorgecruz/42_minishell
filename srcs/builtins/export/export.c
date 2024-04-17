@@ -6,43 +6,11 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/16 13:21:29 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:39:51 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-int	update_var_cont(const char *variable, t_localenv *local);
-int	add_var_cont(const char *variable, t_localenv *local);
-
-char	*extract_variable_name(const char *variable)
-{
-	int		len;
-	char	*name;
-	char	*equal_sign;
-
-	len = 0;
-	equal_sign = ft_strchr(variable, '=');
-	if (equal_sign != NULL)
-	{
-		while (variable[len] != '=' && variable[len] != '\0')
-			len++;
-	}
-	else
-	{
-		while (variable[len] != '\0')
-			len++;
-	}
-	name = (char *)ft_memalloc(len + 1);
-	if (!name)
-		return (NULL);
-	len = -1;
-	while (variable[++len] != '=' && variable[len] != '\0')
-	{
-		name[len] = variable[len];
-	}
-	return (name);
-}
 
 char	**copy_environment(char **old_env, int num_vars)
 {
@@ -129,30 +97,19 @@ int	update_variable(const char *variable, t_localenv *local)
 bool	isvar_valid(const char *name)
 {
 	if (name == NULL || ft_isdigit(*name))
-		return false;
+		return (false);
 	while (*name)
 	{
 		if (!ft_isalnum(*name) && *name != '_')
-			return false;
+			return (false);
 		name++;
 	}
-	return true;
-}
-
-bool variable_name_check(const char *var)
-{
-	char *name;
-	bool ret;
-	
-	name = extract_variable_name(var);
-	ret = isvar_valid(name);
-	free(name);
-	return (ret);
+	return (true);
 }
 
 int	command_export(char **cmds, t_localenv *local)
 {
-	char	*variable;
+	char	*var;
 	char	*equal_sign;
 	int		i;
 
@@ -161,75 +118,20 @@ int	command_export(char **cmds, t_localenv *local)
 		return (ex_code(print_sorted_strings(local->sorted)));
 	while (cmds[++i] != NULL)
 	{
-		variable = cmds[i];
-		equal_sign = ft_strchr(variable, '=');
-		if (equal_sign == variable || !variable_name_check(variable))
+		var = cmds[i];
+		equal_sign = ft_strchr(var, '=');
+		if (equal_sign == var || !variable_name_check(var))
 		{
-			bi_err("export: `", variable, "': not a valid identifier\n");
+			bi_err("export: `", var, "': not a valid identifier\n");
 			return (ex_code(EXIT_FAILURE));
 		}
-		if (find_variable_index(variable, local->sorted) == -1)
+		if (find_variable_index(var, local->sorted) == -1)
 		{
-			if (add_variable(variable, local) || add_var_cont(variable, local))
+			if (add_variable(var, local) || add_var_cont(var, local))
 				return (ex_code(EXIT_FAILURE));
 		}
-		if (update_variable(variable, local) || update_var_cont(variable, local))
+		if (update_variable(var, local) || update_var_cont(var, local))
 			return (ex_code(EXIT_FAILURE));
 	}
 	return (ex_code(EXIT_SUCCESS));
-}
-
-int	add_var_cont(const char *variable, t_localenv *local)
-{
-	int		num_vars;
-	char	**new_env;
-
-	if (!local)
-		return (EXIT_FAILURE);
-	num_vars = 0;
-	while (local->content[num_vars] != NULL)
-		num_vars++;
-	new_env = copy_environment(local->content, num_vars);
-	if (!new_env)
-		return (EXIT_FAILURE);
-	new_env[num_vars] = ft_strdup(variable);
-	if (!new_env[num_vars])
-	{
-		while (num_vars > 0)
-			free(new_env[--num_vars]);
-		free(new_env);
-		return (EXIT_FAILURE);
-	}
-	num_vars = -1;
-	while (local->content[++num_vars])
-		free(local->content[num_vars]);
-	free(local->content);
-	local->content = new_env;
-	return (EXIT_SUCCESS);
-}
-
-int	update_var_cont(const char *variable, t_localenv *local)
-{
-	char	*equal_sign;
-	char	*variable_copy;
-	int		index;
-
-	index = find_variable_index(variable, local->content);
-	if (index != -1)
-	{
-		variable_copy = ft_strdup(variable);
-		if (!variable_copy)
-			return (EXIT_FAILURE);
-		equal_sign = ft_strchr(variable_copy, '=');
-		if (!equal_sign)
-		{
-			free(variable_copy);
-			return (EXIT_SUCCESS);
-		}
-		free(local->content[index]);
-		local->content[index] = variable_copy;
-		return (EXIT_SUCCESS);
-	}
-	else
-		return (add_var_cont(variable, local));
 }

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:39:53 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 14:41:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:45:26 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,23 @@ void	free_t_token(t_token *tok)
 		if (tok->next)
 			free_t_token(tok->next);
 	}
+}
+
+int	ex_code(int code)
+{
+	if (code == 298)
+	{
+		g_signal = 42;
+		return (g_signal);
+	}
+	if (code >= 256 || code <= -256)
+	{
+		g_signal = WEXITSTATUS(code);
+		return (g_signal);
+	}
+	if (code == 13)
+		g_signal = 126;
+	else
+		g_signal = code;
+	return (g_signal);
 }

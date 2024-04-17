@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:59 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/03/29 15:31:45 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:26:37 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,10 @@ void	swap_strings(char **str1, char **str2)
 	temp = *str1;
 	*str1 = *str2;
 	*str2 = temp;
+}
+
+int	print_sorted_strings(char **sorted)
+{
+	put_quotes_expdr(sorted);
+	return (EXIT_SUCCESS);
 }

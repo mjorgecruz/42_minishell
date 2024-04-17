@@ -6,16 +6,12 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:29:10 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 15:47:24 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:17:35 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-//char		*master_expander(char *cmd, t_localenv *local);
-char		*master_expander_out(char *cmd, t_localenv *local);
-char		*expander_heredocs(char *cmd, t_localenv *local);
-void		ft_looper(char *str, char *home_dir, char *new_str, int j);
 static char	*check_for_tilde(char *str, t_localenv *local);
 
 // char	*master_expander(char *cmd, t_localenv *local)

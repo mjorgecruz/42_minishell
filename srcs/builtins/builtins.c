@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 13:58:24 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:44:25 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,6 @@ int	command_pwd(t_localenv *local_env)
 	}
 	ft_putendl_fd(ft_getenv("PWD", local_env->content), 1);
 	return (ex_code(EXIT_SUCCESS));
-}
-
-void	print_string_array(char **strings)
-{
-	int	i;
-
-	if (strings == NULL)
-		return ;
-	i = -1;
-	while (strings[++i] != NULL)
-		ft_printf("%s\n", strings[i]);
-}
-
-void	prtstr_arr_env(char **strings)
-{
-	int	i;
-
-	if (strings == NULL)
-		return ;
-	i = -1;
-	while (strings[++i] != NULL)
-	{
-		if (ft_strchr(strings[i], '='))
-			ft_printf("%s\n", strings[i]);
-	}
 }
 
 int	command_env(t_localenv *local)
@@ -102,7 +77,7 @@ int	unset_variable2(const char *variable, t_localenv *local)
 
 int	command_unset(char **cmds, t_localenv *local)
 {
-	int i;
+	int	i;
 
 	if (cmds == NULL || local == NULL || local->content == NULL)
 		return (bi_err("Invalid command or local environment.", "\n", ""));
@@ -120,32 +95,4 @@ int	command_unset(char **cmds, t_localenv *local)
 		i++;
 	}
 	return (ex_code(EXIT_SUCCESS));
-}
-
-int	bi_err(char *str1, char *str2, char *str3)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(str1, STDERR_FILENO);
-	ft_putstr_fd(str2, STDERR_FILENO);
-	ft_putstr_fd(str3, STDERR_FILENO);
-	return (ex_code(EXIT_FAILURE));
-}
-
-int ex_code(int code)
-{
-	if (code == 298)
-	{
-		g_signal = 42;
-		return(g_signal);
-	}
-	if (code >= 256 || code <= -256)
-	{
-		g_signal = WEXITSTATUS(code);
-		return (g_signal);
-	}
-	if (code == 13)
-		g_signal = 126;
-	else
-		g_signal = code;
-	return (g_signal);
 }

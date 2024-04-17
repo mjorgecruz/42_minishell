@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 14:57:45 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/17 16:46:23 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC := minishell.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
 		builtins/builtins.c \
+		builtins/builtins_utils.c \
 		builtins/echo/echo.c \
 		builtins/expander/expander.c \
 		builtins/expander/expander_lst.c \
@@ -59,6 +60,7 @@ SRC := minishell.c \
 		builtins/expander/expander_main.c \
 		builtins/export/export.c \
 		builtins/export/export_utils.c \
+		builtins/export/export_utils_2.c \
 		builtins/export/export_envcpy.c \
 		builtins/export/export_utils_sort.c \
 		builtins/export/ft_getenv.c \

@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/16 13:13:49 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:50:46 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,16 @@ typedef struct s_lstexpand
 
 int		command_pwd(t_localenv *local_env);
 void	print_string_array(char **strings);
+
+
+void	prtstr_arr_env(char **strings);
+
 int		command_env(t_localenv *local);
 int		unset_variable(const char *variable, t_localenv *local);
 int		command_unset(char **cmds, t_localenv *local);
+
+bool	variable_name_check(const char *var);
+
 
 /* ************************************************************************** */
 /*                                   EXPANDER.c                               */
@@ -114,6 +121,10 @@ char	**copy_environment(char **old_env, int num_vars);
 int		command_export(char **cmds, t_localenv *local);
 int	update_variable(const char *variable, t_localenv *local);
 int	add_variable(const char *variable, t_localenv *local);
+
+
+int	update_var_cont(const char *variable, t_localenv *local);
+int	add_var_cont(const char *variable, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                EXPORT_UTILS.c                              */

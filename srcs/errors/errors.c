@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:02 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:56:21 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:51:46 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains all error handling functions*/
 
@@ -102,4 +102,13 @@ int	error_definer(char *cmd)
 	while (cmd[j] && i < 2 && is_special_char(cmd[j]))
 		err[i++] = cmd[j++];
 	return (code_2(err), 1);
+}
+
+int	bi_err(char *str1, char *str2, char *str3)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str1, STDERR_FILENO);
+	ft_putstr_fd(str2, STDERR_FILENO);
+	ft_putstr_fd(str3, STDERR_FILENO);
+	return (ex_code(EXIT_FAILURE));
 }
