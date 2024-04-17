@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 10:00:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:32:12 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -87,11 +87,11 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	if (file && *fd < 0)
 	{
 		if (errno == ENOENT)
-			builtin_errors(file, " : No such file or directory", "\n");
+			bi_err(file, " : No such file or directory", "\n");
 		else if (errno == EACCES)
-			builtin_errors(file, " : Permission denied", "\n");
-		// else
-			// 	builtin_errors(file, " : Is a directory");
+			bi_err(file, " : Permission denied", "\n");
+		// // else
+		// 	// 	builtin_errors(file, " : Is a directory");
 	}
 	if (file != NULL)
 		free(file);
@@ -141,9 +141,9 @@ void	define_output(t_command *cmds, int *fd, int *out)
 	if (file && *fd < 0)
 	{
 		if (errno == ENOENT)
-			builtin_errors(file, " : No such file or directory", "\n");
+			bi_err(file, " : No such file or directory", "\n");
 		else if (errno == EACCES)
-			builtin_errors(file, " : Permission denied", "\n");
+			bi_err(file, " : Permission denied", "\n");
 		// else
 		// 	builtin_errors(file, " : Is a directory");
 		free(file);

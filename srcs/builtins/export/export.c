@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/13 16:14:20 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:21:29 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -165,7 +165,7 @@ int	command_export(char **cmds, t_localenv *local)
 		equal_sign = ft_strchr(variable, '=');
 		if (equal_sign == variable || !variable_name_check(variable))
 		{
-			builtin_errors("export: `", variable, "': not a valid identifier\n");
+			bi_err("export: `", variable, "': not a valid identifier\n");
 			return (ex_code(EXIT_FAILURE));
 		}
 		if (find_variable_index(variable, local->sorted) == -1)

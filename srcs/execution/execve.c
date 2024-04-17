@@ -1,16 +1,42 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 11:00:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:27:50 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+void set_mesage(char *cmd, int code, char *msg)
+{
+	(void ) cmd;
+		//ft_putstr_fd(cmd, STDERR_FILENO);
+		
+		ft_putstr_fd( msg, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		ex_code(code);
+}
+
+
+void err_eacces_chooser(char *cmd)
+{
+	if (opendir(cmd) == NULL) 
+		set_mesage(cmd, 127, ": Permission denied");
+	else
+		set_mesage(cmd, 127, ": Is a directory");
+}
+
+void err_enoent_chooser(char *cmd)
+{
+	if (ft_strchr(cmd, '/'))
+		set_mesage(cmd, 127, " No such file or directory");
+	else
+		set_mesage(cmd, 127, ": command not found");
+}
 
 void exec_not(char *cmd)
 {
@@ -27,36 +53,11 @@ void exec_not(char *cmd)
 		if (cmd[i])
 			i++;
 	}
-	if (count > 1)
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		ex_code(127);
-	}
-	else if (errno == EACCES)
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-		ex_code(127);
-	}
-	else if (errno == EISDIR)
-	{	
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-		ex_code(126);
-	}
+	if (errno == EACCES)
+		err_eacces_chooser(cmd);
 	else if (errno == ENOENT)
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		ex_code(127);
-	}
-	else
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		ex_code(127);
-	}
+		err_enoent_chooser(cmd);
+
 }
 
 int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)

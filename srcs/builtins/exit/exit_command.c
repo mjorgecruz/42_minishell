@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exit_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/15 19:42:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:22:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -45,16 +45,16 @@ static bool	exit_args_checker(char **cmds)
 		return (ex_code(0), true);
 	if (cmds[2])
 	{
-		builtin_errors("exit: too many arguments", "\n", "");
+		bi_err("exit: too many arguments", "\n", "");
 		return (ex_code(1), false);
 	}
 	if (cmds[1] && !cmds[2])
 	{
 		if (is_arg_valid_numeric(cmds[1]))
-			return (exit_code(ft_atoi(cmds[1])), true);
+			return (ex_code(ft_atoi(cmds[1])), true);
 		else
 		{
-			builtin_errors("exit: ", 0, " numeric argument required\n");
+			bi_err("exit: ", 0, "numeric argument required\n");
 			return (ex_code(2), false);   
 		}
 	}
