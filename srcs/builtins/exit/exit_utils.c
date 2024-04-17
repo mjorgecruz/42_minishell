@@ -79,13 +79,22 @@ int	ex_code(int code)
 		g_signal = 42;
 		return (g_signal);
 	}
+	if (code == 5120 || code == 13)
+	{
+		g_signal = 126;
+		return (g_signal);
+	}
+	if (code == 512)
+	{
+		g_signal = 127;
+		return (g_signal);
+	}
+	
 	if (code >= 256 || code <= -256)
 	{
 		g_signal = WEXITSTATUS(code);
 		return (g_signal);
 	}
-	if (code == 13)
-		g_signal = 126;
 	else
 		g_signal = code;
 	return (g_signal);
