@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 08:50:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:56:47 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -87,11 +87,11 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 	if (file && *fd < 0)
 	{
 		if (errno == ENOENT)
-			builtin_errors(file, " : No such file or directory", "\n");
+			bi_err(file, " : No such file or directory", "\n");
 		else if (errno == EACCES)
-			builtin_errors(file, " : Permission denied", "\n");
-		// else
-			// 	builtin_errors(file, " : Is a directory");
+			bi_err(file, " : Permission denied", "\n");
+		// // else
+		// 	// 	builtin_errors(file, " : Is a directory");
 	}
 	if (file != NULL)
 		free(file);
@@ -141,9 +141,9 @@ void	define_output(t_command *cmds, int *fd, int *out)
 	if (file && *fd < 0)
 	{
 		if (errno == ENOENT)
-			builtin_errors(file, " : No such file or directory", "\n");
+			bi_err(file, " : No such file or directory", "\n");
 		else if (errno == EACCES)
-			builtin_errors(file, " : Permission denied", "\n");
+			bi_err(file, " : Permission denied", "\n");
 		// else
 		// 	builtin_errors(file, " : Is a directory");
 		free(file);

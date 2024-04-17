@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/15 19:17:15 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:13:49 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -157,23 +157,9 @@ char	*ft_getenv(const char *name, char **envp);
 /*                                 EXIT_COMMAND.c                             */
 /* ************************************************************************** */
 
-
-
-
-
-
-
-
-
-
-
-
 int		command_printenv(char **cmds, t_localenv *local);
-int		builtin_errors(char *str1, char *str2, char *str3);
+int		bi_err(char *str1, char *str2, char *str3);
 bool	isvar_valid(const char *name);
 
-
-
 int		ex_code(int code);
-int		exit_code(int code);
 #endif

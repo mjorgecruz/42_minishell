@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/15 18:22:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:12:32 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -104,12 +104,12 @@ int	command_cd(char **cmds, t_localenv *local, int err)
 	char	cwd[PATH_MAX];
 
 	if (cmds[1] && cmds[2])
-		return (builtin_errors("cd: too many arguments", "\n", ""));
+		return (bi_err("cd: too many arguments", "\n", ""));
 	if (cmds[1] == NULL || cmds[1][0] == '\0')
 	{
 		target_dir = get_home_directory(local);
 		if (target_dir == NULL)
-			builtin_errors("cd: ", "", ": HOME not set\n");
+			bi_err("cd: ", "", ": HOME not set\n");
 	}
 	else if (ft_strcmp(cmds[1], "-") == 0)
 		target_dir = get_previous_directory(local);
@@ -119,9 +119,9 @@ int	command_cd(char **cmds, t_localenv *local, int err)
 		return (EXIT_FAILURE);
 	err = change_directory(target_dir);
 	if (err == 13)
-		return (free(target_dir), builtin_errors("cd: ", "", ": Permission denied\n"));
+		return (free(target_dir), bi_err("cd: ", "", ": Permission denied\n"));
 	if (err == 2)
-		return (free(target_dir), builtin_errors("cd: ", cmds[1], ": No such file or directory\n"));
+		return (free(target_dir), bi_err("cd: ", cmds[1], ": No such file or directory\n"));
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (free(target_dir), EXIT_FAILURE);
 	if (update_directories(local, cwd) == -1)

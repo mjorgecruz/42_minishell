@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:47:25 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:56:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -225,22 +225,22 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 
 	local = info.local;
 	if (id == ECHOS)
-		return (command_echo(cmds));//done
+		return (command_echo(cmds));
 	else if (id == PWD)
 		return (command_pwd(local));
 	else if (id == EXPORT)
-		return (command_export(cmds, local)) ;//done
+		return (command_export(cmds, local));
 	else if (id == ENV)
-		return (command_env(local));//done
+		return (command_env(local));
 	else if (id == UNSET)
-		return (command_unset(cmds, local));//done
+		return (command_unset(cmds, local));
 	else if (id == PRINTENV)
-		return (command_printenv(cmds, local));//done
+		return (command_printenv(cmds, local));
 	else if (id == EXIT)
-		command_exit(info, cmds);//erros tratados
+		command_exit(info, cmds);
 	else if (id == CD)
-		return (ex_code(command_cd(cmds, local, 0)));//erros tratados
+		return (ex_code(command_cd(cmds, local, 0)));
 	else if (id == UNDEFINED)
-		return(command_execve(cmds, local, info, cmd_info)); // PROBLEMS WITH EXIT CODE WHEN POASSING INVALID SHIT
+		return(command_execve(cmds, local, info, cmd_info));
 	return (g_signal);
 }
