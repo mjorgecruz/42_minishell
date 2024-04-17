@@ -6,13 +6,15 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:11:06 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:54:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../includes/minishell.h"
 
 int g_signal;
+
+static int adjust_shlvl(char **environ);
 
 int	main(void)
 {
@@ -21,6 +23,7 @@ int	main(void)
 	int			i;
 	t_localenv	*local_env;
 	
+	adjust_shlvl(__environ);
 	local_env = env_init(__environ);
 	input = NULL;
 	i = 0;
@@ -41,10 +44,27 @@ int	main(void)
 	}
 }
 
-/*
-we can reuse the command_exit at the end of the main loop to free all shits 
-and exit the program with the corret exit code
-*/
+int adjust_shlvl(char **environ)
+{
+	int		i;
+	int		shlvl;
+	//char	*trav;
+
+	i = 0;
+	while (environ[i])
+	{
+		if (ft_strncmp("SHLVL", environ[i], 5))
+		{
+			//trav = environ[i];
+			shlvl = ft_atoi(&environ[i][5]);
+			environ[i] = ft_strjoin("SHLVL", ft_itoa(shlvl + 1));
+			//free(trav);
+			break;
+		}
+		i++;
+	}
+	return (1);
+}
 
 void	clear_terminal(char *paths)
 {
