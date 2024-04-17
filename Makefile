@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 14:28:46 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/17 14:41:43 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC := minishell.c \
 		builtins/export/export_utils_sort.c \
 		builtins/export/ft_getenv.c \
 		builtins/exit/exit_command.c \
+		builtins/exit/exit_utils.c \
 		builtins/cd/cd_command.c \
 		builtins/cd/cd_utils_2.c \
 		builtins/cd/cd_utils.c \
