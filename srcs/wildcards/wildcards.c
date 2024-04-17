@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 11:41:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,6 +15,7 @@
 static int	free_wild_split(char **splitted);
 static int 	wild_words(char *s);
 static int	*check_wild_redirs(char *str, char **wild, char **new);
+static char	*wild_transformer(char *wild);
 
 char    *wildcardings(char *str)
 {
@@ -24,6 +25,7 @@ char    *wildcardings(char *str)
 	char			**wild;
 	int				i;
 	char			*final;
+	char			*trav;
 
 	i = 0;
 	new = (char **) malloc (sizeof(char *) * (wildcards_counter(str) + 1));
@@ -37,13 +39,14 @@ char    *wildcardings(char *str)
 	closedir(dirp);
 	while (wild[i])
 	{
+		trav = wild_transformer(wild[i]);
 		new[i] = ft_strdup("");
 		dirp = opendir(".");
 		dp = readdir(dirp);
 		while (dp != NULL)
 		{
         	errno = 0;
-            if (dp->d_name[0] != '.' && mega_strncmp(wild[i], dp->d_name) != 0)
+            if (dp->d_name[0] != '.' && mega_strncmp(trav, dp->d_name) != 0)
                 add_wildcard(&new[i], dp->d_name);
 			dp = readdir(dirp);
     	}
@@ -51,6 +54,7 @@ char    *wildcardings(char *str)
         	perror("Error reading directory");
     	closedir(dirp);
 		i++;
+		free(trav);
 	}
 	new[i] = NULL;
 	final = wild_rewriter(str, new, wild);
@@ -58,6 +62,40 @@ char    *wildcardings(char *str)
 	free_wild_split(wild);
 	free(str);
 	return (final);
+}
+
+static char	*wild_transformer(char *wild)
+{
+	int		i;
+	int		j;
+	char	asps;
+	char	*trav;
+	
+	i = 0;
+	j = 0;
+	trav = ft_calloc(ft_strlen(wild) + 1, sizeof(char));
+	while (wild[i])
+	{
+		if (wild[i] == '\"' || wild[i] == '\'')
+		{
+			asps = wild[i];
+			i++;
+			while (wild[i] != asps)
+			{
+				trav[j] = wild[i];
+				i++;
+				j++;
+			}
+			i++;
+		}
+		if (wild[i])
+		{
+			trav[j] = wild[i];
+			i++;
+			j++;
+		}
+	}
+	return (trav);
 }
 
 char	*wild_rewriter(char *str, char **new, char **wild)
@@ -88,11 +126,16 @@ char	*wild_rewriter(char *str, char **new, char **wild)
 		{
 			if (decider[i] == 0)
 			{
-				if (new[i] != NULL)
+				if (new[i][0] == 0)
+				{
+					k = ft_strlcat(final, wild[i], count);
+					j += (ft_strlen(wild[i]));
+				}
+				else if (new[i] != NULL)
 				{
 					k = ft_strlcat(final, new[i], count);
 					j += (ft_strlen(wild[i]));
-				}	
+				}
 			}
 			else
 			{

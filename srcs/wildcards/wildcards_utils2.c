@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 11:32:59 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:20:55 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -47,7 +47,7 @@ char	**wild_splitter(char *str)
 				wild[j] = add_forw_wildcard(str, &i);
 			else if ((i != 0 && !is_space(str[i - 1])
 				&& !is_special_char(str[i - 1])) && (is_space(str[i + 1])
-				|| is_special_char(str[i + 1])))
+				|| is_special_char(str[i + 1]) || !str[i + 1]))
 				wild[j] = add_back_wildcard(str, &i);
 			else if (!is_space(str[i - 1]) && !is_special_char(str[i - 1])
 				&& !is_space(str[i + 1]) && !is_special_char(str[i + 1]))
@@ -116,7 +116,7 @@ char	*add_back_wildcard(char *str, int *i)
 	j = *i - 1;
 	while (str[j] && !is_special_char(str[j]))
 	{
-		if (str[j] == '<' && j >0 && str[j - 1] == '<')
+		if (str[j] == '<' && j > 0 && str[j - 1] == '<')
 			return("");
 		j--;
 	}
@@ -124,7 +124,7 @@ char	*add_back_wildcard(char *str, int *i)
 		(beg)--;
 	(beg)++;
 	j = 0;
-	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));
+	wildcard = ft_calloc(end - beg - 2, sizeof(char));
 	while (beg <= end)
 	{
 		wildcard[j] = str[beg];
