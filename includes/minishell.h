@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/16 23:12:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 02:07:44 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,8 @@ void		clean_cmd_list(t_token *cmd_list, char ***heredocs);
 
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);
+
+int		tree_cleaner(t_token *cmd_list);
 
 /* ************************************************************************** */
 /*                                   STR_UTILS                                */

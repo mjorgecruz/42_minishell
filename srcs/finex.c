@@ -6,15 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 01:34:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 02:07:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*This file contains all functions related to memory cleaning*/
 
 #include "../includes/minishell.h"
-
-static int		tree_cleaner(t_token *cmd_list);
 
 void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 {
@@ -23,7 +21,7 @@ void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 	tree_cleaner(cmd_list);
 }
 
-static int		tree_cleaner(t_token *cmd_list)
+int		tree_cleaner(t_token *cmd_list)
 {
 	int		i;
 	
