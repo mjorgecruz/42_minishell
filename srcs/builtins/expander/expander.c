@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/11 08:59:11 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:03:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -73,6 +73,8 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 			env = ft_getenv(code_word, local->content);
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
+	if (env)
+		free(env);
 	return (expanded_str);
 }
 

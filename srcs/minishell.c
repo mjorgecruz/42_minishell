@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -6,24 +6,22 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 00:23:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 08:44:10 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../includes/minishell.h"
 
 int g_signal;
 
-int	main(int ac, char **av, char **env)
+int	main(void)
 {
 	char		*input;
 	char		**heredocs;
 	int			i;
 	t_localenv	*local_env;
-
-	(void) ac;
-	(void) av;
-	local_env = env_init(env);
+	
+	local_env = env_init(__environ);
 	input = NULL;
 	i = 0;
 	switch_sig_function();
@@ -37,7 +35,6 @@ int	main(int ac, char **av, char **env)
 		{
 			if (input[ignore_spaces(input, i)])
 				general_executer(input, &heredocs, local_env);
-			free(input);
 			input = NULL;
 		}
 		if (input != NULL)
