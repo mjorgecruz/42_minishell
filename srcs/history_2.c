@@ -6,33 +6,11 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:31:08 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:31:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:15:12 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../includes/minishell.h"
-
-void    first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd)
-{
-    char    *line_read;
-    int     res;
-
-	switch_sig_function();
-    res = 0;
-    close(fd0);
-	line_read = readline(pwd);
-	free(pwd);
-	free_split(local_env->content);
-	free_split(local_env->sorted);
-	free(local_env);
-	if (!line_read)
-	{
-		res = 10;
-		exit(res);
-	}
-	write(fd1, line_read, ft_strlen(line_read));
-	exit(res);
-}
 
 void    line_reader(int fd0, int fd1, char **total_line)
 {

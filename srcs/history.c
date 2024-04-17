@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:37:12 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:14:49 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,33 +14,22 @@
 
 #include "../includes/minishell.h"
 
-static void	free_onexit(t_localenv *local_env, char *total_line);
-
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
 	char	*pwd;
-	int		pid;
-	int		fd[2];
 	int		res;
 	
 	res = 0;
 	*heredocs = NULL;
 	pwd = create_pc_name(local_env);
-	handle_sigint_status();
-	total_line = ft_strdup("");
-	pipe(fd);
-	pid = fork();
-	if (pid == 0)
+	switch_sig_function();
+	total_line = readline(pwd);
+	if (!total_line)
 	{
-		free(total_line);
-	 	first_fork(fd[0], fd[1], local_env, pwd);
+		printf("exit\n");
+		exit(res);
 	}
-	handle_sigint_status();
-	waitpid(0, &res, 0);
-	line_reader(fd[0], fd[1], &total_line);
 	free(pwd);
-	if (WEXITSTATUS(res) == 10)
-		free_onexit(local_env, total_line);
 	if (!join_to_line(&total_line, heredocs, local_env))
 	{
 		if (total_line && *total_line)
@@ -55,15 +44,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	return (total_line);
 }
 
-static void	free_onexit(t_localenv *local_env, char *total_line)
-{
-	printf("exit\n");
-	free_split(local_env->content);
-	free_split(local_env->sorted);
-	free(local_env);
-	free(total_line);
-	exit(10);
-}
+
 
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {

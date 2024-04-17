@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:56:36 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:00:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -77,7 +77,7 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 	if (res == 2)
 		printf("\n");
 	else if (res == 131)
-		builtin_errors("Quit (core dumped)", "\n", "");
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	return(close(stdin));
 }
 
@@ -174,7 +174,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		if (res == 2)
 			printf("\n");
 		else if (res == 131)
-			builtin_errors("Quit (core dumped)", "\n", "");
+			bi_err("Quit (core dumped)", "\n", "");
 		ex_code(res);
 	}
 	else	
