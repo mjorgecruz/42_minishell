@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 14:12:26 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 23:43:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
+			{
 				ex_code(errno);
+				break;
+			}
 			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
@@ -122,7 +125,12 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_TRUNC);
 			close(*fd);
-			*fd = open(file, O_RDWR|O_CREAT, 0666);
+			*fd = open(file, O_WRONLY|O_CREAT, 0666);
+			if (*fd == -1)
+			{
+				ex_code(errno);
+				break ;
+			}
 			*out = OUT_DOC; 
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
@@ -133,8 +141,12 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			if (file != NULL)
 				free(file);
 			file = create_file_name(cmds->cmds, &i);
-			*fd = open(file, O_RDWR|O_APPEND|O_CREAT, 0660);
-			
+			*fd = open(file, O_WRONLY|O_APPEND|O_CREAT, 0660);
+			if (*fd < 0)
+			{
+				ex_code(errno);
+				break ;
+			}
 			*out = OUT_DOC; 
 		}
 		if (cmds->cmds && cmds->cmds[i])
@@ -197,12 +209,14 @@ char	*create_file_name(char *cmd, int *i)
 char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 {
 	char	*clean;
+	char	*clean_2;
 	char 	**trav;
 	char	**final_cmds;
 	int		i;
 
 	clean = clean_str(full_cmds->cmds);
-	trav = ft_split_ignore_quotes(clean, " \t\n");
+	clean_2 = expander_heredocs(clean, local); 
+	trav = ft_split_ignore_quotes(clean_2, " \t\n");
 	i = 0;
 	while (trav && trav[i] != 0)
 		i++; 
@@ -214,7 +228,7 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 		final_cmds[i] = master_expander_out(trav[i], local);
 		i++;
 	}
-	free(clean);
+	free(clean_2);
 	free_split(trav);
 	return (final_cmds);
 }

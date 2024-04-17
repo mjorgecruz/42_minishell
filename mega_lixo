@@ -74,7 +74,11 @@ V  (asdsaas || sdsad)
 V  (dasa)
 V  ls *"'aosdahas'"
 V  SHLVL
+V  echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+
 $_ fazer dentro de forks
 execve errors
-echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
 organize files
+leak on shlvl change
+return int with position of input/output in the functions define_input and define_output in case of error
+problema da dupla impressao de erro vem da contagem de inputs antes do programa normal

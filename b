@@ -78,3 +78,17 @@ XDG_SESSION_CLASS=user
 XDG_SESSION_DESKTOP=ubuntu
 XDG_SESSION_TYPE=wayland
 XMODIFIERS=@im=ibus
+a
+b
+c
+includes
+lel
+libft
+Makefile
+mega_lixo
+minishell
+minishell.h
+minishell_tester
+obj
+README.md
+srcs

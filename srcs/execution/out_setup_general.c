@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 21:46:04 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 00:16:07 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,15 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
 	{
-		cmd_info.fd_in_out[0] = STDIN_FILENO;
-		return (1);
+		return (g_signal);
 	}
 	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
+	if (cmd_info.fd_in_out[1] == -1)
+	{
+		return (g_signal);
+	}
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
+	
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
 	return (res);
 }

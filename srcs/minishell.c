@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 21:12:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:15:30 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ static int adjust_shlvl(char **environ)
 		{
 			shlvl = ft_atoi(&(environ[i][5]));
 			intoa = ft_itoa(shlvl + 1);
-			environ[i] = ft_strjoin("SHLVL", intoa);
 			free(intoa);
 			break;
 		}
 		i++;
 	}
-	return (1);
+	return (i);
 }
 
 void	clear_terminal(char *paths)
