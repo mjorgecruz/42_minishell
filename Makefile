@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 14:41:43 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/17 14:57:45 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC := minishell.c \
 		builtins/expander/expander.c \
 		builtins/expander/expander_lst.c \
 		builtins/expander/expander_utils.c \
+		builtins/expander/expander_utils_2.c \
 		builtins/expander/expander_main.c \
 		builtins/export/export.c \
 		builtins/export/export_utils.c \

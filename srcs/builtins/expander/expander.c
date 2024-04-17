@@ -1,32 +1,16 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 00:04:44 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 09:13:55 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/17 14:43:32 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/17 14:56:58 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-char	*get_ds_code(char *cmd)
-{
-	char	*tmp;
-	int		len;
-
-	len = 0;
-	tmp = ft_strnstr(cmd, "$", ft_strlen(cmd));
-	if (tmp[1] == '?')
-		return (ft_strdup("$?"));
-	if (ft_isdigit(tmp[1]))
-		return (ft_substr(tmp, 0, 1));
-	while (ft_isalnum(tmp[len + 1]) || tmp[len + 1] == '_')
-		len++;
-	return (ft_substr(tmp, 1, len));
-}
 
 char	*ds_replace_codeword(char *cmd, char *code, char *env_val)
 {
@@ -108,6 +92,19 @@ char	*join_list_contents(t_lstexpand *head)
 	return (joined_content);
 }
 
+//if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') 
+//|| (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
+bool	q_lst_clean_helper(t_lstexpand *cur, int len)
+{
+	if (len >= 2 && ((cur->content[0] == '\'' && \
+		cur->content[len - 1] == '\'')))
+		return (true);
+	else if ((cur->content[0] == '\"' && cur->content[len - 1] == '\"'))
+		return (true);
+	else
+		return (false);
+}
+
 void	clean_quotes_in_list(t_lstexpand *head, int len)
 {
 	t_lstexpand	*cur;
@@ -116,7 +113,8 @@ void	clean_quotes_in_list(t_lstexpand *head, int len)
 	cur = head;
 	while (cur != NULL)
 	{
-		if ((ft_strcmp(cur->content, "''") == 0) || (ft_strcmp(cur->content, "\"\"") == 0))
+		if ((ft_strcmp(cur->content, "''") == 0) || \
+			(ft_strcmp(cur->content, "\"\"") == 0))
 		{
 			free(cur->content);
 			cur->content = NULL;
@@ -124,7 +122,7 @@ void	clean_quotes_in_list(t_lstexpand *head, int len)
 		else
 		{
 			len = ft_strlen(cur->content);
-			if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') || (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
+			if (q_lst_clean_helper(cur, len))
 			{
 				temp = ft_strdup(cur->content + 1);
 				temp[len - 2] = '\0';
