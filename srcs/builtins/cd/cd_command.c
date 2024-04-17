@@ -6,43 +6,11 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/16 13:12:32 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:36:14 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-int	change_directory(const char *path)
-{
-	int	error;
-
-	if (chdir(path) == -1)
-	{
-		error = errno;
-		return (error);
-	}
-	return (EXIT_SUCCESS);
-}
-
-char	*get_home_directory(t_localenv *local)
-{
-	char	*home_dir;
-
-	home_dir = ft_getenv("HOME", local->content);
-	if (!home_dir)
-		return (NULL);
-	return (home_dir);
-}
-
-char	*get_previous_directory(t_localenv *local)
-{
-	char	*prev_dir;
-
-	prev_dir = ft_getenv("OLDPWD", local->content);
-	if (!prev_dir)
-		return (NULL);
-	return (prev_dir);
-}
 
 int	update_directories(t_localenv *local, char *cwd)
 {
@@ -98,10 +66,34 @@ char	*expand_tilde(char *dir, t_localenv *local)
 	return (ft_strdup(dir));
 }
 
+int	sub_cd_handle(int err, char *dir, t_localenv *local, char **cmds)
+{
+	char	cwd[PATH_MAX];
+
+	if (err == 13)
+	{
+		bi_err("cd: ", "", ": Permission denied\n");
+		return (free(dir), EXIT_FAILURE);
+	}
+	if (err == 2)
+	{
+		bi_err("cd: ", cmds[1], ": No such file or directory\n");
+		return (free(dir), EXIT_FAILURE);
+	}
+	if (!getcwd(cwd, sizeof(cwd)))
+		return (free(dir), ex_code(EXIT_FAILURE));
+	if (update_directories(local, cwd) == -1)
+		return (free(dir), ex_code(EXIT_FAILURE));
+	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
+		free(dir);
+	else if (dir)
+		free(dir);
+	return (ex_code(EXIT_SUCCESS));
+}
+
 int	command_cd(char **cmds, t_localenv *local, int err)
 {
 	char	*target_dir;
-	char	cwd[PATH_MAX];
 
 	if (cmds[1] && cmds[2])
 		return (bi_err("cd: too many arguments", "\n", ""));
@@ -116,19 +108,7 @@ int	command_cd(char **cmds, t_localenv *local, int err)
 	else
 		target_dir = expand_tilde(cmds[1], local);
 	if (!target_dir)
-		return (EXIT_FAILURE);
+		return (ex_code(EXIT_FAILURE));
 	err = change_directory(target_dir);
-	if (err == 13)
-		return (free(target_dir), bi_err("cd: ", "", ": Permission denied\n"));
-	if (err == 2)
-		return (free(target_dir), bi_err("cd: ", cmds[1], ": No such file or directory\n"));
-	if (!getcwd(cwd, sizeof(cwd)))
-		return (free(target_dir), EXIT_FAILURE);
-	if (update_directories(local, cwd) == -1)
-		return (free(target_dir), EXIT_FAILURE);
-	if (cmds[1] && cmds[1][0] != '\0' && cmds[1][0] != '~')
-		free(target_dir);
-	else if (target_dir)
-		free(target_dir);
-	return (EXIT_SUCCESS);
+	return (sub_cd_handle(err, target_dir, local, cmds));
 }

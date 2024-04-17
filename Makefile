@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 10:35:09 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/17 14:28:46 by luis-ffe         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 RED = \033[31m
 GREEN = \033[32m
@@ -63,6 +63,7 @@ SRC := minishell.c \
 		builtins/export/ft_getenv.c \
 		builtins/exit/exit_command.c \
 		builtins/cd/cd_command.c \
+		builtins/cd/cd_utils_2.c \
 		builtins/cd/cd_utils.c \
 		wildcards/wildcards.c \
 		wildcards/wildcards_utils.c \

@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 11:56:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:12:26 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -39,14 +39,16 @@ int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
 	int		fd;
+	int		res;
 	
+	res = 0;
 	fd = dup(STDOUT_FILENO);
 	dup2(cmd_info.fd_in_out[1], STDOUT_FILENO);
 	close(cmd_info.fd_in_out[1]);
-	exec_correct_builtin(cmds, info, id, cmd_info);
+	res = exec_correct_builtin(cmds, info, id, cmd_info);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
-	return (0);
+	return (res);
 }
 
 void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
