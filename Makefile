@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 10:35:09 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/17 16:46:23 by luis-ffe         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 RED = \033[31m
 GREEN = \033[32m
@@ -51,18 +51,23 @@ SRC := minishell.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
 		builtins/builtins.c \
+		builtins/builtins_utils.c \
 		builtins/echo/echo.c \
 		builtins/expander/expander.c \
 		builtins/expander/expander_lst.c \
 		builtins/expander/expander_utils.c \
+		builtins/expander/expander_utils_2.c \
 		builtins/expander/expander_main.c \
 		builtins/export/export.c \
 		builtins/export/export_utils.c \
+		builtins/export/export_utils_2.c \
 		builtins/export/export_envcpy.c \
 		builtins/export/export_utils_sort.c \
 		builtins/export/ft_getenv.c \
 		builtins/exit/exit_command.c \
+		builtins/exit/exit_utils.c \
 		builtins/cd/cd_command.c \
+		builtins/cd/cd_utils_2.c \
 		builtins/cd/cd_utils.c \
 		wildcards/wildcards.c \
 		wildcards/wildcards_utils.c \

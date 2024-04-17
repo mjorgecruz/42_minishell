@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:03:55 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/16 13:22:02 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:41:03 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	is_arg_valid_numeric(const char *str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (is_space(str[i]))
 		i++;
@@ -55,71 +55,11 @@ static bool	exit_args_checker(char **cmds)
 		else
 		{
 			bi_err("exit: ", 0, "numeric argument required\n");
-			return (ex_code(2), false);   
+			return (ex_code(2), false);
 		}
 	}
 	else
 		return (ex_code(1), false);
-}
-
-void	free_t_info(t_info info)
-{
-	int	i;
-
-	i = 0;
-	while (info.heredocs[i])
-	{
-		free(info.heredocs[i]);
-		i++;
-	}
-	free(info.heredocs);
-}
-
-void	free_info_andenv(t_info info)
-{
-	int	i;
-
-	i = 0;
-	while (info.local->content[i])
-	{
-		free(info.local->content[i]);
-		i++;
-	}
-	i = 0;
-	while (info.local->sorted[i])
-	{
-		free(info.local->sorted[i]);
-		i++;
-	}
-	free(info.local->content);
-	free(info.local->sorted);
-	free(info.local);
-}
-
-void	free_t_token(t_token *tok)
-{
-	int	i;
-
-	i = 0;
-	if (tok)
-	{
-		if (tok->content != NULL)
-			free(tok->content);
-		if (tok->cmds->cmds != NULL)
-		{
-			i = 0;
-			while (tok->cmds[i].cmds)
-			{
-				free(tok->cmds[i].cmds);
-				i++;
-			}
-			free(tok->cmds);
-		}
-		if (tok->down)
-			free_t_token(tok->down);
-		if (tok->next)
-			free_t_token(tok->next);
-	}
 }
 
 void	command_exit(t_info info, char **cmds)

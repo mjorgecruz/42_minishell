@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 00:05:12 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/10 13:47:02 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/17 16:21:11 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/17 16:21:29 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -16,7 +16,7 @@ int	find_variable_index_recursive(const char *name, char **env, int index)
 {
 	if (env[index] == NULL)
 		return (-1);
-	if (strncmp(name, env[index], ft_strlen(name)) == 0 &&
+	if (strncmp(name, env[index], ft_strlen(name)) == 0 && \
 		(env[index][ft_strlen(name)] == '=' || \
 			env[index][ft_strlen(name)] == '\0'))
 	{

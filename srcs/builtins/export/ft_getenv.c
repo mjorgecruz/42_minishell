@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:05:28 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 10:25:11 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:16:06 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,34 @@ char	*ft_getenv(const char *name, char **envp)
 	return (NULL);
 }
 
-////////////////////////////////////////////////////////////////////////////
-//                                                                        //
-//                             PRINTENV                                   //
-//                                                                        //
-////////////////////////////////////////////////////////////////////////////
-                                                                      
-int index_locator(char *var, t_localenv *local)
+int	index_locator(char *var, t_localenv *local)
 {
-    int ret;
+	int	ret;
 
 	ret = -1;
-    ret = find_variable_index_recursive(var, local->content, 0);
-    return ret;
+	ret = find_variable_index_recursive(var, local->content, 0);
+	return (ret);
 }
 
-int	command_printenv(char **cmds, t_localenv *local)
+int	command_printenv(char **cmds, t_localenv *lo)
 {
 	int	i;
-	int index;
+	int	index;
 
 	i = 1;
-	if (cmds == NULL || local == NULL || local->content == NULL)
+	if (cmds == NULL || lo == NULL || lo->content == NULL)
 		return (EXIT_FAILURE);
 	if (cmds[i] == NULL)
-		return (command_env(local));
+		return (command_env(lo));
 	if (cmds[i])
 	{
-		while(cmds[i])
+		while (cmds[i])
 		{
-			index = index_locator(cmds[i], local);
-			if	(index < 0)
+			index = index_locator(cmds[i], lo);
+			if (index < 0)
 				return (EXIT_FAILURE);
 			else
-				ft_printf("%s\n", local->content[index] + ft_strlen(cmds[i]) + 1);
+				ft_printf("%s\n", lo->content[index] + ft_strlen(cmds[i]) + 1);
 			i++;
 		}
 		if (i > 1)

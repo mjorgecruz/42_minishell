@@ -6,29 +6,11 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:08:58 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/05 12:11:55 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:40 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void	*ft_realloc(void *ptr, size_t size)
-{
-	void	*new_ptr;
-	size_t	old_size;
-
-	if (!ptr)
-		return (ft_memalloc(size));
-	old_size = ft_strlen(ptr) + 1;
-	if (size <= old_size)
-		return (ptr);
-	new_ptr = ft_memalloc(size);
-	if (!new_ptr)
-		return (NULL);
-	ft_memcpy(new_ptr, ptr, old_size);
-	free(ptr);
-	return (new_ptr);
-}
 
 int	add_env_variable(char *name, char *value, t_localenv *local)
 {
@@ -142,15 +124,14 @@ int	update_env_vs(char *name, char *value, t_localenv *local)
 	return (-1);
 }
 
-
 int	ft_setenv(char *name, char *value, t_localenv *local)
 {
 	if (local == NULL || name == NULL)
 		return (-1);
-	if (update_env_variable(name, value, local) == -1 ||
+	if (update_env_variable(name, value, local) == -1 || \
 		update_env_vs(name, value, local) == -1)
 	{
-		if (add_env_variable(name, value, local) == -1 ||
+		if (add_env_variable(name, value, local) == -1 || \
 			add_env_vs(name, value, local) == -1)
 			return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 14:57:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:57:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -249,7 +249,7 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == EXIT)
 		command_exit(info, cmds);
 	else if (id == CD)
-		return (ex_code(command_cd(cmds, local, 0)));
+		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
 		return(command_execve(cmds, local, info, cmd_info));
 	return (g_signal);
