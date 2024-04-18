@@ -3,3 +3,6 @@ minishell
 *.o
 include/libft/libft.a
 minishell_tester
+*.a
+sup
+leaks.log

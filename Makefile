@@ -79,10 +79,6 @@ SRC := minishell.c \
 		signals/signals.c \
 		signals/signals_handlers.c \
 
-
-		
-
-
 LIBRARY = 
 OBJ := $(patsubst %.c, $(ODIR)/%.o,$(SRC))
 
@@ -110,8 +106,6 @@ $(ODIR):
 $(ODIR)/%.o: $(INCDIR)/%.c
 	@mkdir -p $(dir $@) 
 	@$(CC) $(CFLAGS) -c -o $@ $<
-	
-
 
 $(LIBFT):
 	@make -C ./libft/ -s
