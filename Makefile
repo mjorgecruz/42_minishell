@@ -90,21 +90,27 @@ CC = cc
 
 RM = rm -f
 
+TOTAL_FILES := $(words $(SRC))
+COMPILED_FILES := $(shell if [ -d "$(ODIR)" ]; then find $(ODIR) -name "*.o" | wc -l; else echo 0; fi)
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
-		@echo "${BOLD_GREEN}...minishell is reborn${END}"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
+	@printf "$(BOLD_GREEN)...minishell in the making: $$(echo "$(shell find $(ODIR) -name "*.o" | wc -l) $(TOTAL_FILES)" | awk '{printf "%.2f", $$1/$$2 * 100}')%%$(RES)\r"
+	@printf "\n"
+	@echo "${BOLD_GREEN}minishell is reborn...${END}"
 
 test: $(OBJ) $(LIBFT)
-		@$(CC) $(CFLAGS) $(TESTFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
-		@echo "${BOLD_GREEN}...minishell is reborn${END}"
+	@$(CC) $(CFLAGS) $(TESTFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
+	@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
 $(ODIR):
 	@mkdir -p $@
 	
 $(ODIR)/%.o: $(INCDIR)/%.c
 	@mkdir -p $(dir $@) 
+	@printf "$(BOLD_GREEN)...minishell in the making: $$(echo "$(shell find $(ODIR) -name "*.o" | wc -l) $(TOTAL_FILES)" | awk '{printf "%.2f", $$1/$$2 * 100}')%%$(RES)\r"
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT):
