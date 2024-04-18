@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 16:43:54 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:59:44 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -70,7 +70,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	if (cmd_info.fd_in_out[1] == -1)
 		err[1] = errno;
 	if (err[1] != 0 || err[0] != 0)
-		error_definer_(err, pos, cmd_list->cmds[i].cmds);
+		return(error_definer_(err, pos, cmd_list->cmds[i].cmds));
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
 	set_lastcommand(final_cmds, info.local);
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
