@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,14 +6,15 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 01:40:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 08:24:30 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
 static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_info, t_command cmds);
 static void cmd_info_starter(t_cmd_info	*cmd_info);
+static void set_lastcommand(char **final_cmds, t_localenv *local);
 
 void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 {
@@ -175,6 +176,17 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	return (res);
 }
 
+static void set_lastcommand(char **final_cmds, t_localenv *local)
+{
+	int		i;
+
+	i = 0;
+	while (final_cmds[i])
+		i++;
+	i--;
+	ft_setenv("_", final_cmds[i], local);
+}
+
 static void cmd_info_starter(t_cmd_info	*cmd_info)
 {
 	cmd_info->fd_in_out[0] = 0;
@@ -218,6 +230,7 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		res = solver(final_cmds, info, cmd_info);
 		ex_code(res);
 	}
+	set_lastcommand(final_cmds, info.local);
 	return(free_split(final_cmds), g_signal);
 }
 
