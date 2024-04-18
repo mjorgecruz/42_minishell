@@ -1,14 +1,14 @@
-# **************************************************************************** #
+#******************************************************************************#
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
+#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/17 16:46:23 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/18 09:18:21 by masoares         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
+#******************************************************************************#
 
 RED = \033[31m
 GREEN = \033[32m
@@ -23,6 +23,8 @@ NAME = minishell
 CFLAGS = -Wall -Werror -Wextra -g
 
 VGFLAGS = valgrind --leak-check=full --suppressions=sup --track-origins=yes --show-leak-kinds=all --log-file=leaks.log -s
+
+TESTFLAGS = -fsanitize=address
 
 INCDIR:=srcs
 ODIR:=obj
@@ -96,6 +98,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
+		@echo "${BOLD_GREEN}...minishell is reborn${END}"
+
+test: $(OBJ) $(LIBFT)
+		@$(CC) $(CFLAGS) $(TESTFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
 		@echo "${BOLD_GREEN}...minishell is reborn${END}"
 
 $(ODIR):

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 09:07:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:20:46 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,12 +21,12 @@ int	main(void)
 	char		*input;
 	char		**heredocs;
 	int			i;
-	int			z;
+	//int			z;
 	t_localenv	*local_env;
 	
-	z = adjust_shlvl(__environ);
+	adjust_shlvl(__environ);
 	local_env = env_init(__environ);
-	free(__environ[z]);
+	//free(__environ[z]);
 	input = NULL;
 	i = 0;
 	g_signal = 0;
@@ -51,7 +51,6 @@ static int adjust_shlvl(char **environ)
 	int		i;
 	int		shlvl;
 	char	*intoa;
-	//char	shell_string[8];
 	char	*sh;
 	
 	intoa = NULL;
@@ -60,7 +59,6 @@ static int adjust_shlvl(char **environ)
 	{
 		if (!ft_strncmp("SHLVL", environ[i], 5))
 		{
-			printf("%s\n", environ[i]);
 			shlvl = ft_atoi(&(environ[i][6]));
 			intoa = ft_itoa(shlvl + 1);
 			sh = ft_strjoin("SHLVL=", intoa);
