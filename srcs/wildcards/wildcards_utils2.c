@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils2.c                                 :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 17:20:55 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:40:52 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -114,17 +114,17 @@ char	*add_back_wildcard(char *str, int *i)
 	beg = *i;
 
 	j = *i - 1;
-	while (str[j] && !is_special_char(str[j]))
+	while (j >= 0 && !is_special_char(str[j]))
 	{
 		if (str[j] == '<' && j > 0 && str[j - 1] == '<')
 			return("");
 		j--;
 	}
-	while (str[beg] && !is_space(str[beg]) && !is_special_char(str[beg]))
+	while (beg >= 0 && !is_space(str[beg]) && !is_special_char(str[beg]))
 		(beg)--;
 	(beg)++;
 	j = 0;
-	wildcard = ft_calloc(end - beg - 2, sizeof(char));
+	wildcard = ft_calloc(end - beg + 2, sizeof(char));
 	while (beg <= end)
 	{
 		wildcard[j] = str[beg];
@@ -147,7 +147,7 @@ char	*add_middle_wildcard(char *str, int *i)
 		(*i)++;
 	end = *i;
 	(*i)--;
-	while ((*i) != 0 && !is_space(str[*i]) && !is_special_char(str[*i]))
+	while ((*i) >= 0 && !is_space(str[*i]) && !is_special_char(str[*i]))
 		(*i)--;
 	beg = *i + 1;
 	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));

@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils4.c                                 :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/05 18:19:19 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:36:42 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -79,7 +79,7 @@ int	wmiddle(char *str, char *comp)
 	if (wildcard == NULL)
 		return (0);
 	j = 0;
-	while (str[i + j] != '*')
+	while (str[i + j] && str[i + j] != '*')
 	{
 		wildcard[j] = str[i + j];
 		j++;
@@ -104,10 +104,12 @@ int	wedges(char *str, char *comp)
 
 	i = 0;
 	res = 0;
-	res += wback(str, comp);
+	if (wback(str, comp) > 0)
+		res++;
 	while (str[i] != '*')
 		i++;
-	res += wfront(&str[i], comp);
+	if(wfront(&str[i], comp) > 0)
+		res++;
 	if (res < 2)
 		return(0);
 	else
@@ -163,10 +165,11 @@ int	wmega(char *str, char *comp)
 	i = 0;
 	res = 0;
 	wildcard = NULL;
+	prev = NULL;
 	letter = ft_calloc(2, sizeof(char));
 	while (str[i] == '*')
 		i++;
-	wildcard = ft_strdup("*");
+	wildcard = ft_strdup("");
 	while(str[i])
 	{
 		while(str[i] && str[i] != '*')

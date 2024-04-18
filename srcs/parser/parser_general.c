@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser_general.c                                   :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:11:05 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 09:21:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:10:14 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains the general process to clear the input received from 
 the terminal*/
@@ -75,7 +75,7 @@ bool	parenthesis_after_command(char *line_read, int *i)
 		while (j >= 0 && ft_strchr(" \t\n", line_read[j]))
 			j--;
 		if (j >= 0 && line_read[j] != '|' && line_read[j] != '&'
-			&& line_read[j] != '<' && line_read[j] != '>')
+			&& line_read[j] != '<' && line_read[j] != '>'&& line_read[j] != '(' )
 			return (true);
 	}
 	if (line_read[*i] == '\0')

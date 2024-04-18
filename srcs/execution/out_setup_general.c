@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 18:59:44 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:03:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 	int			i;
 	int			res;
 
-	res = -1;
+	res = 0;
 	i = 0;
 	info.token = cmd_list;
 	if (cmd_list->down != NULL)
