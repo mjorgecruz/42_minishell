@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/17 14:15:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:10:57 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 extern int g_signal;
 
@@ -394,9 +394,9 @@ int 	solver(char **final_cmds, t_info info, t_cmd_info *cmd_info);
 
 int		cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info);
 
-void	define_input(t_command *cmds, int *fd, int *heredocs, int *in);
+int		define_input(t_command *cmds, int *fd, int *heredocs, int *in);
 
-void	define_output(t_command *cmds, int *fd, int *out);
+int		define_output(t_command *cmds, int *fd, int *out, int pos0);
 
 char	*create_file_name(char *cmd, int *i);
 

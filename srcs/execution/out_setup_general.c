@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 00:16:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:40:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,14 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	t_cmd_info	cmd_info;
 	int			j;
 	int			res;
+	int			err[2];
+	int			pos[2];
+	char		*file;
 	
 	res = 0;
 	j = 0;
+	err[0] = 0;
+	err[1] = 0;
 	cmd_info_starter(&cmd_info);
 	while (j < i)
 	{
@@ -135,19 +140,37 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	}
 	if (wildcard_checker(cmd_list->cmds[i].cmds))
 		cmd_list->cmds[i].cmds = wildcardings(cmd_list->cmds[i].cmds);
-	define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),
+	pos[0] = define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),	
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
-	{
-		return (g_signal);
-	}
-	define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]));
+		err[0] = errno;
+	pos[1] = define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]), pos[0]);
 	if (cmd_info.fd_in_out[1] == -1)
+		err[1] = errno;
+	if (err[1] != 0 || err[0] != 0)
 	{
-		return (g_signal);
+		if (pos[0] <= pos[1])
+		{
+			file = create_file_name(cmd_list->cmds[i].cmds, &pos[0]);
+			if (err[0] == ENOENT)
+				bi_err(file, " : No such file or directory", "\n");
+			else if (err[0] == EACCES)
+				bi_err(file, " : Permission denied", "\n");
+			return (ex_code(1), g_signal);
+		}
+		else
+		{
+			file = create_file_name(cmd_list->cmds[i].cmds, &pos[1]);
+			if (err[1] == ENOENT)
+				bi_err(file, " : No such file or directory", "\n");
+			else if (err[1] == EACCES)
+				bi_err(file, " : Permission denied", "\n");
+			else if (err[1] == 20)
+				bi_err(file, " : Not a directory", "\n");
+			return (ex_code(1), g_signal);
+		}
 	}
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
-	
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
 	return (res);
 }

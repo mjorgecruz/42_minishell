@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 23:43:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:29:43 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 	return (res);
 }
 
-void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
+int	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 {
 	int		i;
 	char	*file;
+	int 	pos;
 		
 	i = 0;
 	file = NULL;
@@ -65,15 +66,13 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 		if ((cmds->cmds)[i] == '<' && (cmds->cmds)[i + 1] != '<')
 		{
 			i++;
+			pos = i;
 			if (file != NULL)
 				free(file);
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
-			{
-				ex_code(errno);
-				break;
-			}
+				return(pos);
 			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
@@ -89,28 +88,21 @@ void	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 		}
 		i++;
 	}
-	if (file && *fd < 0)
-	{
-		if (errno == ENOENT)
-			bi_err(file, " : No such file or directory", "\n");
-		else if (errno == EACCES)
-			bi_err(file, " : Permission denied", "\n");
-		// // else
-		// 	// 	builtin_errors(file, " : Is a directory");
-	}
 	if (file != NULL)
 		free(file);
+	return (i);
 }
 
-void	define_output(t_command *cmds, int *fd, int *out)
+int	define_output(t_command *cmds, int *fd, int *out, int pos0)
 {
 	int		i;
 	char	*file;
+	int 	pos;
 	
 	i = 0;
 	*fd = 1;
 	file = NULL;
-	while (i < ft_strlen(cmds->cmds) && cmds->cmds[i])
+	while (i < ft_strlen(cmds->cmds) && i < pos0 && cmds->cmds[i])
 	{
 		i = ignore_in_quotes(cmds->cmds, i);
 		if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] != '>')
@@ -118,6 +110,7 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			i++;
 			if (cmds->cmds[i] == '|')
 				i++;
+			pos = i;
 			if (*fd > 1)
 				close(*fd);
 			if (file != NULL)
@@ -125,17 +118,15 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_TRUNC);
 			close(*fd);
-			*fd = open(file, O_WRONLY|O_CREAT, 0666);
+			*fd = open(file, O_RDWR|O_CREAT, 0666);
 			if (*fd == -1)
-			{
-				ex_code(errno);
-				break ;
-			}
+				return (pos);
 			*out = OUT_DOC; 
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
 		{
 			i+=2;
+			pos = i;
 			if (*fd > 1)
 				close(*fd);
 			if (file != NULL)
@@ -143,28 +134,15 @@ void	define_output(t_command *cmds, int *fd, int *out)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_WRONLY|O_APPEND|O_CREAT, 0660);
 			if (*fd < 0)
-			{
-				ex_code(errno);
-				break ;
-			}
+				return (pos) ;
 			*out = OUT_DOC; 
 		}
 		if (cmds->cmds && cmds->cmds[i])
 			i++;
 	}
-	if (file && *fd < 0)
-	{
-		if (errno == ENOENT)
-			bi_err(file, " : No such file or directory", "\n");
-		else if (errno == EACCES)
-			bi_err(file, " : Permission denied", "\n");
-		// else
-		// 	builtin_errors(file, " : Is a directory");
-		free(file);
-		return ;
-	}
 	if (file != NULL)
 		free(file);
+	return (i);
 }
 
 char	*create_file_name(char *cmd, int *i)

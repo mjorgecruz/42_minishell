@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:06 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 14:36:14 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:58:20 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	sub_cd_handle(int err, char *dir, t_localenv *local, char **cmds)
 	if (err == 2)
 	{
 		bi_err("cd: ", cmds[1], ": No such file or directory\n");
-		return (free(dir), EXIT_FAILURE);
+		return (ex_code(err), free(dir), EXIT_FAILURE);
 	}
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (free(dir), ex_code(EXIT_FAILURE));
