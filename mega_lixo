@@ -78,7 +78,7 @@ V  echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
 V  return int with position of input/output in the functions define_input and define_output in case of error
 V  problema da dupla impressao de erro vem da contagem de inputs antes do programa normal
 V  $_ fazer dentro de forks
+V  leak on shlvl change
 
 execve errors
 organize files
-leak on shlvl change
