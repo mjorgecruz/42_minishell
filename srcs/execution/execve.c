@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
@@ -6,16 +6,14 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 02:03:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:38:33 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 void set_mesage(char *cmd, int code, char *msg)
 {
 	(void ) cmd;
-		//ft_putstr_fd(cmd, STDERR_FILENO);
-		
 		ft_putstr_fd( msg, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		ex_code(code);
@@ -24,10 +22,15 @@ void set_mesage(char *cmd, int code, char *msg)
 
 void err_eacces_chooser(char *cmd)
 {
-	if (opendir(cmd) == NULL) 
+	DIR		*dir;
+	dir = opendir(cmd);
+	if (dir == NULL)
 		set_mesage(cmd, 127, ": Permission denied");
 	else
-		set_mesage(cmd, 127, ": Is a directory");
+	{
+		closedir(dir);
+		set_mesage(cmd, 126, ": Is a directory");
+	}
 }
 
 void err_enoent_chooser(char *cmd)

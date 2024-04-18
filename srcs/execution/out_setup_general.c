@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:19:15 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 08:24:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:44:41 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -157,7 +157,7 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 				bi_err(file, " : No such file or directory", "\n");
 			else if (err[0] == EACCES)
 				bi_err(file, " : Permission denied", "\n");
-			return (ex_code(1), g_signal);
+			return (free(file), ex_code(1), g_signal);
 		}
 		else
 		{
@@ -168,10 +168,11 @@ int		inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 				bi_err(file, " : Permission denied", "\n");
 			else if (err[1] == 20)
 				bi_err(file, " : Not a directory", "\n");
-			return (ex_code(1), g_signal);
+			return (free(file), ex_code(1), g_signal);
 		}
 	}
 	final_cmds = clean_cmds(&(cmd_list->cmds[i]), local);
+	set_lastcommand(final_cmds, info.local);
 	res = all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]);
 	return (res);
 }
@@ -230,7 +231,6 @@ static	int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_in
 		res = solver(final_cmds, info, cmd_info);
 		ex_code(res);
 	}
-	set_lastcommand(final_cmds, info.local);
 	return(free_split(final_cmds), g_signal);
 }
 

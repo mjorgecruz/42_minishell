@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 09:20:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:30:03 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -52,21 +52,25 @@ static int adjust_shlvl(char **environ)
 	int		shlvl;
 	char	*intoa;
 	char	*sh;
+	int		j;
 	
 	intoa = NULL;
-	i = 0;
-	while (environ[i])
+	i = -1;
+	j = -1;
+	while (environ[++i])
 	{
 		if (!ft_strncmp("SHLVL", environ[i], 5))
 		{
 			shlvl = ft_atoi(&(environ[i][6]));
 			intoa = ft_itoa(shlvl + 1);
 			sh = ft_strjoin("SHLVL=", intoa);
-			environ[i] = sh;
+			while (sh[++j])
+				environ[i][j] = sh[j];
+			environ[i][j] = 0;
 			free(intoa);
+			free(sh);
 			break;
 		}
-		i++;
 	}
 	return (i);
 }

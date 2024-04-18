@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
@@ -6,21 +6,20 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 01:29:43 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:45:56 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
 int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
 	int		res;
-	int		fd;
+	//int		fd;
 	
 	res = 0;
 	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
 	{
-		fd = dup(STDIN_FILENO);
 		dup2(cmd_info->fd_in_out[0], STDIN_FILENO);
 		close(cmd_info->fd_in_out[0]);
 	}
@@ -28,11 +27,6 @@ int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 		res = exec_correct_builtin(final_cmds, info, cmd_info->id, *cmd_info);
 	else if (cmd_info->fd_in_out[1] > STDOUT_FILENO)
 		res = cd_output_exec(final_cmds, info, cmd_info->id, *cmd_info);
-	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
-	{
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
 	return (res);
 }
 
@@ -72,7 +66,7 @@ int	define_input(t_command *cmds, int *fd, int *heredocs, int *in)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_RDONLY);
 			if (*fd < 0)
-				return(pos);
+				return(free(file), pos);
 			*in = IN_DOC;
 		}
 		else if (cmds->cmds[i] == '<' && cmds->cmds[i + 1] == '<')
@@ -119,8 +113,8 @@ int	define_output(t_command *cmds, int *fd, int *out, int pos0)
 			*fd = open(file, O_TRUNC);
 			close(*fd);
 			*fd = open(file, O_RDWR|O_CREAT, 0666);
-			if (*fd == -1)
-				return (pos);
+			if (*fd <= -1)
+				return (free(file), pos);
 			*out = OUT_DOC; 
 		}
 		else if (cmds->cmds[i] == '>' && cmds->cmds[i + 1] == '>')
@@ -134,7 +128,7 @@ int	define_output(t_command *cmds, int *fd, int *out, int pos0)
 			file = create_file_name(cmds->cmds, &i);
 			*fd = open(file, O_WRONLY|O_APPEND|O_CREAT, 0660);
 			if (*fd < 0)
-				return (pos) ;
+				return (free(file), pos);
 			*out = OUT_DOC; 
 		}
 		if (cmds->cmds && cmds->cmds[i])
