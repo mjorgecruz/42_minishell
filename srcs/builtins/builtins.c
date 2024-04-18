@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 12:20:23 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:38:19 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -84,7 +84,7 @@ int	command_unset(char **cmds, t_localenv *local)
 	if (cmds[1] == NULL)
 		return (EXIT_SUCCESS);
 	if (!isvar_valid(cmds[1]))
-		return (EXIT_FAILURE + 1);
+		return (0);
 	i = 1;
 	while (cmds[i] != NULL)
 	{

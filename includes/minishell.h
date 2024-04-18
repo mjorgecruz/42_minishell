@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/18 01:10:57 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:22:47 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 extern int g_signal;
 
@@ -418,6 +418,12 @@ int			execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local);
 int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
 
 char	*test_commands(char **cmds, char **p_path);
+
+void exec_not(char *cmd);
+
+int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_info, t_command cmds);
+void cmd_info_starter(t_cmd_info	*cmd_info);
+void set_lastcommand(char **final_cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                  MEGASPLIT                                 */

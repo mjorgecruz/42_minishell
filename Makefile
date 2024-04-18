@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/18 09:18:21 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/18 16:53:25 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -48,10 +48,17 @@ SRC := minishell.c \
 		parser/parser_parenthesis.c \
 		parser/special_mid_parser.c \
 		execution/solver.c \
+		execution/solver_2.c \
+		execution/solver_3.c \
 		execution/execve.c \
+		execution/execve_2.c \
 		execution/out_setup_general.c \
+		execution/out_setup_general2.c \
+		execution/out_setup_general3.c \
+		execution/out_setup_general4.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
+		execution/general_executor_3.c \
 		builtins/builtins.c \
 		builtins/builtins_utils.c \
 		builtins/echo/echo.c \
