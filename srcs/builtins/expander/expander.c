@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:43:32 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 14:56:58 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/18 09:37:14 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -53,9 +53,17 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 		if (!code_word || is_str_empty(code_word))
 			break ;
 		if (!ft_strncmp(code_word, "$?", 2))
+		{
+			if (env)
+				free(env);
 			env = ft_itoa(g_signal);
+		}
 		else
+		{
+			if (env)
+				free(env);
 			env = ft_getenv(code_word, local->content);
+		}
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
 	if (env)
@@ -92,8 +100,6 @@ char	*join_list_contents(t_lstexpand *head)
 	return (joined_content);
 }
 
-//if (len >= 2 && ((cur->content[0] == '\'' && cur->content[len - 1] == '\'') 
-//|| (cur->content[0] == '\"' && cur->content[len - 1] == '\"')))
 bool	q_lst_clean_helper(t_lstexpand *cur, int len)
 {
 	if (len >= 2 && ((cur->content[0] == '\'' && \
