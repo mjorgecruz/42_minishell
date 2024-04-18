@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:55:30 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 17:57:32 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:20:23 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -41,7 +41,7 @@ int	unset_variable(const char *variable, t_localenv *local)
 	if (index != -1)
 	{
 		free(local->sorted[index]);
-		if (index != 0)
+		if (index >= 0)
 		{
 			while (local->sorted[index] != NULL)
 			{
@@ -62,7 +62,7 @@ int	unset_variable2(const char *variable, t_localenv *local)
 	if (index != -1)
 	{
 		free(local->content[index]);
-		if (index != 0)
+		if (index >= 0)
 		{
 			while (local->content[index] != NULL)
 			{

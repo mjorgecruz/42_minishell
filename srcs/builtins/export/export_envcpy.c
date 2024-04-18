@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export_envcpy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 16:26:25 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:14:59 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../../includes/minishell.h"
 
@@ -27,23 +27,24 @@ t_localenv	*env_init(char **envirion)
 	return (new);
 }
 
-char	**copy_env_var_utils(char **env, int num_vars, char **env_copy)
+void	copy_env_var_utils(char **env, int num_vars, char **env_copy)
 {
 	int	len;
 
 	if (*env == NULL)
 	{
 		env_copy[num_vars] = NULL;
-		return (env_copy);
+		return;
 	}
 	len = ft_strlen(*env) + 1;
 	env_copy[num_vars] = (char *)malloc(len * sizeof(char));
 	if (env_copy[num_vars] == NULL)
 	{
-		return (NULL);
+		return;
 	}
 	ft_strncpy(env_copy[num_vars], *env, len);
-	return (copy_env_var_utils(env + 1, num_vars + 1, env_copy));
+	copy_env_var_utils(env + 1, num_vars + 1, env_copy);
+	return;
 }
 
 void	sort_strings(char **strings, int i, int j, int k)
@@ -91,7 +92,8 @@ char	**copy_environment_variables(char **environ)
 	env_copy = (char **)malloc((num_vars + 1) * sizeof(char *));
 	if (env_copy == NULL)
 		return (NULL);
-	return (copy_env_var_utils(environ, 0, env_copy));
+	copy_env_var_utils(environ, 0, env_copy);
+	return (env_copy);
 }
 
 void	put_quotes_expdr(char **arrstr)

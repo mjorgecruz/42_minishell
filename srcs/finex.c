@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 09:31:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:16:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -58,6 +58,7 @@ int	free_split(char **splitted)
 			i++;
 		}
 		free(splitted);
+		splitted = NULL;
 	}
 	return (0);
 }
