@@ -6,17 +6,17 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:31:08 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:52:15 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:21:39 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    line_reader(int fd0, int fd1, char **total_line)
+void	line_reader(int fd0, int fd1, char **total_line)
 {
-	int     bread;
+	int		bread;
 	char	buffer[21];
-	
+
 	close(fd1);
 	bread = read(fd0, buffer, 20);
 	buffer[bread] = 0;
@@ -28,10 +28,10 @@ void    line_reader(int fd0, int fd1, char **total_line)
 	}
 }
 
-void    extra_fork(int fd0, int fd1, t_localenv *local, char * line_read)
+void	extra_fork(int fd0, int fd1, t_localenv *local, char *line_read)
 {
-	int     res;
-	
+	int	res;
+
 	close(fd0);
 	switch_sig_new();
 	free_split(local->content);
@@ -63,7 +63,7 @@ char	*get_end_path(t_localenv *local_env)
 	int		i;
 	int		j;
 	int		count_bars;
-	
+
 	garbage = getcwd(NULL, 0);
 	if (garbage == NULL)
 		garbage = ft_getenv("PWD", local_env->content);
@@ -81,5 +81,6 @@ char	*get_end_path(t_localenv *local_env)
 	rest[1] = '/';
 	while (garbage[i] != '\0')
 		rest[j++] = garbage[i++];
-	return (rest[j] = '$', rest[j + 1] = ' ', rest[j + 2] = '\0', free(garbage), rest);
+	return (rest[j] = '$', rest[j + 1] = ' ', \
+	rest[j + 2] = '\0', free(garbage), rest);
 }
