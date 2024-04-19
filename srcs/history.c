@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 14:05:04 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:07:38 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -144,3 +144,12 @@ static void	read_to_line(char ** total_line, char **line_read, int *fd)
 	}
 	*total_line = *line_read;
 }
+
+
+if(!ft_parser(*total_line, &i))
+	{
+		heredoc_writer(*total_line, heredocs, i, local);
+		free_split(*heredocs);
+		return (false);
+	}
+	heredoc_writer(*total_line, heredocs, i, local);
