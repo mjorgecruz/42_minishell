@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 15:39:48 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/19 16:01:00 by luis-ffe         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 RED = \033[31m
 GREEN = \033[32m
@@ -61,6 +61,7 @@ SRC := minishell.c \
 		execution/out_setup_general2.c \
 		execution/out_setup_general3.c \
 		execution/out_setup_general4.c \
+		execution/out_setup_general5.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
 		execution/general_executor_3.c \

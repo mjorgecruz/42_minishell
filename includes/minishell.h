@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:33:46 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 16:00:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:08:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -385,11 +385,11 @@ void		free_t_info(t_info info);
 
 void		all_initial_free(char *pwd, char ***heredocs, \
 t_localenv *local_env, int res);
-void		read_to_line(char ** total_line, \
+void		read_to_line(char **total_line, \
 char **line_read, int *fd);
-int			writer_to_final(char ** total_line, \
+int			writer_to_final(char **total_line, \
 char **line_read, t_localenv *local);
 bool		writer_from_input(char **total_line, \
 char ***heredocs, t_localenv *local, int i);
-
+int			error_definer_(int *err, int *pos, char *cmds);
 #endif
