@@ -1,14 +1,14 @@
-# **************************************************************************** #
+#******************************************************************************#
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
+#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 14:01:12 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/19 15:27:07 by masoares         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
+#******************************************************************************#
 
 RED = \033[31m
 GREEN = \033[32m
@@ -19,6 +19,8 @@ BOLD_YELLOW = \033[1;33m
 END = \033[0m
 
 NAME = minishell
+
+NAME_BONUS = minishell_bonus
 
 CFLAGS = -Wall -Werror -Wextra -g
 
@@ -105,6 +107,14 @@ TOTAL_FILES := $(words $(SRC))
 COMPILED_FILES := $(shell if [ -d "$(ODIR)" ]; then find $(ODIR) -name "*.o" | wc -l; else echo 0; fi)
 
 all: $(NAME)
+
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_BONUS) $(LIBFLAGS)
+	@printf "$(BOLD_GREEN)...minishell in the making: $$(echo "$(shell find $(ODIR) -name "*.o" | wc -l) $(TOTAL_FILES)" | awk '{printf "%.2f", $$1/$$2 * 100}')%%$(RES)\r"
+	@printf "\n"
+	@echo "${BOLD_GREEN}minishell is reborn...${END}"
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LIBFLAGS)
