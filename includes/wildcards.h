@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:04:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 10:26:00 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:49:07 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef WILDCARDS_H
 #define WILDCARDS_H
@@ -38,7 +38,7 @@ int		order_cmp(char *letters, char *str);
 /* ************************************************************************** */
 /*                        WILDCARDS_UTILS2                                    */
 /* ************************************************************************** */
-char	**wild_splitter(char *str);
+char	**wild_splitter(char *str, int i, int j, int k);
 char	*add_simple_wildcard(char *str, int *i);
 char	*add_forw_wildcard(char *str, int *i);
 char	*add_back_wildcard(char *str, int *i);
