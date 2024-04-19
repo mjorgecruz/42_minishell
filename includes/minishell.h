@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/19 10:54:40 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:07:07 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,7 +408,7 @@ char	*create_file_name(char *cmd, int *i);
 
 char	**clean_cmds(t_command *full_cmds, t_localenv *local);
 
-char	*clean_str(char *cmds);
+char	*clean_str(char *cmds, int i, int j);
 
 /* ************************************************************************** */
 /*                                   EXECVE                                   */
