@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 18:03:31 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 12:12:08 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 08:15:30 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 08:25:19 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -22,29 +22,30 @@ int	heredoc_counter(char *line_read, int i)
 	while (line_read[j] && j <= i)
 	{
 		j = ignore_in_quotes(line_read, j);
-		if (j - 1 >= 0 && line_read[j] && line_read[j] == '<' && line_read[j - 1] == '<')
+		if (j - 1 >= 0 && line_read[j] && \
+			line_read[j] == '<' && line_read[j - 1] == '<')
 			heredocs++;
 		j++;
 	}
 	return (heredocs);
 }
 
-void	heredoc_writer(char *line_read, char ***heredocs, int i, t_localenv *local)
+void	heredoc_writer(char *line_r, char ***hdocs, int i, t_localenv *local)
 {
-	int		n_heredocs;
+	int				n_heredocs;
 	t_heredocker	heredocker;
 
-	n_heredocs = heredoc_counter(line_read, i);
+	n_heredocs = heredoc_counter(line_r, i);
 	if (n_heredocs == 0)
 		return ;
-	heredocker.heredocs = heredocs;
+	heredocker.heredocs = hdocs;
 	heredocker.n_heredocs = n_heredocs;
-	heredocker.line_read = line_read;
+	heredocker.line_read = line_r;
 	heredocker.i = i;
 	adjust_heredocs(heredocker, local);
 }
 
-int		adjust_heredocs(t_heredocker heredocker, t_localenv *local)
+int	adjust_heredocs(t_heredocker heredocker, t_localenv *local)
 {
 	int		k;
 	int		total_heredocs;
@@ -73,25 +74,28 @@ int		adjust_heredocs(t_heredocker heredocker, t_localenv *local)
 	return (1);
 }
 
-void	add_heredocs(char ***new_heredocs, int cur_heredocs, t_heredocker heredocker, t_localenv * local)
+void	add_heredocs(char ***new_hd, int cur_hd, \
+t_heredocker hdoker, t_localenv *local)
 {
 	int		heredoc_count;
-	int 	j;
+	int		j;
+
 	heredoc_count = 0;
-	j = heredocker.i;
-	heredocker.i = 0;
-	while (heredocker.line_read[heredocker.i] && heredocker.i <= j)
+	j = hdoker.i;
+	hdoker.i = 0;
+	while (hdoker.line_read[hdoker.i] && hdoker.i <= j)
 	{
-		j = ignore_in_quotes(heredocker.line_read, j);
-		if (heredocker.line_read[heredocker.i] == '<' && heredocker.i > 0 && heredocker.line_read[heredocker.i - 1] == '<')
+		j = ignore_in_quotes(hdoker.line_read, j);
+		if (hdoker.line_read[hdoker.i] == '<' && \
+			hdoker.i > 0 && hdoker.line_read[hdoker.i - 1] == '<')
 		{
-			if (heredoc_count == cur_heredocs) 
-				heredocker.i = heredoc_creator(new_heredocs, &cur_heredocs, heredocker, local);
+			if (heredoc_count == cur_hd)
+				hdoker.i = heredoc_creator(new_hd, &cur_hd, hdoker, local);
 			heredoc_count++;
 		}
 		else
-			heredocker.i++;
+			hdoker.i++;
 	}
-	(*new_heredocs)[cur_heredocs] = NULL;
+	(*new_hd)[cur_hd] = NULL;
 	return ;
 }

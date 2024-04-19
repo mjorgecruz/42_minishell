@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 07:40:02 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 07:40:04 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 08:23:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,8 +368,8 @@ int			adjust_heredocs(t_heredocker heredocker, t_localenv *local);
 
 void		add_newline_line(char **total_line, char *line_read);
 
-void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
-
+//void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
+void		add_heredocs(char ***new_hd, int cur_hd, t_heredocker hdoker, t_localenv *local);
 void		add_partials(char **heredoc, char *str);
 
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local);
