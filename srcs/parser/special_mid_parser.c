@@ -1,21 +1,21 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   special_mid_parser.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:45:57 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 15:27:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:12:19 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 bool	mid_parser_iteration(char *str, int *i)
 {
-	int		j;
-	
+	int	j;
+
 	j = 0;
 	while (str[j] && j <= *i)
 	{
@@ -41,7 +41,7 @@ bool	mid_parser_iteration(char *str, int *i)
 	return (true);
 }
 
-int check_pipes(char *str, int pos)
+int	check_pipes(char *str, int pos)
 {
 	if (str[pos] != '|')
 		return (pos);
@@ -70,7 +70,7 @@ int check_pipes(char *str, int pos)
 	return (pos);
 }
 
-int check_redirs(char *str, int pos)
+int	check_redirs(char *str, int pos)
 {
 	if (pos < ft_strlen(str) && (str[pos] == '>' || str[pos] == '<'))
 	{
@@ -90,15 +90,16 @@ int check_redirs(char *str, int pos)
 				return (pos);
 			return (error_definer(&str[pos]), -1);
 		}
-		else if (str[pos] == '>' && str[pos + 1] && is_special_char(str[pos + 1]))
+		else if (check_condition(pos, str))
 			pos = check_redirs_rr_sc(str, pos);
-		else if (str[pos] == '<' && str[pos + 1] && is_special_char(str[pos + 1]))
+		else if (str[pos] == '<' && str[pos + 1] && \
+			is_special_char(str[pos + 1]))
 			pos = check_redirs_lr_sc(str, pos);
 	}
 	return (pos);
 }
 
-int check_redirs_rr_sc(char *str, int pos)
+int	check_redirs_rr_sc(char *str, int pos)
 {
 	if (str[pos + 1] == '|' || str[pos + 1] == '&')
 	{
@@ -108,7 +109,7 @@ int check_redirs_rr_sc(char *str, int pos)
 		else if (is_special_char(str[pos]))
 			return (error_definer(&str[pos]), -1);
 		else
-			return(pos);
+			return (pos);
 	}
 	if (str[pos + 1] == '<' )
 		return (errors(SYNTAX_L_S_REDIR, NULL), -1);
@@ -118,17 +119,17 @@ int check_redirs_rr_sc(char *str, int pos)
 	return (pos);
 }
 
-int check_redirs_lr_sc(char * str, int pos)
+int	check_redirs_lr_sc(char *str, int pos)
 {
 	if (str[pos + 1] == '|' && str[pos + 2] != '|' && str[pos + 2] != '&')
 		return (errors(SYNTAX_PIPE, NULL), -1);
-	else if  (str[pos + 1] == '|' && str[pos + 2] == '|')
+	else if (str[pos + 1] == '|' && str[pos + 2] == '|')
 		return (errors(SYNTAX_D_PIPE, NULL), -1);
-	else if  (str[pos + 1] == '|' && str[pos + 2] == '&')
+	else if (str[pos + 1] == '|' && str[pos + 2] == '&')
 		return (errors(SYNTAX_PIPE_AMP, NULL), -1);
 	else if (str[pos + 1] == '&' && str[pos + 2] != '|')
 	{
-		pos = ignore_spaces(str, pos + 2);		
+		pos = ignore_spaces(str, pos + 2);
 		return (errors(SYNTAX_AMP, NULL), -1);
 	}
 	else if (str[pos + 1] == '&' && str[pos + 2] == '|')
@@ -137,17 +138,4 @@ int check_redirs_lr_sc(char * str, int pos)
 	if (!has_valid_cmd_after(str, pos))
 		return (error_definer(&str[pos]), -1);
 	return (pos);
-}
-
-
-int check_uppersand(char *str, int pos)
-{
-	if (str[pos] != '&')
-		return (pos);
-	else if (str[pos] == '&')
-	{
-		if (str[pos] == str[pos + 1])
-			return (pos + 2);
-	}
-	return (errors(SYNTAX_AMP, NULL), -1);
 }

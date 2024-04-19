@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export_envcpy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 00:04:52 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/18 12:14:59 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 08:00:21 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 08:13:35 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -34,17 +34,15 @@ void	copy_env_var_utils(char **env, int num_vars, char **env_copy)
 	if (*env == NULL)
 	{
 		env_copy[num_vars] = NULL;
-		return;
+		return ;
 	}
 	len = ft_strlen(*env) + 1;
 	env_copy[num_vars] = (char *)malloc(len * sizeof(char));
 	if (env_copy[num_vars] == NULL)
-	{
-		return;
-	}
+		return ;
 	ft_strncpy(env_copy[num_vars], *env, len);
 	copy_env_var_utils(env + 1, num_vars + 1, env_copy);
-	return;
+	return ;
 }
 
 void	sort_strings(char **strings, int i, int j, int k)

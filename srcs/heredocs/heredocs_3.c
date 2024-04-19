@@ -1,27 +1,28 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 13:34:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 08:32:24 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static int	heredoc_reader(char ***new_heredocs, int *cur_heredocs, int fd);
-static int	forking_heredocs(char *final_str, t_heredocker heredocker, t_localenv *local, char ***new_heredocs);
+static int	forking_heredocs(char *final_str, t_heredocker heredocker, \
+t_localenv *local, char ***new_heredocs);
 static void	heredoc_word(char *str, char *word);
 static int	write_to_fd(char *final_str, int *fd, char *str);
 
-int heredoc_creator(char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local)
+int	heredoc_creator(char ***new_heredocs, int *cur_heredocs, \
+t_heredocker heredocker, t_localenv *local)
 {
 	char	*final_str;
 	int		fd;
-	(void)	local;
 
 	final_str = NULL;
 	heredocker.i = ignore_spaces(heredocker.line_read, heredocker.i + 1);
@@ -31,7 +32,8 @@ int heredoc_creator(char ***new_heredocs, int *cur_heredocs, t_heredocker heredo
 	return (heredocker.i);
 }
 
-static int	forking_heredocs(char *final_str, t_heredocker heredocker, t_localenv *local, char ***new_heredocs)
+static int	forking_heredocs(char *final_str, t_heredocker heredocker, \
+t_localenv *local, char ***new_heredocs)
 {
 	int		pid;
 	int		fd[2];
@@ -64,7 +66,7 @@ static void	heredoc_word(char *str, char *word)
 	int		i;
 	int		j;
 	char	asps;
-	
+
 	i = -1;
 	j = 0;
 	while (++i < 4096)
@@ -76,29 +78,20 @@ static void	heredoc_word(char *str, char *word)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 		{
-			asps = str[i];
-			i++;
+			asps = str[i++];
 			while (str[i] != asps)
-			{
-				word[j] = str[i];
-				i++;
-				j++;
-			}
+				word[j++] = str[i++];
 			i++;
 		}
 		if (str[i])
-		{
-			word[j] = str[i];
-			i++;
-			j++;
-		}
+			word[j++] = str[i++];
 	}
 }
 
-static int write_to_fd(char *final_str, int *fd, char *str)
+static int	write_to_fd(char *final_str, int *fd, char *str)
 {
 	char	*here;
-	
+
 	(void) final_str;
 	here = NULL;
 	close(fd[0]);
@@ -114,7 +107,7 @@ static int	heredoc_reader(char ***new_heredocs, int *cur_heredocs, int fd)
 	int		bread;
 	char	*buffer;
 	char	*temp;
-		
+
 	buffer = ft_calloc(21, sizeof(char));
 	bread = read(fd, buffer, 20);
 	temp = NULL;

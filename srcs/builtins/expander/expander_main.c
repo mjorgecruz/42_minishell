@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:29:10 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 01:00:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 07:58:52 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
 static char	*check_for_tilde(char *str, t_localenv *local);
-
-// char	*master_expander(char *cmd, t_localenv *local)
-// {
-// 	t_lstexpand	*in_cmd_list;
-// 	char		*joined_content;
-
-// 	in_cmd_list = NULL;
-// 	create_list_quotes(cmd, &in_cmd_list);
-// 	expand_content_in_list(in_cmd_list, local);
-// 	clean_quotes_in_list(in_cmd_list, 0);
-// 	joined_content = join_list_contents(in_cmd_list);
-// 	free_lstexpand(in_cmd_list);
-// 	in_cmd_list = NULL;
-// 	return (joined_content);
-// }
 
 char	*master_expander_out(char *cmd, t_localenv *local)
 {
@@ -68,7 +53,8 @@ void	ft_looper(char *str, char *home_dir, char *new_str, int j)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '~' && (i == 0 || is_space(str[i - 1])) && (!str[i + 1] || is_space(str[i + 1])))
+		if (str[i] == '~' && (i == 0 || is_space(str[i - 1])) && \
+			(!str[i + 1] || is_space(str[i + 1])))
 		{
 			i++;
 			k = 0;
@@ -97,7 +83,6 @@ static char	*check_for_tilde(char *str, t_localenv *local)
 	i = 0;
 	while (str[i] && str[i] != '~')
 		i++;
-	
 	if (str[i] == '~')
 	{
 		home_dir = get_home_directory(local);

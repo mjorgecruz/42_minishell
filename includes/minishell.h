@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/19 08:18:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:41:30 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -370,8 +370,8 @@ int			adjust_heredocs(t_heredocker heredocker, t_localenv *local);
 
 void		add_newline_line(char **total_line, char *line_read);
 
-void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
-
+//void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
+void		add_heredocs(char ***new_hd, int cur_hd, t_heredocker hdoker, t_localenv *local);
 void		add_partials(char **heredoc, char *str);
 
 int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local);
@@ -440,7 +440,7 @@ char	**ft_split_ignore_quotes(char *s, char *c);
 
 
 
-
+bool	check_condition(int pos, char *str);
 void 		command_exit(t_info info, char **cmds);
 void		free_t_token(t_token *tok);
 void    	free_info_andenv(t_info info);

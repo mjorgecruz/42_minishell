@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:25:24 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 02:08:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 08:26:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	add_partials(char **heredoc, char *str)
 {
 	char	*heredoc_line;
-	
+
 	heredoc_line = readline("> ");
 	if (heredoc_line == NULL)
 	{
@@ -34,7 +34,7 @@ void	add_partials(char **heredoc, char *str)
 	{
 		*heredoc = ft_calloc(2, sizeof(char));
 		*heredoc[0] = '\n';
-	}	
+	}
 	else
 		*heredoc = ft_strjoin_2(*heredoc, "\n");
 }

@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:09:13 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/18 12:10:12 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 07:55:59 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -173,4 +173,8 @@ int		bi_err(char *str1, char *str2, char *str3);
 bool	isvar_valid(const char *name);
 
 int		ex_code(int code);
+
+char *ft_env_getenv(char *env, char *code_w, t_localenv *local);
+char *ft_env_itoa(char *env);
+
 #endif
