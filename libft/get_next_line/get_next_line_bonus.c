@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:49:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/01/30 12:24:51 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:06:39 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	static char	*temp[4096];
 
 	bread = 1;
-	if (fd < 0 || BUFFER_SIZE < 0) 
+	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	buffer = ft_calloc(1, BUFFER_SIZE + 1);
 	while (search_temp(temp[fd]) == 0 && bread > 0)
