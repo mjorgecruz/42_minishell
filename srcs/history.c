@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
@@ -6,13 +6,17 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 02:07:28 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:05:04 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file contains functions related to the history of the terminal*/
 
 #include "../includes/minishell.h"
+
+static void	all_initial_free(char *pwd, char ***heredocs, t_localenv *local_env, int res);
+static void	read_to_line(char ** total_line, char **line_read, int *fd);
+static int		writer_to_final(char ** total_line, char **line_read, t_localenv *local);
 
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
@@ -25,15 +29,7 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	switch_sig_function();
 	total_line = readline(pwd);
 	if (!total_line)
-	{
-		free_split(*heredocs);
-		free(pwd);
-		free_split(local_env->content);
-		free_split(local_env->sorted);
-		free(local_env);
-		printf("exit\n");
-		exit(res);
-	}
+		all_initial_free(pwd, heredocs, local_env, res);
 	free(pwd);
 	if (!join_to_line(&total_line, heredocs, local_env))
 	{
@@ -49,17 +45,25 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 	return (total_line);
 }
 
+static void	all_initial_free(char *pwd, char ***heredocs, t_localenv *local_env, int res)
+{
+	free_split(*heredocs);
+	free(pwd);
+	free_split(local_env->content);
+	free_split(local_env->sorted);
+	free(local_env);
+	printf("exit\n");
+	exit(res);
+}
+
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
 	char 	*line_read;
 	int		i;
-	int		pid;
-	int		fd[2];
 	int		res;
-	int		bread;
-	char	buffer[21];
 
 	i = 0;
+	line_read = NULL;
 	if(!ft_parser(*total_line, &i))
 	{
 		heredoc_writer(*total_line, heredocs, i, local);
@@ -75,38 +79,12 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 		while (end_pipe_and(*total_line) || is_only_spaces(line_read) >= 0
 			|| open_parenthesis(*total_line) > 0)
 		{
-			res = 0;
-			pipe(fd);
-			pid = fork();
-			if (pid == 0)
-			{
-				free(*total_line);
-				extra_fork(fd[0], fd[1], local, line_read);
-			}
-			handle_sigint_status();
-			wait(&res);
-			if (res == 2)
-			{
-				printf("\n");
+			res = writer_to_final(total_line, &line_read, local);
+			if (res == 0)
 				break;
-			}
-			close(fd[1]);
-			bread = read(fd[0], buffer, 20);
-			buffer[bread] = 0;
-			line_read = *total_line;
-			while (bread > 0)
-			{
-				line_read = ft_strjoin_2(line_read, buffer);
-				bread = read(fd[0], buffer, 20);
-				buffer[bread] = 0;
-			}
-			*total_line = line_read;
-			if (WEXITSTATUS(res) == 10)
-			{
-				write(STDIN_FILENO, "\0", 1);
-				return (false);
-			}
-			else if (WEXITSTATUS(res) == 20)
+			else if (res == 10)
+				return(false);
+			else if (res == 20)
 				continue;
 			if(!ft_parser(*total_line, &i))
 			{
@@ -121,4 +99,48 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 	if(!ft_parser(*total_line, &i))
 		return (free(total_line), false);
 	return (true);
+}
+
+static int		writer_to_final(char ** total_line, char **line_read, t_localenv *local)
+{
+	int		res;
+	int		fd[2];
+	int		pid;
+	
+	res = 0;
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		free(*total_line);
+		extra_fork(fd[0], fd[1], local, *line_read);
+	}
+	handle_sigint_status();
+	wait(&res);
+	if (res == 2)
+		return(printf("\n"), 0);
+	read_to_line(total_line, line_read, fd);
+	if (WEXITSTATUS(res) == 10)
+		return (write(STDIN_FILENO, "\0", 1), 10);
+	else if (WEXITSTATUS(res) == 20)
+		return(20);
+	return(res);
+}
+
+static void	read_to_line(char ** total_line, char **line_read, int *fd)
+{
+	int		bread;
+	char	buffer[21];
+	
+	close(fd[1]);
+	bread = read(fd[0], buffer, 20);
+	buffer[bread] = 0;
+	*line_read = *total_line;
+	while (bread > 0)
+	{
+		*line_read = ft_strjoin_2(*line_read, buffer);
+		bread = read(fd[0], buffer, 20);
+		buffer[bread] = 0;
+	}
+	*total_line = *line_read;
 }
