@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:46:52 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:18:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:06:51 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,12 +22,13 @@ int		mult_cmd_executer(t_token *cmd_list, t_info info,
 	int			stdin;
 	int			fd[2];
 	int			res;
-	
+	ls -al -i
 	while (cmd_list->cmds[i].cmds)
 	 	i++;
 	pid = (int *)malloc(sizeof(int) * i);
 	i = 0;	
 	stdin = dup(STDIN_FILENO);
+	
 	while (cmd_list->cmds[i].cmds)
 	{
 		if (cmd_list->cmds[i].cmds[0] != 0)

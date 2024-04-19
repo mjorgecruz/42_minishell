@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:14:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 12:30:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:07:34 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -21,12 +21,10 @@ int	main(void)
 	char		*input;
 	char		**heredocs;
 	int			i;
-	//int			z;
 	t_localenv	*local_env;
 	
 	adjust_shlvl(__environ);
 	local_env = env_init(__environ);
-	//free(__environ[z]);
 	input = NULL;
 	i = 0;
 	g_signal = 0;
