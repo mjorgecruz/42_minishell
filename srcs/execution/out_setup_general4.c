@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:51:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 15:57:41 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:13:15 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,18 @@ int	all_data_in_fork(char **final_cmds, t_info info, t_cmd_info	*cmd_info)
 	else if (res == 131)
 		bi_err("Quit (core dumped)", "\n", "");
 	ex_code(res);
+	return (res);
+}
+
+int	waiter_function(t_token *cmd_list, int res)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_list->cmds[i].cmds)
+	{
+		wait(&res);
+		i++;
+	}
 	return (res);
 }
