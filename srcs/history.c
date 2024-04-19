@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 15:39:42 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 16:15:53 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 16:19:31 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains functions related to the history of the terminal*/
 
@@ -117,8 +117,8 @@ t_localenv *local, int i)
 			else if (res == 10)
 				return (false);
 			else if (res == 20)
-				continue;
-			if(!ft_parser(*total_line, &i))
+				continue ;
+			if (!ft_parser(*total_line, &i))
 				return (heredoc_writer(*total_line, heredocs, i, local),
 					free_split(*heredocs), false);
 			heredoc_writer(*total_line, heredocs, i, local);
