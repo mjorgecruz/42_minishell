@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 14:52:49 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/19 15:18:06 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,8 @@ SRC := minishell.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
 		execution/general_executor_3.c \
+		execution/general_executor_4.c \
+		execution/general_executor_5.c \
 		builtins/builtins.c \
 		builtins/builtins_utils.c \
 		builtins/echo/echo.c \

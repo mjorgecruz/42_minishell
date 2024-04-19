@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:33:46 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 14:51:43 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:12:33 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ t_localenv *local_env);
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
 /*function used to divide the full line read into parts separated by pipes*/
-void		command_divider(t_token **list, char *input, \
+void		command_divider(t_token **list, char *in, \
 t_type	type, t_token *token);
 t_type		type_definer(char *input, int *i);
 bool		token_has_par(t_token *token);
