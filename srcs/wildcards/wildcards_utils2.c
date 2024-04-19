@@ -3,67 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 02:05:26 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:34:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**wild_splitter(char *str)
-{
-	char	**wild;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	wild = (char **) malloc (sizeof(char *) * (wildcards_counter(str) + 1));
-	while (str[i])
-	{
-		i = ignore_in_quotes(str, i);
-		if (str[i] == '*')
-		{
-			k = i - 1;
-			while (k >= 0 && !is_special_char(str[k]))
-			{
-				if (str[k] == '<' && k > 0 && str[k - 1] == '<')
-					k = -10;
-				k--;
-			}
-			if (k < -5)
-				continue;
-			else if((i == 0 || is_space(str[i - 1]) || is_special_char(str[i - 1]))
-				&& (!str[i + 1] || is_space(str[i + 1])
-				|| is_special_char(str[i + 1])))
-				wild[j] = add_simple_wildcard(str, &i);
-			else if ((i == 0 || is_space(str[i - 1]) 
-				|| is_special_char(str[i - 1])) && (str[i + 1] 
-				&& !is_space(str[i + 1]) && !is_special_char(str[i + 1])))
-				wild[j] = add_forw_wildcard(str, &i);
-			else if ((i != 0 && !is_space(str[i - 1])
-				&& !is_special_char(str[i - 1])) && (is_space(str[i + 1])
-				|| is_special_char(str[i + 1]) || !str[i + 1]))
-				wild[j] = add_back_wildcard(str, &i);
-			else if (!is_space(str[i - 1]) && !is_special_char(str[i - 1])
-				&& !is_space(str[i + 1]) && !is_special_char(str[i + 1]))
-				wild[j] = add_middle_wildcard(str, &i);
-			j++;
-		}
-		if(str[i])
-			i++;
-	}
-	wild[j] = NULL;
-	return (wild);
-}
-
 char	*add_simple_wildcard(char *str, int *i)
 {
 	char	*wildcard;
-	int 	j;
+	int		j;
 
 	j = *i - 1;
 	while (j >= 0 && !is_special_char(str[j]))
