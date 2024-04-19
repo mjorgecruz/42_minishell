@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/19 09:41:30 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:54:40 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 extern int g_signal;
 
@@ -445,4 +445,8 @@ void 		command_exit(t_info info, char **cmds);
 void		free_t_token(t_token *tok);
 void    	free_info_andenv(t_info info);
 void 		free_t_info(t_info info);
+
+
+bool wild_conditioncheck(int i, int j, char *str, char **wild, int n);
+
 #endif
