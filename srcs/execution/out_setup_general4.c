@@ -1,20 +1,20 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general4.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:51:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:07:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:57:41 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void set_lastcommand(char **final_cmds, t_localenv *local)
+void	set_lastcommand(char **final_cmds, t_localenv *local)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (final_cmds[i])
@@ -25,7 +25,7 @@ void set_lastcommand(char **final_cmds, t_localenv *local)
 		ft_setenv("_", final_cmds[i], local);
 }
 
-void cmd_info_starter(t_cmd_info	*cmd_info)
+void	cmd_info_starter(t_cmd_info	*cmd_info)
 {
 	cmd_info->fd_in_out[0] = 0;
 	cmd_info->fd_in_out[1] = 1;
@@ -33,32 +33,33 @@ void cmd_info_starter(t_cmd_info	*cmd_info)
 	cmd_info->in_out[1] = UNDEF;
 }
 
-int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_info, t_command cmds)
+int	all_data_to_solver(char **final_cmds, t_info info, \
+t_cmd_info	*cmd_info, t_command cmds)
 {
-	int		res;
-	
+	int	res;
+
 	res = 0;
 	set_id_flag_cmd(final_cmds, &(cmds.id));
 	if (!final_cmds[0] || final_cmds[0][0] == 0)
-		return(free_split(final_cmds), res);
+		return (free_split(final_cmds), res);
 	(*cmd_info).id = cmds.id;
 	if ((*cmd_info).id == UNDEFINED || (*cmd_info).id == ECHOS)
 	{
 		res = all_data_in_fork(final_cmds, info, cmd_info);
 	}
-	else	
+	else
 	{
 		res = solver(final_cmds, info, cmd_info);
 		ex_code(res);
 	}
-	return(free_split(final_cmds), g_signal);
+	return (free_split(final_cmds), g_signal);
 }
 
 int	all_data_in_fork(char **final_cmds, t_info info, t_cmd_info	*cmd_info)
 {
-	int		res;
-	int		pid;
-	
+	int	res;
+	int	pid;
+
 	pid = fork();
 	if (pid == 0)
 	{

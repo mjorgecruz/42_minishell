@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 15:49:22 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 15:50:17 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 15:54:58 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 15:56:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -20,7 +20,8 @@ void	set_id_flag_cmd(char **cmd, t_builtin *id)
 
 t_builtin	get_builtin_id(const char *str)
 {
-	if (!ft_strcmp(str, "cd") || !ft_strcmp(str, "\"cd\"") || !ft_strcmp(str, "\'cd\'"))
+	if (!ft_strcmp(str, "cd") || !ft_strcmp(str, "\"cd\"") || \
+		!ft_strcmp(str, "\'cd\'"))
 		return (CD);
 	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "\"export\"")
 		|| !ft_strcmp(str, "\'export\'"))
@@ -46,9 +47,10 @@ t_builtin	get_builtin_id(const char *str)
 	return (UNDEFINED);
 }
 
-int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
+int	exec_correct_builtin(char **cmds, t_info info, \
+t_builtin id, t_cmd_info cmd_info)
 {
-	t_localenv *local;
+	t_localenv	*local;
 
 	local = info.local;
 	if (id == ECHOS)
@@ -68,6 +70,6 @@ int	exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_
 	else if (id == CD)
 		return (command_cd(cmds, local, 0));
 	else if (id == UNDEFINED)
-		return(command_execve(cmds, local, info, cmd_info));
+		return (command_execve(cmds, local, info, cmd_info));
 	return (g_signal);
 }
