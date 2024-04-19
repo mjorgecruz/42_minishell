@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:39:53 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 16:45:26 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 07:42:33 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	ex_code(int code)
 		g_signal = 127;
 		return (g_signal);
 	}
-	
 	if (code >= 256 || code <= -256)
 	{
 		g_signal = WEXITSTATUS(code);

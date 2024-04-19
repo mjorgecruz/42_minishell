@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 14:43:32 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/18 10:36:24 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 07:43:30 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 07:55:38 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -54,17 +54,9 @@ char	*expand_single_variable(char *cmd, t_localenv *local)
 		if (!code_word || is_str_empty(code_word))
 			break ;
 		if (!ft_strncmp(code_word, "$?", 2))
-		{
-			if (env)
-				free(env);
-			env = ft_itoa(g_signal);
-		}
+			env = ft_env_itoa(env);
 		else
-		{
-			if (env)
-				free(env);
-			env = ft_getenv(code_word, local->content);
-		}
+			env = ft_env_getenv(env, code_word, local);
 		expanded_str = ds_replace_codeword(expanded_str, code_word, env);
 	}
 	if (env)

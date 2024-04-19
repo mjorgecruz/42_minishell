@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 21:45:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 07:36:33 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
-	int		stdin;
-	int		stdout;
+	//int		stdin;
+	//int		stdout;
 
 	(void) fd_in;
 	(void) info;
