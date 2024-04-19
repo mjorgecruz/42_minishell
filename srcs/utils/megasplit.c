@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   megasplit.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/19 09:39:17 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 09:39:37 by luis-ffe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -6,7 +17,7 @@ static int	string_size(char *s, char *c);
 
 int quote_ignore(char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while(s[i])
@@ -20,11 +31,11 @@ int quote_ignore(char *s, char c)
 
 int  all_quotes_ignore(char *s)
 {
-    if (*s == '\"')
-        return (quote_ignore(s, D_QUOTE) + 1);
+	if (*s == '\"')
+		return (quote_ignore(s, D_QUOTE) + 1);
 	else if (*s == '\'')
-	    return (quote_ignore(s, S_QUOTE) + 1);
-    return (1);
+		return (quote_ignore(s, S_QUOTE) + 1);
+	return (1);
 }
 
 
@@ -83,7 +94,5 @@ char	**ft_split_ignore_quotes(char *s, char *c)
 			i += all_quotes_ignore(s + i);
 	}
 	str_array[j] = NULL;
-	// if (j == 0 && str_array[j] == NULL)
-	// 	str_array[j] = ft_strdup("");
 	return (str_array);
 }
