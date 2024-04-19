@@ -1,28 +1,29 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:58:03 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 13:20:02 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:43:05 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void set_mesage(char *cmd, int code, char *msg)
+void	set_mesage(char *cmd, int code, char *msg)
 {
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd( msg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		ex_code(code);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	ex_code(code);
 }
 
-void err_eacces_chooser(char *cmd)
+void	err_eacces_chooser(char *cmd)
 {
-	DIR		*dir;
+	DIR	*dir;
+
 	dir = opendir(cmd);
 	if (dir == NULL)
 		set_mesage(cmd, 127, ": Permission denied");
@@ -33,7 +34,7 @@ void err_eacces_chooser(char *cmd)
 	}
 }
 
-void err_enoent_chooser(char *cmd)
+void	err_enoent_chooser(char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
 		set_mesage(cmd, 127, " No such file or directory");
@@ -41,9 +42,9 @@ void err_enoent_chooser(char *cmd)
 		set_mesage(cmd, 127, ": command not found");
 }
 
-void exec_not(char *cmd)
+void	exec_not(char *cmd)
 {
-	int i;
+	int	i;
 	int	count;
 
 	count = 0;
@@ -60,5 +61,4 @@ void exec_not(char *cmd)
 		err_eacces_chooser(cmd);
 	else if (errno == ENOENT)
 		err_enoent_chooser(cmd);
-
 }

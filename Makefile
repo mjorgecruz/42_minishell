@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 10:35:50 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/19 14:01:12 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC := minishell.c \
 		execution/solver.c \
 		execution/solver_2.c \
 		execution/solver_3.c \
+		execution/solver_4.c \
 		execution/execve.c \
 		execution/execve_2.c \
 		execution/out_setup_general.c \

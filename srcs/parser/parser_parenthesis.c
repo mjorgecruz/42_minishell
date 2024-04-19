@@ -1,22 +1,20 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser_parenthesis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:54:57 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 13:28:23 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 13:35:11 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
-/*This file handles the first division of commands 
-based on the existence of parenthesis*/
 #include "../../includes/minishell.h"
 
 int	parser_parenthesis(char *total_line, int *i)
 {
-	if (!check_operator_open_p(total_line, i))
+	if (!check_operator_open_p(total_line, i, 0))
 		return (-1);
 	if (!check_open_p_operator(total_line, i))
 		return (-2);
@@ -27,12 +25,10 @@ int	parser_parenthesis(char *total_line, int *i)
 	return (0);
 }
 
-bool	check_operator_open_p(char *total_line, int *i)
+bool	check_operator_open_p(char *total_line, int *i, int k)
 {
-	int		k;
-	int		j;
-		
-	k = 0;
+	int	j;
+
 	j = 0;
 	while (total_line[k] && k <= *i)
 	{
@@ -40,12 +36,14 @@ bool	check_operator_open_p(char *total_line, int *i)
 		if (total_line[k] == '(')
 		{
 			j = k - 1;
-			while (j >= 0 &&total_line[j])
+			while (j >= 0 && total_line[j])
 			{
-				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&'
-				&& total_line[j - 1] == '&') || (total_line[j] == '|' && total_line[j - 1] == '|'))
-					break;
-				else if (total_line[j] != '&' && total_line[j] != '|' && total_line[j] != '(' && total_line[j] != ' ')
+				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&' && \
+					total_line[j - 1] == '&') || (total_line[j] == '|' && \
+					total_line[j - 1] == '|'))
+					break ;
+				else if (total_line[j] != '&' && total_line[j] != '|' && \
+					total_line[j] != '(' && total_line[j] != ' ')
 					return (errors(SYNTAX_OPEN_P, NULL), false);
 				j--;
 			}
