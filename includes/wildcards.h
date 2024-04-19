@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:04:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 11:49:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 11:54:13 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -58,7 +58,7 @@ int	wfront(char *str, char *comp);
 int	wback(char *str, char *comp);
 int	wmiddle(char *str, char *comp);
 int	wedges(char *str, char *comp);
-int	wmega_back(char *str, char *comp);
+int	wmega_back(char *str, char *comp, int i, int res);
 int	wmega(char *str, char *comp);
 int	mega_wildcmp(char *wildcard, char *comp, int start);
 
