@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:33:46 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 15:12:33 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:23:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ special characters*/
 void		commands_separator(t_token *cmd_list);
 /*This function counts the number of special characters that are in the
 substring, >> << && etc count as one special character*/
-int			pipe_counter(t_token *cmd_list);
+int			pipe_counter(t_token *cmd_list, int pos);
 /*This is an altered version of the split to stop separating at a special
 character. We can also make it so it can also complete all the structs instead
 of just one*/

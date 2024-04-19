@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 12:48:49 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 15:55:15 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 15:19:54 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 15:24:28 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file makes the segmentation of each part of the line read separated by 
 pipes. The strings must be divided in parts in an array of structs*/
@@ -17,8 +17,8 @@ pipes. The strings must be divided in parts in an array of structs*/
 
 void	commands_separator(t_token *cmd_list)
 {
-	int		pipes;
- 
+	int	pipes;
+
 	while (cmd_list != NULL)
 	{
 		pipes = 0;
@@ -32,13 +32,13 @@ void	commands_separator(t_token *cmd_list)
 			}
 			else
 			{
-				pipes = pipe_counter(cmd_list);
-				cmd_list->cmds = (t_command *)malloc
-				(sizeof(t_command) * (pipes + 2));
+				pipes = pipe_counter(cmd_list, 0);
+				cmd_list->cmds = (t_command *)malloc(sizeof(t_command) * \
+				(pipes + 2));
 			}
-			fill_cmds(cmd_list, pipes);	
+			fill_cmds(cmd_list, pipes);
 		}
-		else 
+		else
 			commands_separator(cmd_list->down);
 		cmd_list = cmd_list->next;
 	}
@@ -57,7 +57,7 @@ void	fill_cmds(t_token *cmd_list, int pipes)
 		while (cmd_list->content[pos] == ' ')
 			pos++;
 		cmd_list->cmds[i].type = pipe_selector(cmd_list, &pos);
-		while (cmd_list && cmd_list->content && cmd_list->content[pos] 
+		while (cmd_list && cmd_list->content && cmd_list->content[pos]
 			&& (cmd_list->content[pos] == ' '))
 			pos++;
 		i++;
@@ -65,15 +65,13 @@ void	fill_cmds(t_token *cmd_list, int pipes)
 	cmd_list->cmds[i].cmds = NULL;
 }
 
-int	pipe_counter(t_token *cmd_list)
+int	pipe_counter(t_token *cmd_list, int pos)
 {
 	int		asp_place;
 	int		count;
-	int		pos;
 
 	count = 0;
 	asp_place = 0;
-	pos = 0;
 	while (cmd_list->content[pos])
 	{
 		if (cmd_list->content[pos] == 34 || cmd_list->content[pos] == 39)
@@ -83,7 +81,8 @@ int	pipe_counter(t_token *cmd_list)
 			while (cmd_list->content[pos] != cmd_list->content[asp_place])
 				pos++;
 		}
-		else if (ft_strchr("|", cmd_list->content[pos]) && !ft_strchr(">", cmd_list->content[pos - 1]))
+		else if (ft_strchr("|", cmd_list->content[pos]) && \
+			!ft_strchr(">", cmd_list->content[pos - 1]))
 		{
 			while (ft_strchr("|", cmd_list->content[pos]))
 				pos++;
@@ -126,28 +125,3 @@ char	*write_to_line(int count, char *content, int *pos)
 	line[j] = 0;
 	return (line);
 }
-
-int	ft_count_words(char *content, int pos)
-{
-	int		count;
-
-	count = 0;
-	pass_spaces(content, &pos);
-	while (content[pos])
-	{
-		if (content[pos] == 34 || content[pos] == 39)
-		{
-			if (pos == 0 || content[pos - 1] != content[pos])
-				count++;
-			pass_quotes(content, &pos);
-		}
-		else if (ft_strchr("|", content[pos]) && ft_strchr(">", content[pos - 1]))
-			count++;
-		pos++;
-	}
-	if (content[pos] && ft_strchr("|", content[pos + 1]) != NULL)
-		pos += 2;
-	return (count + 1);
-}
-
-

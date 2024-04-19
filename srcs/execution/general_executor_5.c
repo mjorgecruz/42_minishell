@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:16:41 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 15:17:14 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:24:39 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,28 @@ bool	token_has_par(t_token *token)
 			i++;
 	}
 	return (false);
+}
+
+int	ft_count_words(char *content, int pos)
+{
+	int		count;
+
+	count = 0;
+	pass_spaces(content, &pos);
+	while (content[pos])
+	{
+		if (content[pos] == 34 || content[pos] == 39)
+		{
+			if (pos == 0 || content[pos - 1] != content[pos])
+				count++;
+			pass_quotes(content, &pos);
+		}
+		else if (ft_strchr("|", content[pos]) && \
+			ft_strchr(">", content[pos - 1]))
+			count++;
+		pos++;
+	}
+	if (content[pos] && ft_strchr("|", content[pos + 1]) != NULL)
+		pos += 2;
+	return (count + 1);
 }
