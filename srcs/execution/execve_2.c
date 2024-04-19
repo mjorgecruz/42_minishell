@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:58:03 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 16:00:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:20:02 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,7 +14,7 @@
 
 void set_mesage(char *cmd, int code, char *msg)
 {
-	(void ) cmd;
+		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd( msg, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		ex_code(code);
