@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 21:45:08 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 08:04:29 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -118,18 +118,9 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 
 int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
-	int		stdin;
-	int		stdout;
-
 	(void) fd_in;
 	(void) info;
-	// stdin = dup(STDIN_FILENO);
-	// stdout = dup(STDOUT_FILENO);
-	// dup2(fd_in, STDIN_FILENO);
-	// close(fd_in);
 	execve(cmds[0], cmds, local->content);
 	exec_not(cmds[0]);
-	// dup2(stdin, STDIN_FILENO);
-	// close(stdin);
 	return (errno);
 }
