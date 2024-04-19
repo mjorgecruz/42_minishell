@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/18 16:22:47 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 01:59:19 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 extern int g_signal;
 
@@ -247,6 +247,10 @@ t_token		*create_node(int init, int end, char *input, t_type type);
 int			find_closed(char *input, int i);
 
 t_token 	*token_creator (int i, int j, char *input, int type);
+
+int		jumper_i(char *input, int *i);
+
+void	addings_tokens(t_token **list, t_token *token, t_type type);
 
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */

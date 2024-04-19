@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 00:12:17 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 02:05:26 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ char	*add_back_wildcard(char *str, int *i)
 
 	end = *i;
 	beg = *i;
-
 	j = *i - 1;
 	while (j >= 0 && !is_special_char(str[j]))
 	{
@@ -121,16 +120,13 @@ char	*add_back_wildcard(char *str, int *i)
 	}
 	while (beg >= 0 && !is_space(str[beg]) && !is_special_char(str[beg]))
 		(beg)--;
-	(beg)++;
 	j = 0;
 	wildcard = ft_calloc(end - beg + 2, sizeof(char));
-	while (beg <= end)
+	while (++beg <= end)
 	{
 		wildcard[j] = str[beg];
-		beg++;
 		j++;
 	}
-	wildcard[j] = '\0';
 	return (wildcard);
 }
 

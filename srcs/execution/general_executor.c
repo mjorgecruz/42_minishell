@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 14:18:07 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 01:59:40 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /* General execution file. Receives a valid full string and makes all organizes
 all necessary operations This file contains the functions to divide the full
@@ -61,31 +61,19 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 {
 	int		i;
 	int		j;
-	char	*trimmed;
 
 	i = 0;
 	j = 0;
 	type = 0;
-	trimmed = NULL;
 	while (input[i])
 	{
-		if (input[i] == 34 || input[i] == 39)
-			i = find_next(input, i);
-		if (i < ft_strlen(input) && input[i] == '(')
-			i = find_closed(input, i);
-		if (i >= ft_strlen(input) || !input[i])
+		if (!jumper_i(input, &i))
 			break;
 		if (!input[i] || (input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
 		{
 			type = type_definer(input, &i);
 			token = token_creator(i, j, input, type);
-			add_token(list, token);
-			if (token_has_par(token))
-			{
-				trimmed = trim_string(token->content);
-				command_divider(&(token->down), trimmed, type, token);
-				free(trimmed);
-			}
+			addings_tokens(list, token, type);
 			j = i + 1;
 		}
 		if (input[i])
@@ -94,17 +82,36 @@ void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
 	if (j < ft_strlen(input))
 	{
 		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
-		add_token(list, token);
-		if (token_has_par(token))
-		{
-			trimmed = trim_string(token->content);
-			command_divider(&(token->down), trimmed, type, token);
-			free(trimmed);
-		}
+		addings_tokens(list, token, type);
 	}
 }
 
-t_token *token_creator (int i, int j, char *input, int type)
+int		jumper_i(char *input, int *i)
+{
+	if (input[*i] == 34 || input[*i] == 39)
+		*i = find_next(input, *i);
+	if (*i < ft_strlen(input) && input[*i] == '(')
+		*i = find_closed(input, *i);
+	if (*i >= ft_strlen(input) || !input[*i])
+		return (0);
+	return(1);
+}
+
+void	addings_tokens(t_token **list, t_token *token, t_type type)
+{
+	char	*trimmed;
+	
+	trimmed = NULL;
+	add_token(list, token);
+	if (token_has_par(token))
+	{
+		trimmed = trim_string(token->content);
+		command_divider(&(token->down), trimmed, type, token);
+		free(trimmed);
+	}
+}
+
+t_token *token_creator(int i, int j, char *input, int type)
 {
 	t_token *token;
 	if (type == D_PIPE || type == D_AMP )

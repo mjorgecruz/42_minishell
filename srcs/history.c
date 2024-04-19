@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 12:42:03 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 02:07:28 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains functions related to the history of the terminal*/
 
@@ -48,8 +48,6 @@ char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 		add_history(total_line);	
 	return (total_line);
 }
-
-
 
 bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {

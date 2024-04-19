@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:25:24 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/17 02:02:15 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 02:08:09 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	add_partials(char **heredoc, char *str)
 		*heredoc = ft_strjoin_2(*heredoc, "\n");
 }
 
-
 void	add_newline_line(char **total_line, char *line_read)
 {
 	if (*total_line != NULL)
@@ -50,6 +49,7 @@ void	add_newline_line(char **total_line, char *line_read)
 	else
 		*total_line = line_read;
 }
+
 char	*ft_strjoin_2(char *s1, char const *s2)
 {
 	size_t	i1;
