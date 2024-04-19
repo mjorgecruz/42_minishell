@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:41:50 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:58:22 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,6 +20,8 @@ int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_i
 	
 	origin_cmd = NULL;
 	paths = ft_getenv("PATH", local->content);
+	if (paths == NULL)
+		return(ex_code(execve_decider(cmds, local, info, cmd_info)), g_signal);
 	p_path = ft_split(paths, ':');
 	free(paths);
 	if (ft_strchr(cmds[0], '/'))

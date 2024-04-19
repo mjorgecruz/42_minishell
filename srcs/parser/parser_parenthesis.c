@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser_parenthesis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:34:59 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 08:54:12 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:54:57 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 /*This file handles the first division of commands 
 based on the existence of parenthesis*/
@@ -31,27 +31,26 @@ bool	check_operator_open_p(char *total_line, int *i)
 {
 	int		k;
 	int		j;
-
-	k = -1;
+		
+	k = 0;
 	j = 0;
-	while (total_line[k] && ++k <= *i)
+	while (total_line[k] && k <= *i)
 	{
 		k = ignore_in_quotes(total_line, k);
 		if (total_line[k] == '(')
 		{
 			j = k - 1;
-			while (j >= 0 && total_line[j])
+			while (j >= 0 &&total_line[j])
 			{
-				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&' && \
-					total_line[j - 1] == '&') || (total_line[j] == '|' && \
-					total_line[j - 1] == '|'))
-					break ;
-				else if (total_line[j] != '&' && total_line[j] != '|' && \
-					total_line[j] != '(' && total_line[j] != ' ')
+				if (j == -1 || total_line[j] == '(' || (total_line[j] == '&'
+				&& total_line[j - 1] == '&') || (total_line[j] == '|' && total_line[j - 1] == '|'))
+					break;
+				else if (total_line[j] != '&' && total_line[j] != '|' && total_line[j] != '(' && total_line[j] != ' ')
 					return (errors(SYNTAX_OPEN_P, NULL), false);
 				j--;
 			}
 		}
+		k++;
 	}
 	return (true);
 }
