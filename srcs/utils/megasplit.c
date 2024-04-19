@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 09:39:17 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 09:39:37 by luis-ffe         ###   ########.fr       */
+/*   Created: 2024/04/19 09:46:03 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 09:46:08 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 static int	word_counter(char *s, char *c);
 static int	string_size(char *s, char *c);
 
-int quote_ignore(char *s, char c)
+int	quote_ignore(char *s, char c)
 {
 	int	i;
 
 	i = 1;
-	while(s[i])
+	while (s[i])
 	{
-		if(s[i] == c)
+		if (s[i] == c)
 			return (i);
 		i++;
 	}
 	return (1);
 }
 
-int  all_quotes_ignore(char *s)
+int	all_quotes_ignore(char *s)
 {
 	if (*s == '\"')
 		return (quote_ignore(s, D_QUOTE) + 1);
@@ -37,7 +37,6 @@ int  all_quotes_ignore(char *s)
 		return (quote_ignore(s, S_QUOTE) + 1);
 	return (1);
 }
-
 
 static int	word_counter(char *s, char *c)
 {

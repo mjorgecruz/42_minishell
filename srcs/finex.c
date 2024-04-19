@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   finex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/20 16:22:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 12:16:40 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 09:50:54 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 09:51:54 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*This file contains all functions related to memory cleaning*/
 
@@ -21,10 +21,10 @@ void	clean_cmd_list(t_token *cmd_list, char ***heredocs)
 	tree_cleaner(cmd_list);
 }
 
-int		tree_cleaner(t_token *cmd_list)
+int	tree_cleaner(t_token *cmd_list)
 {
-	int		i;
-	
+	int	i;
+
 	i = 0;
 	if (cmd_list->down)
 		tree_cleaner(cmd_list->down);
@@ -32,7 +32,7 @@ int		tree_cleaner(t_token *cmd_list)
 	{
 		while (cmd_list->cmds[i].cmds)
 		{
-			if(cmd_list->cmds[i].cmds[0] != 0)
+			if (cmd_list->cmds[i].cmds[0] != 0)
 				free((cmd_list->cmds[i].cmds));
 			i++;
 		}
@@ -42,7 +42,7 @@ int		tree_cleaner(t_token *cmd_list)
 	if (cmd_list->next)
 		tree_cleaner(cmd_list->next);
 	free(cmd_list);
-	return(1);
+	return (1);
 }
 
 int	free_split(char **splitted)
