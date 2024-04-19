@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:52:04 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 12:07:38 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:12:34 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	**clean_cmds(t_command *full_cmds, t_localenv *local)
 	free_split(trav);
 	return (final_cmds);
 }
-
 
 static int iterator_clean_str(int i, char *cmds)
 {
