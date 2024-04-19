@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 07:40:02 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 08:23:43 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:10:53 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,7 @@ char	**ft_split_ignore_quotes(char *s, char *c);
 
 
 
-
+bool	check_condition(int pos, char *str);
 void 		command_exit(t_info info, char **cmds);
 void		free_t_token(t_token *tok);
 void    	free_info_andenv(t_info info);

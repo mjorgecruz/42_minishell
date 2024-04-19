@@ -6,32 +6,32 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:14:38 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/16 11:46:17 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:19:16 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	is_pipe(char* str, int pos)
+bool	is_pipe(char *str, int pos)
 {
 	if (str[pos] != '\0' && str[pos] == '|' && str[pos + 1] != '|')
 	{
 		pos = ignore_spaces(str, pos + 1);
 		if (str[pos] != '|')
-			return(true);
+			return (true);
 	}
 	return (false);
 }
 
-bool find_specials_outside_quotes(char *str)
+bool	find_specials_outside_quotes(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 	{
 		i = ignore_in_quotes(str, i);
-		if	(is_special_char(str[i]))
+		if (is_special_char(str[i]))
 			return (true);
 	}
 	return (false);
@@ -41,7 +41,7 @@ int	find_same_trio(char *str, int pos)
 {
 	if (str[pos] && str[pos + 1] && str[pos + 2])
 	{
-		if(str[pos] == str[pos + 1] && str[pos + 2] == str[pos])
+		if (str[pos] == str[pos + 1] && str[pos + 2] == str[pos])
 		{
 			if (str[pos] == '&' && str[pos + 3] && str[pos + 3] == '&')
 				errors(SYNTAX_D_AMP, NULL);
@@ -54,7 +54,7 @@ int	find_same_trio(char *str, int pos)
 			else if (str[pos + 3] == str[pos] && str[pos + 3] == '<')
 				errors(SYNTAX_L_D_REDIR, NULL);
 			else if (str[pos + 3] == str[pos] && str[pos + 3] == '>')
-				errors(SYNTAX_R_D_REDIR, NULL);			
+				errors(SYNTAX_R_D_REDIR, NULL);
 			else if (str[pos] == '>')
 				errors(SYNTAX_R_S_REDIR, NULL);
 			else if (str[pos] == '<')
@@ -65,12 +65,12 @@ int	find_same_trio(char *str, int pos)
 	return (0);
 }
 
-int find_equal_trio_nospaces(char *str, int *i)
+int	find_equal_trio_nospaces(char *str, int *i)
 {
-	int j;
+	int	j;
 
 	j = -1;
-	while(str[++j] && j <= *i)
+	while (str[++j] && j <= *i)
 	{
 		j = ignore_in_quotes(str, j);
 		if (is_special_char(str[j]))
@@ -80,15 +80,15 @@ int find_equal_trio_nospaces(char *str, int *i)
 			j++;
 		}
 		if (!str[j])
-			break;
+			break ;
 	}
 	return (0);
 }
 
-int check_invalid_specialcount(char *str, int pos, int *i)
+int	check_invalid_specialcount(char *str, int pos, int *i)
 {
-	int count;
-	
+	int	count;
+
 	count = 0;
 	pos = ignore_in_quotes(str, pos);
 	while (str[pos] && pos <= *i && str[pos] != 39 && str[pos] != 34)
@@ -106,7 +106,7 @@ int check_invalid_specialcount(char *str, int pos, int *i)
 			if (!is_special_char(str[pos]))
 				count = 0;
 			if (!str[pos])
-				break;
+				break ;
 			pos++;
 		}
 	}

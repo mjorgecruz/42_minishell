@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/17 00:20:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 09:10:29 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,12 @@ void	add_token(t_token **tokens, t_token *new)
 			trav = trav->next;
 		trav->next = new;
 	}
+}
+
+bool	check_condition(int pos, char *str)
+{
+	if (str[pos] == '>' && str[pos + 1] && \
+		is_special_char(str[pos + 1]))
+			return(true);
+	return (false);
 }
