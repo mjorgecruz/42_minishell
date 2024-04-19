@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/19 12:07:07 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:32:30 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,7 +384,7 @@ char		*ft_strjoin_2(char *s1, char const *s2);
 
 int			parser_parenthesis(char *total_line, int *i);
 
-bool		check_operator_open_p(char *total_line, int *i);
+bool	check_operator_open_p(char *total_line, int *i, int k);
 
 bool		check_open_p_operator(char *total_line, int *i);
 
