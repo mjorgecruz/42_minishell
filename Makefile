@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 15:27:07 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/19 15:39:48 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,6 +35,7 @@ SRC := minishell.c \
 		history.c \
 		history_2.c \
 		history_3.c \
+		history_4.c \
 		finex.c \
 		errors/errors.c \
 		utils/str_utils.c \
@@ -63,6 +64,8 @@ SRC := minishell.c \
 		execution/general_executor.c \
 		execution/general_executor_2.c \
 		execution/general_executor_3.c \
+		execution/general_executor_4.c \
+		execution/general_executor_5.c \
 		builtins/builtins.c \
 		builtins/builtins_utils.c \
 		builtins/echo/echo.c \

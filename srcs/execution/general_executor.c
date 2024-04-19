@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:54:13 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 01:59:40 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:17:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	general_executer(char *input, char ***heredocs, t_localenv *local)
 	info.heredocs = heredocs;
 	if ((*heredocs))
 	{
-		while((*heredocs)[i] && (*heredocs)[i][0])
+		while ((*heredocs)[i] && (*heredocs)[i][0])
 		{
 			(*heredocs)[i] = expander_heredocs((*heredocs)[i], local);
 			i++;
@@ -49,7 +49,7 @@ t_token	*command_organizer(char *input)
 	t_token	*list;
 	t_type	type;
 	t_token	*token;
-	
+
 	type = 0;
 	token = NULL;
 	list = NULL;
@@ -57,36 +57,37 @@ t_token	*command_organizer(char *input)
 	return (list);
 }
 
-void	command_divider(t_token **list, char *input, t_type	type, t_token *token)
+void	command_divider(t_token **list, char *in, \
+t_type	type, t_token *token)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	type = 0;
-	while (input[i])
+	while (in[i])
 	{
-		if (!jumper_i(input, &i))
-			break;
-		if (!input[i] || (input[i] == '|' && input[i + 1] == '|' ) || input[i] == '&')
+		if (!jumper_i(in, &i))
+			break ;
+		if (!in[i] || (in[i] == '|' && in[i + 1] == '|' ) || in[i] == '&')
 		{
-			type = type_definer(input, &i);
-			token = token_creator(i, j, input, type);
+			type = type_definer(in, &i);
+			token = token_creator(i, j, in, type);
 			addings_tokens(list, token, type);
 			j = i + 1;
 		}
-		if (input[i])
+		if (in[i])
 			i++;
 	}
-	if (j < ft_strlen(input))
+	if (j < ft_strlen(in))
 	{
-		token = create_node(j, ft_strlen(input) - 1, input, NO_PIPE);
+		token = create_node(j, ft_strlen(in) - 1, in, NO_PIPE);
 		addings_tokens(list, token, type);
 	}
 }
 
-int		jumper_i(char *input, int *i)
+int	jumper_i(char *input, int *i)
 {
 	if (input[*i] == 34 || input[*i] == 39)
 		*i = find_next(input, *i);
@@ -94,13 +95,13 @@ int		jumper_i(char *input, int *i)
 		*i = find_closed(input, *i);
 	if (*i >= ft_strlen(input) || !input[*i])
 		return (0);
-	return(1);
+	return (1);
 }
 
 void	addings_tokens(t_token **list, t_token *token, t_type type)
 {
 	char	*trimmed;
-	
+
 	trimmed = NULL;
 	add_token(list, token);
 	if (token_has_par(token))
@@ -109,140 +110,4 @@ void	addings_tokens(t_token **list, t_token *token, t_type type)
 		command_divider(&(token->down), trimmed, type, token);
 		free(trimmed);
 	}
-}
-
-t_token *token_creator(int i, int j, char *input, int type)
-{
-	t_token *token;
-	if (type == D_PIPE || type == D_AMP )
-	{
-		token = create_node(j, i - 2, input, type);
-	}
-	else
-		token = create_node(j, i - 1, input, type);
-	return (token);
-}
-
-bool token_has_par(t_token *token)
-{
-	int i;
-
-	i = 0;
-	while (token->content && token->content[i])
-	{
-		i = ignore_in_quotes(token->content, i);
-		if (token->content[i] == '(')
-			return (true);
-		if (token->content[i])
-			i++;
-	}
-	return (false);
-}
-
-char *trim_string(char *str)
-{
-	char	*trimmed;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	trimmed = ft_calloc(ft_strlen(str), sizeof(char));
-	if (trimmed == NULL)
-		return (NULL);
-	while (str[i] != '(')
-		i++;
-	i++;
-	while (str[i])
-	{
-		trimmed[j] = str[i];
-		i++;
-		j++;
-	}
-	while (trimmed[j] != ')')
-	{
-		trimmed[j] = '\0';
-		j--; 
-	}
-	trimmed[j] = '\0';
-	return (trimmed);
-}
-
-t_type type_definer(char *input, int *i)
-{
-	t_type	type;
-	
-	type = -1;
-	if (input[*i] == '|')
-		{
-			if (input[(*i) + 1] == '|')
-			{
-				type  = D_PIPE;
-				(*i)++;
-			}
-		}
-	else if (input[*i] == '&')
-	{
-		if (input[(*i) + 1] == '&')
-			type  = D_AMP;
-		(*i)++;
-	}
-	else
-		type = NO_PIPE;
-	return (type);
-}
-
-int	find_next(char *input, int init_pos)
-{
-	int		i;
-
-	i = init_pos + 1;
-	while (input[i] && input[i] != input[init_pos])
-		i++;
-	i++;
-	return (i);
-}
-
-t_token	*create_node(int init, int end, char *input, t_type type)
-{
-	t_token	*new_node;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = init;
-	new_node = init_struct_cmd();
-	new_node->next_type = type;
-	if (end < init)
-		new_node->content = (char *) NULL;
-	else
-	{
-		new_node->content = ft_calloc(end + 3 - init, sizeof(char));
-		while (j < end + 1)
-		{
-			new_node->content[i] = input[j];
-			i++;
-			j++;
-		}
-	}
-	new_node->content[i] = 0;
-	new_node->cmds = NULL;
-	return (new_node);
-}
-
-int	find_closed(char *input, int i)
-{
-	int	par_count;
-
-	par_count = 1;
-	i++;
-	while (par_count > 0)
-	{
-		if (input[i] == '(')
-			par_count++;
-		else if (input[i] == ')')
-			par_count--;
-		i++;
-	}
-	return (i);
 }

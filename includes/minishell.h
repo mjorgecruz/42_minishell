@@ -5,12 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/04/19 13:32:30 by luis-ffe         ###   ########.fr       */
+/*   Created: 2024/04/19 14:33:46 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 15:23:02 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-extern int g_signal;
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -34,16 +32,16 @@ extern int g_signal;
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <linux/limits.h>
-//# include <sys/syslimits.h>
-
 # include "parser.h"
 # include "builtins.h"
 # include "wildcards.h"
 # include "signals.h"
+//# include <sys/syslimits.h>
 
+# define S_QUOTE 39
+# define D_QUOTE 34
 
-#define S_QUOTE 39
-#define D_QUOTE 34
+extern int	g_signal;
 
 typedef enum e_builtin
 {
@@ -104,30 +102,27 @@ typedef struct s_token
 
 typedef struct s_info
 {
-	char	***heredocs;
-	int		pos_heredoc;
+	char		***heredocs;
+	int			pos_heredoc;
 	t_localenv	*local;
 	t_token		*token;
 	t_token		*head;
-	
-} t_info;
+}	t_info;
 
 typedef struct s_cmd_info
 {
-	int 		in_out[2];
+	int			in_out[2];
 	int			fd_in_out[2];
 	t_builtin	id;	
 }	t_cmd_info;
 
 typedef struct s_heredocker
 {
-	char ***heredocs;
-	int n_heredocs;
-	char *line_read;
-	int i;
+	char	***heredocs;
+	int		n_heredocs;
+	char	*line_read;
+	int		i;
 }	t_heredocker;
-
-
 
 /*Definition of error cases*/
 enum e_ERRORS
@@ -174,27 +169,20 @@ void		clear_terminal(char *paths);
 /*Get a string from the command line and add to history.
 Function sends error signal to ERRORS if anything wrong happens and returns
 NULL, and returns the full string otherwise*/
-char		*get_line(char *total_line, char ***heredocs, t_localenv *local_env);
-
-bool		join_to_line(char **total_line, char ***heredocs, t_localenv *local);
-
+char		*get_line(char *total_line, char ***heredocs, \
+t_localenv *local_env);
+bool		join_to_line(char **total_line, char ***heredocs, \
+t_localenv *local);
 bool		end_pipe_and(char *total_line);
-
 int			is_only_spaces(char *total_line);
-
 void		add_space_line(char **total_line, char *line_read);
-
 int			open_parenthesis(char *total_line);
-
 char		*create_pc_name(t_localenv *local_env);
-
 char		*get_end_path(t_localenv *local_env);
-
-void    first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd);
-
-void	line_reader(int fd0, int fd1, char **total_line);
-
-void	extra_fork(int fd0, int fd1, t_localenv *local, char * line_read);
+void		first_fork(int fd0, int fd1, t_localenv *local_env, char *pwd);
+void		line_reader(int fd0, int fd1, char **total_line);
+void		extra_fork(int fd0, int fd1, t_localenv *local, \
+char *line_read);
 
 /* ************************************************************************** */
 /*                             PARSER_GENERAL                                 */
@@ -204,13 +192,9 @@ void	extra_fork(int fd0, int fd1, t_localenv *local, char * line_read);
 received and its freeing. The output is a completely clean string to 
 be interpreted*/
 bool		ft_parser(char *line_read, int *i);
-
 bool		text_in_parenthesis(char *line_read, int *i);
-
 bool		parenthesis_after_command(char *line_read, int *i);
-
 bool		parenthesis_before_command(char *line_read, int *i);
-
 
 /* ************************************************************************** */
 /*                              PARSER_QUOTES                                 */
@@ -225,32 +209,25 @@ bool		parser_quotes(char *input, int *i);
 /* ************************************************************************** */
 
 /**/
-void		general_executer(char *input, char ***heredocs, t_localenv *local_env);
-
+void		general_executer(char *input, char ***heredocs, \
+t_localenv *local_env);
 /*general function to divide the full line read into parts separated by pipes*/
 t_token		*command_organizer(char *input);
-
 /*function used to divide the full line read into parts separated by pipes*/
-void		command_divider(t_token **list, char *input, t_type	type, t_token *token);
-
+void		command_divider(t_token **list, char *in, \
+t_type	type, t_token *token);
 t_type		type_definer(char *input, int *i);
-
 bool		token_has_par(t_token *token);
+char		*trim_string(char *str);
 
-char 		*trim_string(char *str);
-/*Function to find the next '"' or '''*/ 
+/*Function to find the next '"' or '''*/
 int			find_next(char *input, int init_pos);
-
 /* creates new t_token node with the segment of the full line read*/
 t_token		*create_node(int init, int end, char *input, t_type type);
-
 int			find_closed(char *input, int i);
-
-t_token 	*token_creator (int i, int j, char *input, int type);
-
-int		jumper_i(char *input, int *i);
-
-void	addings_tokens(t_token **list, t_token *token, t_type type);
+t_token		*token_creator(int i, int j, char *input, int type);
+int			jumper_i(char *input, int *i);
+void		addings_tokens(t_token **list, t_token *token, t_type type);
 
 /* ************************************************************************** */
 /*                              GENERAL_EXECUTOR_2                            */
@@ -260,30 +237,20 @@ void	addings_tokens(t_token **list, t_token *token, t_type type);
 the general division of the partial strings in an array of structs separated by
 special characters*/
 void		commands_separator(t_token *cmd_list);
-
 /*This function counts the number of special characters that are in the
 substring, >> << && etc count as one special character*/
-int			pipe_counter(t_token *cmd_list);
-
+int			pipe_counter(t_token *cmd_list, int pos);
 /*This is an altered version of the split to stop separating at a special
 character. We can also make it so it can also complete all the structs instead
 of just one*/
 char		*mega_divider(char *content, int *pos);
-
 char		*write_to_line(int count, char *content, int *pos);
-
 int			ft_count_words(char *content, int pos);
-
 int			find_next_stop(char *content, int pos);
-
 t_special	pipe_selector(t_token *cmd_list, int *pos);
-
 int			count_spaces(int *pos, char *content);
-
 void		fill_cmds(t_token *cmd_list, int pipes);
-
 void		pass_quotes(char *content, int *pos);
-
 void		pass_spaces(char *content, int *pos);
 
 /* ************************************************************************** */
@@ -299,32 +266,27 @@ void		set_id_flag_cmd(char **cmd, t_builtin *id);
 
 /*receives the struct t_comand as argument and will match execution
 with its id flag*/
-int			exec_correct_builtin(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info);
-
+int			exec_correct_builtin(char **cmds, t_info info, \
+t_builtin id, t_cmd_info cmd_info);
 /*defines which function should run the commands sent. It receives the struct
 where we can access the arrays of the commands */
 void		commands_sorter(t_token *cmd_list, t_info info, t_localenv *local);
-
-int			inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i);
-
-int			mult_cmd_executer(t_token *cmd_list, t_info info, t_localenv *local, int i);
-
+int			inter_executioner(t_token *cmd_list, t_info info, \
+t_localenv *local, int i);
+int			mult_cmd_executer(t_token *cmd_list, t_info info, \
+t_localenv *local, int i);
 int			waiter_function(t_token *cmd_list, int res);
-
 int			pied_piper(t_token *cmd_list, int *fd, int i, int *stdin);
-
-int			all_data_in_fork(char **final_cmds, t_info info, t_cmd_info	*cmd_info);
+int			all_data_in_fork(char **final_cmds, t_info info, \
+t_cmd_info	*cmd_info);
 
 /* ************************************************************************** */
 /*                                    ERRORS                                  */
 /* ************************************************************************** */
 /*Handle of all errors*/
 void		errors(int error_code, char *cmd);
-
-void 		errors_2(int error_code, char *cmd);
-
+void		errors_2(int error_code, char *cmd);
 int			wrong_syntax(char *total_line);
-
 int			error_definer(char *cmd);
 
 /* ************************************************************************** */
@@ -332,26 +294,19 @@ int			error_definer(char *cmd);
 /* ************************************************************************** */
 
 void		clean_cmd_list(t_token *cmd_list, char ***heredocs);
-
 /*Handle the memory freeing of an array of strings*/
 int			free_split(char **splitted);
-
-int		tree_cleaner(t_token *cmd_list);
+int			tree_cleaner(t_token *cmd_list);
 
 /* ************************************************************************** */
 /*                                   STR_UTILS                                */
 /* ************************************************************************** */
 
 int			ignore_in_quotes(char *str, int pos);
-
 int			ignore_spaces(char *str, int pos);
-
 bool		is_special_char(char c);
-
 bool		is_space(char c);
-
 char		*ft_strcpy(char *s);
-
 /*Creates a new node from the line read*/
 t_token		*init_struct_cmd(void);
 
@@ -362,20 +317,16 @@ void		add_token(t_token **tokens, t_token *new);
 /*                                    HEREDOCS                                */
 /* ************************************************************************** */
 
-void		heredoc_writer(char *line_read, char ***heredocs, int i, t_localenv *local);
-
+void		heredoc_writer(char *line_read, char ***heredocs, \
+int i, t_localenv *local);
 int			heredoc_counter(char *line_read, int i);
-
 int			adjust_heredocs(t_heredocker heredocker, t_localenv *local);
-
 void		add_newline_line(char **total_line, char *line_read);
-
-//void		add_heredocs(char ***new_heredocs, int j, t_heredocker heredocker, t_localenv *local);
-void		add_heredocs(char ***new_hd, int cur_hd, t_heredocker hdoker, t_localenv *local);
+void		add_heredocs(char ***new_hd, int cur_hd, \
+t_heredocker hdoker, t_localenv *local);
 void		add_partials(char **heredoc, char *str);
-
-int 		heredoc_creator (char ***new_heredocs, int *cur_heredocs, t_heredocker heredocker, t_localenv *local);
-
+int			heredoc_creator(char ***new_heredocs, int *cur_heredocs, \
+t_heredocker heredocker, t_localenv *local);
 char		*ft_strjoin_2(char *s1, char const *s2);
 
 /* ************************************************************************** */
@@ -383,32 +334,23 @@ char		*ft_strjoin_2(char *s1, char const *s2);
 /* ************************************************************************** */
 
 int			parser_parenthesis(char *total_line, int *i);
-
-bool	check_operator_open_p(char *total_line, int *i, int k);
-
+bool		check_operator_open_p(char *total_line, int *i, int k);
 bool		check_open_p_operator(char *total_line, int *i);
-
 bool		check_operator_closed_p(char *total_line, int *i);
-
 bool		check_closed_p_operator(char *total_line, int *i);
 
 /* ************************************************************************** */
 /*                                   SOLVER                                   */
 /* ************************************************************************** */
 
-int 	solver(char **final_cmds, t_info info, t_cmd_info *cmd_info);
-
-int		cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info);
-
-int		define_input(t_command *cmds, int *fd, int *heredocs, int *in);
-
-int		define_output(t_command *cmds, int *fd, int *out, int pos0);
-
-char	*create_file_name(char *cmd, int *i);
-
-char	**clean_cmds(t_command *full_cmds, t_localenv *local);
-
-char	*clean_str(char *cmds, int i, int j);
+int			solver(char **final_cmds, t_info info, t_cmd_info *cmd_info);
+int			cd_output_exec(char **cmds, t_info info, t_builtin id, \
+t_cmd_info cmd_info);
+int			define_input(t_command *cmds, int *fd, int *heredocs, int *in);
+int			define_output(t_command *cmds, int *fd, int *out, int pos0);
+char		*create_file_name(char *cmd, int *i);
+char		**clean_cmds(t_command *full_cmds, t_localenv *local);
+char		*clean_str(char *cmds, int i, int j);
 
 /* ************************************************************************** */
 /*                                   EXECVE                                   */
@@ -417,36 +359,37 @@ char	*clean_str(char *cmds, int i, int j);
 int			execve_heredoc(t_info info, char **cmds, t_localenv *local);
 
 /*executes commands using the execve function*/
-int			command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
-
-int			execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local);
-
-int			execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info);
-
-char	*test_commands(char **cmds, char **p_path);
-
-void exec_not(char *cmd);
-
-int	all_data_to_solver(char **final_cmds, t_info info, t_cmd_info	*cmd_info, t_command cmds);
-void cmd_info_starter(t_cmd_info	*cmd_info);
-void set_lastcommand(char **final_cmds, t_localenv *local);
+int			command_execve(char **cmds, t_localenv *local, \
+t_info info, t_cmd_info cmd_info);
+int			execve_doc(int fd_in, t_info info, char **cmds, \
+t_localenv *local);
+int			execve_decider(char **cmds, t_localenv *local, \
+t_info info, t_cmd_info cmd_info);
+char		*test_commands(char **cmds, char **p_path);
+void		exec_not(char *cmd);
+int			all_data_to_solver(char **final_cmds, t_info info, \
+t_cmd_info	*cmd_info, t_command cmds);
+void		cmd_info_starter(t_cmd_info	*cmd_info);
+void		set_lastcommand(char **final_cmds, t_localenv *local);
 
 /* ************************************************************************** */
 /*                                  MEGASPLIT                                 */
 /* ************************************************************************** */
 
-char	**ft_split_ignore_quotes(char *s, char *c);
-
-
-
-
-bool	check_condition(int pos, char *str);
-void 		command_exit(t_info info, char **cmds);
+char		**ft_split_ignore_quotes(char *s, char *c);
+bool		check_condition(int pos, char *str);
+void		command_exit(t_info info, char **cmds);
 void		free_t_token(t_token *tok);
-void    	free_info_andenv(t_info info);
-void 		free_t_info(t_info info);
+void		free_info_andenv(t_info info);
+void		free_t_info(t_info info);
 
-
-bool wild_conditioncheck(int i, int j, char *str, char **wild, int n);
+void		all_initial_free(char *pwd, char ***heredocs, \
+t_localenv *local_env, int res);
+void		read_to_line(char ** total_line, \
+char **line_read, int *fd);
+int			writer_to_final(char ** total_line, \
+char **line_read, t_localenv *local);
+bool		writer_from_input(char **total_line, \
+char ***heredocs, t_localenv *local, int i);
 
 #endif

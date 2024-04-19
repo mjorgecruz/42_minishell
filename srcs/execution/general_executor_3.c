@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   general_executor_3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 15:55:07 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 15:55:30 by masoares         ###   ########.fr       */
+/*   Created: 2024/04/19 15:25:13 by luis-ffe          #+#    #+#             */
+/*   Updated: 2024/04/19 15:25:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -27,8 +27,9 @@ int	find_next_stop(char *content, int pos)
 
 	asp_place = 0;
 	count = count_spaces(&pos, content);
-	while (content[pos] && (!ft_strchr("|", content[pos])
-		|| (ft_strchr("|", content[pos]) && ft_strchr(">", content[pos - 1]))))
+	while (content[pos] && (!ft_strchr("|", content[pos]) || \
+		(ft_strchr("|", content[pos]) && \
+		ft_strchr(">", content[pos - 1]))))
 	{
 		if (content[pos] == 34 || content[pos] == 39)
 		{
