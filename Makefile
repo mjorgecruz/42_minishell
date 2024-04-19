@@ -6,7 +6,7 @@
 #    By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/19 14:01:12 by luis-ffe         ###   ########.fr        #
+#    Updated: 2024/04/19 14:52:49 by luis-ffe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC := minishell.c \
 		history.c \
 		history_2.c \
 		history_3.c \
+		history_4.c \
 		finex.c \
 		errors/errors.c \
 		utils/str_utils.c \

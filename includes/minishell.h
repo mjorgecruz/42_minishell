@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:33:46 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 14:45:16 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:51:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,5 +382,14 @@ void		command_exit(t_info info, char **cmds);
 void		free_t_token(t_token *tok);
 void		free_info_andenv(t_info info);
 void		free_t_info(t_info info);
+
+void		all_initial_free(char *pwd, char ***heredocs, \
+t_localenv *local_env, int res);
+void		read_to_line(char ** total_line, \
+char **line_read, int *fd);
+int			writer_to_final(char ** total_line, \
+char **line_read, t_localenv *local);
+bool		writer_from_input(char **total_line, \
+char ***heredocs, t_localenv *local, int i);
 
 #endif
