@@ -6,13 +6,14 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 09:58:22 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:01:32 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../../includes/minishell.h"
 
-int	command_execve(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
+int	command_execve(char **cmds, t_localenv *local, t_info info,
+	t_cmd_info cmd_info)
 {
 	char	**p_path;
 	char	*paths;

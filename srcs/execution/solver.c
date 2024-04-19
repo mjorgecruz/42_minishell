@@ -6,11 +6,13 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 16:53:10 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:19:04 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "../../includes/minishell.h"
+
+static void	file_name_replacer(char **file, char c);
 
 int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
@@ -48,11 +50,8 @@ char	*create_file_name(char *cmd, int *i)
 {
 	int		j;
 	char	*file;
-	char	*trav;
-	char	*garbage;
 	
 	file = ft_strdup("");
-	trav = ft_calloc(2, sizeof(char));
 	*i = ignore_spaces(cmd, *i);
 	j = *i;
 	while (cmd[j] && !ft_strchr("<>|& \t\n", cmd[j]))
@@ -62,23 +61,27 @@ char	*create_file_name(char *cmd, int *i)
 			j++;
 			while (cmd[j] && cmd[j] != cmd[*i])
 			{
-				garbage = file;
-				trav[0] = cmd[j];
-				file = ft_strjoin(file, trav);
-				free(garbage);
+				file_name_replacer(&file, cmd[j]);;
 				j++;
 			}
 			j++;
 		}
 		else
-		{
-			garbage = file;
-			trav[0] = cmd[j];
-			file = ft_strjoin(file, trav);
-			free(garbage);
-			j++;
-		}
+			file_name_replacer(&file, cmd[j++]);
 	}
 	*i = j;
-	return (free(trav), file);
+	return (file);
+}
+
+static void	file_name_replacer(char **file, char c)
+{
+	char	*garbage;
+	char	*trav;
+	
+	trav = ft_calloc(2, sizeof(char));
+	garbage = *file;
+	trav[0] = c;
+	*file = ft_strjoin(*file, trav);
+	free(garbage);
+	free(trav);
 }
