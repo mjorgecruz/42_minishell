@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:49:36 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 10:01:32 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:41:10 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -17,12 +17,12 @@ int	command_execve(char **cmds, t_localenv *local, t_info info,
 {
 	char	**p_path;
 	char	*paths;
-	char *origin_cmd;
-	
+	char	*origin_cmd;
+
 	origin_cmd = NULL;
 	paths = ft_getenv("PATH", local->content);
 	if (paths == NULL)
-		return(ex_code(execve_decider(cmds, local, info, cmd_info)), g_signal);
+		return (ex_code(execve_decider(cmds, local, info, cmd_info)), g_signal);
 	p_path = ft_split(paths, ':');
 	free(paths);
 	if (ft_strchr(cmds[0], '/'))
@@ -35,7 +35,7 @@ int	command_execve(char **cmds, t_localenv *local, t_info info,
 		else
 		{
 			exec_not(origin_cmd);
-			free(origin_cmd);	
+			free(origin_cmd);
 		}
 	}
 	free_split(p_path);
@@ -47,7 +47,7 @@ char	*test_commands(char **cmds, char **p_path)
 	char	*line;
 	char	*cmd_0;
 	int		i;
-	
+
 	cmd_0 = ft_strcpy(cmds[0]);
 	line = cmds[0];
 	cmds[0] = ft_strjoin("/usr/local/sbin/", cmd_0);
@@ -66,20 +66,21 @@ char	*test_commands(char **cmds, char **p_path)
 	if (p_path[i])
 		return (free(cmd_0), NULL);
 	else
-		return(cmd_0);
+		return (cmd_0);
 }
 
-int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_info)
+int	execve_decider(char **cmds, t_localenv *local, \
+t_info info, t_cmd_info cmd_info)
 {
-	int		status;
-	int		error;
-	
+	int	status;
+	int	error;
+
 	error = 0;
 	status = 0;
 	if (cmd_info.in_out[0] == HEREDOC)
 		error = execve_heredoc(info, cmds, local);
 	else if (cmd_info.in_out[0] == IN_DOC)
-	 	error = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
+		error = execve_doc(cmd_info.fd_in_out[0], info, cmds, local);
 	else
 	{
 		status = execve(cmds[0], cmds, local->content);
@@ -87,12 +88,12 @@ int		execve_decider(char **cmds, t_localenv *local, t_info info, t_cmd_info cmd_
 		error = errno;
 	}
 	if (status == -1)
-		return(error);
+		return (error);
 	else
 		return (0);
 }
 
-int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
+int	execve_heredoc(t_info info, char **cmds, t_localenv *local)
 {
 	int		fd[2];
 	int		stdin;
@@ -119,7 +120,7 @@ int		execve_heredoc(t_info info, char **cmds, t_localenv *local)
 	return (errno);
 }
 
-int		execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
+int	execve_doc(int fd_in, t_info info, char **cmds, t_localenv *local)
 {
 	(void) fd_in;
 	(void) info;

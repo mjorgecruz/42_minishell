@@ -1,22 +1,22 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:08:35 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 10:19:04 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:51:51 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	file_name_replacer(char **file, char c);
 
-int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
+int	solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 {
-	int		res;
+	int	res;
 
 	res = 0;
 	if (cmd_info->fd_in_out[0] != STDIN_FILENO)
@@ -33,9 +33,9 @@ int solver(char **final_cmds, t_info info, t_cmd_info *cmd_info)
 
 int	cd_output_exec(char **cmds, t_info info, t_builtin id, t_cmd_info cmd_info)
 {
-	int		fd;
-	int		res;
-	
+	int	fd;
+	int	res;
+
 	res = 0;
 	fd = dup(STDOUT_FILENO);
 	dup2(cmd_info.fd_in_out[1], STDOUT_FILENO);
@@ -50,7 +50,7 @@ char	*create_file_name(char *cmd, int *i)
 {
 	int		j;
 	char	*file;
-	
+
 	file = ft_strdup("");
 	*i = ignore_spaces(cmd, *i);
 	j = *i;
@@ -61,7 +61,7 @@ char	*create_file_name(char *cmd, int *i)
 			j++;
 			while (cmd[j] && cmd[j] != cmd[*i])
 			{
-				file_name_replacer(&file, cmd[j]);;
+				file_name_replacer(&file, cmd[j]);
 				j++;
 			}
 			j++;
@@ -77,7 +77,7 @@ static void	file_name_replacer(char **file, char c)
 {
 	char	*garbage;
 	char	*trav;
-	
+
 	trav = ft_calloc(2, sizeof(char));
 	garbage = *file;
 	trav[0] = c;
