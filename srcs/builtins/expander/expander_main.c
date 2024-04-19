@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:29:10 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/17 16:17:35 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/19 01:00:52 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_looper(char *str, char *home_dir, char *new_str, int j)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '~')
+		if (str[i] == '~' && (i == 0 || is_space(str[i - 1])) && (!str[i + 1] || is_space(str[i + 1])))
 		{
 			i++;
 			k = 0;
@@ -80,7 +80,7 @@ void	ft_looper(char *str, char *home_dir, char *new_str, int j)
 		}
 		else
 		{
-			new_str[j] = str[i++];
+			new_str[j] = str[i];
 			j++;
 		}
 		if (str[i])
@@ -97,6 +97,7 @@ static char	*check_for_tilde(char *str, t_localenv *local)
 	i = 0;
 	while (str[i] && str[i] != '~')
 		i++;
+	
 	if (str[i] == '~')
 	{
 		home_dir = get_home_directory(local);

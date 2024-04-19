@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 22:40:52 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 00:12:17 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	**wild_splitter(char *str)
 	int		i;
 	int		j;
 	int		k;
-
 
 	i = 0;
 	j = 0;
@@ -151,7 +150,7 @@ char	*add_middle_wildcard(char *str, int *i)
 		(*i)--;
 	beg = *i + 1;
 	wildcard = (char *) malloc(sizeof(char) * (end - beg + 2));
-	while (beg <= end)
+	while (beg < end)
 	{
 		wildcard[j] = str[beg];
 		beg++;

@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/18 23:36:42 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 00:19:59 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,10 @@ int	wmega(char *str, char *comp)
 	letter = ft_calloc(2, sizeof(char));
 	while (str[i] == '*')
 		i++;
-	wildcard = ft_strdup("");
+	if (str[0] == '*')
+		wildcard = ft_strdup("*");
+	else	
+		wildcard = ft_strdup("");
 	while(str[i])
 	{
 		while(str[i] && str[i] != '*')
