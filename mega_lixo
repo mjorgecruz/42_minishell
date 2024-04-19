@@ -82,3 +82,6 @@ V  leak on shlvl change
 
 V  execve errors
 organize files
+
+erro para o command not found tem que ser diferente
+leak nos heredocs

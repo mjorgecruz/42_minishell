@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 14:07:38 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:33:29 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,6 +17,7 @@
 static void	all_initial_free(char *pwd, char ***heredocs, t_localenv *local_env, int res);
 static void	read_to_line(char ** total_line, char **line_read, int *fd);
 static int		writer_to_final(char ** total_line, char **line_read, t_localenv *local);
+static bool	writer_from_input(char **total_line, char ***heredocs, t_localenv *local, int i);
 
 char	*get_line(char *total_line, char ***heredocs, t_localenv *local_env)
 {
@@ -60,7 +61,6 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 {
 	char 	*line_read;
 	int		i;
-	int		res;
 
 	i = 0;
 	line_read = NULL;
@@ -71,31 +71,8 @@ bool	join_to_line(char **total_line, char ***heredocs, t_localenv *local)
 		return (false);
 	}
 	heredoc_writer(*total_line, heredocs, i, local);
-	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
-	{
-		i = 0;
-		if(!ft_parser(*total_line, &i))
-			return (false);
-		while (end_pipe_and(*total_line) || is_only_spaces(line_read) >= 0
-			|| open_parenthesis(*total_line) > 0)
-		{
-			res = writer_to_final(total_line, &line_read, local);
-			if (res == 0)
-				break;
-			else if (res == 10)
-				return(false);
-			else if (res == 20)
-				continue;
-			if(!ft_parser(*total_line, &i))
-			{
-				heredoc_writer(*total_line, heredocs, i, local);
-				free_split(*heredocs);
-				return (false);
-			}
-			heredoc_writer(*total_line, heredocs, i, local);
-			i = 0;
-		}
-	}
+	if (!writer_from_input(total_line, heredocs, local, i))
+		return(false);
 	if(!ft_parser(*total_line, &i))
 		return (free(total_line), false);
 	return (true);
@@ -145,11 +122,33 @@ static void	read_to_line(char ** total_line, char **line_read, int *fd)
 	*total_line = *line_read;
 }
 
-
-if(!ft_parser(*total_line, &i))
+static bool	writer_from_input(char **total_line, char ***heredocs, t_localenv *local, int i) 
+{
+	char 	*line_read;
+	int 	res;
+	
+	if (end_pipe_and(*total_line) || open_parenthesis(*total_line) > 0)
 	{
-		heredoc_writer(*total_line, heredocs, i, local);
-		free_split(*heredocs);
-		return (false);
+		if(!ft_parser(*total_line, &i))
+			return (false);
+		while (end_pipe_and(*total_line) || is_only_spaces(line_read) >= 0
+			|| open_parenthesis(*total_line) > 0)
+		{
+			res = writer_to_final(total_line, &line_read, local);
+			if (res == 0)
+				break;
+			else if (res == 10)
+				return(false);
+			else if (res == 20)
+				continue;
+			if(!ft_parser(*total_line, &i))
+			{
+				heredoc_writer(*total_line, heredocs, i, local);
+				free_split(*heredocs);
+				return (false);
+			}
+			heredoc_writer(*total_line, heredocs, i, local);
+		}
 	}
-	heredoc_writer(*total_line, heredocs, i, local);
+	return (true);
+}
