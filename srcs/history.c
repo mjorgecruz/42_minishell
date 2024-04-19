@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:12:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 14:33:29 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:40:04 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -142,11 +142,8 @@ static bool	writer_from_input(char **total_line, char ***heredocs, t_localenv *l
 			else if (res == 20)
 				continue;
 			if(!ft_parser(*total_line, &i))
-			{
-				heredoc_writer(*total_line, heredocs, i, local);
-				free_split(*heredocs);
-				return (false);
-			}
+				return (heredoc_writer(*total_line, heredocs, i, local),
+					free_split(*heredocs), false);
 			heredoc_writer(*total_line, heredocs, i, local);
 		}
 	}
