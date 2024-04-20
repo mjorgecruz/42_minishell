@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:10:32 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 10:33:32 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:36:11 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	wildcard_formatter(char **wildcard, char *str, int *i);
 
 int	wedges(char *str, char *comp)
 {
@@ -100,14 +102,10 @@ int	wmega(char *str, char *comp)
 	int		res;
 	int		i;
 	char	*wildcard;
-	char	*prev;
-	char	*letter;
 
 	i = 0;
 	res = 0;
 	wildcard = NULL;
-	prev = NULL;
-	letter = ft_calloc(2, sizeof(char));
 	while (str[i] == '*')
 		i++;
 	if (str[0] == '*')
@@ -116,27 +114,39 @@ int	wmega(char *str, char *comp)
 		wildcard = ft_strdup("");
 	while(str[i])
 	{
-		while(str[i] && str[i] != '*')
-		{
-			prev = wildcard;
-			letter[0] = str[i];
-			wildcard = ft_strjoin(prev, letter);
-			free(prev);
-			i++;
-		}
-		if (str[i] == '*')
-		{
-			prev = wildcard;
-			letter[0] = str[i];
-			wildcard = ft_strjoin(prev, letter);
-			free(prev);
-			i++;
-		}
+		wildcard_formatter(&wildcard, str, &i);
 		res = order_cmp(wildcard, &comp[res]);
 		if (res == 0)
-			return (free(wildcard), free(letter), res);
+			return (free(wildcard), res);
 		free(wildcard);
 		wildcard = ft_strdup("*");
 	}
-	return (free(wildcard), free(letter), res);
+	return (free(wildcard), res);
+}
+
+static void	wildcard_formatter(char **wildcard, char *str, int *i)
+{
+	char	*letter;
+	char	*prev;
+
+	prev = NULL;
+	letter = ft_calloc(2, sizeof(char));
+	
+	while(str[*i] && str[*i] != '*')
+	{
+		prev = *wildcard;
+		letter[0] = str[*i];
+		*wildcard = ft_strjoin(prev, letter);
+		free(prev);
+		(*i)++;
+	}
+	if (str[*i] == '*')
+	{
+		prev = *wildcard;
+		letter[0] = str[*i];
+		*wildcard = ft_strjoin(prev, letter);
+		free(prev);
+		(*i)++;
+	}
+	free(letter);
 }

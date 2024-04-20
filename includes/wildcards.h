@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:04:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 14:28:10 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:01:09 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_wildtype
 }	t_wildtype;
 
 char	*wildcardings(char *str);
-char	*wild_rewriter(char *str, char **new, char **wild);
+char	*wild_rewriter(char *str, char **new, char **wild, int k);
 void	add_wildcard(char **wild, char *origin);
 
 /* ************************************************************************** */

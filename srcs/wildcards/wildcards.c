@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
@@ -6,62 +6,70 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 11:48:46 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:05:41 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+
+static int	wild_searcher(char **wild, int *i, char **new);
 static int	free_wild_split(char **splitted);
 static int 	wild_words(char *s);
 static int	*check_wild_redirs(char *str, char **wild, char **new);
 static char	*wild_transformer(char *wild);
+static int	wild_fs_counter(char *str, char **new);
+static int	rewriter(char **final, char *wild, char *new, int *j);
 
 char    *wildcardings(char *str)
 {
 	char			**new;
-    DIR				*dirp;
-	struct dirent	*dp;
 	char			**wild;
 	int				i;
 	char			*final;
-	char			*trav;
+	int				res;
 
+	res = 0;
 	i = 0;
 	new = (char **) malloc (sizeof(char *) * (wildcards_counter(str) + 1));
 	wild = wild_splitter(str, 0, 0, 0);
-    dirp = opendir(".");
-	if (dirp == NULL)
+	while (wild[i] && res == 0)
 	{
-        perror("Couldn't open '.'");
-        return (str);
-	}
-	closedir(dirp);
-	while (wild[i])
-	{
-		trav = wild_transformer(wild[i]);
-		new[i] = ft_strdup("");
-		dirp = opendir(".");
-		dp = readdir(dirp);
-		while (dp != NULL)
-		{
-        	errno = 0;
-            if (dp->d_name[0] != '.' && mega_strncmp(trav, dp->d_name) != 0)
-                add_wildcard(&new[i], dp->d_name);
-			dp = readdir(dirp);
-    	}
-    	if (errno != 0)
-        	perror("Error reading directory");
-    	closedir(dirp);
-		i++;
-		free(trav);
+		res = wild_searcher(wild, &i, new);
 	}
 	new[i] = NULL;
-	final = wild_rewriter(str, new, wild);
+	final = wild_rewriter(str, new, wild, 0);
 	free_wild_split(new);
 	free_wild_split(wild);
 	free(str);
 	return (final);
+}
+static int	wild_searcher(char **wild, int *i, char **new)
+{
+	char			*trav;
+	DIR				*dirp;
+	struct dirent	*dp;
+	
+	trav = wild_transformer(wild[*i]);
+	new[*i] = ft_strdup("");
+	dirp = opendir(".");
+	dp = readdir(dirp);
+	while (dp != NULL)
+	{
+       	errno = 0;
+        if (dp->d_name[0] != '.' && mega_strncmp(trav, dp->d_name) != 0)
+            add_wildcard(&new[*i], dp->d_name);
+		dp = readdir(dirp);
+    }
+    if (errno != 0)
+	{
+       	perror("Error reading directory");
+		return (-1);
+	}
+	closedir(dirp);
+	(*i)++;
+	free(trav);
+	return(0);
 }
 
 static char	*wild_transformer(char *wild)
@@ -81,34 +89,55 @@ static char	*wild_transformer(char *wild)
 			asps = wild[i];
 			i++;
 			while (wild[i] != asps)
-			{
-				trav[j] = wild[i];
-				i++;
-				j++;
-			}
+				trav[j++] = wild[i++];
 			i++;
 		}
 		if (wild[i])
-		{
-			trav[j] = wild[i];
-			i++;
-			j++;
-		}
+			trav[j++] = wild[i++];
 	}
 	return (trav);
 }
 
-char	*wild_rewriter(char *str, char **new, char **wild)
+char	*wild_rewriter(char *str, char **new, char **wild, int k)
 {
 	char	*final;
-	int		count;
 	int		i;
 	int		j;
-	int		k;
 	int		*decider;
 	
 	i = 0;
 	j = 0;
+	k = 0;
+	decider = check_wild_redirs(str, wild, new);
+	final = ft_calloc(wild_fs_counter(str, new), sizeof(char));
+	while (new[i] || str[j])
+	{
+		if (wild[i] && mega_wildcmp(wild[i], str, j))
+		{
+			if (decider[i] == 0)
+				k = rewriter(&final, wild[i], new[i], &j);
+			else
+			{
+				if (decider[i] < 0)
+					return(ft_printf("ambiguous redirect"),free(final), free(decider), "");
+				final[k++] = str[j++]; 
+			}
+			
+			i++;
+		}
+		else
+			final[k++] = str[j++]; 
+	}
+	free(decider);
+	return(final);
+}
+
+int		wild_fs_counter(char *str, char **new)
+{
+	int i;
+	int count;
+	
+	i = 0;
 	count = ft_strlen(str);
 	while (new[i])
 	{
@@ -116,50 +145,24 @@ char	*wild_rewriter(char *str, char **new, char **wild)
 		i++;
 	}
 	count++;
-	k = 0;
-	i = 0;
-	decider = check_wild_redirs(str, wild, new);
-	final = ft_calloc(count, sizeof(char));
-	while (new[i] || str[j])
+	return(count);
+}
+
+int		rewriter(char **final, char *wild, char *new, int *j)
+{
+	int k;
+	
+	if (new[0] == 0)
 	{
-		if (wild[i] && mega_wildcmp(wild[i], str, j))
-		{
-			if (decider[i] == 0)
-			{
-				if (new[i][0] == 0)
-				{
-					k = ft_strlcat(final, wild[i], count);
-					j += (ft_strlen(wild[i]));
-				}
-				else if (new[i] != NULL)
-				{
-					k = ft_strlcat(final, new[i], count);
-					j += (ft_strlen(wild[i]));
-				}
-			}
-			else
-			{
-				if (decider[i] < 0)
-				{	
-					ft_printf("ambiguous redirect");
-					return(free(final), free(decider), "");
-				}
-				final[k] = str[j]; 
-				k++;
-				j++;
-			}
-			
-			i++;
-		}
-		else
-		{
-			final[k] = str[j]; 
-			k++;
-			j++;
-		}
+		k = ft_strlcat(*final, wild, ft_strlen(*final) + ft_strlen(wild) + 2);
+		(*j) += (ft_strlen(wild));
 	}
-	free(decider);
-	return(final);
+	else if (new != NULL)
+	{
+		k = ft_strlcat(*final, new, ft_strlen(*final) + ft_strlen(new) + 2);
+		(*j) += (ft_strlen(wild));
+	}
+	return (k);
 }
 
 void	add_wildcard(char **wild, char *origin)
@@ -178,7 +181,6 @@ void	add_wildcard(char **wild, char *origin)
 	*wild = ft_strjoin(*wild, origin);
 	free(trav);
 }
-
 
 static int	free_wild_split(char **splitted)
 {
@@ -251,11 +253,8 @@ static int 	wild_words(char *s)
 			i++;
 		if (s[i] != '\0')
 			count++;
-		//i = ignore_in_quotes(s, i);
 		while (!is_space(s[i]) && s[i] != '\0')
 		{	
-			// if (s[i] == '\"' || s[i] == '\'' )
-			// 	i = ignore_in_quotes(s, i);
 			i++;
 		}
 	}
