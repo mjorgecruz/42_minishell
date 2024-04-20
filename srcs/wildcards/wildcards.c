@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/20 23:05:41 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:09:25 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,17 +116,12 @@ char	*wild_rewriter(char *str, char **new, char **wild, int k)
 		{
 			if (decider[i] == 0)
 				k = rewriter(&final, wild[i], new[i], &j);
-			else
-			{
-				if (decider[i] < 0)
-					return(ft_printf("ambiguous redirect"),free(final), free(decider), "");
-				final[k++] = str[j++]; 
-			}
-			
+			else if (decider[i] < 0)
+				return(ft_printf("ambiguous redirect"),
+					free(final), free(decider), "");
 			i++;
 		}
-		else
-			final[k++] = str[j++]; 
+		final[k++] = str[j++]; 
 	}
 	free(decider);
 	return(final);
