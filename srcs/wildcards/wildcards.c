@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/20 23:09:25 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:18:45 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	*check_wild_redirs(char *str, char **wild, char **new);
 static char	*wild_transformer(char *wild);
 static int	wild_fs_counter(char *str, char **new);
 static int	rewriter(char **final, char *wild, char *new, int *j);
+static int	decidings(char *str, int k, char *new);
 
 char    *wildcardings(char *str)
 {
@@ -211,28 +212,36 @@ static int	*check_wild_redirs(char *str, char **wild, char **new)
 		{
 			k = j;
 			k--;
-			decider[i] = 0;
-			while (k >= 0 && is_space(str[k]))
-				k--;
-			if (k == -1 || (str[k] != '<' && str[k] != '>'))
-				decider[i] = 0;
-			else if (str[k] == '<' && str[k - 1] == '<')
-				decider[i] = 1;
-			else if (str[k] == '<')
-			{
-				if (wild_words(new[i]) > 1)
-					decider[i] = -1;
-			}
-			else if (str[k] == '>')
-			{
-				if (wild_words(new[i]) > 1)
-					decider[i] = -2;
-			}
+			decider[i] = decidings(str, k, new[i]);
 			i++;
 		}
 		j++;
 	}
 	return(decider);
+}
+
+int	decidings(char *str, int k, char *new)
+{
+	int		decider;
+
+	decider = 0;
+	while (k >= 0 && is_space(str[k]))
+		k--;
+	if (k == -1 || (str[k] != '<' && str[k] != '>'))
+		decider = 0;
+	else if (str[k] == '<' && str[k - 1] == '<')
+		decider = 1;
+	else if (str[k] == '<')
+	{
+		if (wild_words(new) > 1)
+			decider = -1;
+	}
+	else if (str[k] == '>')
+	{
+		if (wild_words(new) > 1)
+			decider = -2;
+	}
+	return (decider);	
 }
 
 static int 	wild_words(char *s)
