@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   heredocs_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:29:43 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 08:32:24 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:06:17 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -57,7 +57,8 @@ t_localenv *local, char ***new_heredocs)
 	waitpid(0, &res, 0);
 	if (res == 2)
 		printf("\n");
-	close(fd[1]);
+	if (fd[1] > -1)
+		close(fd[1]);
 	return (fd[0]);
 }
 
@@ -94,7 +95,8 @@ static int	write_to_fd(char *final_str, int *fd, char *str)
 
 	(void) final_str;
 	here = NULL;
-	close(fd[0]);
+	if (fd[0] > -1)
+		close(fd[0]);
 	switch_sig_new();
 	add_partials(&(here), str);
 	write(fd[1], here, ft_strlen(final_str));
