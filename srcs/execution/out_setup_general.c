@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   out_setup_general.c                                :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:43:50 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/21 18:06:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 22:46:54 by masoares         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -31,7 +31,8 @@ void	commands_sorter(t_token *cmd_list, t_info info, t_localenv *local)
 			res = mult_cmd_executer(cmd_list, info, local, i);
 	}
 	while (cmd_list->next != NULL \
-		&& (((res == 0 && cmd_list->next_type == D_PIPE)) || ((res != 0 && cmd_list->next_type == D_AMP)) ))
+		&& (((res == 0 && cmd_list->next_type == D_PIPE)) 
+		|| ((res != 0 && cmd_list->next_type == D_AMP))))
 		cmd_list = cmd_list->next;
 	if (cmd_list->next != NULL)
 		commands_sorter(cmd_list->next, info, local);
