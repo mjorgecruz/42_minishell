@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:58:03 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 13:43:05 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:50:17 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -37,7 +37,10 @@ void	err_eacces_chooser(char *cmd)
 void	err_enoent_chooser(char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
-		set_mesage(cmd, 127, " No such file or directory");
+	{
+		bi_err(cmd, ": No such file or directory", "\n");
+		ex_code(127);
+	}
 	else
 		set_mesage(cmd, 127, ": command not found");
 }
