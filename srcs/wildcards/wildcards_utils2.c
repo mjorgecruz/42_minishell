@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:53:10 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/19 10:34:16 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:23:57 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*add_back_wildcard(char *str, int *i)
 	while (j >= 0 && !is_special_char(str[j]))
 	{
 		if (str[j] == '<' && j > 0 && str[j - 1] == '<')
-			return("");
+			return ("");
 		j--;
 	}
 	while (beg >= 0 && !is_space(str[beg]) && !is_special_char(str[beg]))

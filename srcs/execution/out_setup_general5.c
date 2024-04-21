@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   out_setup_general5.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:59:18 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/20 23:34:34 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:58:19 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	count_wild_n_her(t_token *cmd_list, int i, t_info info, t_cmd_info	cmd_info);
+static int	count_wild_n_her(t_token *cmd_list, int i, \
+t_info info, t_cmd_info	cmd_info);
 
 int	inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 {
@@ -25,11 +26,12 @@ int	inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	err[1] = 0;
 	cmd_info_starter(&cmd_info);
 	count_wild_n_her(cmd_list, i, info, cmd_info);
-	pos[0] = define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]),	
+	pos[0] = define_input(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[0]), \
 		&info.pos_heredoc, &(cmd_info.in_out[0]));
 	if (cmd_info.fd_in_out[0] == -1 && cmd_info.in_out[0] != HEREDOC)
 		err[0] = errno;
-	pos[1] = define_output(&(cmd_list->cmds[i]), &(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]), pos[0]);
+	pos[1] = define_output(&(cmd_list->cmds[i]), \
+		&(cmd_info.fd_in_out[1]), &(cmd_info.in_out[1]), pos[0]);
 	if (cmd_info.fd_in_out[1] == -1)
 		err[1] = errno;
 	if (err[1] != 0 || err[0] != 0)
@@ -39,9 +41,10 @@ int	inter_executioner(t_token *cmd_list, t_info info, t_localenv *local, int i)
 	return (all_data_to_solver(final_cmds, info, &cmd_info, cmd_list->cmds[i]));
 }
 
-int		count_wild_n_her(t_token *cmd_list, int i, t_info info, t_cmd_info	cmd_info)
+int	count_wild_n_her(t_token *cmd_list, int i, t_info info, \
+t_cmd_info	cmd_info)
 {
-	int		j;
+	int	j;
 
 	j = -1;
 	while (++j < i)

@@ -6,17 +6,17 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:31:12 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 11:52:35 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:27:33 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int  ft_iterator(char *str, int i)
+static int	ft_iterator(char *str, int i)
 {
 	while (str[i] && str[i] == '*')
 		i++;
-        return (i);
+	return (i);
 }
 
 int	wmiddle(char *str, char *comp)
@@ -26,9 +26,9 @@ int	wmiddle(char *str, char *comp)
 	int		j;
 	int		res;
 
-    i = ft_iterator(str, 0);
+	i = ft_iterator(str, 0);
 	j = i;
-    j = ft_iterator(str, j);
+	j = ft_iterator(str, j);
 	wildcard = ft_calloc(j - i + 1, sizeof(char));
 	if (wildcard == NULL)
 		return (0);
@@ -41,7 +41,7 @@ int	wmiddle(char *str, char *comp)
 	{
 		res = mega_wildcmp(wildcard, comp, i);
 		if (res > 0)
-			break;
+			break ;
 	}
 	free(wildcard);
 	return (res);

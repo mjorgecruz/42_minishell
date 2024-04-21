@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:04:23 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/20 22:01:09 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:26:43 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ int		wedges(char *str, char *comp);
 int		wmega_back(char *str, char *comp, int i, int res);
 int		wmega(char *str, char *comp);
 int		mega_wildcmp(char *wildcard, char *comp, int start);
+int		rewriter(char **final, char *wild, char *new, int *j);
+void	wildcard_formatter(char **wildcard, char *str, int *i);
 
 #endif

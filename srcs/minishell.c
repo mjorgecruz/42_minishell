@@ -6,15 +6,15 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:19:08 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 16:19:10 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:55:48 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int g_signal;
+int	g_signal;
 
-static int adjust_shlvl(char **environ);
+static int	adjust_shlvl(char **environ);
 
 int	main(void)
 {
@@ -22,7 +22,7 @@ int	main(void)
 	char		**heredocs;
 	int			i;
 	t_localenv	*local_env;
-	
+
 	adjust_shlvl(__environ);
 	local_env = env_init(__environ);
 	input = NULL;
@@ -32,7 +32,7 @@ int	main(void)
 	{
 		input = get_line(input, &heredocs, local_env);
 		if (input == NULL)
-			continue;
+			continue ;
 		if (input != NULL && *input && input[ft_strlen(input) - 1] != 0x03)
 		{
 			if (input[ignore_spaces(input, i)])
@@ -44,14 +44,14 @@ int	main(void)
 	}
 }
 
-static int adjust_shlvl(char **environ)
+static int	adjust_shlvl(char **environ)
 {
 	int		i;
 	int		shlvl;
 	char	*intoa;
 	char	*sh;
 	int		j;
-	
+
 	intoa = NULL;
 	i = -1;
 	j = -1;
@@ -67,7 +67,7 @@ static int adjust_shlvl(char **environ)
 			environ[i][j] = 0;
 			free(intoa);
 			free(sh);
-			break;
+			break ;
 		}
 	}
 	return (i);
