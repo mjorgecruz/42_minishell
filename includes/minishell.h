@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:18:48 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/04/19 16:18:50 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:15:26 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,4 +392,15 @@ char **line_read, t_localenv *local);
 bool		writer_from_input(char **total_line, \
 char ***heredocs, t_localenv *local, int i);
 int			error_definer_(int *err, int *pos, char *cmds);
+
+/* ************************************************************************** */
+/*                                  WILDUTILS7                                */
+/* ************************************************************************** */
+
+int			wild_words(char *s);
+int			decidings(char *str, int k, char *new);
+int			*check_wild_redirs(char *str, char **wild, char **new);
+int			free_wild_split(char **splitted);
+void		add_wildcard(char **wild, char *origin);
+
 #endif

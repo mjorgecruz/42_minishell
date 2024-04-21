@@ -6,7 +6,7 @@
 #    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 09:48:00 by masoares          #+#    #+#              #
-#    Updated: 2024/04/21 14:29:49 by masoares         ###   ########.fr        #
+#    Updated: 2024/04/21 14:36:33 by masoares         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -93,6 +93,7 @@ SRC := minishell.c \
 		wildcards/wildcards_utils4.c \
 		wildcards/wildcards_utils5.c \
 		wildcards/wildcards_utils6.c \
+		wildcards/wildcards_utils7.c \
 		signals/signals.c \
 		signals/signals_handlers.c \
 

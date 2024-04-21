@@ -1,24 +1,24 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:08:39 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/15 13:38:58 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:23:31 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int     wildcard_checker(char *str)
+int	wildcard_checker(char *str)
 {
-	int     i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		i = ignore_in_quotes(str, i);
 		if (str[i] == '*')
@@ -26,10 +26,10 @@ int     wildcard_checker(char *str)
 			j = i - 1;
 			while (j >= 0 && !is_special_char(str[j]))
 			{
-				if (str[j] != '<')  
+				if (str[j] != '<')
 					return (1);
 				if (str[j] == '<' && j > 0 && str[j - 1] != '<')
-					return(1);
+					return (1);
 				j--;
 			}
 		}
@@ -38,10 +38,10 @@ int     wildcard_checker(char *str)
 	return (0);
 }
 
-int		wildcards_counter(char *str)
+int	wildcards_counter(char *str)
 {
-	int		i;
-	int		counter;
+	int	i;
+	int	counter;
 
 	i = 0;
 	counter = 0;
@@ -60,10 +60,10 @@ int		wildcards_counter(char *str)
 	return (counter);
 }
 
-int		order_cmp(char *wildcard, char *str)
+int	order_cmp(char *wildcard, char *str)
 {
-	int		res;
-	
+	int	res;
+
 	res = 0;
 	if (wildcard[0] == '*')
 	{
