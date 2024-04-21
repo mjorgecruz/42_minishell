@@ -6,7 +6,7 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/21 12:35:13 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:40:40 by masoares         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -118,7 +118,7 @@ char	*wild_rewriter(char *str, char **new, char **wild, int k)
 			if (decider[i] == 0)
 				k = rewriter(&final, wild[i], new[i], &j);
 			else if (decider[i] < 0)
-				return(bi_err(wild[i], " : ambiguous redirect", "\n"),
+				return(ex_code(1), bi_err(wild[i], " : ambiguous redirect", "\n"),
 					free(final), free(decider), "");
 			i++;
 		}
