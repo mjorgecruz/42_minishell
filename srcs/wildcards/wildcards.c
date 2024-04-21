@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 09:50:14 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/20 23:18:45 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:35:13 by masoares         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../includes/minishell.h"
 
@@ -118,7 +118,7 @@ char	*wild_rewriter(char *str, char **new, char **wild, int k)
 			if (decider[i] == 0)
 				k = rewriter(&final, wild[i], new[i], &j);
 			else if (decider[i] < 0)
-				return(ft_printf("ambiguous redirect"),
+				return(bi_err(wild[i], " : ambiguous redirect", "\n"),
 					free(final), free(decider), "");
 			i++;
 		}
@@ -148,6 +148,7 @@ int		rewriter(char **final, char *wild, char *new, int *j)
 {
 	int k;
 	
+	k = 0;
 	if (new[0] == 0)
 	{
 		k = ft_strlcat(*final, wild, ft_strlen(*final) + ft_strlen(wild) + 2);
