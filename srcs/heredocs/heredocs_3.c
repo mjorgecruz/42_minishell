@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masoares <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: masoares <masoares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:45:46 by masoares          #+#    #+#             */
-/*   Updated: 2024/04/21 14:45:49 by masoares         ###   ########.fr       */
+/*   Updated: 2024/04/21 22:47:36 by masoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	write_to_fd(char *final_str, int *fd, char *str)
 		close(fd[0]);
 	switch_sig_new();
 	add_partials(&(here), str);
-	write(fd[1], here, ft_strlen(final_str));
+	write(fd[1], here, ft_strlen(here));
 	free(here);
 	return (0);
 }
