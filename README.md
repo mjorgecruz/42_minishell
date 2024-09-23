@@ -45,3 +45,19 @@ The goal of the Minishell project is to help understand how a shell works by bui
   - Implement `&&` and `||` with support for parentheses for precedence.</br></br>
 - Wildcards:
   - Implement wildcard `*` expansion in the current working directory.</br></br>
+
+## How to run
+1. Clone repository
+    ```bash
+    git clone git@github.com:mjorgecruz/42_minishell.git
+    ```
+### Mandatory part
+2. Go inside project directory and run `make`
+    ```bash
+    cd 42_minishell
+    make
+    ```
+3. Run `./minishell`</br> </br>
+    ```bash
+    ./minishell
+    ```
