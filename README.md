@@ -1,18 +1,12 @@
+# Minishell
+
 This repository contains the implementation of the Minishell project, a Unix system programming exercise assigned at 42. The project involves building a basic shell that mimics the behavior of the popular bash shell. It covers fundamental concepts such as process creation, input/output redirection, and signal handling.
-Table of Contents
 
-    Introduction
-    Features
-    Mandatory Part
-    Bonus Part
-    Installation
-    Usage
-    License
+## Introduction
 
-Introduction
+The goal of the Minishell project is to help you understand how a shell works by building your own minimal version of bash. For that, we need to learn how to handle user input, execute commands, manage processes, and work with file descriptors. This project is a great opportunity to get familiar with the Unix programming environment and its system calls.
 
-The goal of the Minishell project is to help you understand how a shell works by building your own minimal version of bash. You will learn how to handle user input, execute commands, manage processes, and work with file descriptors. This project is a great opportunity to get familiar with the Unix programming environment and its system calls.
-Features
+## Features
 
     Display a prompt and wait for user input.
     Implement a command history.
