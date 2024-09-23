@@ -61,3 +61,6 @@ The goal of the Minishell project is to help understand how a shell works by bui
     ```bash
     ./minishell
     ```
+## Credits
+ - Jorge Cruz
+ - Luis Carvalho
